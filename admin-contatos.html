@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contatos — Painel Admin · Psicologia Real</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --r1: #3D2028; --r2: #7A4A55; --r3: #B08090;
+      --r-light: #EEE0E4; --r-pale: #F8F2F4; --r-border: #DDD0D6;
+      --grad: linear-gradient(135deg, #3D2028 0%, #7A4A55 50%, #B08090 100%);
+      --ink: #1E1014; --ink-2: #5A3040; --ink-3: #9A7080; --ink-4: #C8A8B4;
+      --bg: #F5EEF1; --white: #FFFFFF; --border: #E2D0D8;
+      --radius: 14px; --radius-sm: 9px;
+      --shadow: 0 2px 12px rgba(90,48,64,0.07);
+      --shadow-hover: 0 8px 30px rgba(90,48,64,0.12);
+      /* status colors */
+      --s-novo: #3B82F6; --s-novo-bg: #EFF6FF; --s-novo-border: #BFDBFE;
+      --s-contato: #F59E0B; --s-contato-bg: #FFFBEB; --s-contato-border: #FDE68A;
+      --s-convertido: #10B981; --s-convertido-bg: #ECFDF5; --s-convertido-border: #A7F3D0;
+      --s-arquivado: #9CA3AF; --s-arquivado-bg: #F9FAFB; --s-arquivado-border: #E5E7EB;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; min-height: 100vh; }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--white); border-bottom: 1px solid var(--border);
+      padding: 0 2rem; height: 58px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 50;
+      box-shadow: 0 1px 4px rgba(90,48,64,0.05);
+    }
+    .header-left { display: flex; align-items: center; gap: 1rem; }
+    .header-logo {
+      font-family: 'Instrument Serif', serif; font-size: 17px; font-weight: 400;
+      color: var(--ink); text-decoration: none;
+    }
+    .header-logo span { color: var(--r1); }
+    .header-sep { color: var(--border); }
+    .header-title { font-size: 13px; font-weight: 500; color: var(--ink-3); }
+    .header-back {
+      font-size: 12px; color: var(--ink-3); text-decoration: none;
+      display: flex; align-items: center; gap: 5px;
+      padding: 5px 12px; border-radius: 7px; border: 1px solid var(--border);
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .header-back:hover { color: var(--r1); border-color: var(--r-border); }
+
+    /* ── MAIN ── */
+    main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+    /* ── METRICS ── */
+    .metrics { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 2rem; }
+    .metric {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.1rem 1.25rem;
+      box-shadow: var(--shadow);
+    }
+    .metric-n {
+      font-family: 'Instrument Serif', serif; font-size: 30px; font-weight: 600;
+      background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; letter-spacing: -0.02em; line-height: 1;
+    }
+    .metric-l { font-size: 11px; color: var(--ink-4); margin-top: 4px; font-weight: 400; }
+
+    /* ── FILTERS ── */
+    .toolbar {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap;
+    }
+    .search-input {
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; color: var(--ink);
+      background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+      padding: 8px 14px; outline: none; flex: 1; min-width: 200px; max-width: 320px;
+      transition: border-color 0.15s;
+    }
+    .search-input:focus { border-color: var(--r2); }
+    .filter-btn {
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 500;
+      padding: 7px 14px; border-radius: var(--radius-sm); border: 1.5px solid var(--border);
+      background: var(--white); color: var(--ink-3); cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-btn:hover { border-color: var(--r-border); color: var(--r1); }
+    .filter-btn.active { background: var(--r1); color: #fff; border-color: var(--r1); }
+    .refresh-btn {
+      margin-left: auto; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12px; font-weight: 500; padding: 7px 14px;
+      border-radius: var(--radius-sm); border: 1.5px solid var(--r-border);
+      background: var(--r-light); color: var(--r1); cursor: pointer;
+      display: flex; align-items: center; gap: 6px; transition: opacity 0.15s;
+    }
+    .refresh-btn:hover { opacity: 0.8; }
+    .refresh-btn svg { width: 13px; height: 13px; stroke: var(--r1); fill: none; stroke-width: 2; stroke-linecap: round; }
+
+    /* ── TABLE ── */
+    .table-wrap {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+    }
+    table { width: 100%; border-collapse: collapse; }
+    thead { background: var(--r-pale); border-bottom: 1px solid var(--r-border); }
+    th {
+      font-size: 10.5px; font-weight: 700; color: var(--ink-3);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 11px 16px; text-align: left; white-space: nowrap;
+    }
+    td { padding: 14px 16px; font-size: 13px; color: var(--ink-2); vertical-align: top; }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.12s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--r-pale); }
+
+    .td-nome { font-weight: 500; color: var(--ink); }
+    .td-wpp {
+      color: var(--r1); font-weight: 500; text-decoration: none;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .td-wpp:hover { text-decoration: underline; }
+    .td-wpp svg { width: 13px; height: 13px; fill: #25D366; flex-shrink: 0; }
+    .td-servico { color: var(--ink-3); font-size: 12.5px; }
+    .td-msg { color: var(--ink-4); font-size: 12px; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .td-pagina {
+      font-size: 10.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--ink-4); background: var(--bg); border: 1px solid var(--border);
+      padding: 3px 8px; border-radius: 99px; white-space: nowrap; display: inline-block;
+    }
+    .td-data { font-size: 11.5px; color: var(--ink-4); white-space: nowrap; }
+
+    /* Status badge + select */
+    .status-badge {
+      font-size: 10.5px; font-weight: 600; padding: 3px 10px; border-radius: 99px;
+      display: inline-block; white-space: nowrap;
+    }
+    .status-novo       { color: var(--s-novo);       background: var(--s-novo-bg);       border: 1px solid var(--s-novo-border); }
+    .status-em_contato { color: var(--s-contato);    background: var(--s-contato-bg);    border: 1px solid var(--s-contato-border); }
+    .status-convertido { color: var(--s-convertido); background: var(--s-convertido-bg); border: 1px solid var(--s-convertido-border); }
+    .status-arquivado  { color: var(--s-arquivado);  background: var(--s-arquivado-bg);  border: 1px solid var(--s-arquivado-border); }
+
+    .status-select {
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 500;
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+      padding: 4px 8px; background: var(--white); color: var(--ink-2);
+      cursor: pointer; outline: none; transition: border-color 0.15s;
+    }
+    .status-select:focus { border-color: var(--r2); }
+
+    /* Empty / loading states */
+    .state-row td { text-align: center; padding: 3rem 1rem; color: var(--ink-4); font-size: 13px; }
+    .spinner {
+      width: 20px; height: 20px; border: 2px solid var(--r-border);
+      border-top-color: var(--r2); border-radius: 50%;
+      animation: spin 0.7s linear infinite; display: inline-block; vertical-align: middle; margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── NOTAS INLINE ── */
+    .notas-btn {
+      font-size: 11px; color: var(--ink-4); background: none; border: none;
+      cursor: pointer; padding: 2px 6px; border-radius: 5px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .notas-btn:hover { background: var(--r-light); color: var(--r1); }
+    .notas-input {
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px;
+      border: 1.5px solid var(--r-border); border-radius: 6px;
+      padding: 5px 8px; width: 100%; max-width: 180px; color: var(--ink);
+      outline: none; background: var(--white);
+    }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 999;
+      background: var(--ink); color: #fff; font-size: 13px; font-weight: 500;
+      padding: 10px 18px; border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      opacity: 0; transform: translateY(8px);
+      transition: opacity 0.2s, transform 0.2s;
+      pointer-events: none;
+    }
+    #toast.show { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 900px) {
+      .metrics { grid-template-columns: repeat(3,1fr); }
+      table { font-size: 12px; }
+      th, td { padding: 10px 12px; }
+    }
+    @media (max-width: 640px) {
+      .metrics { grid-template-columns: 1fr 1fr; }
+      main { padding: 1.25rem 1rem; }
+      .td-msg, .td-pagina { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <a href="index.html" class="header-logo">Psicologia <span>Real</span></a>
+    <span class="header-sep">·</span>
+    <span class="header-title">Painel de Contatos</span>
+  </div>
+  <a href="index.html" class="header-back">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Voltar ao site
+  </a>
+</header>
+
+<main>
+
+  <!-- MÉTRICAS -->
+  <div class="metrics" id="metrics">
+    <div class="metric"><div class="metric-n" id="m-total">—</div><div class="metric-l">Total de contatos</div></div>
+    <div class="metric"><div class="metric-n" id="m-novo" style="background:var(--s-novo);-webkit-background-clip:text;background-clip:text;">—</div><div class="metric-l">Novos</div></div>
+    <div class="metric"><div class="metric-n" id="m-contato" style="background:var(--s-contato);-webkit-background-clip:text;background-clip:text;">—</div><div class="metric-l">Em contato</div></div>
+    <div class="metric"><div class="metric-n" id="m-convertido" style="background:var(--s-convertido);-webkit-background-clip:text;background-clip:text;">—</div><div class="metric-l">Convertidos</div></div>
+    <div class="metric"><div class="metric-n" id="m-hoje">—</div><div class="metric-l">Hoje</div></div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <input class="search-input" id="searchInput" type="text" placeholder="Buscar por nome, serviço ou WhatsApp..." oninput="renderTable()" />
+    <button class="filter-btn active" data-status="todos" onclick="setFilter(this)">Todos</button>
+    <button class="filter-btn" data-status="novo" onclick="setFilter(this)">Novos</button>
+    <button class="filter-btn" data-status="em_contato" onclick="setFilter(this)">Em contato</button>
+    <button class="filter-btn" data-status="convertido" onclick="setFilter(this)">Convertidos</button>
+    <button class="filter-btn" data-status="arquivado" onclick="setFilter(this)">Arquivados</button>
+    <button class="refresh-btn" onclick="loadContatos()">
+      <svg viewBox="0 0 24 24" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+      Atualizar
+    </button>
+  </div>
+
+  <!-- TABELA -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>WhatsApp</th>
+          <th>Serviço</th>
+          <th>Mensagem</th>
+          <th>Página</th>
+          <th>Status</th>
+          <th>Notas</th>
+          <th>Data</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr class="state-row"><td colspan="8"><span class="spinner"></span> Carregando...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<div id="toast"></div>
+
+<script>
+  const SB_URL = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
+  const SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp'; // ← substitua pela sua chave anon
+
+  let allContatos = [];
+  let activeFilter = 'todos';
+
+  async function loadContatos() {
+    try {
+      const res = await fetch(`${SB_URL}/rest/v1/contatos?order=criado_em.desc&limit=200`, {
+        headers: {
+          'apikey': SB_KEY,
+          'Authorization': `Bearer ${SB_KEY}`
+        }
+      });
+      if (!res.ok) throw new Error(res.status);
+      allContatos = await res.json();
+      updateMetrics();
+      renderTable();
+    } catch(e) {
+      document.getElementById('tableBody').innerHTML =
+        `<tr class="state-row"><td colspan="8">Erro ao carregar. Verifique a chave do Supabase.<br><small style="color:var(--ink-4)">${e}</small></td></tr>`;
+    }
+  }
+
+  function updateMetrics() {
+    const hoje = new Date().toDateString();
+    document.getElementById('m-total').textContent     = allContatos.length;
+    document.getElementById('m-novo').textContent      = allContatos.filter(c => c.status === 'novo').length;
+    document.getElementById('m-contato').textContent   = allContatos.filter(c => c.status === 'em_contato').length;
+    document.getElementById('m-convertido').textContent= allContatos.filter(c => c.status === 'convertido').length;
+    document.getElementById('m-hoje').textContent      = allContatos.filter(c => new Date(c.criado_em).toDateString() === hoje).length;
+  }
+
+  function setFilter(btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.status;
+    renderTable();
+  }
+
+  function renderTable() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    let rows = allContatos;
+
+    if (activeFilter !== 'todos') {
+      rows = rows.filter(c => c.status === activeFilter);
+    }
+    if (q) {
+      rows = rows.filter(c =>
+        (c.nome||'').toLowerCase().includes(q) ||
+        (c.whatsapp||'').includes(q) ||
+        (c.servico||'').toLowerCase().includes(q)
+      );
+    }
+
+    if (rows.length === 0) {
+      document.getElementById('tableBody').innerHTML =
+        `<tr class="state-row"><td colspan="8">Nenhum contato encontrado.</td></tr>`;
+      return;
+    }
+
+    const body = rows.map(c => {
+      const wppNum = (c.whatsapp||'').replace(/\D/g,'');
+      const wppLink = `https://wa.me/55${wppNum}`;
+      const data = new Date(c.criado_em);
+      const dataStr = data.toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit',year:'2-digit'}) +
+                      '<br><span style="color:var(--ink-4);font-size:10.5px;">' +
+                      data.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}) + '</span>';
+      const statusClass = 'status-' + (c.status||'novo').replace('_','-');
+      const statusLabel = {novo:'Novo', em_contato:'Em contato', convertido:'Convertido', arquivado:'Arquivado'}[c.status] || c.status;
+
+      return `<tr>
+        <td class="td-nome">${esc(c.nome)}</td>
+        <td>
+          <a class="td-wpp" href="${wppLink}" target="_blank">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+            ${esc(c.whatsapp)}
+          </a>
+        </td>
+        <td class="td-servico">${esc(c.servico)}</td>
+        <td class="td-msg" title="${esc(c.mensagem||'')}">${esc(c.mensagem||'—')}</td>
+        <td><span class="td-pagina">${esc(c.pagina||'—')}</span></td>
+        <td>
+          <select class="status-select" onchange="updateStatus(${c.id}, this.value)">
+            <option value="novo" ${c.status==='novo'?'selected':''}>Novo</option>
+            <option value="em_contato" ${c.status==='em_contato'?'selected':''}>Em contato</option>
+            <option value="convertido" ${c.status==='convertido'?'selected':''}>Convertido</option>
+            <option value="arquivado" ${c.status==='arquivado'?'selected':''}>Arquivado</option>
+          </select>
+        </td>
+        <td>
+          <input class="notas-input" type="text" placeholder="Adicionar nota..."
+            value="${esc(c.notas||'')}"
+            onblur="updateNota(${c.id}, this.value)"
+            onkeydown="if(event.key==='Enter')this.blur()"
+          />
+        </td>
+        <td class="td-data">${dataStr}</td>
+      </tr>`;
+    }).join('');
+
+    document.getElementById('tableBody').innerHTML = body;
+  }
+
+  async function updateStatus(id, status) {
+    try {
+      const res = await fetch(`${SB_URL}/rest/v1/contatos?id=eq.${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SB_KEY,
+          'Authorization': `Bearer ${SB_KEY}`,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({ status })
+      });
+      if (res.ok) {
+        const c = allContatos.find(c => c.id === id);
+        if (c) c.status = status;
+        updateMetrics();
+        showToast('Status atualizado ✓');
+      }
+    } catch(e) { showToast('Erro ao atualizar status'); }
+  }
+
+  async function updateNota(id, notas) {
+    const c = allContatos.find(c => c.id === id);
+    if (!c || c.notas === notas) return;
+    try {
+      const res = await fetch(`${SB_URL}/rest/v1/contatos?id=eq.${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SB_KEY,
+          'Authorization': `Bearer ${SB_KEY}`,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({ notas })
+      });
+      if (res.ok) { c.notas = notas; showToast('Nota salva ✓'); }
+    } catch(e) {}
+  }
+
+  function esc(str) {
+    return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  let toastTimer;
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  // Auto-refresh a cada 60s
+  loadContatos();
+  setInterval(loadContatos, 60000);
+</script>
+</body>
+</html>
