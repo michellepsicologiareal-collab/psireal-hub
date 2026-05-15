@@ -2,7 +2,33 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Supervisão em TCC — Michelle Donegá · Psicologia Real</title>
+  <title>Supervisão Clínica em TCC — Michelle Donegá | Psicologia Real</title>
+  <!-- SEO -->
+  <meta name="description" content="Supervisão clínica individual e em grupo para psicólogos em formação. Base em TCC, Terapia do Esquema e ACT. Online, sem deslocamento." />
+  <meta name="keywords" content="supervisão clínica TCC, supervisão psicólogos, formação TCC, supervisão individual grupo" />
+  <meta name="author" content="Michelle Donegá dos Santos" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://michellepsicologiareal-collab.github.io/psireal-hub/supervisao.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Supervisão Clínica em TCC — Michelle Donegá | Psicologia Real" />
+  <meta property="og:description" content="Supervisão clínica individual e em grupo para psicólogos em formação. Base em TCC, Terapia do Esquema e ACT. Online, sem deslocamento." />
+  <meta property="og:url" content="https://michellepsicologiareal-collab.github.io/psireal-hub/supervisao.html" />
+  <meta property="og:site_name" content="Psicologia Real" />
+  <meta property="og:locale" content="pt_BR" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Supervisão Clínica em TCC — Michelle Donegá | Psicologia Real" />
+  <meta name="twitter:description" content="Supervisão clínica individual e em grupo para psicólogos em formação. Base em TCC, Terapia do Esquema e ACT. Online, sem deslocamento." />
+  <!-- PWA -->
+  <link rel="manifest" href="/psireal-hub/manifest.json" />
+  <meta name="theme-color" content="#3D2028" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Psi Real" />
+  <link rel="apple-touch-icon" href="/psireal-hub/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/psireal-hub/icon-192.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Cormorant+Garamond:ital@1&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -342,5 +368,15 @@ async function sendForm(e){e.preventDefault();const btn=document.getElementById(
     finally { btn.disabled = false; btnText.textContent = 'Enviar mensagem'; }
   }
 </script>
+<script>
+  // PWA Service Worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/psireal-hub/sw.js')
+        .then(r => console.log('SW registered'))
+        .catch(e => console.log('SW error', e));
+    });
+  }
+  </script>
 </body>
 </html>
