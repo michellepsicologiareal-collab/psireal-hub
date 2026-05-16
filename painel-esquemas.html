@@ -10,23 +10,44 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{
-      --r1:#1A2E27;--r2:#2D4A3E;--r3:#7AAD96;
-      --r-light:#E8F2EE;--r-pale:#F5EFE6;--r-border:#C8DDD6;
-      --grad:linear-gradient(135deg,#1A2E27 0%,#2D4A3E 50%,#7AAD96 100%);
-      --ink:#0F1E18;--ink-2:#1A2E27;--ink-3:#4A7C6A;--ink-4:#7AAD96;
-      --border:#C8DDD6;--white:#fff;--bg:#EDF5F0;
-      --radius:14px;--radius-sm:9px;
-      --shadow:0 2px 12px rgba(26,46,39,0.07);
-      --shadow-hover:0 8px 32px rgba(26,46,39,0.13);
-      --s-novo:#3B82F6;--s-novo-bg:#EFF6FF;
-      --s-visto:#10B981;--s-visto-bg:#ECFDF5;
+    :root {
+      /* Vinho · Rose · Sage detalhe */
+      --r1: #3D2235;
+      --r2: #7A4060;
+      --r3: #C8908A;
+      --r4: #E8C8C4;
+      --sage: #4A7C6A;
+      --sage-light: #7AAD96;
+      --sage-pale: #EDF5F0;
+      --clay: #C4956A;
+      --rose: #C8908A;
+      --rose-mid: #D4A8A2;
+      --rose-light: #E8C8C4;
+      --rose-pale: #F7F0F2;
+      --rose-border: #DFBFBA;
+      --r-light: #F0E5EC;
+      --r-pale: #F8F2F5;
+      --r-border: #DFBFCA;
+      --grad: linear-gradient(135deg, #3D2235 0%, #7A4060 50%, #C8908A 100%);
+      --grad-subtle: linear-gradient(135deg, #F8F2F5 0%, #F2E8EE 50%, #ECD8E4 100%);
+      --ink: #1E1018;
+      --ink-2: #5A3048;
+      --ink-3: #9A7088;
+      --ink-4: #C8A8B8;
+      --bg: #FDFBFC;
+      --white: #FFFFFF;
+      --border: #DFBFCA;
+      --surface: #F2E8EE;
+      --radius: 18px;
+      --radius-sm: 11px;
+      --shadow-card: 0 2px 12px rgba(61,34,53,0.07), 0 1px 3px rgba(61,34,53,0.04);
+      --shadow-hover: 0 12px 40px rgba(61,34,53,0.13), 0 4px 12px rgba(61,34,53,0.07);
     }
     html{scroll-behavior:smooth}
     body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-weight:300;line-height:1.6;min-height:100vh}
 
     /* HEADER */
-    header{background:var(--white);border-bottom:1px solid var(--border);padding:0 1.75rem;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(26,46,39,0.05)}
+    header{background:var(--white);border-bottom:1px solid var(--border);padding:0 1.75rem;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(61,34,53,0.05)}
     .header-left{display:flex;align-items:center;gap:1rem}
     .header-sep{color:var(--border);font-size:18px}
     .header-title{font-size:13px;font-weight:500;color:var(--ink-3)}
@@ -140,7 +161,7 @@
       background: var(--white); border: 1px solid var(--r-border);
       border-radius: 16px; padding: 2.5rem;
       width: 100%; max-width: 360px;
-      box-shadow: 0 8px 40px rgba(26,46,39,0.12);
+      box-shadow: 0 8px 40px rgba(61,34,53,0.12);
       text-align: center;
     }
     .lock-logo { margin-bottom: 1.5rem; }
@@ -159,13 +180,13 @@
       transition: border-color 0.15s, box-shadow 0.15s;
       margin-bottom: 0.75rem;
     }
-    .lock-input:focus { border-color: var(--r2); box-shadow: 0 0 0 3px rgba(45,74,62,0.1); }
+    .lock-input:focus { border-color: var(--r2); box-shadow: 0 0 0 3px rgba(61,34,53,0.1); }
     .lock-input.error { border-color: #DC2626; animation: shake 0.3s ease; }
     @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
     .lock-btn {
       width: 100%; font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 14px; font-weight: 600; color: #fff;
-      background: linear-gradient(135deg, #1A2E27 0%, #2D4A3E 100%);
+      background: linear-gradient(135deg, #3D2235 0%, #7A4060 100%);
       border: none; border-radius: 10px; padding: 12px;
       cursor: pointer; transition: opacity 0.15s, transform 0.15s;
     }
@@ -182,17 +203,17 @@
       background: var(--white); border: 1px solid var(--r-border);
       border-radius: 16px; padding: 2.5rem;
       width: 100%; max-width: 360px;
-      box-shadow: 0 8px 40px rgba(26,46,39,0.12);
+      box-shadow: 0 8px 40px rgba(61,34,53,0.12);
       text-align: center;
     }
     .lock-logo { margin-bottom: 1.5rem; }
     .lock-title { font-family: 'Instrument Serif', serif; font-size: 22px; font-weight: 400; color: var(--ink); margin-bottom: 0.4rem; }
     .lock-sub { font-size: 13px; color: var(--ink-4); margin-bottom: 1.75rem; font-weight: 300; }
     .lock-input { width: 100%; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; color: var(--ink); background: var(--r-pale); border: 1.5px solid var(--r-border); border-radius: 10px; padding: 12px 16px; outline: none; text-align: center; letter-spacing: 0.08em; transition: border-color 0.15s, box-shadow 0.15s; margin-bottom: 0.75rem; }
-    .lock-input:focus { border-color: var(--r2); box-shadow: 0 0 0 3px rgba(45,74,62,0.1); }
+    .lock-input:focus { border-color: var(--r2); box-shadow: 0 0 0 3px rgba(61,34,53,0.1); }
     .lock-input.error { border-color: #DC2626; animation: shake 0.3s ease; }
     @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
-    .lock-btn { width: 100%; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; color: #fff; background: linear-gradient(135deg, #1A2E27 0%, #2D4A3E 100%); border: none; border-radius: 10px; padding: 12px; cursor: pointer; transition: opacity 0.15s, transform 0.15s; }
+    .lock-btn { width: 100%; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; color: #fff; background: linear-gradient(135deg, #3D2235 0%, #7A4060 100%); border: none; border-radius: 10px; padding: 12px; cursor: pointer; transition: opacity 0.15s, transform 0.15s; }
     .lock-btn:hover { opacity: 0.9; transform: translateY(-1px); }
     .lock-error { font-size: 12px; color: #DC2626; margin-top: 0.5rem; display: none; }
 
@@ -559,10 +580,10 @@ function renderCharts(scores) {
       datasets: [{
         label: 'Média por esquema',
         data,
-        backgroundColor: 'rgba(45,74,62,0.12)',
-        borderColor: '#2D4A3E',
+        backgroundColor: 'rgba(61,34,53,0.12)',
+        borderColor: '#7A4060',
         borderWidth: 2,
-        pointBackgroundColor: '#1A2E27',
+        pointBackgroundColor: '#3D2235',
         pointRadius: 3,
         pointHoverRadius: 5,
       }]
@@ -573,10 +594,10 @@ function renderCharts(scores) {
       scales: {
         r: {
           min: 0, max: 6,
-          ticks: {stepSize:1, font:{size:10}, color:'#7AAD96'},
-          pointLabels: {font:{size:9.5, family:"'Plus Jakarta Sans', sans-serif"}, color:'#4A7C6A'},
-          grid: {color:'#E8F2EE'},
-          angleLines: {color:'#E8F2EE'}
+          ticks: {stepSize:1, font:{size:10}, color:'#E8C8C4'},
+          pointLabels: {font:{size:9.5, family:"'Plus Jakarta Sans', sans-serif"}, color:'#C8908A'},
+          grid: {color:'#F0E5EC'},
+          angleLines: {color:'#F0E5EC'}
         }
       },
       plugins: {legend:{display:false}, tooltip:{callbacks:{label: ctx => ' Média: ' + ctx.raw.toFixed(1)}}}
@@ -605,8 +626,8 @@ function renderCharts(scores) {
       responsive: true,
       maintainAspectRatio: false,
       scales: {
-        x: {min:0, max:6, ticks:{stepSize:1, font:{size:10}, color:'#4A7C6A'}, grid:{color:'#F0E6EA'}},
-        y: {ticks:{font:{size:10.5, family:"'Plus Jakarta Sans', sans-serif"}, color:'#1A2E27'}, grid:{display:false}}
+        x: {min:0, max:6, ticks:{stepSize:1, font:{size:10}, color:'#C8908A'}, grid:{color:'#F0E6EA'}},
+        y: {ticks:{font:{size:10.5, family:"'Plus Jakarta Sans', sans-serif"}, color:'#3D2235'}, grid:{display:false}}
       },
       plugins: {legend:{display:false}, tooltip:{callbacks:{label: ctx => ' ' + ctx.raw.toFixed(1) + ' / 6'}}}
     }

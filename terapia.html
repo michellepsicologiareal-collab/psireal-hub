@@ -22,7 +22,7 @@
   <meta name="twitter:description" content="Atendimento psicológico com base em TCC, Terapia do Esquema e ACT. Terapia individual, de casal, online e avaliação psicológica. Jarinu/SP e online." />
   <!-- PWA -->
   <link rel="manifest" href="/psireal-hub/manifest.json" />
-  <meta name="theme-color" content="#1A2E27" />
+  <meta name="theme-color" content="#3D2235" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -36,17 +36,37 @@
     body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: #fff; color: var(--ink); line-height: 1.7; -webkit-font-smoothing: antialiased; font-weight: 300; letter-spacing: 0.01em; font-size: 16px; }
     
     :root {
-      --r1: #1A2E27; --r2: #2D4A3E; --r3: #7AAD96;
-      --r-light: #E8F2EE; --r-pale: #F5EFE6; --r-border: #C8DDD6;
-      --grad: linear-gradient(135deg, #1A2E27 0%, #2D4A3E 50%, #7AAD96 100%);
-      --grad-subtle: linear-gradient(135deg, #F5EFE6 0%, #F0E6EA 50%, #E8D8DE 100%);
-      --ink: #0F1E18; --ink-2: #1A2E27; --ink-3: #4A7C6A; --ink-4: #7AAD96;
-      --bg: #FFFFFF; --white: #FFFFFF; --border: #C8DDD6;
-      --radius: 16px; --radius-sm: 10px;
-      --shadow-card: 0 2px 12px rgba(26,46,39,0.06), 0 1px 3px rgba(26,46,39,0.04);
-      --shadow-hover: 0 12px 40px rgba(26,46,39,0.12), 0 4px 12px rgba(26,46,39,0.06);
-      --corp: #C4956A; --corp-light: #F2E8E5; --corp-border: #DFC8C2;
-      --grad-corp: linear-gradient(135deg, #1A2E27 0%, #2D4A3E 45%, #C4956A 100%);
+      /* Vinho · Rose · Sage detalhe */
+      --r1: #3D2235;
+      --r2: #7A4060;
+      --r3: #C8908A;
+      --r4: #E8C8C4;
+      --sage: #4A7C6A;
+      --sage-light: #7AAD96;
+      --sage-pale: #EDF5F0;
+      --clay: #C4956A;
+      --rose: #C8908A;
+      --rose-mid: #D4A8A2;
+      --rose-light: #E8C8C4;
+      --rose-pale: #F7F0F2;
+      --rose-border: #DFBFBA;
+      --r-light: #F0E5EC;
+      --r-pale: #F8F2F5;
+      --r-border: #DFBFCA;
+      --grad: linear-gradient(135deg, #3D2235 0%, #7A4060 50%, #C8908A 100%);
+      --grad-subtle: linear-gradient(135deg, #F8F2F5 0%, #F2E8EE 50%, #ECD8E4 100%);
+      --ink: #1E1018;
+      --ink-2: #5A3048;
+      --ink-3: #9A7088;
+      --ink-4: #C8A8B8;
+      --bg: #FDFBFC;
+      --white: #FFFFFF;
+      --border: #DFBFCA;
+      --surface: #F2E8EE;
+      --radius: 18px;
+      --radius-sm: 11px;
+      --shadow-card: 0 2px 12px rgba(61,34,53,0.07), 0 1px 3px rgba(61,34,53,0.04);
+      --shadow-hover: 0 12px 40px rgba(61,34,53,0.13), 0 4px 12px rgba(61,34,53,0.07);
     }
 
     nav {
@@ -64,7 +84,7 @@
     .nav-links a { font-size: 13.5px; color: var(--ink-3); text-decoration: none; padding: 6px 12px; border-radius: 8px; transition: color 0.15s, background 0.15s; }
     .nav-links a:hover { color: var(--ink); background: var(--r-light); }
     .nav-links a.active { color: var(--r1); font-weight: 500; }
-    .nav-links .nav-cta { background: var(--grad); color: #fff !important; font-weight: 500; padding: 7px 16px; border-radius: 8px; box-shadow: 0 2px 8px rgba(26,46,39,0.13); }
+    .nav-links .nav-cta { background: var(--grad); color: #fff !important; font-weight: 500; padding: 7px 16px; border-radius: 8px; box-shadow: 0 2px 8px rgba(61,34,53,0.13); }
     .nav-links .nav-cta:hover { opacity: 0.9; }
 
     .contact-section { background: var(--r-pale); border-top: 1px solid var(--r-border); border-bottom: 1px solid var(--r-border); padding: 5rem 2.5rem; }
@@ -86,7 +106,7 @@
       padding: 10px 14px; outline: none; width: 100%;
       transition: border-color 0.15s, box-shadow 0.15s;
     }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--r2); box-shadow: 0 0 0 3px rgba(45,74,62,0.1); }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--r2); box-shadow: 0 0 0 3px rgba(61,34,53,0.1); }
     .form-group textarea { resize: vertical; min-height: 80px; }
     .form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239A7080' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; background-color: var(--bg); padding-right: 36px; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -171,7 +191,7 @@
     .pq-item { display: flex; align-items: flex-start; gap: 11px; background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; box-shadow: var(--shadow-card); }
     .pq-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--grad); flex-shrink: 0; margin-top: 6px; }
     .pq-text { font-size: 13.5px; color: var(--ink-2); line-height: 1.6; }
-    .cta-box { background: var(--grad); border-radius: var(--radius); padding: 3rem 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; position: relative; overflow: hidden; box-shadow: 0 8px 40px rgba(26,46,39,0.15); }
+    .cta-box { background: var(--grad); border-radius: var(--radius); padding: 3rem 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; position: relative; overflow: hidden; box-shadow: 0 8px 40px rgba(61,34,53,0.15); }
     .cta-box::before { content: ''; position: absolute; right: -60px; top: -60px; width: 240px; height: 240px; background: rgba(255,255,255,0.06); border-radius: 50%; }
     .cta-box h3 { font-family: 'Instrument Serif', serif; font-size: 26px; color: #fff; margin-bottom: 0.5rem; position: relative; z-index:1; }
     .cta-box p { font-size: 13.5px; color: rgba(255,255,255,0.8); max-width: 420px; line-height: 1.65; position: relative; z-index:1; }
@@ -201,7 +221,7 @@
     .form-group select { cursor: pointer; appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239A7080' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
       background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--r2); box-shadow: 0 0 0 3px rgba(45,74,62,0.1); }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--r2); box-shadow: 0 0 0 3px rgba(61,34,53,0.1); }
     .form-group input::placeholder, .form-group textarea::placeholder { color: var(--ink-4); }
     .form-btn {
       display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -345,7 +365,7 @@
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:0.5rem;">
 
     <!-- Individual -->
-    <div style="border-radius:16px;overflow:hidden;background:linear-gradient(155deg,#1A2E27 0%,#2D4A3E 60%,#7AAD96 100%);min-height:340px;display:flex;flex-direction:column;justify-content:flex-end;padding:1.75rem;position:relative;cursor:pointer;transition:transform 0.22s cubic-bezier(.22,.68,0,1.2),box-shadow 0.22s;" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 16px 48px rgba(26,46,39,0.28)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+    <div style="border-radius:16px;overflow:hidden;background:linear-gradient(155deg,#3D2235 0%,#7A4060 60%,#E8C8C4 100%);min-height:340px;display:flex;flex-direction:column;justify-content:flex-end;padding:1.75rem;position:relative;cursor:pointer;transition:transform 0.22s cubic-bezier(.22,.68,0,1.2),box-shadow 0.22s;" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 16px 48px rgba(61,34,53,0.28)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
       <div style="position:absolute;top:0;right:0;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.05);transform:translate(40%,-40%);"></div>
       <div style="position:absolute;top:1rem;left:1rem;font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.65);">Presencial · Online</div>
       <!-- Ícone: pessoa / individual -->
@@ -401,7 +421,7 @@
     </div>
 
     <!-- Criança e Adolescente (NOVO) -->
-    <div style="border-radius:16px;overflow:hidden;background:linear-gradient(155deg,#1A3028 0%,#2E6050 60%,#5A9878 100%);min-height:340px;display:flex;flex-direction:column;justify-content:flex-end;padding:1.75rem;position:relative;cursor:pointer;transition:transform 0.22s cubic-bezier(.22,.68,0,1.2),box-shadow 0.22s;" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 16px 48px rgba(30,80,55,0.28)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+    <div style="border-radius:16px;overflow:hidden;background:linear-gradient(155deg,#3D2235 0%,#7A4060 60%,#C8908A 100%);min-height:340px;display:flex;flex-direction:column;justify-content:flex-end;padding:1.75rem;position:relative;cursor:pointer;transition:transform 0.22s cubic-bezier(.22,.68,0,1.2),box-shadow 0.22s;" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 16px 48px rgba(30,80,55,0.28)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
       <div style="position:absolute;top:0;right:0;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,0.05);transform:translate(40%,-40%);"></div>
       <div style="position:absolute;top:1rem;left:1rem;font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.65);">Presencial · Online</div>
       <!-- Ícone: sol / criança -->
@@ -544,11 +564,6 @@ async function sendForm(e) {
     pagina:   'terapia'
   };
   try {
-    const r = await fetch('https://qpwjxacdjzzsyjbuuwsq.supabase.co/rest/v1/contatos', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'apikey': 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp', 'Authorization': 'Bearer sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp', 'Prefer': 'return=minimal' },
-      body: JSON.stringify(data)
-    });
     if (r.ok || r.status === 201) {
       fb.className = 'form-feedback ok';
       fb.textContent = '✓ Mensagem enviada! Entrarei em contato em até 24h.';
@@ -576,6 +591,17 @@ async function sendForm(e) {
   </div>
   <p>© 2025 Psicologia Real · Jarinu, SP</p>
 </footer>
+
+<script>
+  // PWA Service Worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/psireal-hub/sw.js')
+        .then(r => console.log('SW registered'))
+        .catch(e => console.log('SW error', e));
+    });
+  }
+  </script>
 <script>
   const _SB_URL = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
   const _SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
@@ -586,15 +612,21 @@ async function sendForm(e) {
     const btnText = document.getElementById('formBtnText');
     const success = document.getElementById('formSuccess');
     const error = document.getElementById('formError');
-    btn.disabled = true; btnText.textContent = 'Enviando...';
-    success.style.display = 'none'; error.style.display = 'none';
+
+    btn.disabled = true;
+    btnText.textContent = 'Enviando...';
+    success.style.display = 'none';
+    error.style.display = 'none';
+
     const payload = {
       nome: document.getElementById('nome').value.trim(),
       whatsapp: document.getElementById('whatsapp').value.trim(),
       servico: document.getElementById('servico').value,
       mensagem: document.getElementById('mensagem').value.trim() || null,
-      pagina: 'terapia', status: 'novo'
+      pagina: window.location.pathname.split('/').pop() || 'index',
+      status: 'novo'
     };
+
     try {
       const res = await fetch(_SB_URL + '/rest/v1/contatos', {
         method: 'POST',
@@ -606,25 +638,27 @@ async function sendForm(e) {
         },
         body: JSON.stringify(payload)
       });
+
       if (res.ok || res.status === 201) {
         success.style.display = 'flex';
         document.getElementById('contactForm').reset();
-        const msg = encodeURIComponent('Olá Michelle! Me chamo ' + payload.nome + '.\nTenho interesse em: ' + payload.servico + '.' + (payload.mensagem ? '\n\n' + payload.mensagem : ''));
+        const msg = encodeURIComponent(
+          'Olá Michelle! Me chamo ' + payload.nome + '.\n' +
+          'Tenho interesse em: ' + payload.servico + '.' +
+          (payload.mensagem ? '\n\n' + payload.mensagem : '')
+        );
         setTimeout(() => window.open('https://wa.me/5511947388423?text=' + msg, '_blank'), 900);
-      } else { throw new Error(res.status); }
-    } catch(err) { console.error(err); error.style.display = 'block'; }
-    finally { btn.disabled = false; btnText.textContent = 'Enviar mensagem'; }
+      } else {
+        throw new Error(res.status);
+      }
+    } catch(err) {
+      console.error('Form error:', err);
+      error.style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      btnText.textContent = 'Enviar mensagem';
+    }
   }
 </script>
-<script>
-  // PWA Service Worker
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/psireal-hub/sw.js')
-        .then(r => console.log('SW registered'))
-        .catch(e => console.log('SW error', e));
-    });
-  }
-  </script>
 </body>
 </html>
