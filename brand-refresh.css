@@ -1,0 +1,185 @@
+:root,
+body {
+  --paper: #fcfbfc;
+  --paper-deep: #f3eef1;
+  --ink: #21171e;
+  --ink-2: #4a3340;
+  --ink-3: #7f6975;
+  --ink-4: #aa97a1;
+  --muted: #715f69;
+  --soft: #9a8791;
+  --line: #e7dde3;
+  --wine: #341624;
+  --wine-2: #58283d;
+  --brown: #5a484f;
+  --white: #ffffff;
+  --bg: #fcfbfc;
+  --surface: #f6f2f5;
+  --border: #e7dde3;
+  --r1: #341624;
+  --r2: #58283d;
+  --r3: #c78b99;
+  --r4: #ead7de;
+  --rose: #c78b99;
+  --rose-mid: #d4a5b0;
+  --rose-light: #ead7de;
+  --rose-pale: #f7f2f5;
+  --rose-border: #dfc9d1;
+  --r-light: #f2e8ed;
+  --r-pale: #f8f4f6;
+  --r-border: #e2d1d9;
+  --sage: #627870;
+  --sage-light: #8da29b;
+  --sage-pale: #eef4f1;
+  --sage-border: #d4e0db;
+  --grad: linear-gradient(135deg, #341624 0%, #58283d 58%, #c78b99 100%);
+  --grad-subtle: linear-gradient(135deg, #fbf8fa 0%, #f5eff3 52%, #efe5ea 100%);
+}
+
+body {
+  background: var(--bg);
+}
+
+.site-nav,
+nav {
+  background: color-mix(in srgb, #ffffff 88%, transparent) !important;
+  border-bottom-color: color-mix(in srgb, var(--border) 88%, transparent) !important;
+}
+
+.site-nav.scrolled {
+  border-bottom-color: var(--border) !important;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 190px;
+  min-height: 54px;
+  color: var(--ink) !important;
+}
+
+.brand::before,
+nav > a[href="index.html"]:has(img[alt="Psi Real"])::before {
+  content: "";
+  width: 54px;
+  height: 54px;
+  flex: 0 0 54px;
+  background: url("logo-psicologia-real.png?v=2") center / contain no-repeat;
+  border-radius: 999px;
+}
+
+.brand span {
+  color: var(--rose) !important;
+}
+
+nav > a[href="index.html"]:has(img[alt="Psi Real"]) {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  width: auto;
+  height: 48px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+nav > a[href="index.html"]:has(img[alt="Psi Real"])::after {
+  content: "Psicologia Real";
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: 22px;
+  line-height: 1;
+}
+
+nav > a[href="index.html"] img[alt="Psi Real"] {
+  display: none !important;
+}
+
+.hero {
+  isolation: isolate;
+}
+
+.hero::before,
+.hero::after {
+  display: none !important;
+}
+
+.inv-card,
+.dif,
+.pq,
+.lead-form,
+.contact-form,
+.ident-card,
+.send-box,
+.paciente-card,
+.resultado-card,
+.esq-group,
+.lock-card {
+  border-radius: 8px !important;
+  box-shadow: 0 18px 48px rgba(52, 22, 36, .07) !important;
+}
+
+.btn-hero,
+.btn-cta-white,
+.btn-white,
+.nav-cta,
+.button-primary,
+.form-button,
+.lead-btn,
+.contact-btn,
+.lock-btn,
+.btn-gerar {
+  border-radius: 6px !important;
+}
+
+.manifesto,
+.cta-final,
+.cta-box,
+#lockScreen {
+  background: var(--grad) !important;
+}
+
+footer {
+  background: #170e14 !important;
+}
+
+.footer-logo,
+.footer-brand,
+footer p,
+footer a {
+  color: rgba(255,255,255,.82) !important;
+}
+
+.footer-logo span {
+  color: var(--rose-light) !important;
+}
+
+.hero-price,
+.hero-index,
+.app-strip,
+.app-banner,
+.bib-banner {
+  backdrop-filter: blur(18px);
+}
+
+@media (max-width: 768px) {
+  .brand {
+    min-width: 164px;
+    min-height: 46px;
+  }
+
+  nav > a[href="index.html"]:has(img[alt="Psi Real"]) {
+    width: auto;
+    height: 42px;
+  }
+
+  .brand::before,
+  nav > a[href="index.html"]:has(img[alt="Psi Real"])::before {
+    width: 46px;
+    height: 46px;
+    flex-basis: 46px;
+  }
+
+  nav > a[href="index.html"]:has(img[alt="Psi Real"])::after {
+    font-size: 19px;
+  }
+}

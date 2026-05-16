@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Meu Painel — Inventários Psi Real</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --r1:#3D2235;--r2:#7A4060;--r3:#C8908A;
+      --rose:#C8908A;--rose-light:#E8C8C4;--rose-pale:#F7F0F2;--rose-border:#DFBFBA;
+      --sage:#4A7C6A;--sage-light:#7AAD96;--sage-pale:#EDF5F0;--sage-border:#C8DDD6;
+      --ink:#0F0A0D;--ink-2:#3D2235;--ink-3:#9A7088;--ink-4:#C8A8B8;
+      --bg:#FDFBFC;--white:#fff;--border:#EAD8E0;--surface:#F7F0F2;
+      --radius:14px;--radius-sm:9px;
+      --shadow:0 1px 8px rgba(61,34,53,0.06),0 4px 24px rgba(61,34,53,0.04);
+    }
+    body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-weight:300}
+
+    /* LOCK */
+    #lockScreen{position:fixed;inset:0;background:var(--r1);display:flex;align-items:center;justify-content:center;z-index:999}
+    .lock-card{background:#fff;border-radius:var(--radius);padding:2.5rem;width:380px;text-align:center}
+    .lock-logo{font-family:'Instrument Serif',serif;font-size:22px;color:var(--r1);margin-bottom:4px}
+    .lock-sub{font-size:12px;color:var(--ink-3);margin-bottom:2rem;line-height:1.6}
+    .lock-input{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:15px;font-family:inherit;outline:none;margin-bottom:10px;text-align:center}
+    .lock-input:focus{border-color:var(--r2)}
+    .lock-btn{width:100%;padding:13px;background:var(--r1);color:#fff;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+    .lock-err{font-size:12px;color:#c0392b;margin-top:8px;display:none}
+
+    #app{display:none}
+    nav{background:var(--r1);padding:0 2rem;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+    .nav-logo{font-family:'Instrument Serif',serif;font-size:17px;color:#fff}
+    .nav-logo span{color:var(--rose-light);font-style:italic}
+    .nav-psi{font-size:12px;color:rgba(255,255,255,0.55);background:rgba(255,255,255,0.08);padding:4px 12px;border-radius:99px}
+    .main{max-width:1060px;margin:0 auto;padding:2rem 1.5rem}
+
+    /* ENVIAR LINK */
+    .send-box{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 2rem;box-shadow:var(--shadow);margin-bottom:2rem}
+    .send-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:1rem}
+    .send-row{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap}
+    .send-field{flex:1;min-width:200px}
+    .send-field label{font-size:11px;font-weight:600;color:var(--ink-2);display:block;margin-bottom:4px;letter-spacing:0.02em}
+    .send-field input,.send-field select{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;color:var(--ink);outline:none;background:var(--bg)}
+    .send-field input:focus,.send-field select:focus{border-color:var(--r2)}
+    .btn-gerar{padding:10px 22px;background:var(--r1);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+    .link-result{margin-top:1rem;display:none}
+    .link-row{display:flex;align-items:center;gap:10px;background:var(--sage-pale);border:1px solid var(--sage-border);border-radius:8px;padding:10px 14px}
+    .link-text{font-size:12px;color:var(--sage);font-family:monospace;flex:1;word-break:break-all}
+    .btn-copy{font-size:11px;font-weight:600;padding:6px 14px;background:#fff;border:1px solid var(--sage-border);border-radius:6px;color:var(--sage);cursor:pointer;white-space:nowrap}
+    .btn-wa{font-size:11px;font-weight:600;padding:6px 14px;background:#25D366;border:none;border-radius:6px;color:#fff;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:5px}
+
+    /* PACIENTES */
+    .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+    .section-title{font-family:'Instrument Serif',serif;font-size:22px;color:var(--ink)}
+    .btn-sm{font-size:12px;font-weight:500;padding:7px 14px;border-radius:7px;border:1px solid var(--border);background:#fff;color:var(--ink-2);cursor:pointer;font-family:inherit;transition:all 0.15s}
+    .btn-sm:hover{background:var(--rose-pale);border-color:var(--rose-border);color:var(--r1)}
+
+    .paciente-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;box-shadow:var(--shadow);overflow:hidden}
+    .pac-header{padding:1.1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background 0.15s}
+    .pac-header:hover{background:var(--surface)}
+    .pac-nome{font-size:14px;font-weight:600;color:var(--ink)}
+    .pac-meta{font-size:12px;color:var(--ink-3);margin-top:2px}
+    .pac-right{display:flex;align-items:center;gap:10px}
+    .badge{display:inline-flex;align-items:center;font-size:10px;font-weight:700;padding:3px 10px;border-radius:99px}
+    .badge.ysq{background:var(--rose-pale);color:var(--r2);border:1px solid var(--rose-border)}
+    .pac-body{border-top:1px solid var(--border);padding:1.5rem;display:none}
+    .pac-body.open{display:block}
+
+    /* GRÁFICO */
+    .chart-wrap{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
+    .chart-box{background:var(--surface);border-radius:10px;padding:1rem}
+    .chart-title{font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:0.75rem;text-transform:uppercase;letter-spacing:0.06em}
+    .esquemas-mini{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+    .esq-mini{background:#fff;border-radius:7px;padding:8px 10px;border:1px solid var(--border)}
+    .esq-mini-nome{font-size:10px;color:var(--ink-3);margin-bottom:2px}
+    .esq-mini-val{font-family:'Instrument Serif',serif;font-size:18px;color:var(--r1)}
+    .nivel-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px}
+    .alto{background:#e74c3c}.medio{background:#e67e22}.baixo{background:var(--sage)}
+
+    .empty{text-align:center;padding:3rem;color:var(--ink-4);font-size:14px}
+    .loading{text-align:center;padding:3rem;color:var(--ink-3);font-size:14px}
+
+    @media(max-width:768px){
+      .send-row{flex-direction:column}
+      .chart-wrap{grid-template-columns:1fr}
+      .esquemas-mini{grid-template-columns:1fr 1fr}
+    }
+  </style>
+  <link rel="stylesheet" href="brand-refresh.css" />
+</head>
+<body>
+
+<!-- LOCK -->
+<div id="lockScreen">
+  <div class="lock-card">
+    <div class="lock-logo">Inventários <span style="color:var(--r1)">Psi Real</span></div>
+    <div class="lock-sub">Painel da psicóloga<br>Acesse com seu e-mail e senha</div>
+    <input type="email" class="lock-input" id="emailInput" placeholder="seu e-mail" autocomplete="email"/>
+    <input type="password" class="lock-input" id="passwordInput" placeholder="sua senha" autocomplete="current-password" onkeydown="if(event.key==='Enter')checkLock()"/>
+    <button class="lock-btn" onclick="checkLock()">Acessar meu painel →</button>
+    <div class="lock-err" id="lockErr">Acesso não autorizado. Verifique seu cadastro.</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <nav>
+    <div class="nav-logo">Inventários <span>Psi Real</span></div>
+    <span class="nav-psi" id="nav-psi-name">Psicóloga</span>
+  </nav>
+
+  <div class="main">
+
+    <!-- ENVIAR LINK -->
+    <div class="send-box">
+      <div class="send-title">Enviar questionário para paciente</div>
+      <div class="send-row">
+        <div class="send-field">
+          <label>Nome do paciente</label>
+          <input id="pac-nome-input" placeholder="Ex: Maria Silva"/>
+        </div>
+        <div class="send-field">
+          <label>Questionário</label>
+          <select id="inv-select">
+            <option value="formulario-esquemas">YSQ-S3 — Esquemas de Young</option>
+            <option disabled>GAD-7 — Em breve</option>
+            <option disabled>PHQ-9 — Em breve</option>
+          </select>
+        </div>
+        <button class="btn-gerar" onclick="gerarLink()">Gerar link →</button>
+      </div>
+      <div class="link-result" id="link-result">
+        <div class="link-row">
+          <span class="link-text" id="link-gerado"></span>
+          <button class="btn-copy" onclick="copiarLink()">Copiar</button>
+          <a class="btn-wa" id="link-wa" href="#" target="_blank">Enviar pelo WhatsApp</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PACIENTES -->
+    <div class="section-head">
+      <div class="section-title">Meus pacientes</div>
+      <button class="btn-sm" onclick="loadPacientes()">↻ Atualizar</button>
+    </div>
+    <div id="pacientes-list"><div class="loading">Carregando...</div></div>
+
+  </div>
+</div>
+
+<script>
+const SB = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
+const KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
+const BASE = 'https://michellepsicologiareal-collab.github.io/psireal-hub';
+let PSI_NOME = '';
+let ACCESS_TOKEN = '';
+let allRespostas = [];
+
+async function checkLock() {
+  const email = document.getElementById('emailInput').value.trim().toLowerCase();
+  const password = document.getElementById('passwordInput').value;
+  if(!email || !password) return;
+  try {
+    const auth = await fetch(`${SB}/auth/v1/token?grant_type=password`, {
+      method:'POST',
+      headers:{apikey:KEY,'Content-Type':'application/json'},
+      body:JSON.stringify({email,password})
+    });
+    const session = await auth.json();
+    if(!auth.ok || !session.access_token) throw new Error(session.error_description || 'Login inválido');
+    ACCESS_TOKEN = session.access_token;
+
+    const r = await fetch(`${SB}/rest/v1/psis?select=nome,ativa`, {
+      headers:{apikey:KEY,'Authorization':'Bearer '+ACCESS_TOKEN}
+    });
+    const data = await r.json();
+    if(data && data.length && data[0].ativa) {
+      PSI_NOME = data[0].nome || 'Psicóloga';
+      document.getElementById('lockScreen').style.display='none';
+      document.getElementById('app').style.display='block';
+      document.getElementById('nav-psi-name').textContent = PSI_NOME;
+      loadPacientes();
+    } else {
+      document.getElementById('lockErr').style.display='block';
+    }
+  } catch(e) {
+    document.getElementById('lockErr').textContent = 'Erro de conexão: '+e.message;
+    document.getElementById('lockErr').style.display='block';
+  }
+}
+
+async function gerarLink() {
+  const nome = document.getElementById('pac-nome-input').value.trim();
+  const inv = document.getElementById('inv-select').value;
+  if(!nome) { alert('Informe o nome do paciente'); return; }
+  const res = await fetch(`${SB}/rest/v1/rpc/create_patient_link`, {
+    method:'POST',
+    headers:{
+      apikey:KEY,
+      'Authorization':'Bearer '+ACCESS_TOKEN,
+      'Content-Type':'application/json'
+    },
+    body:JSON.stringify({
+      p_patient_name:nome,
+      p_patient_birth:null,
+      p_instrumento:'YSQ-S3',
+      p_expires_at:null
+    })
+  });
+  const data = await res.json();
+  if(!res.ok || !data?.[0]?.token) {
+    alert('Não foi possível gerar o link. Verifique sua sessão e tente novamente.');
+    return;
+  }
+  const token = encodeURIComponent(data[0].token);
+  const enc = encodeURIComponent(nome);
+  const link = `${BASE}/${inv}.html?token=${token}&nome=${enc}`;
+  document.getElementById('link-gerado').textContent = link;
+  const waMsg = encodeURIComponent(`Olá ${nome}! Sou sua psicóloga e gostaria que você respondesse este questionário antes da nossa próxima sessão:\n${link}`);
+  document.getElementById('link-wa').href = `https://wa.me/?text=${waMsg}`;
+  document.getElementById('link-result').style.display='block';
+}
+
+function copiarLink() {
+  navigator.clipboard.writeText(document.getElementById('link-gerado').textContent);
+  event.target.textContent='✓ Copiado!';
+  setTimeout(()=>event.target.textContent='Copiar',2000);
+}
+
+async function loadPacientes() {
+  try {
+    const r = await fetch(`${SB}/rest/v1/respostas_clinicas?select=*&order=created_at.desc`, {
+      headers:{apikey:KEY,'Authorization':'Bearer '+ACCESS_TOKEN}
+    });
+    allRespostas = await r.json();
+
+    const list = document.getElementById('pacientes-list');
+    const reais = allRespostas.filter(r=>r.status!=='teste');
+    if(!reais.length) {
+      list.innerHTML = '<div class="empty">Nenhuma resposta recebida ainda.<br>Gere um link acima e envie para seu paciente.</div>';
+      return;
+    }
+
+    // Agrupar por nome
+    const byPac = {};
+    reais.forEach(r => {
+      const k = r.paciente_nome||'Sem nome';
+      if(!byPac[k]) byPac[k] = [];
+      byPac[k].push(r);
+    });
+
+    list.innerHTML = Object.entries(byPac).map(([nome, resps]) => {
+      const ultima = resps[0];
+      const scores = ultima.scores||{};
+      const date = ultima.created_at ? new Date(ultima.created_at).toLocaleDateString('pt-BR') : '—';
+
+      // Top 3 esquemas mais altos
+      const top3 = Object.entries(scores).sort((a,b)=>b[1]-a[1]).slice(0,3);
+
+      const esquemasMini = Object.entries(scores).map(([nome,val]) => {
+        const v = parseFloat(val)||0;
+        const pct = Math.min(100,Math.round((v/6)*100));
+        const cls = v>=4?'alto':v>=2.5?'medio':'baixo';
+        return `<div class="esq-mini">
+          <div class="esq-mini-nome">${nome}</div>
+          <div class="esq-mini-val">${v.toFixed(1)}</div>
+          <span class="nivel-dot ${cls}"></span>
+        </div>`;
+      }).join('');
+
+      return `<div class="paciente-card">
+        <div class="pac-header" onclick="togglePac(this)">
+          <div>
+            <div class="pac-nome">${nome}</div>
+            <div class="pac-meta">${resps.length} resposta(s) · última: ${date}</div>
+          </div>
+          <div class="pac-right">
+            <span class="badge ysq">YSQ-S3</span>
+            <span style="font-size:18px;color:var(--ink-3)">▾</span>
+          </div>
+        </div>
+        <div class="pac-body">
+          ${top3.length ? `
+          <div style="margin-bottom:1rem">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:8px">Esquemas mais elevados</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              ${top3.map(([n,v])=>`<span style="background:var(--rose-pale);border:1px solid var(--rose-border);padding:4px 12px;border-radius:99px;font-size:12px;color:var(--r2)"><b>${parseFloat(v).toFixed(1)}</b> ${n}</span>`).join('')}
+            </div>
+          </div>` : ''}
+          ${esquemasMini ? `
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:8px">Todos os esquemas</div>
+          <div class="esquemas-mini">${esquemasMini}</div>` : ''}
+          <div style="margin-top:1.25rem;display:flex;gap:8px">
+            <button class="btn-sm" onclick="verGrafico('${nome}')">Ver gráfico</button>
+          </div>
+          <div id="chart-${nome.replace(/\s/g,'_')}" style="margin-top:1rem;display:none">
+            <canvas id="canvas-${nome.replace(/\s/g,'_')}" height="300"></canvas>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    document.getElementById('pacientes-list').innerHTML = `<div class="empty">Erro: ${e.message}</div>`;
+  }
+}
+
+function togglePac(header) {
+  header.nextElementSibling.classList.toggle('open');
+}
+
+function verGrafico(nome) {
+  const key = nome.replace(/\s/g,'_');
+  const wrap = document.getElementById('chart-'+key);
+  if(wrap.style.display==='block') { wrap.style.display='none'; return; }
+  wrap.style.display='block';
+
+  const resps = allRespostas.filter(r=>(r.paciente_nome||'Sem nome')===nome);
+  const scores = resps[0]?.scores||{};
+  const labels = Object.keys(scores);
+  const vals = Object.values(scores).map(v=>parseFloat(v)||0);
+
+  const canvas = document.getElementById('canvas-'+key);
+  if(canvas._chart) canvas._chart.destroy();
+  canvas._chart = new Chart(canvas, {
+    type:'bar',
+    data:{
+      labels,
+      datasets:[{
+        data:vals,
+        backgroundColor: vals.map(v=>v>=4?'rgba(192,57,43,0.7)':v>=2.5?'rgba(230,126,34,0.7)':'rgba(74,124,106,0.7)'),
+        borderRadius:6,
+        borderSkipped:false,
+      }]
+    },
+    options:{
+      responsive:true,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`Score: ${ctx.raw.toFixed(1)}/6`}}},
+      scales:{
+        y:{min:0,max:6,ticks:{stepSize:1},grid:{color:'rgba(0,0,0,0.05)'}},
+        x:{ticks:{font:{size:10},maxRotation:45}}
+      }
+    }
+  });
+}
+</script>
+</body>
+</html>

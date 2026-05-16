@@ -99,6 +99,18 @@
     .pq{display:flex;align-items:flex-start;gap:12px;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
     .pq-dot{width:8px;height:8px;border-radius:50%;background:var(--grad);flex-shrink:0;margin-top:5px}
     .pq-text{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+    .lead-wrap{display:grid;grid-template-columns:0.9fr 1.1fr;gap:2rem;align-items:start}
+    .lead-copy p{font-size:14.5px;color:var(--ink-3);line-height:1.8;max-width:420px}
+    .lead-form{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow)}
+    .lead-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .lead-grid .full{grid-column:1/-1}
+    .lead-form label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:6px}
+    .lead-form input,.lead-form select,.lead-form textarea{width:100%;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:11px 13px;font:inherit;color:var(--ink);background:#fff}
+    .lead-form textarea{min-height:110px;resize:vertical}
+    .lead-btn{margin-top:14px;width:100%;border:0;border-radius:var(--radius-sm);background:var(--grad);color:#fff;padding:13px 16px;font-weight:700;cursor:pointer}
+    .lead-msg{display:none;margin-top:12px;font-size:13px}
+    .lead-msg.ok{color:var(--sage)}
+    .lead-msg.err{color:#b42318}
 
     /* CTA FINAL */
     .cta-final{background:var(--grad);border-radius:var(--radius);padding:4rem 2.5rem;text-align:center;position:relative;overflow:hidden;box-shadow:0 12px 50px rgba(61,34,53,0.18);max-width:1060px;margin:0 auto 5rem}
@@ -126,12 +138,13 @@
       .hero{padding:3.5rem 1.25rem 3rem}
       .hero h1{font-size:clamp(30px,8vw,42px)}
       .section{padding:3rem 1.25rem}
-      .steps,.inv-grid,.dif-grid,.pq-grid{grid-template-columns:1fr}
+      .steps,.inv-grid,.dif-grid,.pq-grid,.lead-wrap,.lead-grid{grid-template-columns:1fr}
       .cta-final{padding:2.5rem 1.25rem;margin:0 1.25rem 3rem}
       .price-val{font-size:38px}
       .cta-final-price{font-size:40px}
     }
   </style>
+  <link rel="stylesheet" href="brand-refresh.css" />
 </head>
 <body>
 
@@ -170,12 +183,12 @@
     <div class="step">
       <div class="step-n"></div>
       <div class="step-t">Assine e acesse</div>
-      <div class="step-d">Após a assinatura via Kiwify você recebe seu link de acesso exclusivo ao painel de psicóloga.</div>
+      <div class="step-d">Após a assinatura via Kiwify você recebe seu acesso ao painel de psicóloga com login individual.</div>
     </div>
     <div class="step">
       <div class="step-n"></div>
       <div class="step-t">Envie o link ao paciente</div>
-      <div class="step-d">Cada inventário tem um link único com seu código. O paciente acessa no celular ou computador — sem cadastro.</div>
+      <div class="step-d">Cada envio gera um link exclusivo e seguro para aquele paciente. Ele acessa no celular ou computador — sem cadastro.</div>
     </div>
     <div class="step">
       <div class="step-n"></div>
@@ -314,6 +327,29 @@
   </div>
 </section>
 
+<hr class="div">
+
+<section class="section" id="contato">
+  <div class="lead-wrap">
+    <div class="lead-copy">
+      <div class="sec-eyebrow">Falar com a Psi Real</div>
+      <h2>Quer entender se os inventários servem para sua prática?</h2>
+      <p>Envie seus dados e eu retorno com orientação sobre assinatura, acesso ao painel e quais instrumentos fazem mais sentido para sua rotina clínica.</p>
+    </div>
+    <form class="lead-form" id="inventariosLeadForm">
+      <div class="lead-grid">
+        <div><label for="leadNome">Nome</label><input id="leadNome" required/></div>
+        <div><label for="leadWhats">WhatsApp</label><input id="leadWhats" required/></div>
+        <div class="full"><label for="leadServico">Interesse</label><select id="leadServico" required><option value="">Selecione</option><option>Inventários digitais</option><option>Dúvida sobre assinatura</option><option>Demonstração do painel</option></select></div>
+        <div class="full"><label for="leadMsg">Mensagem</label><textarea id="leadMsg" placeholder="Conte rapidamente o que você precisa."></textarea></div>
+      </div>
+      <button class="lead-btn" type="submit">Quero falar sobre os inventários →</button>
+      <div class="lead-msg ok" id="leadOk">Mensagem enviada. Em instantes abriremos o WhatsApp.</div>
+      <div class="lead-msg err" id="leadErr">Não foi possível enviar agora. Tente novamente.</div>
+    </form>
+  </div>
+</section>
+
 <!-- CTA FINAL -->
 <section style="max-width:1060px;margin:0 auto;padding:0 2rem 5rem;">
   <div class="cta-final">
@@ -333,6 +369,39 @@
 </footer>
 
 <script>
+  const SB_URL = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
+  const SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
+  document.getElementById('inventariosLeadForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const payload = {
+      nome: document.getElementById('leadNome').value.trim(),
+      whatsapp: document.getElementById('leadWhats').value.trim(),
+      servico: document.getElementById('leadServico').value,
+      mensagem: document.getElementById('leadMsg').value.trim() || null,
+      pagina: 'inventarios',
+      status: 'novo'
+    };
+    try {
+      const res = await fetch(SB_URL + '/rest/v1/contatos', {
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          apikey:SB_KEY,
+          Authorization:'Bearer ' + SB_KEY,
+          Prefer:'return=minimal'
+        },
+        body:JSON.stringify(payload)
+      });
+      if(!res.ok) throw new Error('falha');
+      document.getElementById('leadOk').style.display='block';
+      document.getElementById('leadErr').style.display='none';
+      const msg = encodeURIComponent('Olá Michelle! Me chamo ' + payload.nome + '.\nTenho interesse em: ' + payload.servico + '.' + (payload.mensagem ? '\n\n' + payload.mensagem : ''));
+      setTimeout(()=>window.open('https://wa.me/5511947388423?text=' + msg,'_blank'),600);
+    } catch (err) {
+      document.getElementById('leadErr').style.display='block';
+      document.getElementById('leadOk').style.display='none';
+    }
+  });
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/psireal-hub/sw.js').catch(()=>{});

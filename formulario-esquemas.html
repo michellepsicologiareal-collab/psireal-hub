@@ -256,6 +256,7 @@
   }
 
 </style>
+<link rel="stylesheet" href="brand-refresh.css" />
 </head>
 <body>
 
@@ -432,13 +433,10 @@ const ESQUEMAS = [{"id":"PA","nome":'Privação Emocional'},
 {"id":"NP","nome":'Negativismo / Pessimismo'},
 {"id":"PU","nome":'Punição'}];
 
-// Get psi_id from URL
+// O link do paciente carrega apenas um token opaco e não revela a psicóloga.
 const params = new URLSearchParams(window.location.search);
-const PSI_ID = params.get('psi') || 'michelle';
-
-if (PSI_ID !== 'michelle') {
-  document.getElementById('navPsi').textContent = 'Enviado por seu psicólogo';
-}
+const PATIENT_TOKEN = params.get('token');
+document.getElementById('navPsi').textContent = 'Enviado por sua psicóloga';
 
 // Build form grouped by esquema
 function buildForm() {
@@ -524,24 +522,28 @@ async function submitForm() {
   btn.disabled = true; btn.textContent = 'Enviando...';
 
   const scores = calcScores();
+  const rawAnswers = {};
+  ITENS.forEach(i => {
+    rawAnswers[i.n] = Number(document.querySelector(`input[name="q${i.n}"]:checked`)?.value || 0);
+  });
   const payload = {
-    psi_id: PSI_ID,
-    paciente_nome: nome,
-    paciente_nascimento: nasc || null,
-    formulario: 'YSQ-S3',
-    respostas_json: JSON.stringify(scores),
-    score_total: Object.values(scores).reduce((a,b)=>a+b,0),
-    criado_em: new Date().toISOString()
+    p_token: PATIENT_TOKEN,
+    p_patient_name: nome,
+    p_patient_birth: nasc || null,
+    p_instrumento: 'YSQ-S3',
+    p_respostas: rawAnswers,
+    p_scores: scores,
+    p_score_total: Object.values(scores).reduce((a,b)=>a+b,0)
   };
 
   try {
-    const res = await fetch(SB_URL + '/rest/v1/respostas_clinicas', {
+    if (!PATIENT_TOKEN) throw new Error('Link inválido');
+    const res = await fetch(SB_URL + '/rest/v1/rpc/submit_patient_response', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'apikey': SB_KEY,
-        'Authorization': 'Bearer ' + SB_KEY,
-        'Prefer': 'return=minimal'
+        'Authorization': 'Bearer ' + SB_KEY
       },
       body: JSON.stringify(payload)
     });

@@ -123,6 +123,18 @@
     .btn-white{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--r1);font-size:15px;font-weight:700;padding:15px 36px;border-radius:var(--radius-sm);text-decoration:none;box-shadow:0 4px 18px rgba(0,0,0,0.2);transition:transform 0.15s,box-shadow 0.15s;position:relative;letter-spacing:-0.01em}
     .btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,0.28)}
     .cta-nota{font-size:12px;color:rgba(255,255,255,0.35);margin-top:1rem;position:relative}
+    .contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:2rem;align-items:start}
+    .contact-copy p{font-size:14.5px;color:var(--ink-3);line-height:1.8;max-width:420px}
+    .contact-form{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow)}
+    .contact-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .contact-fields .full{grid-column:1/-1}
+    .contact-form label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:6px}
+    .contact-form input,.contact-form select,.contact-form textarea{width:100%;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:11px 13px;font:inherit;color:var(--ink);background:#fff}
+    .contact-form textarea{min-height:110px;resize:vertical}
+    .contact-btn{margin-top:14px;width:100%;border:0;border-radius:var(--radius-sm);background:var(--grad);color:#fff;padding:13px 16px;font-weight:700;cursor:pointer}
+    .contact-msg{display:none;margin-top:12px;font-size:13px}
+    .contact-msg.ok{color:var(--sage)}
+    .contact-msg.err{color:#b42318}
 
     footer{border-top:1px solid var(--border);padding:2.5rem;text-align:center;background:var(--white)}
     .footer-logo{font-family:'Instrument Serif',serif;font-size:18px;color:var(--ink);margin-bottom:6px}
@@ -135,7 +147,7 @@
       .nav-links a:not(.nav-cta){display:none}
       .section,.section-wide{padding:3rem 1.25rem}
       .origem-grid{grid-template-columns:1fr}
-      .tri-grid{grid-template-columns:1fr;gap:8px}
+      .tri-grid,.contact-grid,.contact-fields{grid-template-columns:1fr;gap:8px}
       .tec-grid{grid-template-columns:1fr}
       .sinais{grid-template-columns:1fr}
       .cta-box{padding:2.5rem 1.5rem}
@@ -143,6 +155,7 @@
       .fases::before{left:20px}
     }
   </style>
+  <link rel="stylesheet" href="brand-refresh.css" />
 </head>
 <body>
 
@@ -382,6 +395,29 @@
   </div>
 </section>
 
+<hr class="div">
+
+<section class="section-wide" id="contato">
+  <div class="contact-grid">
+    <div class="contact-copy">
+      <div class="sec-eyebrow">Falar com a Michelle</div>
+      <h2>Quer cuidar da ansiedade com acompanhamento clínico?</h2>
+      <p>Envie seus dados e eu retorno para entender seu momento, explicar como funciona o processo e orientar o melhor próximo passo.</p>
+    </div>
+    <form class="contact-form" id="ansiedadeLeadForm">
+      <div class="contact-fields">
+        <div><label for="ansNome">Nome</label><input id="ansNome" required/></div>
+        <div><label for="ansWhats">WhatsApp</label><input id="ansWhats" required/></div>
+        <div class="full"><label for="ansServico">Interesse</label><select id="ansServico" required><option value="">Selecione</option><option>Ansiedade</option><option>Terapia para adulto</option><option>Dúvida inicial</option></select></div>
+        <div class="full"><label for="ansMsg">Mensagem</label><textarea id="ansMsg" placeholder="Conte brevemente o que está vivendo."></textarea></div>
+      </div>
+      <button class="contact-btn" type="submit">Quero conversar →</button>
+      <div class="contact-msg ok" id="ansOk">Mensagem enviada. Em instantes abriremos o WhatsApp.</div>
+      <div class="contact-msg err" id="ansErr">Não foi possível enviar agora. Tente novamente.</div>
+    </form>
+  </div>
+</section>
+
 <!-- CTA -->
 <section class="section-wide" style="padding-bottom:5rem">
   <div class="cta-box">
@@ -398,6 +434,39 @@
 </footer>
 
 <script>
+  const SB_URL = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
+  const SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
+  document.getElementById('ansiedadeLeadForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const payload = {
+      nome: document.getElementById('ansNome').value.trim(),
+      whatsapp: document.getElementById('ansWhats').value.trim(),
+      servico: document.getElementById('ansServico').value,
+      mensagem: document.getElementById('ansMsg').value.trim() || null,
+      pagina: 'ansiedade',
+      status: 'novo'
+    };
+    try {
+      const res = await fetch(SB_URL + '/rest/v1/contatos', {
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          apikey:SB_KEY,
+          Authorization:'Bearer ' + SB_KEY,
+          Prefer:'return=minimal'
+        },
+        body:JSON.stringify(payload)
+      });
+      if(!res.ok) throw new Error('falha');
+      document.getElementById('ansOk').style.display='block';
+      document.getElementById('ansErr').style.display='none';
+      const msg = encodeURIComponent('Olá Michelle! Me chamo ' + payload.nome + '.\nTenho interesse em: ' + payload.servico + '.' + (payload.mensagem ? '\n\n' + payload.mensagem : ''));
+      setTimeout(()=>window.open('https://wa.me/5511947388423?text=' + msg,'_blank'),600);
+    } catch (err) {
+      document.getElementById('ansErr').style.display='block';
+      document.getElementById('ansOk').style.display='none';
+    }
+  });
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/psireal-hub/sw.js').catch(()=>{});

@@ -1,4 +1,4 @@
-const CACHE = 'psireal-v1';
+const CACHE = 'psireal-v2';
 const ASSETS = [
   '/psireal-hub/',
   '/psireal-hub/index.html',
@@ -26,6 +26,10 @@ self.addEventListener('activate', e => {
 
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
+  if (e.request.destination === 'document') {
+    e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+    return;
+  }
   e.respondWith(
     caches.match(e.request).then(cached => {
       const network = fetch(e.request).then(res => {
