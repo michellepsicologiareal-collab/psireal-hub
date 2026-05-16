@@ -10,14 +10,14 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --r1: #3D2028; --r2: #7A4A55; --r3: #B08090;
-      --r-light: #EEE0E4; --r-pale: #F8F2F4; --r-border: #DDD0D6;
-      --grad: linear-gradient(135deg, #3D2028 0%, #7A4A55 50%, #B08090 100%);
-      --ink: #1E1014; --ink-2: #5A3040; --ink-3: #9A7080; --ink-4: #C8A8B4;
-      --bg: #F5EEF1; --white: #FFFFFF; --border: #E2D0D8;
+      --r1: #1A2E27; --r2: #2D4A3E; --r3: #7AAD96;
+      --r-light: #E8F2EE; --r-pale: #F5EFE6; --r-border: #C8DDD6;
+      --grad: linear-gradient(135deg, #1A2E27 0%, #2D4A3E 50%, #7AAD96 100%);
+      --ink: #0F1E18; --ink-2: #1A2E27; --ink-3: #4A7C6A; --ink-4: #7AAD96;
+      --bg: #EDF5F0; --white: #FFFFFF; --border: #C8DDD6;
       --radius: 14px; --radius-sm: 9px;
-      --shadow: 0 2px 12px rgba(90,48,64,0.07);
-      --shadow-hover: 0 8px 30px rgba(90,48,64,0.12);
+      --shadow: 0 2px 12px rgba(26,46,39,0.07);
+      --shadow-hover: 0 8px 30px rgba(26,46,39,0.12);
       /* status colors */
       --s-novo: #3B82F6; --s-novo-bg: #EFF6FF; --s-novo-border: #BFDBFE;
       --s-contato: #F59E0B; --s-contato-bg: #FFFBEB; --s-contato-border: #FDE68A;
@@ -33,7 +33,7 @@
       padding: 0 2rem; height: 58px;
       display: flex; align-items: center; justify-content: space-between;
       position: sticky; top: 0; z-index: 50;
-      box-shadow: 0 1px 4px rgba(90,48,64,0.05);
+      box-shadow: 0 1px 4px rgba(26,46,39,0.05);
     }
     .header-left { display: flex; align-items: center; gap: 1rem; }
     .header-logo {
@@ -203,7 +203,7 @@
       background: var(--white); border: 1px solid var(--r-border);
       border-radius: 16px; padding: 2.5rem;
       width: 100%; max-width: 360px;
-      box-shadow: 0 8px 40px rgba(90,48,64,0.12);
+      box-shadow: 0 8px 40px rgba(26,46,39,0.12);
       text-align: center;
     }
     .lock-logo { margin-bottom: 1.5rem; }
@@ -222,20 +222,146 @@
       transition: border-color 0.15s, box-shadow 0.15s;
       margin-bottom: 0.75rem;
     }
-    .lock-input:focus { border-color: var(--r2); box-shadow: 0 0 0 3px rgba(122,74,85,0.1); }
+    .lock-input:focus { border-color: var(--r2); box-shadow: 0 0 0 3px rgba(45,74,62,0.1); }
     .lock-input.error { border-color: #DC2626; animation: shake 0.3s ease; }
     @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
     .lock-btn {
       width: 100%; font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 14px; font-weight: 600; color: #fff;
-      background: linear-gradient(135deg, #3D2028 0%, #7A4A55 100%);
+      background: linear-gradient(135deg, #1A2E27 0%, #2D4A3E 100%);
       border: none; border-radius: 10px; padding: 12px;
       cursor: pointer; transition: opacity 0.15s, transform 0.15s;
     }
     .lock-btn:hover { opacity: 0.9; transform: translateY(-1px); }
     .lock-error { font-size: 12px; color: #DC2626; margin-top: 0.5rem; display: none; }
 
-    </style>
+    
+    
+
+
+    /* ══ MOBILE APP — SAGE & CLAY ══ */
+    @media (max-width: 768px) {
+      nav { padding: 0 1rem; height: 56px; }
+      .nav-links a:not(.nav-cta) { display: none; }
+      .nav-cta { font-size: 13px !important; padding: 7px 14px !important; }
+
+      /* HERO */
+      .hero-wrap { grid-template-columns: 1fr !important; min-height: auto !important; }
+      .hero-wrap > div:first-child { height: 52vw; min-height: 200px; }
+      .hero-wrap > div:last-child { padding: 2rem 1.25rem !important; }
+      .hero-wrap h1,
+      .hero-content h1 { font-size: clamp(28px, 7.5vw, 40px) !important; }
+      .hero-sub, .hero-wrap p { font-size: 15px !important; }
+
+      /* HERO INDEX */
+      .hero { grid-template-columns: 1fr !important; min-height: auto !important; }
+      .hero-photo { height: 52vw; min-height: 200px; }
+      .hero-content { padding: 2rem 1.25rem !important; }
+      .hero-creds { gap: 8px !important; }
+      .hero-left { padding: 3.5rem 1.25rem 2.5rem !important; border-right: none !important; }
+      .hero-right { display: none !important; }
+
+      /* STATS — 2 col */
+      .stats { display: grid !important; grid-template-columns: 1fr 1fr !important; }
+      .stat { border-right: none !important; border-bottom: 1px solid var(--border) !important; padding: 1.2rem !important; }
+      .stat-n { font-size: 36px !important; }
+      .stat-l { font-size: 13px !important; }
+
+      /* SECTIONS */
+      .section { padding: 2.5rem 1.25rem !important; }
+      h2 { font-size: clamp(26px, 7vw, 36px) !important; }
+      .sec-sub { font-size: 15px !important; }
+
+      /* CARDS — 1 por linha */
+      .services-grid,
+      .mod-grid,
+      .dif-grid,
+      .leva-grid,
+      .depo-grid,
+      .para-quem-grid { grid-template-columns: 1fr !important; }
+
+      /* SERVICE CARD */
+      .service-card, .mod-card, .serv-card { min-height: auto !important; }
+      .service-thumb, .mod-thumb, .serv-thumb { height: 180px !important; }
+      .service-title, .mod-title, .serv-title { font-size: 18px !important; }
+      .service-desc, .mod-desc, .serv-desc { font-size: 14px !important; }
+
+      /* GRADIENT CARDS (terapia) */
+      [style*="grid-template-columns:repeat(auto-fill,minmax(260px"] { grid-template-columns: 1fr !important; }
+      [style*="minmax(260px"] { grid-template-columns: 1fr !important; }
+
+      /* VERTICAIS INDEX */
+      .vert-grid { grid-template-columns: 1fr !important; }
+      .vert-card { min-height: 320px !important; }
+      .vc-photo { min-height: 200px !important; }
+      .vc-corp { flex-direction: column !important; }
+      .vc-corp-inner { flex-direction: column !important; padding: 1.5rem !important; }
+      .vc-corp-title { font-size: 24px !important; margin-top: 0 !important; }
+
+      /* SOBRE */
+      .sobre-section, .sobre-grid, .abordagem-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+      .sobre-foto-badge { right: 12px !important; bottom: -10px !important; }
+      .sobre-foto { height: 280px !important; overflow: hidden !important; }
+      .sobre-foto img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
+
+      /* PROCESSO */
+      .processo-steps, .metodo-grid, .processo-grid { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+      .passo-t, .metodo-t, .proc-t { font-size: 16px !important; }
+      .passo-d, .metodo-d, .proc-d { font-size: 14px !important; }
+
+      /* CTA BOX */
+      .cta-box { flex-direction: column !important; padding: 2rem 1.25rem !important; text-align: center !important; align-items: center !important; }
+      .cta-box h3 { font-size: 24px !important; }
+      .cta-box p { font-size: 14px !important; }
+      .btn-cta-white { width: 100% !important; text-align: center !important; padding: 14px !important; font-size: 15px !important; }
+      .cta-btns { flex-direction: column !important; width: 100% !important; }
+      .cta-btns a { width: 100% !important; text-align: center !important; justify-content: center !important; padding: 14px !important; }
+
+      /* APP BANNER */
+      .app-banner, .bib-banner, .app-strip-inner { flex-wrap: wrap !important; }
+      .app-banner-arrow, .bib-arrow, .app-strip-btn { display: none !important; }
+      .app-banner-title, .bib-title { font-size: 15px !important; }
+
+      /* FORM */
+      .form-row { grid-template-columns: 1fr !important; }
+      .form-section { padding: 2.5rem 1.25rem !important; }
+      .form-wrap { padding: 0 !important; max-width: 100% !important; }
+      .form-group input, .form-group select, .form-group textarea { font-size: 16px !important; padding: 13px 16px !important; }
+      .form-btn { font-size: 15px !important; padding: 15px !important; }
+      .form-title { font-size: clamp(22px, 6vw, 30px) !important; }
+
+      /* PAINEL */
+      .layout { grid-template-columns: 1fr !important; }
+      .sidebar { max-height: 280px !important; border-right: none !important; border-bottom: 1px solid var(--border) !important; }
+      .charts-grid { grid-template-columns: 1fr !important; }
+      .metrics { grid-template-columns: 1fr 1fr !important; }
+
+      /* FOOTER */
+      .footer-links { gap: 0.75rem !important; flex-wrap: wrap !important; justify-content: center !important; }
+      footer p { font-size: 13px !important; }
+
+      /* LOCK */
+      .lock-card { margin: 1rem; width: calc(100% - 2rem) !important; padding: 2rem !important; }
+      .lock-title { font-size: 20px !important; }
+      .lock-input { font-size: 16px !important; padding: 14px !important; }
+      .lock-btn { font-size: 15px !important; padding: 14px !important; }
+
+      /* TEMAS GRID */
+      .temas-grid { grid-template-columns: 1fr !important; }
+      .tema-text { font-size: 15px !important; }
+
+      /* ABORDAGEM PILLS */
+      .abordagem-pill { padding: 16px !important; }
+      .abordagem-pill-label { font-size: 15px !important; }
+
+      /* NAV SUPERVISAO/CORP */
+      .nav-logo-text { font-size: 14px !important; }
+
+      /* SERV CARD FEATURED */
+      .serv-card.featured { grid-template-columns: 1fr !important; }
+    }
+
+  </style>
 </head>
 <body>
 
