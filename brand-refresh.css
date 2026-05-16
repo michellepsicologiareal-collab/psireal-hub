@@ -142,6 +142,17 @@ footer {
   background: #170e14 !important;
 }
 
+.admin-entry {
+  opacity: .58;
+  font-size: 11px !important;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.admin-entry:hover {
+  opacity: 1;
+}
+
 .footer-logo,
 .footer-brand,
 footer p,

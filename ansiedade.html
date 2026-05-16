@@ -13,13 +13,13 @@
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
-      --r1:#3D2235;--r2:#7A4060;--r3:#C8908A;
-      --rose:#C8908A;--rose-light:#E8C8C4;--rose-pale:#F7F0F2;--rose-border:#DFBFBA;
-      --sage:#4A7C6A;--sage-light:#7AAD96;--sage-pale:#EDF5F0;--sage-border:#C8DDD6;
-      --clay:#C4956A;
-      --grad:linear-gradient(135deg,#3D2235 0%,#7A4060 50%,#C8908A 100%);
-      --ink:#1E1018;--ink-2:#5A3048;--ink-3:#9A7088;--ink-4:#C8A8B8;
-      --bg:#FDFBFC;--white:#fff;--border:#DFBFCA;
+      --r1:#6D887F;--r2:#8FA89E;--r3:#C8A79A;
+      --rose:#C8A79A;--rose-light:#E9D8D2;--rose-pale:#FBF7F5;--rose-border:#E7D8D2;
+      --sage:#6D887F;--sage-light:#A9C0B7;--sage-pale:#F1F6F3;--sage-border:#D9E6E0;
+      --clay:#C8A79A;
+      --grad:linear-gradient(135deg,#6D887F 0%,#8FA89E 58%,#C8A79A 100%);
+      --ink:#24312D;--ink-2:#4D625B;--ink-3:#7D938A;--ink-4:#AEBDB7;
+      --bg:#FEFDFB;--white:#fff;--border:#E3ECE7;
       --radius:18px;--radius-sm:11px;
       --shadow:0 2px 12px rgba(61,34,53,0.07);
       --shadow-hover:0 14px 44px rgba(61,34,53,0.13);
@@ -35,15 +35,14 @@
     .nav-cta{background:var(--grad)!important;color:#fff!important;font-weight:500!important;padding:7px 16px!important;border-radius:8px!important;box-shadow:0 2px 8px rgba(61,34,53,0.18)!important}
 
     /* HERO */
-    .hero{background:var(--r1);padding:5rem 2rem 4rem;text-align:center;position:relative;overflow:hidden}
-    .hero::before{content:'';position:absolute;right:-100px;top:-100px;width:400px;height:400px;background:rgba(200,144,138,0.08);border-radius:50%}
-    .hero::after{content:'';position:absolute;left:-60px;bottom:-60px;width:260px;height:260px;background:rgba(122,64,96,0.15);border-radius:50%}
+    .hero{background:linear-gradient(180deg,#F6FAF8 0%,#EEF5F1 100%);padding:5rem 2rem 4rem;text-align:center;position:relative;overflow:hidden}
+    .hero::before,.hero::after{display:none}
     .hero-inner{position:relative;z-index:1;max-width:680px;margin:0 auto}
-    .hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.55);background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);padding:5px 16px;border-radius:99px;margin-bottom:2rem}
-    .hero h1{font-family:'Instrument Serif',serif;font-size:clamp(32px,5.5vw,58px);font-weight:400;line-height:1.05;letter-spacing:-0.025em;color:#fff;margin-bottom:1.25rem}
-    .hero h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--rose-light)}
-    .hero-sub{font-size:16px;color:rgba(255,255,255,0.62);max-width:500px;margin:0 auto 2.5rem;line-height:1.8;font-weight:300}
-    .btn-hero{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--r1);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;padding:15px 36px;border-radius:var(--radius-sm);text-decoration:none;box-shadow:0 6px 28px rgba(0,0,0,0.22);transition:transform 0.15s,box-shadow 0.15s;letter-spacing:-0.01em}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-3);background:#fff;border:1px solid var(--border);padding:5px 16px;border-radius:99px;margin-bottom:2rem}
+    .hero h1{font-family:'Instrument Serif',serif;font-size:clamp(32px,5.5vw,58px);font-weight:400;line-height:1.05;letter-spacing:-0.025em;color:var(--ink);margin-bottom:1.25rem}
+    .hero h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--sage)}
+    .hero-sub{font-size:16px;color:var(--ink-2);max-width:500px;margin:0 auto 2.5rem;line-height:1.8;font-weight:300}
+    .btn-hero{display:inline-flex;align-items:center;gap:8px;background:var(--r1);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;padding:15px 36px;border-radius:var(--radius-sm);text-decoration:none;box-shadow:0 6px 22px rgba(109,136,127,0.22);transition:transform 0.15s,box-shadow 0.15s;letter-spacing:-0.01em}
     .btn-hero:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(0,0,0,0.28)}
 
     /* SECTIONS */
@@ -115,6 +114,16 @@
     .sinal-dot{width:8px;height:8px;border-radius:50%;background:var(--rose);flex-shrink:0;margin-top:6px}
     .sinal-text{font-size:13.5px;color:var(--ink-2);line-height:1.6}
 
+    /* KIT PRATICO */
+    .kit-shell{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;box-shadow:var(--shadow);margin-top:2rem}
+    .kit-intro{max-width:680px;margin-bottom:1.5rem}
+    .kit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .kit-item{border:1px solid var(--border);border-radius:14px;padding:1.25rem;background:linear-gradient(180deg,#fff 0%,#fdf8fa 100%)}
+    .kit-item span{display:block;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--rose);margin-bottom:8px}
+    .kit-item strong{display:block;font-family:'Instrument Serif',serif;font-size:22px;font-weight:400;line-height:1.15;margin-bottom:8px}
+    .kit-item p{font-size:13.5px;color:var(--ink-3);line-height:1.75;margin:0}
+    .kit-note{margin-top:1.25rem;background:var(--rose-pale);border-left:3px solid var(--rose);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:1rem 1.25rem;font-size:13.5px;color:var(--ink-2);line-height:1.8}
+
     /* CTA */
     .cta-box{background:var(--grad);border-radius:var(--radius);padding:4rem 2.5rem;text-align:center;position:relative;overflow:hidden;box-shadow:0 12px 50px rgba(61,34,53,0.18)}
     .cta-box::before{content:'';position:absolute;right:-80px;top:-80px;width:280px;height:280px;background:rgba(255,255,255,0.05);border-radius:50%}
@@ -150,6 +159,7 @@
       .tri-grid,.contact-grid,.contact-fields{grid-template-columns:1fr;gap:8px}
       .tec-grid{grid-template-columns:1fr}
       .sinais{grid-template-columns:1fr}
+      .kit-grid{grid-template-columns:1fr}
       .cta-box{padding:2.5rem 1.5rem}
       .hero{padding:3.5rem 1.25rem 3rem}
       .fases::before{left:20px}
@@ -328,6 +338,32 @@
 
 <hr class="div">
 
+<!-- KIT PRATICO -->
+<section class="section-wide">
+  <div style="max-width:800px">
+    <div class="sec-eyebrow">Como lidar com sua ansiedade</div>
+    <h2>Um guia prático para entender o que acontece e começar a responder de outro jeito</h2>
+    <p>Além de compreender a ansiedade, é importante saber o que observar no dia a dia. Este roteiro reúne alguns dos pontos centrais usados na prática clínica para ajudar você a sair do automático e construir respostas mais flexíveis.</p>
+  </div>
+
+  <div class="kit-shell">
+    <div class="kit-intro">
+      <p>Não se trata de eliminar toda ansiedade. Trata-se de reconhecer o ciclo, diminuir a luta interna e agir com mais clareza mesmo quando o desconforto aparece.</p>
+    </div>
+    <div class="kit-grid">
+      <div class="kit-item"><span>01</span><strong>Entenda o alarme</strong><p>Ansiedade envolve pensamento, corpo e comportamento. Quando você identifica o ciclo, ela deixa de parecer um caos sem nome.</p></div>
+      <div class="kit-item"><span>02</span><strong>Observe seus pensamentos</strong><p>Pensamentos automáticos parecem fatos, mas muitas vezes são previsões. Nomeá-los ajuda a criar distância.</p></div>
+      <div class="kit-item"><span>03</span><strong>Perceba a preocupação</strong><p>Preocupar-se sem parar costuma dar sensação de controle, mas frequentemente mantém o corpo em alerta.</p></div>
+      <div class="kit-item"><span>04</span><strong>Tolere emoções difíceis</strong><p>Nem toda emoção precisa ser resolvida imediatamente. Aprender a atravessá-la reduz a urgência de fugir.</p></div>
+      <div class="kit-item"><span>05</span><strong>Volte aos seus valores</strong><p>Em vez de organizar a vida só para evitar desconforto, pergunte-se que direção importa para você.</p></div>
+      <div class="kit-item"><span>06</span><strong>Enfrente aos poucos</strong><p>A exposição gradual ensina ao cérebro que você consegue lidar com o que antes parecia insuportável.</p></div>
+    </div>
+    <div class="kit-note">Esse caminho costuma funcionar melhor com acompanhamento, especialmente quando a ansiedade já interfere no sono, nas relações, no trabalho ou nas escolhas do dia a dia.</div>
+  </div>
+</section>
+
+<hr class="div">
+
 <!-- COMO TERAPIA TRATA -->
 <section class="section">
   <div class="sec-eyebrow">O tratamento</div>
@@ -430,7 +466,7 @@
 
 <footer>
   <div class="footer-logo">Psi <span>Real</span></div>
-  <p>Michelle Donegá dos Santos · CRP 06/93008 · <a href="terapia.html">Terapia</a> · <a href="https://wa.me/5511947388423?text=Ol%C3%A1%20Michelle!%20Vi%20seu%20guia%20sobre%20ansiedade%20e%20gostaria%20de%20agendar%20uma%20conversa." target="_blank">WhatsApp</a> · <a href="index.html">Início</a></p>
+  <p>Michelle Donegá dos Santos · CRP 06/93008 · <a href="terapia.html">Terapia</a> · <a href="https://wa.me/5511947388423?text=Ol%C3%A1%20Michelle!%20Vi%20seu%20guia%20sobre%20ansiedade%20e%20gostaria%20de%20agendar%20uma%20conversa." target="_blank">WhatsApp</a> · <a href="index.html">Início</a> · <a class="admin-entry" href="admin-contatos.html">Acesso restrito</a></p>
 </footer>
 
 <script>

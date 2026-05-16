@@ -183,6 +183,73 @@
       letter-spacing: .09em;
       text-transform: uppercase;
     }
+    .service-entry {
+      padding: 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--white);
+    }
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .service-link {
+      min-height: 178px;
+      display: grid;
+      align-content: space-between;
+      gap: 18px;
+      padding: 30px clamp(20px, 3vw, 34px);
+      text-decoration: none;
+      border-right: 1px solid var(--line);
+      transition: background .25s ease;
+    }
+    .service-link:last-child { border-right: 0; }
+    .service-link span {
+      color: var(--rose);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .service-link strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: clamp(28px, 2.5vw, 36px);
+      font-weight: 400;
+      line-height: 1;
+    }
+    .service-link small {
+      display: block;
+      max-width: 290px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .service-link:hover { background: var(--paper-deep); }
+    .anxiety-strip {
+      padding: 0;
+      background: var(--paper);
+    }
+    .anxiety-strip a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 86px;
+      text-decoration: none;
+      border-bottom: 1px solid var(--line);
+    }
+    .anxiety-strip strong {
+      font-family: var(--serif);
+      font-size: clamp(24px, 2.6vw, 34px);
+      font-weight: 400;
+    }
+    .anxiety-strip span {
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
     .hero-media {
       position: relative;
       align-self: stretch;
@@ -606,6 +673,13 @@
       .nav-links a:not(.nav-cta) { display: none; }
       .hero { background: var(--paper); padding-top: 92px; }
       .hero-grid, .manifesto-grid, .process-head, .about-grid, .specialties-head, .difference-layout, .ecosystem-grid, .contact-grid { grid-template-columns: 1fr; }
+      .service-grid { grid-template-columns: 1fr; }
+      .service-link {
+        min-height: 0;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .service-link:last-child { border-bottom: 0; }
       .hero-grid { min-height: auto; gap: 24px; }
       .hero-copy { padding: 28px 0 8px; }
       .hero-media { min-height: auto; }
@@ -644,6 +718,10 @@
   <nav class="site-nav" id="siteNav" aria-label="Navegação principal">
     <a href="index.html" class="brand">Psicologia <span>Real</span></a>
     <div class="nav-links">
+      <a href="terapia.html">Terapia</a>
+      <a href="ansiedade.html">Ansiedade</a>
+      <a href="supervisao.html">Supervisão</a>
+      <a href="corporativo.html">Corporativo</a>
       <a href="#processo">Processo</a>
       <a href="#sobre">Sobre</a>
       <a href="#especialidades">Especialidades</a>
@@ -672,6 +750,33 @@
           </figure>
           <div class="hero-index" aria-label="Experiência clínica e profissional"><strong>20+</strong><span>anos de experiência humana, clínica e corporativa</span></div>
         </div>
+      </div>
+    </section>
+    <section class="service-entry" aria-label="Frentes de atuação">
+      <div class="service-grid">
+        <a class="service-link" href="terapia.html">
+          <span>Clínica</span>
+          <strong>Terapia</strong>
+          <small>Atendimento para crianças, adolescentes e adultos, com formulário próprio para novos pacientes.</small>
+        </a>
+        <a class="service-link" href="supervisao.html">
+          <span>Para psicólogas</span>
+          <strong>Supervisão</strong>
+          <small>Supervisão clínica em TCC com página e formulário próprios para profissionais.</small>
+        </a>
+        <a class="service-link" href="corporativo.html">
+          <span>Para empresas</span>
+          <strong>Corporativo</strong>
+          <small>Palestras e consultoria em saúde mental com captação própria para organizações.</small>
+        </a>
+      </div>
+    </section>
+    <section class="anxiety-strip" aria-label="Guia sobre ansiedade">
+      <div class="container">
+        <a href="ansiedade.html">
+          <strong>Como lidar com sua ansiedade</strong>
+          <span>Abrir guia</span>
+        </a>
       </div>
     </section>
     <section class="manifesto" id="identificacao">
@@ -775,53 +880,53 @@
         <div>
           <span class="eyebrow reveal">Ecossistema Psi Real</span>
           <h2 class="section-title reveal delay-1">Clínica, produtos para psis, app e empresas no mesmo universo.</h2>
-          <p class="section-lead reveal delay-2">Além da psicoterapia, Psi Real reúne produtos digitais para psicólogos, inventários clínicos, formulários conectados ao Supabase, painel profissional, biblioteca, app e palestras para empresas. A home precisa mostrar que existe inteligência por trás do cuidado.</p>
+          <p class="section-lead reveal delay-2">Além da psicoterapia, Psi Real reúne inventários clínicos, recursos para psicólogas, biblioteca, aplicativo e soluções para empresas. Cada frente tem uma função clara, sem perder a mesma identidade de cuidado e profundidade.</p>
           <div class="system-actions reveal delay-3">
             <a class="button-primary" href="https://psireal.app" target="_blank" rel="noopener">Abrir psireal.app</a>
             <a class="button-secondary" href="inventarios.html">Inventários Psi Real</a>
             <a class="button-secondary" href="corporativo.html">Palestras para empresas</a>
           </div>
           <div class="portal-links reveal delay-3" aria-label="Links do ecossistema Psi Real">
-            <a class="portal-link" href="https://michellepsicologiareal-collab.github.io/biblioteca-psi-real/index.html" target="_blank" rel="noopener"><span><strong>Biblioteca</strong><small>Materiais e recursos para psicólogos</small></span><em>↗</em></a>
-            <a class="portal-link" href="painel-psi.html"><span><strong>Painel Psi</strong><small>Acesso de assinantes aos pacientes</small></span><em>→</em></a>
-            <a class="portal-link" href="admin-contatos.html"><span><strong>Painel Admin</strong><small>Contatos, testes e links do sistema</small></span><em>→</em></a>
-            <a class="portal-link" href="painel-esquemas.html"><span><strong>Painel Esquemas</strong><small>Visualização clínica do YSQ</small></span><em>→</em></a>
+            <a class="portal-link" href="inventarios.html"><span><strong>Inventários Psi Real</strong><small>YSQ, acompanhamento e painel clínico em um só produto</small></span><em>→</em></a>
+            <a class="portal-link" href="https://psireal.app" target="_blank" rel="noopener"><span><strong>psireal.app</strong><small>Aplicativo criado para ampliar a experiência Psi Real</small></span><em>↗</em></a>
+            <a class="portal-link" href="https://michellepsicologiareal-collab.github.io/biblioteca-psi-real/index.html" target="_blank" rel="noopener"><span><strong>Biblioteca</strong><small>Materiais e recursos para psicólogas</small></span><em>↗</em></a>
+            <a class="portal-link" href="painel-psi.html"><span><strong>Área da assinante</strong><small>Acesso das psicólogas aos inventários e pacientes</small></span><em>→</em></a>
           </div>
         </div>
         <div class="system-panel">
           <div class="system-row reveal">
             <span>01</span>
             <div>
-              <h3>Produtos digitais para psicólogos</h3>
-              <p>Inventários clínicos, biblioteca, painéis e ferramentas que ajudam o psi a organizar avaliação, acompanhamento e raciocínio clínico.</p>
+              <h3>Inventários Psi Real</h3>
+              <p>Produto para psicólogas com instrumentos clínicos, envio ao paciente e visualização organizada das respostas em um único fluxo.</p>
             </div>
           </div>
           <div class="system-row reveal">
             <span>02</span>
             <div>
-              <h3>Formulários conectados ao Supabase</h3>
-              <p>Os formulários recebem respostas de pacientes, salvam dados clínicos e alimentam painéis com score, histórico, gráficos e anotações.</p>
+              <h3>Painel clínico integrado</h3>
+              <p>O painel de esquemas faz parte dos inventários, ajudando a transformar respostas em leitura clínica sem virar um produto separado.</p>
             </div>
           </div>
           <div class="system-row reveal">
             <span>03</span>
             <div>
               <h3>App e biblioteca Psi Real</h3>
-              <p>O aplicativo e a biblioteca funcionam como camada de conteúdo e suporte profissional, conectando materiais, estudos e recursos práticos.</p>
+              <p>O aplicativo e a biblioteca ampliam o ecossistema com conteúdo, materiais e recursos práticos para psicólogas.</p>
             </div>
           </div>
           <div class="system-row reveal">
             <span>04</span>
             <div>
-              <h3>Palestras e soluções para empresas</h3>
-              <p>A frente corporativa leva saúde mental, ansiedade, liderança e autocuidado para equipes, com repertório clínico e experiência organizacional.</p>
+              <h3>Supervisão clínica</h3>
+              <p>Uma frente própria para psicólogas que buscam mais segurança técnica, raciocínio clínico e desenvolvimento profissional.</p>
             </div>
           </div>
           <div class="system-row reveal">
             <span>05</span>
             <div>
-              <h3>Painéis de operação</h3>
-              <p>Painel Psi, Painel Esquemas e Painel Admin seguem preservados para acesso, gestão de pacientes, respostas clínicas, testes e contatos comerciais.</p>
+              <h3>Palestras e soluções para empresas</h3>
+              <p>A frente corporativa leva saúde mental, ansiedade, liderança e autocuidado para equipes com repertório clínico e experiência organizacional.</p>
             </div>
           </div>
         </div>
@@ -888,7 +993,7 @@
         <a href="https://michellepsicologiareal-collab.github.io/biblioteca-psi-real/index.html" target="_blank" rel="noopener">Biblioteca</a>
         <a href="painel-psi.html">Painel Psi</a>
         <a href="painel-esquemas.html">Painel Esquemas</a>
-        <a href="admin-contatos.html">Painel Admin</a>
+        <a class="admin-entry" href="admin-contatos.html">Acesso restrito</a>
         <a href="formulario-esquemas.html">Formulário YSQ</a>
         <a href="ansiedade.html">Guia ansiedade</a>
       </div>
