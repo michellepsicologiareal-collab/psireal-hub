@@ -40,6 +40,38 @@ body {
   background: var(--bg);
 }
 
+.editorial-visual {
+  padding: 1.4rem 0 0;
+}
+
+.editorial-visual-soft {
+  padding-top: 0;
+  margin-top: -0.2rem;
+}
+
+.editorial-frame {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--paper-deep);
+}
+
+.editorial-frame img {
+  display: block;
+  width: 100%;
+  height: clamp(220px, 32vw, 420px);
+  object-fit: cover;
+}
+
+.editorial-frame-wide img {
+  height: clamp(200px, 28vw, 360px);
+}
+
+#lockScreen .lock-logo img,
+.header-brand img {
+  content: url("logo-psicologia-real.png");
+}
+
 .accent-word,
 h1 em,
 h2 em,

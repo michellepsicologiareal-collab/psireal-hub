@@ -192,6 +192,7 @@
     }
     .lock-btn:hover { opacity: 0.9; transform: translateY(-1px); }
     .lock-error { font-size: 12px; color: #DC2626; margin-top: 0.5rem; display: none; }
+    #lockScreen + #lockScreen { display: none !important; }
 
     
     #lockScreen {
@@ -302,6 +303,7 @@
     .escala-opt-lbl { display: none !important; }
 
     #lockScreen { padding: 1rem !important; }
+    #lockScreen + #lockScreen { display: none !important; }
     .lock-card { width: 100% !important; padding: 2rem 1.5rem !important; }
     .lock-input { font-size: 16px !important; padding: 14px !important; }
     .lock-btn { font-size: 15px !important; padding: 14px !important; }
@@ -438,6 +440,16 @@ const SB_URL = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
 const SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
 const params = new URLSearchParams(window.location.search);
 const PSI_ID = params.get('psi') || 'michelle';
+let SB_SESSION_TOKEN = sessionStorage.getItem('sb_session_token') || '';
+let refreshTimer;
+
+function authHeaders(extra = {}) {
+  return {
+    apikey: SB_KEY,
+    Authorization: 'Bearer ' + (SB_SESSION_TOKEN || SB_KEY),
+    ...extra
+  };
+}
 
 const ESQUEMAS = [{"id": "PA", "nome": "Privação Emocional"}, {"id": "AB", "nome": "Abandono"}, {"id": "MA", "nome": "Desconfiança/Abuso"}, {"id": "SI", "nome": "Isolamento Social"}, {"id": "DS", "nome": "Defectividade"}, {"id": "SF", "nome": "Fracasso"}, {"id": "DI", "nome": "Dependência"}, {"id": "VH", "nome": "Vulnerabilidade"}, {"id": "EM", "nome": "Emaranhamento"}, {"id": "SB", "nome": "Subjugação"}, {"id": "SS", "nome": "Autossacrifício"}, {"id": "AS", "nome": "Inibição Emocional"}, {"id": "UP", "nome": "Padrões Inflexíveis"}, {"id": "EP", "nome": "Arrogo"}, {"id": "IS", "nome": "Autocontrole Insuf."}, {"id": "BL", "nome": "Busca de Aprovação"}, {"id": "NP", "nome": "Negativismo"}, {"id": "PU", "nome": "Punição"}];
 
@@ -450,7 +462,7 @@ let radarInst = null, barInst = null;
 async function loadPsi() {
   try {
     const res = await fetch(`${SB_URL}/rest/v1/psis?psi_id=eq.${PSI_ID}&select=nome`, {
-      headers: {'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY}
+      headers: authHeaders()
     });
     const data = await res.json();
     if (data[0]) document.getElementById('psiNome').textContent = data[0].nome;
@@ -461,7 +473,7 @@ async function loadRespostas() {
   try {
     const res = await fetch(
       `${SB_URL}/rest/v1/respostas_clinicas?psi_id=eq.${PSI_ID}&formulario=eq.YSQ-S3&order=criado_em.desc&limit=100`,
-      {headers: {'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY}}
+      {headers: authHeaders()}
     );
     allRespostas = await res.json();
     renderList();
@@ -662,7 +674,7 @@ async function marcarVisto() {
   try {
     const res = await fetch(`${SB_URL}/rest/v1/respostas_clinicas?id=eq.${currentId}`, {
       method: 'PATCH',
-      headers: {'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Prefer':'return=minimal'},
+      headers: authHeaders({'Content-Type':'application/json','Prefer':'return=minimal'}),
       body: JSON.stringify({visualizado: true})
     });
     if (res.ok) {
@@ -681,7 +693,7 @@ async function salvarNotas() {
   try {
     const res = await fetch(`${SB_URL}/rest/v1/respostas_clinicas?id=eq.${currentId}`, {
       method: 'PATCH',
-      headers: {'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Prefer':'return=minimal'},
+      headers: authHeaders({'Content-Type':'application/json','Prefer':'return=minimal'}),
       body: JSON.stringify({notas_psi: notas})
     });
     if (res.ok) {
@@ -702,67 +714,100 @@ function showToast(msg) {
   toastT = setTimeout(() => t.classList.remove('show'), 2200);
 }
 
-loadPsi();
-loadRespostas();
-setInterval(loadRespostas, 60000);
+async function startPanel() {
+  await loadPsi();
+  await loadRespostas();
+  clearInterval(refreshTimer);
+  refreshTimer = setInterval(loadRespostas, 60000);
+}
 </script>
 <script>
-  const SENHA = 'esquemas2026';
-  const SESSION_KEY = 'auth_painel';
+  function ensureLoginFields() {
+    const legacyInput = document.getElementById('lockInput');
+    let email = document.getElementById('lockEmail');
+    let password = document.getElementById('lockPassword');
 
-  function checkAuth() {
-    if (sessionStorage.getItem(SESSION_KEY) === 'ok') {
-      document.getElementById('lockScreen').style.display = 'none';
+    if (!email && legacyInput) {
+      email = legacyInput;
+      email.id = 'lockEmail';
+      email.type = 'email';
+      email.placeholder = 'seu@email.com';
+      email.autocomplete = 'email';
     }
-  }
 
-  function tryLogin() {
-    const input = document.getElementById('lockInput');
+    if (!password && email) {
+      password = email.cloneNode();
+      password.id = 'lockPassword';
+      password.type = 'password';
+      password.placeholder = 'Senha';
+      password.autocomplete = 'current-password';
+      password.value = '';
+      email.insertAdjacentElement('afterend', password);
+    }
+
+    const subtitle = document.querySelector('#lockScreen .lock-sub');
+    if (subtitle) subtitle.textContent = 'Acesso restrito — entre com seu e-mail e senha.';
+
     const error = document.getElementById('lockError');
-    if (input.value === SENHA) {
-      sessionStorage.setItem(SESSION_KEY, 'ok');
+    if (error) error.textContent = 'Não foi possível entrar. Verifique e-mail e senha.';
+
+    return { email, password };
+  }
+
+  async function tryLogin() {
+    const { email, password } = ensureLoginFields();
+    const error = document.getElementById('lockError');
+
+    error.style.display = 'none';
+
+    try {
+      const res = await fetch(`${SB_URL}/auth/v1/token?grant_type=password`, {
+        method: 'POST',
+        headers: {
+          apikey: SB_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: email.value.trim(),
+          password: password.value
+        })
+      });
+      const data = await res.json();
+      if (!res.ok || !data.access_token) throw new Error('auth failed');
+
+      SB_SESSION_TOKEN = data.access_token;
+      sessionStorage.setItem('sb_session_token', data.access_token);
       document.getElementById('lockScreen').style.display = 'none';
-      input.value = '';
-    } else {
-      input.classList.add('error');
+      await startPanel();
+    } catch (e) {
+      email.classList.add('error');
+      password.classList.add('error');
       error.style.display = 'block';
-      setTimeout(() => input.classList.remove('error'), 400);
-      input.value = '';
-      input.focus();
+      setTimeout(() => {
+        email.classList.remove('error');
+        password.classList.remove('error');
+      }, 400);
+      password.value = '';
+      password.focus();
     }
   }
 
-  document.getElementById('lockInput').addEventListener('keydown', e => {
+  function restoreAuth() {
+    ensureLoginFields();
+    if (!SB_SESSION_TOKEN) return;
+    document.getElementById('lockScreen').style.display = 'none';
+    startPanel();
+  }
+
+  ensureLoginFields();
+  document.getElementById('lockEmail').addEventListener('keydown', e => {
+    if (e.key === 'Enter') tryLogin();
+  });
+  document.getElementById('lockPassword').addEventListener('keydown', e => {
     if (e.key === 'Enter') tryLogin();
   });
 
-  checkAuth();
-
-</script>
-<script>
-  const SENHA = 'esquemas2026';
-  const SESSION_KEY = 'auth_painel';
-  function checkAuth() {
-    if (sessionStorage.getItem(SESSION_KEY) === 'ok') {
-      document.getElementById('lockScreen').style.display = 'none';
-    }
-  }
-  function tryLogin() {
-    const input = document.getElementById('lockInput');
-    const error = document.getElementById('lockError');
-    if (input.value === SENHA) {
-      sessionStorage.setItem(SESSION_KEY, 'ok');
-      document.getElementById('lockScreen').style.display = 'none';
-      input.value = '';
-    } else {
-      input.classList.add('error');
-      error.style.display = 'block';
-      setTimeout(() => input.classList.remove('error'), 400);
-      input.value = ''; input.focus();
-    }
-  }
-  document.getElementById('lockInput').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
-  checkAuth();
+  restoreAuth();
 
 </script>
 </body>

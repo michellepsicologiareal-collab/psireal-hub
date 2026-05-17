@@ -522,38 +522,94 @@
   <script>
     const SB_URL = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
     const SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
-    const PASSWORD = 'psireal2026';
-    const SESSION_KEY = 'auth_admin';
+    let SB_SESSION_TOKEN = sessionStorage.getItem('sb_admin_session_token') || '';
+    let refreshTimer;
 
     let contacts = [];
     let tests = [];
     let statusFilter = 'todos';
 
-    function checkAuth() {
-      if (sessionStorage.getItem(SESSION_KEY) === 'ok') {
-        document.getElementById('lockScreen').style.display = 'none';
-      }
+    function authHeaders(extra = {}) {
+      return {
+        apikey: SB_KEY,
+        Authorization: 'Bearer ' + (SB_SESSION_TOKEN || SB_KEY),
+        ...extra
+      };
     }
-    function tryLogin() {
-      const input = document.getElementById('lockInput');
+
+    function ensureLoginFields() {
+      const legacyInput = document.getElementById('lockInput');
+      let email = document.getElementById('lockEmail');
+      let password = document.getElementById('lockPassword');
+
+      if (!email && legacyInput) {
+        email = legacyInput;
+        email.id = 'lockEmail';
+        email.type = 'email';
+        email.placeholder = 'seu@email.com';
+        email.autocomplete = 'email';
+      }
+
+      if (!password && email) {
+        password = email.cloneNode();
+        password.id = 'lockPassword';
+        password.type = 'password';
+        password.placeholder = 'Senha';
+        password.autocomplete = 'current-password';
+        password.value = '';
+        email.insertAdjacentElement('afterend', password);
+      }
+
+      const subtitle = document.querySelector('#lockScreen .lock-sub');
+      if (subtitle) subtitle.textContent = 'Acesso restrito para a administração do ecossistema.';
       const error = document.getElementById('lockError');
-      if (input.value === PASSWORD) {
-        sessionStorage.setItem(SESSION_KEY, 'ok');
+      if (error) error.textContent = 'Não foi possível entrar. Verifique e-mail e senha.';
+
+      return { email, password };
+    }
+
+    async function tryLogin() {
+      const { email, password } = ensureLoginFields();
+      const error = document.getElementById('lockError');
+      error.style.display = 'none';
+
+      try {
+        const res = await fetch(`${SB_URL}/auth/v1/token?grant_type=password`, {
+          method: 'POST',
+          headers: {
+            apikey: SB_KEY,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: email.value.trim(),
+            password: password.value
+          })
+        });
+        const data = await res.json();
+        if (!res.ok || !data.access_token) throw new Error('auth failed');
+
+        SB_SESSION_TOKEN = data.access_token;
+        sessionStorage.setItem('sb_admin_session_token', data.access_token);
         document.getElementById('lockScreen').style.display = 'none';
-        input.value = '';
         loadAll();
         return;
+      } catch (err) {
+        error.style.display = 'block';
+        password.value = '';
+        password.focus();
       }
-      error.style.display = 'block';
-      input.value = '';
-      input.focus();
     }
     function logout() {
-      sessionStorage.removeItem(SESSION_KEY);
+      sessionStorage.removeItem('sb_admin_session_token');
+      SB_SESSION_TOKEN = '';
       document.getElementById('lockScreen').style.display = 'grid';
-      document.getElementById('lockInput').focus();
+      ensureLoginFields().email.focus();
     }
-    document.getElementById('lockInput').addEventListener('keydown', (event) => {
+    ensureLoginFields();
+    document.getElementById('lockEmail').addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') tryLogin();
+    });
+    document.getElementById('lockPassword').addEventListener('keydown', (event) => {
       if (event.key === 'Enter') tryLogin();
     });
 
@@ -565,14 +621,14 @@
     }
     async function loadContacts() {
       const res = await fetch(`${SB_URL}/rest/v1/contatos?select=*&limit=500`, {
-        headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY }
+        headers: authHeaders()
       });
       if (!res.ok) throw new Error('contatos ' + res.status);
       contacts = (await res.json()).sort((a, b) => safeDate(getCreatedAt(b)) - safeDate(getCreatedAt(a)));
     }
     async function loadTests() {
       const res = await fetch(`${SB_URL}/rest/v1/respostas_clinicas?select=*&limit=500`, {
-        headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY }
+        headers: authHeaders()
       });
       if (!res.ok) throw new Error('respostas_clinicas ' + res.status);
       tests = (await res.json()).sort((a, b) => safeDate(getCreatedAt(b)) - safeDate(getCreatedAt(a)));
@@ -693,8 +749,7 @@
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          apikey: SB_KEY,
-          Authorization: 'Bearer ' + SB_KEY,
+          ...authHeaders(),
           Prefer: 'return=minimal'
         },
         body: JSON.stringify(payload)
@@ -742,10 +797,12 @@
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
     }
-    checkAuth();
-    if (sessionStorage.getItem(SESSION_KEY) === 'ok') loadAll();
-    setInterval(() => {
-      if (sessionStorage.getItem(SESSION_KEY) === 'ok') loadAll();
+    if (SB_SESSION_TOKEN) {
+      document.getElementById('lockScreen').style.display = 'none';
+      loadAll();
+    }
+    refreshTimer = setInterval(() => {
+      if (SB_SESSION_TOKEN) loadAll();
     }, 60000);
   </script>
 </body>
