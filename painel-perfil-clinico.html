@@ -96,6 +96,51 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .section-title{font-family:'Instrument Serif',serif;font-size:24px;font-weight:500;color:var(--ink);margin-bottom:4px}
 .section-sub{font-size:13px;color:var(--ink3);line-height:1.6}
 
+/* SYSTEM REDESIGN: branco, limpo, editorial-sans */
+:root{
+  --bg:#FFFFFF;
+  --bg2:#FBF7F8;
+  --bg3:#F4ECEF;
+  --surface:#FFFFFF;
+  --border:#E9DEE2;
+  --border2:#E2D4D9;
+  --ink:#24181D;
+  --ink2:#5B4A50;
+  --ink3:#8E7D84;
+  --radius:16px;
+  --radius-lg:22px;
+  --shadow:0 1px 2px rgba(36,24,29,.03),0 10px 24px rgba(61,32,40,.04);
+  --shadow-md:0 18px 44px rgba(61,32,40,.10);
+}
+body{background:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;line-height:1.55}
+.sidebar{background:#fff;border-right:1px solid var(--border)}
+.logo-text,.topbar-title,.section-title,.dominio-name{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:-.02em}
+.logo-text{font-size:17px;font-weight:700}
+.nav-item{min-height:42px;border-radius:14px;font-size:14px}
+.nav-item:hover{background:var(--bg2)}
+.nav-item.active{background:var(--bg3);color:var(--brown)}
+.nav-item.active::before{display:none}
+.topbar{height:72px;background:#fff}
+.topbar-title{font-size:20px;font-weight:700}
+.topbar-sub{font-size:13px}
+.content{padding:30px 34px 40px}
+.section-title{font-size:24px;font-weight:700}
+.section-sub{font-size:14px}
+.dominio-card,.aviso,.perfil-card,.alerta-card{
+  border-radius:22px;
+  box-shadow:var(--shadow);
+}
+.dominio-header{padding:18px 22px}
+.dominio-name{font-size:16px;font-weight:700}
+.btn,.lock-input,.lock-btn{border-radius:14px}
+@media (max-width: 860px){
+  body{display:block}
+  .sidebar{position:static;width:auto;min-height:auto}
+  .main{margin-left:0}
+  .topbar{height:auto;min-height:72px;flex-wrap:wrap;padding:18px}
+  .content{padding:20px 16px 32px}
+}
+
 /* AVISO CLÍNICO */
 .aviso{background:var(--amber3);border:1px solid var(--amber2);border-radius:var(--radius-lg);padding:16px 20px;display:flex;gap:14px;margin-bottom:28px}
 .aviso-icon{font-size:18px;flex-shrink:0;margin-top:1px}
@@ -213,9 +258,84 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 [style*="font-family:'DM Mono'"]{
   font-family:'Plus Jakarta Sans',sans-serif !important;
 }
+
+#lockScreen{
+  position:fixed; inset:0; z-index:9999;
+  display:grid; place-items:center;
+  background:var(--bg2);
+  padding:20px;
+}
+.lock-card{
+  width:min(380px,100%);
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:18px;
+  box-shadow:var(--shadow-md);
+  padding:28px;
+}
+.lock-logo{
+  width:56px;height:56px;margin:0 auto 16px;
+  background:url("logo-psicologia-real.png") center/contain no-repeat;
+}
+.lock-title{
+  font-family:'Instrument Serif',serif;
+  font-size:28px;
+  text-align:center;
+  margin-bottom:6px;
+}
+.lock-sub{
+  font-size:13px;color:var(--ink3);
+  text-align:center;line-height:1.5;
+  margin-bottom:20px;
+}
+.lock-field{
+  width:100%;
+  border:1px solid var(--border2);
+  background:var(--surface);
+  color:var(--ink);
+  border-radius:10px;
+  padding:12px 13px;
+  font:inherit;
+  margin-bottom:10px;
+}
+.lock-field:focus{
+  outline:none;
+  border-color:var(--brown2);
+  box-shadow:0 0 0 3px rgba(122,74,85,.12);
+}
+.lock-btn{
+  width:100%;
+  border:none;
+  border-radius:10px;
+  padding:12px 14px;
+  font:inherit;
+  font-weight:600;
+  color:#fff;
+  background:linear-gradient(135deg,var(--brown),var(--brown2),var(--brown3));
+  cursor:pointer;
+}
+.lock-error{
+  display:none;
+  color:#9b2f43;
+  font-size:12px;
+  margin-top:10px;
+  text-align:center;
+}
 </style>
 </head>
 <body>
+
+<div id="lockScreen">
+  <div class="lock-card">
+    <div class="lock-logo"></div>
+    <div class="lock-title">Perfil Clínico</div>
+    <div class="lock-sub">Acesso restrito. Entre com seu e-mail e senha do PsiReal TCC.</div>
+    <input id="lockEmail" class="lock-field" type="email" placeholder="E-mail" autocomplete="email">
+    <input id="lockPassword" class="lock-field" type="password" placeholder="Senha" autocomplete="current-password">
+    <button class="lock-btn" onclick="tryLogin()">Entrar</button>
+    <div id="lockError" class="lock-error">Não foi possível entrar. Verifique e-mail e senha.</div>
+  </div>
+</div>
 
 <!-- LOADING -->
 <div class="loading-overlay" id="loadingOverlay">
@@ -1043,6 +1163,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 // ── ESTADO ──────────────────────────────────────────────
 const SB_URL = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
 const SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
+let SB_SESSION_TOKEN = sessionStorage.getItem('sb_session_token') || '';
 
 let ysqScores = {};
 let smiScores = {};
@@ -1051,6 +1172,60 @@ let totalSmi  = 0;
 
 const YSQ_TOTAL = 18;
 const SMI_TOTAL = 14;
+
+async function tryLogin() {
+  const email = document.getElementById('lockEmail');
+  const password = document.getElementById('lockPassword');
+  const error = document.getElementById('lockError');
+  error.style.display = 'none';
+
+  try {
+    const res = await fetch(`${SB_URL}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: {
+        apikey: SB_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email.value.trim(),
+        password: password.value
+      })
+    });
+    const data = await res.json();
+    if (!res.ok || !data.access_token) throw new Error('login');
+
+    SB_SESSION_TOKEN = data.access_token;
+    sessionStorage.setItem('sb_session_token', data.access_token);
+    document.getElementById('lockScreen').style.display = 'none';
+  } catch (e) {
+    error.style.display = 'block';
+  }
+}
+
+async function restoreAuth() {
+  if (!SB_SESSION_TOKEN) return;
+  try {
+    const res = await fetch(`${SB_URL}/auth/v1/user`, {
+      headers: {
+        apikey: SB_KEY,
+        Authorization: 'Bearer ' + SB_SESSION_TOKEN
+      }
+    });
+    if (!res.ok) throw new Error('expired');
+    document.getElementById('lockScreen').style.display = 'none';
+  } catch (e) {
+    SB_SESSION_TOKEN = '';
+    sessionStorage.removeItem('sb_session_token');
+  }
+}
+
+document.getElementById('lockEmail').addEventListener('keydown', e => {
+  if (e.key === 'Enter') tryLogin();
+});
+document.getElementById('lockPassword').addEventListener('keydown', e => {
+  if (e.key === 'Enter') tryLogin();
+});
+restoreAuth();
 
 // ── TABS ────────────────────────────────────────────────
 function showTab(id, el) {
@@ -1259,7 +1434,7 @@ function renderResultado() {
 document.getElementById('btnSalvarPerfil').addEventListener('click', async () => {
   showLoading('Salvando perfil no banco…');
   try {
-    const token = sessionStorage.getItem('sb_session_token');
+    const token = SB_SESSION_TOKEN || sessionStorage.getItem('sb_session_token');
     if (!token) {
       hideLoading();
       showToast('Entre no painel antes de salvar o perfil.');
