@@ -12,6 +12,29 @@ create table if not exists public.psis (
   created_at timestamptz not null default now()
 );
 
+-- Existing projects may already have the older psis table without user_id.
+alter table public.psis
+  add column if not exists user_id uuid references auth.users(id) on delete cascade,
+  add column if not exists psi_id text,
+  add column if not exists nome text,
+  add column if not exists email text,
+  add column if not exists whatsapp text,
+  add column if not exists plano text default 'mensal',
+  add column if not exists ativa boolean default true,
+  add column if not exists created_at timestamptz default now();
+
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_constraint
+    where conname = 'psis_user_id_key'
+      and conrelid = 'public.psis'::regclass
+  ) then
+    alter table public.psis add constraint psis_user_id_key unique (user_id);
+  end if;
+end $$;
+
 create table if not exists public.admin_users (
   user_id uuid primary key references auth.users(id) on delete cascade,
   created_at timestamptz not null default now()
@@ -39,6 +62,7 @@ create table if not exists public.respostas_clinicas (
 );
 
 alter table public.respostas_clinicas
+  add column if not exists created_at timestamptz default now(),
   add column if not exists psi_user_id uuid references public.psis(user_id) on delete cascade,
   add column if not exists patient_link_id uuid references public.patient_links(id) on delete set null,
   add column if not exists instrumento text,
@@ -91,6 +115,16 @@ create table if not exists public.contatos (
   notas text,
   created_at timestamptz not null default now()
 );
+
+alter table public.contatos
+  add column if not exists nome text,
+  add column if not exists whatsapp text,
+  add column if not exists servico text,
+  add column if not exists mensagem text,
+  add column if not exists pagina text,
+  add column if not exists status text default 'novo',
+  add column if not exists notas text,
+  add column if not exists created_at timestamptz default now();
 
 create index if not exists contatos_created_at_idx on public.contatos (created_at desc);
 create index if not exists contatos_status_idx on public.contatos (status);
