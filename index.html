@@ -481,8 +481,8 @@
     .difference-row h3 { color: var(--wine); font-size: 17px; font-weight: 500; }
     .difference-row p { margin-top: 8px; color: var(--muted); }
     .ecosystem {
-      background: #241018;
-      color: var(--paper);
+      background: var(--paper);
+      color: var(--ink);
     }
     .ecosystem-grid {
       display: grid;
@@ -490,33 +490,43 @@
       gap: clamp(42px, 7vw, 104px);
       align-items: start;
     }
-    .ecosystem .eyebrow { color: #d7a39b; }
-    .ecosystem .section-title { color: var(--paper); }
-    .ecosystem .section-lead { color: rgba(250,247,243,.68); }
-    .system-panel {
-      border-top: 1px solid rgba(250,247,243,.18);
+    .ecosystem .eyebrow { color: var(--rose); }
+    .ecosystem .section-title { color: var(--ink); }
+    .ecosystem .section-lead { color: var(--muted); }
+    .ecosystem .section-title {
+      max-width: 560px;
+      font-size: clamp(34px, 4.2vw, 54px);
+      line-height: .98;
     }
+    .system-panel { border-top: 1px solid var(--line); }
     .system-row {
       display: grid;
       grid-template-columns: 88px 1fr;
       gap: 28px;
       padding: 30px 0;
-      border-bottom: 1px solid rgba(250,247,243,.18);
+      border-bottom: 1px solid var(--line);
+      background: transparent;
     }
     .system-row span {
-      color: #d7a39b;
+      color: var(--rose);
       font-family: var(--serif);
       font-size: 32px;
       line-height: 1;
     }
     .system-row h3 {
-      color: var(--paper);
+      color: var(--ink);
       font-size: 18px;
       font-weight: 500;
     }
     .system-row p {
       margin-top: 8px;
-      color: rgba(250,247,243,.68);
+      color: var(--muted);
+    }
+    .ecosystem .system-row {
+      padding-left: 0;
+      padding-right: 0;
+      border-radius: 0;
+      box-shadow: none;
     }
     .system-actions {
       display: flex;
@@ -537,19 +547,19 @@
       gap: 18px;
       min-height: 62px;
       padding: 16px 18px;
-      border: 1px solid rgba(250,247,243,.18);
-      color: rgba(250,247,243,.78);
+      border: 1px solid var(--line);
+      color: var(--muted);
       text-decoration: none;
       transition: border-color .25s ease, background .25s ease, transform .25s ease;
     }
     .portal-link:hover {
-      background: rgba(250,247,243,.06);
-      border-color: rgba(250,247,243,.4);
+      background: var(--paper-2);
+      border-color: var(--rose-line);
       transform: translateY(-2px);
     }
     .portal-link strong {
       display: block;
-      color: var(--paper);
+      color: var(--ink);
       font-size: 13px;
       font-weight: 600;
       letter-spacing: .08em;
@@ -558,27 +568,27 @@
     .portal-link small {
       display: block;
       margin-top: 4px;
-      color: rgba(250,247,243,.56);
+      color: var(--muted);
       font-size: 12px;
       line-height: 1.45;
     }
     .portal-link em {
-      color: #d7a39b;
+      color: var(--rose);
       font-family: var(--serif);
       font-size: 24px;
       font-style: normal;
       line-height: 1;
     }
     .ecosystem .button-primary {
-      background: var(--paper);
-      color: var(--wine);
-      border-color: var(--paper);
+      background: var(--wine);
+      color: var(--paper);
+      border-color: var(--wine);
     }
     .ecosystem .button-secondary {
-      color: var(--paper);
-      border-color: rgba(250,247,243,.34);
+      color: var(--wine);
+      border-color: var(--line);
     }
-    .ecosystem .button-secondary:hover { border-color: var(--paper); }
+    .ecosystem .button-secondary:hover { border-color: var(--wine); }
     .faq .section-title, .faq .section-lead { text-align: center; margin-left: auto; margin-right: auto; }
     .faq-list { margin-top: 54px; border-top: 1px solid var(--line); }
     .faq-item { border-bottom: 1px solid var(--line); }

@@ -184,6 +184,12 @@ nav > a[href="index.html"] img[alt="Psi Real"],
   background: rgba(255, 255, 255, .9) !important;
   border-color: var(--border) !important;
 }
+.ecosystem .system-row {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  border-color: rgba(250,247,243,.18) !important;
+}
 
 .btn-hero,
 .btn-cta-white,
@@ -247,7 +253,7 @@ footer {
 }
 
 .ecosystem {
-  background: #332720 !important;
+  background: var(--bg) !important;
 }
 
 .final-cta .eyebrow {
