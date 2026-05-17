@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Meu Painel — Inventários Psi Real</title>
+  <title>Área da Assinante — PsiReal TCC</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
@@ -21,10 +21,11 @@
     body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-weight:300}
 
     /* LOCK */
-    #lockScreen{position:fixed;inset:0;background:var(--r1);display:flex;align-items:center;justify-content:center;z-index:999}
-    .lock-card{background:#fff;border-radius:var(--radius);padding:2.5rem;width:380px;text-align:center}
-    .lock-logo{font-family:'Instrument Serif',serif;font-size:22px;color:var(--r1);margin-bottom:4px}
-    .lock-sub{font-size:12px;color:var(--ink-3);margin-bottom:2rem;line-height:1.6}
+    #lockScreen{position:fixed;inset:0;background:linear-gradient(180deg,#fff 0%,#F8F2F4 100%);display:flex;align-items:center;justify-content:center;z-index:999}
+    .lock-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:2.5rem;width:380px;text-align:center;box-shadow:var(--shadow)}
+    .lock-kicker{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:.65rem}
+    .lock-logo{font-family:'Instrument Serif',serif;font-size:28px;color:var(--r1);margin-bottom:4px}
+    .lock-sub{font-size:13px;color:var(--ink-3);margin-bottom:2rem;line-height:1.6}
     .lock-input{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:15px;font-family:inherit;outline:none;margin-bottom:10px;text-align:center}
     .lock-input:focus{border-color:var(--r2)}
     .lock-btn{width:100%;padding:13px;background:var(--r1);color:#fff;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
@@ -32,7 +33,7 @@
 
     #app{display:none}
     nav{background:var(--r1);padding:0 2rem;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
-    .nav-logo{font-family:'Instrument Serif',serif;font-size:17px;color:#fff}
+    .nav-logo{font-family:'Instrument Serif',serif;font-size:19px;color:#fff}
     .nav-logo span{color:var(--rose-light);font-style:italic}
     .nav-psi{font-size:12px;color:rgba(255,255,255,0.55);background:rgba(255,255,255,0.08);padding:4px 12px;border-radius:99px}
     .main{max-width:1060px;margin:0 auto;padding:2rem 1.5rem}
@@ -96,8 +97,9 @@
 <!-- LOCK -->
 <div id="lockScreen">
   <div class="lock-card">
-    <div class="lock-logo">Inventários <span style="color:var(--r1)">Psi Real</span></div>
-    <div class="lock-sub">Painel da psicóloga<br>Acesse com seu e-mail e senha</div>
+    <div class="lock-kicker">Área da assinante</div>
+    <div class="lock-logo">PsiReal <span style="color:var(--r1)">TCC</span></div>
+    <div class="lock-sub">Plataforma clínica para psicólogas<br>Acesse com seu e-mail e senha</div>
     <input type="email" class="lock-input" id="emailInput" placeholder="seu e-mail" autocomplete="email"/>
     <input type="password" class="lock-input" id="passwordInput" placeholder="sua senha" autocomplete="current-password" onkeydown="if(event.key==='Enter')checkLock()"/>
     <button class="lock-btn" onclick="checkLock()">Acessar meu painel →</button>
@@ -108,7 +110,7 @@
 <!-- APP -->
 <div id="app">
   <nav>
-    <div class="nav-logo">Inventários <span>Psi Real</span></div>
+    <div class="nav-logo">PsiReal <span>TCC</span></div>
     <span class="nav-psi" id="nav-psi-name">Psicóloga</span>
   </nav>
 
@@ -116,7 +118,7 @@
 
     <!-- ENVIAR LINK -->
     <div class="send-box">
-      <div class="send-title">Enviar questionário para paciente</div>
+      <div class="send-title">Enviar instrumento para paciente</div>
       <div class="send-row">
         <div class="send-field">
           <label>Nome do paciente</label>
@@ -125,8 +127,9 @@
         <div class="send-field">
           <label>Questionário</label>
           <select id="inv-select">
-            <option value="formulario-esquemas">YSQ-S3 — Esquemas de Young</option>
-            <option disabled>GAD-7 — Em breve</option>
+            <option value="YSQ-S3" data-page="formulario-esquemas">YSQ-S3 — Esquemas de Young</option>
+            <option value="GAD-7" data-page="formulario-gad7">GAD-7 — Ansiedade</option>
+            <option disabled>BAI — Beck Anxiety Inventory (licenciamento)</option>
             <option disabled>PHQ-9 — Em breve</option>
           </select>
         </div>
@@ -194,7 +197,9 @@ async function checkLock() {
 
 async function gerarLink() {
   const nome = document.getElementById('pac-nome-input').value.trim();
-  const inv = document.getElementById('inv-select').value;
+  const select = document.getElementById('inv-select');
+  const inv = select.value;
+  const page = select.options[select.selectedIndex].dataset.page;
   if(!nome) { alert('Informe o nome do paciente'); return; }
   const res = await fetch(`${SB}/rest/v1/rpc/create_patient_link`, {
     method:'POST',
@@ -206,7 +211,7 @@ async function gerarLink() {
     body:JSON.stringify({
       p_patient_name:nome,
       p_patient_birth:null,
-      p_instrumento:'YSQ-S3',
+      p_instrumento:inv,
       p_expires_at:null
     })
   });
@@ -217,7 +222,7 @@ async function gerarLink() {
   }
   const token = encodeURIComponent(data[0].token);
   const enc = encodeURIComponent(nome);
-  const link = `${BASE}/${inv}.html?token=${token}&nome=${enc}`;
+  const link = `${BASE}/${page}.html?token=${token}&nome=${enc}`;
   document.getElementById('link-gerado').textContent = link;
   const waMsg = encodeURIComponent(`Olá ${nome}! Sou sua psicóloga e gostaria que você respondesse este questionário antes da nossa próxima sessão:\n${link}`);
   document.getElementById('link-wa').href = `https://wa.me/?text=${waMsg}`;
@@ -256,11 +261,14 @@ async function loadPacientes() {
       const ultima = resps[0];
       const scores = ultima.scores||{};
       const date = ultima.created_at ? new Date(ultima.created_at).toLocaleDateString('pt-BR') : '—';
+      const instrumentos = [...new Set(resps.map(resp => resp.instrumento || resp.formulario).filter(Boolean))];
+      const ultimaInst = ultima.instrumento || ultima.formulario || 'Instrumento';
+      const totalScore = Number(ultima.score_total ?? scores.total ?? 0);
 
       // Top 3 esquemas mais altos
-      const top3 = Object.entries(scores).sort((a,b)=>b[1]-a[1]).slice(0,3);
+      const top3 = ultimaInst === 'YSQ-S3' ? Object.entries(scores).sort((a,b)=>b[1]-a[1]).slice(0,3) : [];
 
-      const esquemasMini = Object.entries(scores).map(([nome,val]) => {
+      const esquemasMini = ultimaInst === 'YSQ-S3' ? Object.entries(scores).map(([nome,val]) => {
         const v = parseFloat(val)||0;
         const pct = Math.min(100,Math.round((v/6)*100));
         const cls = v>=4?'alto':v>=2.5?'medio':'baixo';
@@ -269,7 +277,7 @@ async function loadPacientes() {
           <div class="esq-mini-val">${v.toFixed(1)}</div>
           <span class="nivel-dot ${cls}"></span>
         </div>`;
-      }).join('');
+      }).join('') : '';
 
       return `<div class="paciente-card">
         <div class="pac-header" onclick="togglePac(this)">
@@ -278,11 +286,19 @@ async function loadPacientes() {
             <div class="pac-meta">${resps.length} resposta(s) · última: ${date}</div>
           </div>
           <div class="pac-right">
-            <span class="badge ysq">YSQ-S3</span>
+            ${instrumentos.map(inst => `<span class="badge ysq">${inst}</span>`).join('')}
             <span style="font-size:18px;color:var(--ink-3)">▾</span>
           </div>
         </div>
         <div class="pac-body">
+          ${ultimaInst === 'GAD-7' ? `
+          <div style="margin-bottom:1rem">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:8px">Última avaliação de ansiedade</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <span style="background:var(--sage-pale);border:1px solid var(--sage-border);padding:4px 12px;border-radius:99px;font-size:12px;color:var(--sage)"><b>${totalScore}</b> pontos</span>
+              <span style="background:var(--rose-pale);border:1px solid var(--rose-border);padding:4px 12px;border-radius:99px;font-size:12px;color:var(--r2)">${scores.nivel || 'Resultado registrado'}</span>
+            </div>
+          </div>` : ''}
           ${top3.length ? `
           <div style="margin-bottom:1rem">
             <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:8px">Esquemas mais elevados</div>
@@ -293,8 +309,9 @@ async function loadPacientes() {
           ${esquemasMini ? `
           <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:8px">Todos os esquemas</div>
           <div class="esquemas-mini">${esquemasMini}</div>` : ''}
-          <div style="margin-top:1.25rem;display:flex;gap:8px">
-            <button class="btn-sm" onclick="verGrafico('${nome}')">Ver gráfico</button>
+          <div style="margin-top:1.25rem;display:flex;gap:8px;flex-wrap:wrap">
+            ${ultimaInst === 'YSQ-S3' ? `<button class="btn-sm" onclick="abrirPainelEsquemas()">Abrir painel de esquemas</button>` : ''}
+            ${ultimaInst === 'YSQ-S3' ? `<button class="btn-sm" onclick="verGrafico('${nome}')">Ver gráfico</button>` : ''}
           </div>
           <div id="chart-${nome.replace(/\s/g,'_')}" style="margin-top:1rem;display:none">
             <canvas id="canvas-${nome.replace(/\s/g,'_')}" height="300"></canvas>
@@ -309,6 +326,10 @@ async function loadPacientes() {
 
 function togglePac(header) {
   header.nextElementSibling.classList.toggle('open');
+}
+
+function abrirPainelEsquemas() {
+  window.location.href = 'painel-esquemas.html';
 }
 
 function verGrafico(nome) {

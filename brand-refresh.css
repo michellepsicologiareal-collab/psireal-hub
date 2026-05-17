@@ -1,43 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap");
+
 :root,
 body {
-  --paper: #fcfaf8;
-  --paper-deep: #f3e9e4;
-  --ink: #2f2423;
-  --ink-2: #564643;
-  --ink-3: #7b6863;
-  --ink-4: #aa9993;
-  --muted: #72615d;
-  --soft: #9d8a84;
-  --line: #e7ddd8;
-  --wine: #6a4742;
-  --wine-2: #81584f;
-  --brown: #4f3b37;
+  --paper: #faf8f5;
+  --paper-deep: #f4f1ec;
+  --ink: #2c2420;
+  --ink-2: #6b5e56;
+  --ink-3: #8f837b;
+  --ink-4: #b4aaa2;
+  --muted: #6b5e56;
+  --soft: #9e9189;
+  --line: #e4ddd3;
+  --wine: #5c3d2e;
+  --wine-2: #8b5e47;
+  --brown: #5c3d2e;
   --white: #ffffff;
-  --bg: #fcfaf8;
-  --surface: #f7f1ee;
-  --border: #e7ddd8;
-  --r1: #6a4742;
-  --r2: #b86f5a;
-  --r3: #cda7a3;
-  --r4: #eadbd8;
-  --rose: #cda7a3;
-  --rose-mid: #d8b9b6;
-  --rose-light: #eadbd8;
-  --rose-pale: #faf5f3;
-  --rose-border: #e8d8d4;
-  --r-light: #f2e7e1;
-  --r-pale: #fbf7f4;
-  --r-border: #e7d8d2;
-  --sage: #98a892;
-  --sage-light: #b8c4b4;
-  --sage-pale: #f2f5f1;
-  --sage-border: #dde5da;
-  --grad: linear-gradient(135deg, #6a4742 0%, #b86f5a 58%, #cda7a3 100%);
-  --grad-subtle: linear-gradient(135deg, #fcfaf8 0%, #f6eee9 52%, #faf5f3 100%);
+  --bg: #faf8f5;
+  --surface: #ffffff;
+  --border: #e4ddd3;
+  --r1: #5c3d2e;
+  --r2: #8b7bab;
+  --r3: #b4a7cc;
+  --r4: #ddd6ee;
+  --rose: #b4a7cc;
+  --rose-mid: #c7bdd8;
+  --rose-light: #ddd6ee;
+  --rose-pale: #f0edf8;
+  --rose-border: #ddd6ee;
+  --r-light: #f0edf8;
+  --r-pale: #f7f5fb;
+  --r-border: #ddd6ee;
+  --sage: #3d7a72;
+  --sage-light: #6aada6;
+  --sage-pale: #d0ebe8;
+  --sage-border: #d0ebe8;
+  --grad: linear-gradient(135deg, #5c3d2e 0%, #8b5e47 45%, #8b7bab 100%);
+  --grad-subtle: linear-gradient(135deg, #faf8f5 0%, #f4f1ec 55%, #f0edf8 100%);
 }
 
 body {
   background: var(--bg);
+  font-family: "DM Sans", system-ui, sans-serif !important;
+}
+
+.brand,
+.section-title,
+.hero h1,
+h1,
+h2,
+h3,
+.lock-title,
+.stat-value,
+.det-nome {
+  font-family: "Cormorant Garamond", Georgia, serif !important;
 }
 
 .editorial-visual {
@@ -75,18 +90,15 @@ body {
 .accent-word,
 h1 em,
 h2 em,
-.section-title em {
+.section-title em,
+.hero h1 em {
   color: var(--r2) !important;
   font-style: italic;
 }
 
-.hero h1 em {
-  color: var(--r2) !important;
-}
-
 .site-nav,
 nav {
-  background: color-mix(in srgb, #ffffff 88%, transparent) !important;
+  background: color-mix(in srgb, #ffffff 90%, transparent) !important;
   border-bottom-color: color-mix(in srgb, var(--border) 88%, transparent) !important;
 }
 
@@ -115,7 +127,7 @@ nav > a[href="index.html"]:has(img[alt="Psi Real"])::before,
 }
 
 .brand span {
-  color: var(--rose) !important;
+  color: var(--r2) !important;
 }
 
 nav > a[href="index.html"]:has(img[alt="Psi Real"]) {
@@ -130,19 +142,13 @@ nav > a[href="index.html"]:has(img[alt="Psi Real"]) {
 
 nav > a[href="index.html"]:has(img[alt="Psi Real"])::after {
   content: "Psicologia Real";
-  font-family: "Instrument Serif", Georgia, serif;
+  font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 22px;
   line-height: 1;
 }
 
-nav > a[href="index.html"] img[alt="Psi Real"] {
-  display: none !important;
-}
-
-.nav-logo img {
-  display: none !important;
-}
-
+nav > a[href="index.html"] img[alt="Psi Real"],
+.nav-logo img,
 .nav-logo-name {
   display: none !important;
 }
@@ -170,9 +176,13 @@ nav > a[href="index.html"] img[alt="Psi Real"] {
 .paciente-card,
 .resultado-card,
 .esq-group,
-.lock-card {
-  border-radius: 8px !important;
-  box-shadow: 0 18px 48px rgba(52, 22, 36, .07) !important;
+.lock-card,
+.portal-link,
+.system-row {
+  border-radius: 10px !important;
+  box-shadow: 0 18px 48px rgba(44, 36, 32, .06) !important;
+  background: rgba(255, 255, 255, .9) !important;
+  border-color: var(--border) !important;
 }
 
 .btn-hero,
@@ -185,30 +195,37 @@ nav > a[href="index.html"] img[alt="Psi Real"] {
 .contact-btn,
 .lock-btn,
 .btn-gerar {
-  border-radius: 6px !important;
+  border-radius: 8px !important;
 }
 
-.manifesto {
-  background: #f2e7e1 !important;
+.manifesto,
+.final-cta {
+  background: var(--paper-deep) !important;
   color: var(--ink) !important;
 }
 
 .manifesto .eyebrow {
-  color: var(--rose) !important;
+  color: var(--r2) !important;
 }
 
-.manifesto .section-title {
+.manifesto .section-title,
+.final-cta h2,
+.final-cta p {
   color: var(--ink) !important;
 }
 
 .manifesto .section-lead,
-.symptom {
-  color: var(--ink-2) !important;
+.symptom,
+.button-secondary,
+.nav-links a:not(.nav-cta),
+.portal-link small,
+.section-lead {
+  color: var(--muted) !important;
 }
 
 .symptom-list,
 .symptom {
-  border-color: rgba(125, 89, 103, .16) !important;
+  border-color: rgba(139, 123, 171, .16) !important;
 }
 
 .symptom strong {
@@ -216,7 +233,7 @@ nav > a[href="index.html"] img[alt="Psi Real"] {
 }
 
 .symptom span {
-  color: var(--rose) !important;
+  color: var(--r2) !important;
 }
 
 .cta-final,
@@ -226,30 +243,20 @@ nav > a[href="index.html"] img[alt="Psi Real"] {
 }
 
 footer {
-  background: #3b2d2b !important;
+  background: #31261f !important;
 }
 
 .ecosystem {
-  background: #433331 !important;
-}
-
-.final-cta {
-  background: #f2e7e1 !important;
-  color: var(--ink) !important;
+  background: #332720 !important;
 }
 
 .final-cta .eyebrow {
   color: var(--sage) !important;
 }
 
-.final-cta h2,
-.final-cta p {
-  color: var(--ink) !important;
-}
-
 .final-cta .button-primary {
-  background: var(--r2) !important;
-  border-color: var(--r2) !important;
+  background: var(--wine) !important;
+  border-color: var(--wine) !important;
   color: #fff !important;
 }
 
@@ -258,50 +265,4 @@ footer {
   font-size: 11px !important;
   letter-spacing: .12em;
   text-transform: uppercase;
-}
-
-.admin-entry:hover {
-  opacity: 1;
-}
-
-.footer-logo,
-.footer-brand,
-footer p,
-footer a {
-  color: rgba(255,255,255,.82) !important;
-}
-
-.footer-logo span {
-  color: var(--rose-light) !important;
-}
-
-.hero-price,
-.hero-index,
-.app-strip,
-.app-banner,
-.bib-banner {
-  backdrop-filter: blur(18px);
-}
-
-@media (max-width: 768px) {
-  .brand {
-    min-width: 164px;
-    min-height: 46px;
-  }
-
-  nav > a[href="index.html"]:has(img[alt="Psi Real"]) {
-    width: auto;
-    height: 42px;
-  }
-
-  .brand::before,
-  nav > a[href="index.html"]:has(img[alt="Psi Real"])::before {
-    width: 46px;
-    height: 46px;
-    flex-basis: 46px;
-  }
-
-  nav > a[href="index.html"]:has(img[alt="Psi Real"])::after {
-    font-size: 19px;
-  }
 }
