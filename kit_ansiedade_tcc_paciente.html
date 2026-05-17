@@ -1,0 +1,1166 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #F7F4EE;
+    color: #2C2420;
+    min-height: 100vh;
+  }
+
+  .hero {
+    background: #2C2420;
+    padding: 3rem 2.5rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: rgba(200,147,74,0.08);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 40%;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(200,147,74,0.05);
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(200,147,74,0.2);
+    color: #C8934A;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.6rem;
+    font-weight: 400;
+    color: #F7F4EE;
+    line-height: 1.15;
+    margin-bottom: 0.8rem;
+  }
+
+  .hero h1 em {
+    color: #C8934A;
+    font-style: italic;
+  }
+
+  .hero p {
+    font-size: 14px;
+    color: rgba(247,244,238,0.6);
+    line-height: 1.7;
+    max-width: 520px;
+  }
+
+  .authors-bar {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .author-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(247,244,238,0.06);
+    border: 0.5px solid rgba(247,244,238,0.15);
+    border-radius: 30px;
+    padding: 6px 14px 6px 10px;
+  }
+
+  .author-dot {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    font-weight: 500;
+    color: #2C2420;
+  }
+
+  .author-chip span {
+    font-size: 12px;
+    color: rgba(247,244,238,0.75);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-tabs {
+    display: flex;
+    gap: 0;
+    background: #E8E2D6;
+    overflow-x: auto;
+    border-bottom: 0.5px solid #C8B89A;
+  }
+
+  .tab-btn {
+    flex-shrink: 0;
+    padding: 0.85rem 1.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: #7A6A5A;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+  }
+
+  .tab-btn.active {
+    color: #2C2420;
+    font-weight: 500;
+    border-bottom-color: #C8934A;
+    background: rgba(200,147,74,0.06);
+  }
+
+  .tab-btn:hover:not(.active) {
+    color: #4A3728;
+    background: rgba(44,36,32,0.04);
+  }
+
+  .content {
+    padding: 2rem 2.5rem;
+    max-width: 900px;
+  }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .section-header {
+    margin-bottom: 1.8rem;
+  }
+
+  .section-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: #2C2420;
+    margin-bottom: 0.3rem;
+  }
+
+  .section-header p {
+    font-size: 13px;
+    color: #7A6A5A;
+    line-height: 1.6;
+  }
+
+  .source-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+  }
+
+  .card {
+    background: #FFFFFF;
+    border: 0.5px solid #DDD5C5;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: #2C2420;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .card p, .card li {
+    font-size: 13.5px;
+    color: #4A3728;
+    line-height: 1.75;
+  }
+
+  .card ul {
+    padding-left: 1.2rem;
+    margin-top: 0.5rem;
+  }
+
+  .card li { margin-bottom: 0.4rem; }
+
+  .highlight-box {
+    background: #F7F0E6;
+    border-left: 3px solid #C8934A;
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+  }
+
+  .highlight-box p {
+    font-size: 13px;
+    color: #5A3E28;
+    line-height: 1.7;
+  }
+
+  .highlight-box strong {
+    color: #3A2410;
+    font-weight: 500;
+  }
+
+  .thought-record {
+    background: #FAFAF8;
+    border: 0.5px solid #DDD5C5;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.2rem;
+  }
+
+  .thought-record-header {
+    background: #2C2420;
+    padding: 0.8rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .thought-record-header span {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(247,244,238,0.9);
+    letter-spacing: 0.04em;
+  }
+
+  .thought-record-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .tr-cell {
+    padding: 1rem;
+    border-right: 0.5px solid #DDD5C5;
+    border-bottom: 0.5px solid #DDD5C5;
+  }
+
+  .tr-cell:nth-child(3n) { border-right: none; }
+
+  .tr-cell-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #9A8A7A;
+    margin-bottom: 0.5rem;
+  }
+
+  .tr-cell-content {
+    font-size: 12.5px;
+    color: #4A3728;
+    line-height: 1.65;
+    font-style: italic;
+  }
+
+  .scale-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0.8rem 0;
+  }
+
+  .scale-label {
+    font-size: 12px;
+    color: #7A6A5A;
+    width: 80px;
+    flex-shrink: 0;
+  }
+
+  .scale-dots {
+    display: flex;
+    gap: 4px;
+  }
+
+  .scale-dot {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: #F0EAE0;
+    border: 0.5px solid #C8B89A;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px;
+    color: #9A8A7A;
+    font-weight: 500;
+  }
+
+  .scale-dot.filled {
+    background: #C8934A;
+    border-color: #C8934A;
+    color: white;
+  }
+
+  .ladder {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+
+  .ladder::before {
+    content: '';
+    position: absolute;
+    left: 20px; top: 24px; bottom: 24px;
+    width: 1.5px;
+    background: linear-gradient(to bottom, #C8934A, #2C2420);
+  }
+
+  .ladder-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 0.7rem 0;
+  }
+
+  .ladder-num {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .ladder-text { flex: 1; padding-top: 6px; }
+  .ladder-text strong { display: block; font-size: 13.5px; font-weight: 500; color: #2C2420; margin-bottom: 2px; }
+  .ladder-text span { font-size: 12px; color: #7A6A5A; line-height: 1.6; }
+
+  .hexaflex {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: #DDD5C5;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.2rem;
+  }
+
+  .hex-cell {
+    background: #FAFAF8;
+    padding: 1.25rem;
+  }
+
+  .hex-cell-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: #E8D8C0;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+
+  .hex-cell-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #2C2420;
+    margin-bottom: 0.4rem;
+  }
+
+  .hex-cell-desc {
+    font-size: 11.5px;
+    color: #7A6A5A;
+    line-height: 1.6;
+  }
+
+  .exercise-box {
+    background: #F2EDE4;
+    border-radius: 10px;
+    padding: 1.25rem;
+    margin: 1rem 0;
+  }
+
+  .exercise-title {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #8A6A4A;
+    margin-bottom: 0.8rem;
+  }
+
+  .exercise-steps {
+    counter-reset: step;
+  }
+
+  .exercise-step {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 0.6rem;
+    counter-increment: step;
+  }
+
+  .step-num {
+    width: 20px; height: 20px;
+    background: #C8934A;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    font-weight: 500;
+    color: white;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step-text {
+    font-size: 13px;
+    color: #4A3728;
+    line-height: 1.65;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .col-card {
+    background: white;
+    border: 0.5px solid #DDD5C5;
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+
+  .col-card-title {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 0.5px solid #EEE8DC;
+  }
+
+  .worry-loop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0;
+    margin: 1rem 0;
+  }
+
+  .loop-node {
+    background: white;
+    border: 0.5px solid #DDD5C5;
+    border-radius: 10px;
+    padding: 0.8rem 1.25rem;
+    text-align: center;
+    width: 85%;
+  }
+
+  .loop-node-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #9A8A7A;
+    margin-bottom: 3px;
+  }
+
+  .loop-node-text {
+    font-size: 13px;
+    color: #2C2420;
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  .loop-arrow {
+    font-size: 18px;
+    color: #C8934A;
+    line-height: 1.4;
+  }
+
+  .loop-node.trigger { border-color: #C8934A; background: #FDF6EC; }
+  .loop-node.avoid { border-color: #9A6A5A; background: #FAF2EE; }
+
+  .acceptance-bridge {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    align-items: center;
+    margin: 1.2rem 0;
+  }
+
+  .bridge-side {
+    background: white;
+    border: 0.5px solid #DDD5C5;
+    border-radius: 10px;
+    padding: 1rem;
+  }
+
+  .bridge-mid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 1rem;
+    gap: 4px;
+  }
+
+  .bridge-arrow-line {
+    width: 2px;
+    height: 40px;
+    background: #C8934A;
+  }
+
+  .bridge-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #C8934A;
+    white-space: nowrap;
+    writing-mode: vertical-rl;
+    height: 40px;
+    display: flex;
+    align-items: center;
+  }
+
+  .bridge-side-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #9A8A7A;
+    margin-bottom: 0.5rem;
+  }
+
+  .bridge-side p {
+    font-size: 12.5px;
+    color: #4A3728;
+    line-height: 1.6;
+  }
+
+  .footer-note {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 0.5px solid #DDD5C5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: gap;
+  }
+
+  .footer-note p {
+    font-size: 11px;
+    color: #9A8A7A;
+    line-height: 1.5;
+  }
+
+  .footer-note span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: #C8934A;
+    font-style: italic;
+  }
+
+  @media (max-width: 600px) {
+    .content { padding: 1.5rem 1.25rem; }
+    .hero { padding: 2rem 1.5rem; }
+    .hero h1 { font-size: 2rem; }
+    .thought-record-grid { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .hexaflex { grid-template-columns: 1fr 1fr; }
+    .acceptance-bridge { grid-template-columns: 1fr; }
+    .bridge-mid { display: none; }
+  }
+</style>
+
+<div class="hero">
+  <div class="hero-badge">Psicoeducação · TCC · Materiais para Pacientes</div>
+  <h1>Entendendo a<br><em>Ansiedade</em></h1>
+  <p>Um guia baseado nos principais protocolos de Terapia Cognitivo-Comportamental — para compreender, questionar e transformar sua relação com o medo.</p>
+  <div class="authors-bar">
+    <div class="author-chip">
+      <div class="author-dot" style="background:#E8D8C0;">P</div>
+      <span>Padesky</span>
+    </div>
+    <div class="author-chip">
+      <div class="author-dot" style="background:#D4E8D8;">L</div>
+      <span>Leahy</span>
+    </div>
+    <div class="author-chip">
+      <div class="author-dot" style="background:#D8D4E8;">H</div>
+      <span>Hayes</span>
+    </div>
+    <div class="author-chip">
+      <div class="author-dot" style="background:#E8D4D4;">B</div>
+      <span>Barlow</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav-tabs">
+  <button class="tab-btn active" onclick="showPanel('modelo')">O que é a ansiedade</button>
+  <button class="tab-btn" onclick="showPanel('pensamentos')">Pensamentos automáticos</button>
+  <button class="tab-btn" onclick="showPanel('preocupacao')">Ciclo da preocupação</button>
+  <button class="tab-btn" onclick="showPanel('emocoes')">Tolerância emocional</button>
+  <button class="tab-btn" onclick="showPanel('act')">Aceitação e valores</button>
+  <button class="tab-btn" onclick="showPanel('exposicao')">Protocolo de exposição</button>
+</div>
+
+<!-- PAINEL 1: Modelo Cognitivo -->
+<div class="content">
+<div id="panel-modelo" class="panel active">
+  <div class="section-header">
+    <div class="source-tag" style="background:#F0EAE0;color:#8A6A4A;">Modelo Cognitivo · Padesky & Greenberger</div>
+    <h2>Como a ansiedade funciona</h2>
+    <p>A ansiedade não é um sinal de fraqueza. É uma resposta do sistema nervoso que, em algum momento, aprendeu a perceber ameaças onde não há perigo real.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <div class="card-icon" style="background:#F0EAE0;">🔄</div>
+      O modelo dos 5 elementos
+    </div>
+    <p>Segundo Padesky, nosso estado emocional é resultado de 5 sistemas que se influenciam mutuamente:</p>
+    <div class="hexaflex" style="margin-top:1rem;">
+      <div class="hex-cell">
+        <div class="hex-cell-num">01</div>
+        <div class="hex-cell-title">Situação</div>
+        <div class="hex-cell-desc">O evento externo ou interno que dispara o ciclo. Pode ser real ou imaginado.</div>
+      </div>
+      <div class="hex-cell">
+        <div class="hex-cell-num">02</div>
+        <div class="hex-cell-title">Pensamento</div>
+        <div class="hex-cell-desc">"Vou passar mal." "Não vou conseguir." A interpretação automática da situação.</div>
+      </div>
+      <div class="hex-cell">
+        <div class="hex-cell-num">03</div>
+        <div class="hex-cell-title">Emoção</div>
+        <div class="hex-cell-desc">O sentimento resultante: medo, tensão, pânico, preocupação, irritação.</div>
+      </div>
+      <div class="hex-cell">
+        <div class="hex-cell-num">04</div>
+        <div class="hex-cell-title">Corpo</div>
+        <div class="hex-cell-desc">Coração acelerado, tensão muscular, falta de ar, tontura, sudorese.</div>
+      </div>
+      <div class="hex-cell">
+        <div class="hex-cell-num">05</div>
+        <div class="hex-cell-title">Comportamento</div>
+        <div class="hex-cell-desc">O que fazemos: evitar, fugir, checar, pedir reassurance, paralisar.</div>
+      </div>
+      <div class="hex-cell" style="background:#F7F0E6;">
+        <div class="hex-cell-num" style="color:#C8934A;">⟳</div>
+        <div class="hex-cell-title">O ciclo</div>
+        <div class="hex-cell-desc">Cada elemento alimenta o outro. A boa notícia: qualquer ponto pode ser o ponto de mudança.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <p><strong>Ideia central:</strong> A ansiedade não é perigosa em si mesma. O que a mantém é a interpretação de que os sintomas são ameaças — e as estratégias de evitação que impedem o sistema de aprender que o perigo não se concretizou.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <div class="card-icon" style="background:#F0EAE0;">🧠</div>
+      A função evolutiva do medo
+    </div>
+    <p>O sistema de ansiedade evoluiu para proteger. O problema não é ter medo — é que esse sistema às vezes dispara em situações onde não há ameaça real.</p>
+    <div class="two-col" style="margin-top:1rem;">
+      <div class="col-card">
+        <div class="col-card-title" style="color:#6A9A6A;">✓ Medo funcional</div>
+        <ul>
+          <li>Proporcional ao perigo real</li>
+          <li>Passa após a situação</li>
+          <li>Mobiliza para agir com eficácia</li>
+          <li>Não interfere na vida</li>
+        </ul>
+      </div>
+      <div class="col-card">
+        <div class="col-card-title" style="color:#C8934A;">⚑ Ansiedade clínica</div>
+        <ul>
+          <li>Desproporcional ou imaginada</li>
+          <li>Persiste mesmo sem ameaça</li>
+          <li>Leva à esquiva e paralisia</li>
+          <li>Restringe a vida gradualmente</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAINEL 2: Pensamentos Automáticos -->
+<div id="panel-pensamentos" class="panel">
+  <div class="section-header">
+    <div class="source-tag" style="background:#F0EAE0;color:#8A6A4A;">Registro de Pensamentos · Padesky & Leahy</div>
+    <h2>Questionando os pensamentos automáticos</h2>
+    <p>Pensamentos automáticos são rápidos, involuntários e parecem verdadeiros — mas raramente são fatos. Aprender a identificá-los é o primeiro passo para mudá-los.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <div class="card-icon" style="background:#F0EAE0;">⚡</div>
+      As distorções cognitivas mais comuns na ansiedade
+    </div>
+    <div class="ladder">
+      <div class="ladder-item">
+        <div class="ladder-num" style="background:#F7F0E6;color:#C8934A;border:1.5px solid #C8934A;">1</div>
+        <div class="ladder-text">
+          <strong>Catastrofização</strong>
+          <span>"Com certeza vai dar errado. Vai ser horrível. Não vou conseguir suportar."</span>
+        </div>
+      </div>
+      <div class="ladder-item">
+        <div class="ladder-num" style="background:#F7F0E6;color:#C8934A;border:1.5px solid #C8934A;">2</div>
+        <div class="ladder-text">
+          <strong>Leitura mental</strong>
+          <span>"Ela ficou quieta. Com certeza está me julgando negativamente."</span>
+        </div>
+      </div>
+      <div class="ladder-item">
+        <div class="ladder-num" style="background:#F7F0E6;color:#C8934A;border:1.5px solid #C8934A;">3</div>
+        <div class="ladder-text">
+          <strong>Previsão do futuro</strong>
+          <span>"Vou travar na apresentação. Vou ter um ataque de pânico na reunião."</span>
+        </div>
+      </div>
+      <div class="ladder-item">
+        <div class="ladder-num" style="background:#F7F0E6;color:#C8934A;border:1.5px solid #C8934A;">4</div>
+        <div class="ladder-text">
+          <strong>Filtro negativo</strong>
+          <span>Notar apenas o que deu errado, ignorar completamente o que funcionou.</span>
+        </div>
+      </div>
+      <div class="ladder-item">
+        <div class="ladder-num" style="background:#2C2420;color:#F7F4EE;">5</div>
+        <div class="ladder-text">
+          <strong>Superestimação do perigo</strong>
+          <span>Avaliar a probabilidade do pior cenário como muito alta, mesmo sem evidências.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:1.8rem;">
+    <h2 style="font-size:1.4rem;">O registro de pensamentos</h2>
+    <p>Ferramenta central de Padesky. Use para desacelerar o ciclo e criar distância do pensamento automático.</p>
+  </div>
+
+  <div class="thought-record">
+    <div class="thought-record-header">
+      <span>EXEMPLO DE REGISTRO DE PENSAMENTO</span>
+      <span style="font-size:10px;opacity:0.5;">Padesky & Greenberger, 1995</span>
+    </div>
+    <div class="thought-record-grid">
+      <div class="tr-cell">
+        <div class="tr-cell-label">Situação</div>
+        <div class="tr-cell-content">Recebi uma mensagem do chefe: "Precisamos conversar"</div>
+      </div>
+      <div class="tr-cell">
+        <div class="tr-cell-label">Pensamento automático</div>
+        <div class="tr-cell-content">"Vou ser demitida. Fiz algo errado. Está insatisfeito comigo."</div>
+      </div>
+      <div class="tr-cell">
+        <div class="tr-cell-label">Emoção (0–100)</div>
+        <div class="tr-cell-content">Ansiedade: 85 · Medo: 70 · Vergonha: 40</div>
+      </div>
+      <div class="tr-cell">
+        <div class="tr-cell-label">Evidências A FAVOR</div>
+        <div class="tr-cell-content">Nenhuma mensagem específica. Tom da mensagem é neutro.</div>
+      </div>
+      <div class="tr-cell">
+        <div class="tr-cell-label">Evidências CONTRA</div>
+        <div class="tr-cell-content">Recebi um elogio semana passada. Nunca recebi feedbacks negativos formais.</div>
+      </div>
+      <div class="tr-cell">
+        <div class="tr-cell-label">Pensamento alternativo</div>
+        <div class="tr-cell-content">"Pode ser qualquer assunto. Não tenho dados para catastrofizar agora."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <p><strong>Pergunta socrática de Padesky:</strong> "Quais evidências você tem de que esse pensamento é verdadeiro? Quais evidências indicam que ele pode não ser?" O objetivo não é pensar positivo — é pensar com precisão.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <div class="card-icon" style="background:#F0EAE0;">🔎</div>
+      Técnica: Perguntas para examinar o pensamento (Leahy)
+    </div>
+    <div class="exercise-box">
+      <div class="exercise-title">Quando perceber um pensamento ansioso, pergunte:</div>
+      <div class="exercise-steps">
+        <div class="exercise-step"><div class="step-num">1</div><div class="step-text">Qual é a evidência real de que isso vai acontecer?</div></div>
+        <div class="exercise-step"><div class="step-num">2</div><div class="step-text">Já pensei algo assim antes e estava errado?</div></div>
+        <div class="exercise-step"><div class="step-num">3</div><div class="step-text">Se acontecer, vou conseguir lidar de alguma forma?</div></div>
+        <div class="exercise-step"><div class="step-num">4</div><div class="step-text">Estou confundindo um pensamento com um fato?</div></div>
+        <div class="exercise-step"><div class="step-num">5</div><div class="step-text">O que eu diria a um amigo que estivesse pensando isso?</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAINEL 3: Ciclo da preocupação -->
+<div id="panel-preocupacao" class="panel">
+  <div class="section-header">
+    <div class="source-tag" style="background:#F0EAE0;color:#8A6A4A;">TAG & Preocupação Crônica · Leahy</div>
+    <h2>O ciclo da preocupação</h2>
+    <p>Preocupar-se parece útil — parece que estamos "fazendo algo" em relação ao problema. Mas frequentemente é o que mantém a ansiedade.</p>
+  </div>
+
+  <div class="worry-loop">
+    <div class="loop-node trigger">
+      <div class="loop-node-label">Gatilho</div>
+      <div class="loop-node-text">"E se eu não conseguir pagar as contas?"</div>
+    </div>
+    <div class="loop-arrow">↓</div>
+    <div class="loop-node">
+      <div class="loop-node-label">Crença sobre a preocupação</div>
+      <div class="loop-node-text">"Preciso ficar pensando nisso ou algo vai dar errado"</div>
+    </div>
+    <div class="loop-arrow">↓</div>
+    <div class="loop-node">
+      <div class="loop-node-label">Mais preocupação</div>
+      <div class="loop-node-text">Cadeias de "e se..." cada vez mais distantes e catastróficas</div>
+    </div>
+    <div class="loop-arrow">↓</div>
+    <div class="loop-node avoid">
+      <div class="loop-node-label">Comportamento de segurança</div>
+      <div class="loop-node-text">Evitar, checar repetidamente, buscar reassurance, não agir</div>
+    </div>
+    <div class="loop-arrow">↓</div>
+    <div class="loop-node">
+      <div class="loop-node-label">Resultado</div>
+      <div class="loop-node-text">Problema não resolvido → preocupação aumenta → ciclo reinicia</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <div class="card-icon" style="background:#F0EAE0;">📊</div>
+      Preocupação produtiva vs. improdutiva (Leahy)
+    </div>
+    <div class="two-col" style="margin-top:0.8rem;">
+      <div class="col-card">
+        <div class="col-card-title" style="color:#6A9A6A;">✓ Produtiva</div>
+        <ul>
+          <li>Tem um problema atual e real</li>
+          <li>Leva a uma ação concreta</li>
+          <li>Para quando a ação é tomada</li>
+          <li>Resolve ou reduz o problema</li>
+        </ul>
+      </div>
+      <div class="col-card">
+        <div class="col-card-title" style="color:#C8934A;">⚑ Improdutiva</div>
+        <ul>
+          <li>Cenários hipotéticos ("e se...")</li>
+          <li>Não leva a nenhuma ação</li>
+          <li>Ruminação circular sem fim</li>
+          <li>Aumenta a ansiedade sem resolver</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <p><strong>Técnica do "horário da preocupação" (Leahy):</strong> Reserve 20 minutos por dia para se preocupar intencionalmente. Fora desse horário, quando surgir uma preocupação, anote-a e adie para o "horário". Isso quebra a fusão entre pensamento ansioso e ação imediata de checar.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <div class="card-icon" style="background:#F0EAE0;">🧩</div>
+      Exercício: Transformando preocupação em plano
+    </div>
+    <div class="exercise-box">
+      <div class="exercise-title">Passo a passo quando a preocupação aparecer</div>
+      <div class="exercise-steps">
+        <div class="exercise-step"><div class="step-num">1</div><div class="step-text"><strong>Identifique:</strong> Isso é um problema real e atual ou um cenário hipotético?</div></div>
+        <div class="exercise-step"><div class="step-num">2</div><div class="step-text"><strong>Se for real:</strong> O que posso fazer nas próximas 24h sobre isso?</div></div>
+        <div class="exercise-step"><div class="step-num">3</div><div class="step-text"><strong>Se for hipotético:</strong> Anote, adie para o horário da preocupação e retorne ao presente.</div></div>
+        <div class="exercise-step"><div class="step-num">4</div><div class="step-text"><strong>Se for insolúvel:</strong> Pratique a tolerância à incerteza — não toda preocupação tem resposta.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAINEL 4: Tolerância Emocional -->
+<div id="panel-emocoes" class="panel">
+  <div class="section-header">
+    <div class="source-tag" style="background:#F0EAE0;color:#8A6A4A;">Regulação Emocional · Barlow (Protocolo Unificado)</div>
+    <h2>Aprendendo a tolerar emoções difíceis</h2>
+    <p>O Protocolo Unificado de Barlow parte de uma premissa: a tentativa de suprimir ou evitar emoções é o que as intensifica e mantém os transtornos ansiosos.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <div class="card-icon" style="background:#F0EAE0;">🌊</div>
+      Os 5 componentes do Protocolo Unificado (Barlow)
+    </div>
+    <div class="ladder">
+      <div class="ladder-item">
+        <div class="ladder-num" style="background:#2C2420;color:#F7F4EE;">M</div>
+        <div class="ladder-text">
+          <strong>Motivação e consciência do tratamento</strong>
+          <span>Entender por que estamos evitando e o custo disso a longo prazo.</span>
+        </div>
+      </div>
+      <div class="ladder-item">
+        <div class="ladder-num" style="background:#2C2420;color:#F7F4EE;">C</div>
+        <div class="ladder-text">
+          <strong>Consciência emocional</strong>
+          <span>Observar a emoção com curiosidade, identificando pensamento, sensação e impulso.</span>
+        </div>
+      </div>
+      <div class="ladder-item">
+        <div class="ladder-num" style="background:#2C2420;color:#F7F4EE;">R</div>
+        <div class="ladder-text">
+          <strong>Reavaliação cognitiva</strong>
+          <span>Flexibilizar interpretações automáticas — não suprimir, mas examinar.</span>
+        </div>
+      </div>
+      <div class="ladder-item">
+        <div class="ladder-num" style="background:#2C2420;color:#F7F4EE;">E</div>
+        <div class="ladder-text">
+          <strong>Evitação emocional e comportamentos movidos por emoção</strong>
+          <span>Identificar e reduzir gradualmente estratégias de escape que perpetuam o ciclo.</span>
+        </div>
+      </div>
+      <div class="ladder-item">
+        <div class="ladder-num" style="background:#C8934A;color:white;">↑</div>
+        <div class="ladder-text">
+          <strong>Exposição interoceptiva e situacional</strong>
+          <span>Aproximar-se das sensações e situações temidas — a base da mudança duradoura.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <div class="card-icon" style="background:#F0EAE0;">🌡️</div>
+      Termômetro emocional — mapeando a intensidade
+    </div>
+    <p style="margin-bottom:1rem;font-size:13px;color:#4A3728;">Use essa escala para monitorar suas emoções ao longo do dia. O objetivo não é chegar a zero — é aumentar a janela de tolerância.</p>
+    <div class="scale-row">
+      <div class="scale-label">Ansiedade</div>
+      <div class="scale-dots">
+        <div class="scale-dot filled">1</div><div class="scale-dot filled">2</div><div class="scale-dot filled">3</div><div class="scale-dot filled">4</div><div class="scale-dot filled">5</div><div class="scale-dot">6</div><div class="scale-dot">7</div><div class="scale-dot">8</div><div class="scale-dot">9</div><div class="scale-dot">10</div>
+      </div>
+    </div>
+    <div class="scale-row">
+      <div class="scale-label">Urgência de evitar</div>
+      <div class="scale-dots">
+        <div class="scale-dot filled">1</div><div class="scale-dot filled">2</div><div class="scale-dot filled">3</div><div class="scale-dot">4</div><div class="scale-dot">5</div><div class="scale-dot">6</div><div class="scale-dot">7</div><div class="scale-dot">8</div><div class="scale-dot">9</div><div class="scale-dot">10</div>
+      </div>
+    </div>
+    <div class="exercise-box" style="margin-top:1rem;">
+      <div class="exercise-title">Técnica: Surf na onda da emoção (Barlow)</div>
+      <div class="exercise-steps">
+        <div class="exercise-step"><div class="step-num">1</div><div class="step-text">Observe a emoção sem tentar eliminá-la. "Isso é ansiedade. Eu posso sentir isso."</div></div>
+        <div class="exercise-step"><div class="step-num">2</div><div class="step-text">Note onde ela aparece no corpo: aperto no peito, tensão nos ombros?</div></div>
+        <div class="exercise-step"><div class="step-num">3</div><div class="step-text">Observe o pico — emoções atingem um máximo e depois diminuem naturalmente.</div></div>
+        <div class="exercise-step"><div class="step-num">4</div><div class="step-text">Resista ao impulso de evitar. Cada vez que você suporta, sua janela de tolerância aumenta.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAINEL 5: ACT -->
+<div id="panel-act" class="panel">
+  <div class="section-header">
+    <div class="source-tag" style="background:#F0EAE0;color:#8A6A4A;">ACT — Terapia de Aceitação e Compromisso · Hayes</div>
+    <h2>Aceitação, desfusão e valores</h2>
+    <p>A ACT não busca eliminar pensamentos e emoções — mas mudar sua relação com eles. O objetivo é aumentar a flexibilidade psicológica para viver de acordo com o que realmente importa.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <div class="card-icon" style="background:#F0EAE0;">🌐</div>
+      Os 6 processos da flexibilidade psicológica (Hayes)
+    </div>
+    <div class="hexaflex" style="margin-top:0.8rem;">
+      <div class="hex-cell">
+        <div class="hex-cell-num">01</div>
+        <div class="hex-cell-title">Aceitação</div>
+        <div class="hex-cell-desc">Abrir espaço para pensamentos e emoções sem lutar contra eles.</div>
+      </div>
+      <div class="hex-cell">
+        <div class="hex-cell-num">02</div>
+        <div class="hex-cell-title">Desfusão cognitiva</div>
+        <div class="hex-cell-desc">Criar distância dos pensamentos: observá-los como eventos mentais, não fatos.</div>
+      </div>
+      <div class="hex-cell">
+        <div class="hex-cell-num">03</div>
+        <div class="hex-cell-title">Eu como contexto</div>
+        <div class="hex-cell-desc">Você é o observador dos seus pensamentos, não os seus pensamentos.</div>
+      </div>
+      <div class="hex-cell">
+        <div class="hex-cell-num">04</div>
+        <div class="hex-cell-title">Momento presente</div>
+        <div class="hex-cell-desc">Atenção plena ao agora, sem julgamento. A ansiedade existe no futuro imaginado.</div>
+      </div>
+      <div class="hex-cell">
+        <div class="hex-cell-num">05</div>
+        <div class="hex-cell-title">Valores</div>
+        <div class="hex-cell-desc">O que realmente importa para você? Valores guiam ação mesmo na presença do medo.</div>
+      </div>
+      <div class="hex-cell" style="background:#F7F0E6;">
+        <div class="hex-cell-num" style="color:#C8934A;">06</div>
+        <div class="hex-cell-title" style="color:#C8934A;">Ação comprometida</div>
+        <div class="hex-cell-desc">Agir de acordo com os valores, mesmo quando a ansiedade está presente.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <p><strong>A premissa central da ACT:</strong> A tentativa de controlar pensamentos e emoções é, ela mesma, o problema. O objetivo não é se sentir melhor antes de agir — é agir bem enquanto se sente ansioso. O medo pode estar presente sem ser o piloto.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <div class="card-icon" style="background:#F0EAE0;">🪐</div>
+      Exercício de desfusão cognitiva
+    </div>
+    <div class="exercise-box">
+      <div class="exercise-title">Técnica: Nomeando o pensamento</div>
+      <div class="exercise-steps">
+        <div class="exercise-step"><div class="step-num">1</div><div class="step-text">Em vez de: <em>"Vou fracassar"</em></div></div>
+        <div class="exercise-step"><div class="step-num">2</div><div class="step-text">Diga: <em>"Estou tendo o pensamento de que vou fracassar"</em></div></div>
+        <div class="exercise-step"><div class="step-num">3</div><div class="step-text">Ou: <em>"Minha mente está me dizendo que vou fracassar"</em></div></div>
+        <div class="exercise-step"><div class="step-num">4</div><div class="step-text">Observe: o pensamento continua lá — mas você criou distância. Você é quem observa, não o pensamento em si.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="acceptance-bridge">
+    <div class="bridge-side">
+      <div class="bridge-side-label">Fusão (controle)</div>
+      <p>"Preciso eliminar essa ansiedade antes de agir. Quando eu estiver bem, vou fazer o que importa."</p>
+    </div>
+    <div class="bridge-mid">
+      <div class="bridge-label">ACT</div>
+    </div>
+    <div class="bridge-side">
+      <div class="bridge-side-label">Flexibilidade (aceitação)</div>
+      <p>"A ansiedade está aqui, e mesmo assim posso dar o próximo passo na direção do que importa para mim."</p>
+    </div>
+  </div>
+</div>
+
+<!-- PAINEL 6: Exposição -->
+<div id="panel-exposicao" class="panel">
+  <div class="section-header">
+    <div class="source-tag" style="background:#F0EAE0;color:#8A6A4A;">Exposição Gradual · Barlow & Padesky</div>
+    <h2>O protocolo de exposição</h2>
+    <p>A exposição é a intervenção com maior evidência científica no tratamento dos transtornos ansiosos. Funciona porque permite que o sistema nervoso aprenda que o perigo não se concretiza — e que você consegue tolerar.</p>
+  </div>
+
+  <div class="highlight-box">
+    <p><strong>Por que a evitação piora a ansiedade?</strong> Cada vez que você evita uma situação temida, a ansiedade diminui temporariamente — e esse alívio reforça a evitação. A longo prazo, o medo cresce e o mundo vai encolhendo.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <div class="card-icon" style="background:#F0EAE0;">📈</div>
+      A hierarquia de exposição — construindo a escada do medo
+    </div>
+    <p style="font-size:13px;color:#4A3728;margin-bottom:1rem;">Ordenamos as situações temidas do menos ao mais ansiogênico. Começamos sempre pelo degrau mais baixo.</p>
+    <div class="ladder">
+      <div class="ladder-item">
+        <div class="ladder-num" style="background:#F0EAE0;color:#8A6A4A;font-size:11px;">SUAs 10</div>
+        <div class="ladder-text">
+          <strong>Degrau 10 — mais difícil (ex.: apresentar para 200 pessoas)</strong>
+          <span>SUDS: 90–100 · Trabalhado ao final, após construir confiança nos degraus anteriores.</span>
+        </div>
+      </div>
+      <div class="ladder-item">
+        <div class="ladder-num" style="background:#F0EAE0;color:#8A6A4A;font-size:11px;">SUAs 7</div>
+        <div class="ladder-text">
+          <strong>Degrau 7 — moderado (ex.: falar em reunião de 15 pessoas)</strong>
+          <span>SUDS: 60–75 · Pratica-se até a ansiedade reduzir ao menos 50% sem evitação.</span>
+        </div>
+      </div>
+      <div class="ladder-item">
+        <div class="ladder-num" style="background:#F7F0E6;color:#C8934A;font-size:11px;">SUAs 4</div>
+        <div class="ladder-text">
+          <strong>Degrau 4 — início (ex.: fazer uma pergunta em grupo pequeno)</strong>
+          <span>SUDS: 35–50 · Ponto de partida. Desconfortável, mas tolerável.</span>
+        </div>
+      </div>
+      <div class="ladder-item">
+        <div class="ladder-num" style="background:#F7F0E6;color:#C8934A;font-size:11px;">SUAs 2</div>
+        <div class="ladder-text">
+          <strong>Degrau 2 — aquecimento (ex.: cumprimentar um colega)</strong>
+          <span>SUDS: 15–30 · Para construir confiança e habituar ao processo.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <div class="card-icon" style="background:#F0EAE0;">📋</div>
+      Como conduzir uma exposição (passo a passo)
+    </div>
+    <div class="exercise-box">
+      <div class="exercise-title">Protocolo de uma sessão de exposição</div>
+      <div class="exercise-steps">
+        <div class="exercise-step"><div class="step-num">1</div><div class="step-text"><strong>Antes:</strong> Avalie a ansiedade de 0 a 100 (SUDS). Anote o pensamento catastrófico ("O que você acha que vai acontecer?").</div></div>
+        <div class="exercise-step"><div class="step-num">2</div><div class="step-text"><strong>Durante:</strong> Permaneça na situação. Não use comportamentos de segurança. Observe a ansiedade sem lutar.</div></div>
+        <div class="exercise-step"><div class="step-num">3</div><div class="step-text"><strong>Monitoramento:</strong> A cada 5–10 min, avalie novamente (0–100). A tendência natural é diminuir.</div></div>
+        <div class="exercise-step"><div class="step-num">4</div><div class="step-text"><strong>Encerramento:</strong> Só encerre quando a ansiedade reduzir ao menos 50% — nunca no pico.</div></div>
+        <div class="exercise-step"><div class="step-num">5</div><div class="step-text"><strong>Depois:</strong> Anote o que aprendeu. "O que aconteceu de fato? O que isso mostra sobre o pensamento catastrófico?"</div></div>
+      </div>
+    </div>
+    <div class="highlight-box" style="margin-top:1rem;">
+      <p><strong>Regra de ouro:</strong> A exposição funciona porque desconfirma as previsões catastróficas — não porque elimina o medo durante o processo. Espere sentir ansiedade. É sinal de que está funcionando.</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer-note">
+  <p>Materiais psicoeducativos baseados em:<br>Padesky & Greenberger · Leahy (2009) · Hayes, Strosahl & Wilson · Barlow (Protocolo Unificado)</p>
+  <span>Psicologia Real ®</span>
+</div>
+</div>
+
+<script>
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>

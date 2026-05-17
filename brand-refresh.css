@@ -1,43 +1,55 @@
 :root,
 body {
-  --paper: #fcfbfc;
-  --paper-deep: #f3eef1;
-  --ink: #21171e;
-  --ink-2: #4a3340;
-  --ink-3: #7f6975;
-  --ink-4: #aa97a1;
-  --muted: #715f69;
-  --soft: #9a8791;
-  --line: #e7dde3;
-  --wine: #341624;
-  --wine-2: #58283d;
-  --brown: #5a484f;
+  --paper: #fcfaf8;
+  --paper-deep: #f3e9e4;
+  --ink: #2f2423;
+  --ink-2: #564643;
+  --ink-3: #7b6863;
+  --ink-4: #aa9993;
+  --muted: #72615d;
+  --soft: #9d8a84;
+  --line: #e7ddd8;
+  --wine: #6a4742;
+  --wine-2: #81584f;
+  --brown: #4f3b37;
   --white: #ffffff;
-  --bg: #fcfbfc;
-  --surface: #f6f2f5;
-  --border: #e7dde3;
-  --r1: #341624;
-  --r2: #58283d;
-  --r3: #c78b99;
-  --r4: #ead7de;
-  --rose: #c78b99;
-  --rose-mid: #d4a5b0;
-  --rose-light: #ead7de;
-  --rose-pale: #f7f2f5;
-  --rose-border: #dfc9d1;
-  --r-light: #f2e8ed;
-  --r-pale: #f8f4f6;
-  --r-border: #e2d1d9;
-  --sage: #627870;
-  --sage-light: #8da29b;
-  --sage-pale: #eef4f1;
-  --sage-border: #d4e0db;
-  --grad: linear-gradient(135deg, #341624 0%, #58283d 58%, #c78b99 100%);
-  --grad-subtle: linear-gradient(135deg, #fbf8fa 0%, #f5eff3 52%, #efe5ea 100%);
+  --bg: #fcfaf8;
+  --surface: #f7f1ee;
+  --border: #e7ddd8;
+  --r1: #6a4742;
+  --r2: #b86f5a;
+  --r3: #cda7a3;
+  --r4: #eadbd8;
+  --rose: #cda7a3;
+  --rose-mid: #d8b9b6;
+  --rose-light: #eadbd8;
+  --rose-pale: #faf5f3;
+  --rose-border: #e8d8d4;
+  --r-light: #f2e7e1;
+  --r-pale: #fbf7f4;
+  --r-border: #e7d8d2;
+  --sage: #98a892;
+  --sage-light: #b8c4b4;
+  --sage-pale: #f2f5f1;
+  --sage-border: #dde5da;
+  --grad: linear-gradient(135deg, #6a4742 0%, #b86f5a 58%, #cda7a3 100%);
+  --grad-subtle: linear-gradient(135deg, #fcfaf8 0%, #f6eee9 52%, #faf5f3 100%);
 }
 
 body {
   background: var(--bg);
+}
+
+.accent-word,
+h1 em,
+h2 em,
+.section-title em {
+  color: var(--r2) !important;
+  font-style: italic;
+}
+
+.hero h1 em {
+  color: var(--r2) !important;
 }
 
 .site-nav,
@@ -60,7 +72,8 @@ nav {
 }
 
 .brand::before,
-nav > a[href="index.html"]:has(img[alt="Psi Real"])::before {
+nav > a[href="index.html"]:has(img[alt="Psi Real"])::before,
+.nav-logo::before {
   content: "";
   width: 54px;
   height: 54px;
@@ -92,6 +105,18 @@ nav > a[href="index.html"]:has(img[alt="Psi Real"])::after {
 
 nav > a[href="index.html"] img[alt="Psi Real"] {
   display: none !important;
+}
+
+.nav-logo img {
+  display: none !important;
+}
+
+.nav-logo-name {
+  display: none !important;
+}
+
+.nav-logo::before {
+  margin-right: 2px;
 }
 
 .hero {
@@ -131,7 +156,37 @@ nav > a[href="index.html"] img[alt="Psi Real"] {
   border-radius: 6px !important;
 }
 
-.manifesto,
+.manifesto {
+  background: #f2e7e1 !important;
+  color: var(--ink) !important;
+}
+
+.manifesto .eyebrow {
+  color: var(--rose) !important;
+}
+
+.manifesto .section-title {
+  color: var(--ink) !important;
+}
+
+.manifesto .section-lead,
+.symptom {
+  color: var(--ink-2) !important;
+}
+
+.symptom-list,
+.symptom {
+  border-color: rgba(125, 89, 103, .16) !important;
+}
+
+.symptom strong {
+  color: var(--ink) !important;
+}
+
+.symptom span {
+  color: var(--rose) !important;
+}
+
 .cta-final,
 .cta-box,
 #lockScreen {
@@ -139,7 +194,31 @@ nav > a[href="index.html"] img[alt="Psi Real"] {
 }
 
 footer {
-  background: #170e14 !important;
+  background: #3b2d2b !important;
+}
+
+.ecosystem {
+  background: #433331 !important;
+}
+
+.final-cta {
+  background: #f2e7e1 !important;
+  color: var(--ink) !important;
+}
+
+.final-cta .eyebrow {
+  color: var(--sage) !important;
+}
+
+.final-cta h2,
+.final-cta p {
+  color: var(--ink) !important;
+}
+
+.final-cta .button-primary {
+  background: var(--r2) !important;
+  border-color: var(--r2) !important;
+  color: #fff !important;
 }
 
 .admin-entry {

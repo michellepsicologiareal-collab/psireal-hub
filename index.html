@@ -14,17 +14,17 @@
     * { margin: 0; }
     html { scroll-behavior: smooth; }
     body {
-      --paper: #faf7f3;
-      --paper-deep: #f1e8e1;
-      --ink: #1d1315;
-      --muted: #6e5c5b;
-      --soft: #9b8280;
-      --line: #ded0c7;
-      --wine: #3a1624;
-      --wine-2: #5a2638;
-      --rose: #b87972;
-      --brown: #6d5142;
-      --white: #fffdf9;
+      --paper: #fcfaf8;
+      --paper-deep: #f2e7e1;
+      --ink: #2f2423;
+      --muted: #72615d;
+      --soft: #9d8a84;
+      --line: #e7ddd8;
+      --wine: #6a4742;
+      --wine-2: #81584f;
+      --rose: #b86f5a;
+      --brown: #4f3b37;
+      --white: #fffdfb;
       --serif: 'Instrument Serif', Georgia, serif;
       --sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       font-family: var(--sans);
@@ -202,6 +202,25 @@
       text-decoration: none;
       border-right: 1px solid var(--line);
       transition: background .25s ease;
+    }
+    .service-mark {
+      width: 42px;
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      color: var(--wine);
+      background: rgba(255,255,255,.72);
+    }
+    .service-mark svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
     .service-link:last-child { border-right: 0; }
     .service-link span {
@@ -718,13 +737,12 @@
   <nav class="site-nav" id="siteNav" aria-label="Navegação principal">
     <a href="index.html" class="brand">Psicologia <span>Real</span></a>
     <div class="nav-links">
-      <a href="terapia.html">Terapia</a>
+      <a href="#terapia">Terapia</a>
       <a href="ansiedade.html">Ansiedade</a>
       <a href="supervisao.html">Supervisão</a>
       <a href="corporativo.html">Corporativo</a>
       <a href="#processo">Processo</a>
       <a href="#sobre">Sobre</a>
-      <a href="#especialidades">Especialidades</a>
       <a href="#para-psicologos">Psi Real</a>
       <a href="#faq">FAQ</a>
       <a class="nav-cta" href="https://wa.me/5511947388423?text=Ol%C3%A1%20Michelle%2C%20gostaria%20de%20agendar%20uma%20conversa%20inicial." target="_blank" rel="noopener">Agendar</a>
@@ -735,7 +753,7 @@
       <div class="container-wide hero-grid">
         <div class="hero-copy">
           <p class="hero-kicker reveal">Psicoterapia para crianças, adolescentes e adultos</p>
-          <h1 class="reveal delay-1">Talvez você esteja cansada de <em>sustentar tudo</em> sozinha.</h1>
+          <h1 class="reveal delay-1">Talvez <em>carregar tudo</em> tenha ficado pesado demais.</h1>
           <p class="hero-sub reveal delay-2">Um espaço clínico para ansiedade, sobrecarga emocional, relações difíceis e fases de desenvolvimento que pedem cuidado. Atendimento para crianças, adolescentes e adultos, com método, acolhimento e profundidade.</p>
           <div class="hero-actions reveal delay-3">
             <a class="button-primary" href="https://wa.me/5511947388423?text=Ol%C3%A1%20Michelle%2C%20gostaria%20de%20agendar%20uma%20conversa%20inicial." target="_blank" rel="noopener">Agendar conversa inicial</a>
@@ -754,17 +772,20 @@
     </section>
     <section class="service-entry" aria-label="Frentes de atuação">
       <div class="service-grid">
-        <a class="service-link" href="terapia.html">
+        <a class="service-link" href="#terapia">
+          <span class="service-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 19c2.5-5.5 11.5-5.5 14 0"/><path d="M8 8a4 4 0 1 0 8 0 4 4 0 0 0-8 0Z"/></svg></span>
           <span>Clínica</span>
           <strong>Terapia</strong>
           <small>Atendimento para crianças, adolescentes e adultos, com formulário próprio para novos pacientes.</small>
         </a>
         <a class="service-link" href="supervisao.html">
+          <span class="service-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 18h16"/><path d="M7 18V9h10v9"/><path d="M9 6h6"/><path d="M12 6V3"/></svg></span>
           <span>Para psicólogas</span>
           <strong>Supervisão</strong>
           <small>Supervisão clínica em TCC com página e formulário próprios para profissionais.</small>
         </a>
         <a class="service-link" href="corporativo.html">
+          <span class="service-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V8l8-4 8 4v12"/><path d="M9 20v-5h6v5"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/></svg></span>
           <span>Para empresas</span>
           <strong>Corporativo</strong>
           <small>Palestras e consultoria em saúde mental com captação própria para organizações.</small>
@@ -783,7 +804,7 @@
       <div class="container manifesto-grid">
         <div>
           <span class="eyebrow reveal">Quando procurar terapia</span>
-          <h2 class="section-title reveal delay-1">Ansiedade nem sempre aparece como crise.</h2>
+          <h2 class="section-title reveal delay-1">Ansiedade nem sempre aparece como <em>crise</em>.</h2>
           <p class="section-lead reveal delay-2">Em crianças, pode surgir como irritação, medos, recusa escolar ou dificuldade de dormir. Em adolescentes, como isolamento, autocobrança, explosões ou queda de rendimento. Em adultos, muitas vezes aparece como controle, exaustão, pensamento acelerado e sensação de estar sempre devendo algo.</p>
         </div>
         <div class="symptom-list">
@@ -800,7 +821,7 @@
         <div class="process-head">
           <div>
             <span class="eyebrow reveal">Como funciona</span>
-            <h2 class="section-title reveal delay-1">Um processo com escuta, direção e cuidado real.</h2>
+            <h2 class="section-title reveal delay-1">Um processo com escuta, direção e cuidado <em>real</em>.</h2>
           </div>
           <p class="section-lead reveal delay-2">A terapia não é uma conversa solta. O processo muda conforme a idade e a demanda: com crianças, envolve linguagem lúdica e orientação aos responsáveis; com adolescentes, acolhe identidade, pressão social e autonomia; com adultos, aprofunda padrões emocionais, ansiedade e escolhas.</p>
         </div>
@@ -822,12 +843,9 @@
     </section>
     <section class="about" id="sobre">
       <div class="container about-grid">
-        <figure class="about-photo reveal">
-          <img src="michelle-hero.jpg" alt="Retrato profissional de Michelle Donegá" />
-        </figure>
         <div class="about-copy">
           <span class="eyebrow reveal">Sobre a psicóloga</span>
-          <h2 class="section-title reveal delay-1">Autoridade clínica sem perder presença humana.</h2>
+          <h2 class="section-title reveal delay-1">Autoridade clínica sem perder presença <em>humana</em>.</h2>
           <p class="reveal delay-2">Sou Michelle Donegá dos Santos, psicóloga clínica. Minha atuação integra ciência, escuta ativa e raciocínio clínico profundo para construir um processo terapêutico que faça sentido para a pessoa que está diante de mim, seja criança, adolescente ou adulta.</p>
           <p class="reveal delay-2">Trabalho com psicoterapia baseada em evidências, especialmente Terapia Cognitivo-Comportamental, Terapia do Esquema e ACT, com atenção especial para ansiedade e padrões emocionais. A técnica importa, mas ela precisa encontrar uma pessoa inteira: sua história, seus vínculos, seus medos, suas defesas e suas possibilidades.</p>
           <p class="reveal delay-3"><strong>Acolher não é suavizar tudo.</strong> É oferecer um espaço seguro o bastante para olhar com honestidade, nomear o que dói e construir um caminho possível.</p>
@@ -840,12 +858,12 @@
         </div>
       </div>
     </section>
-    <section id="especialidades">
+    <section id="terapia">
       <div class="container">
         <div class="specialties-head">
           <div>
-            <span class="eyebrow reveal">Especialidades</span>
-            <h2 class="section-title reveal delay-1">Cuidado clínico para diferentes idades e formas de ansiedade.</h2>
+            <span class="eyebrow reveal">Terapia</span>
+            <h2 class="section-title reveal delay-1">Cuidado clínico para diferentes idades e formas de <em>ansiedade</em>.</h2>
           </div>
           <p class="section-lead reveal delay-2">A ansiedade é um dos eixos centrais do atendimento, mas ela aparece de formas muito diferentes em cada fase da vida. A clínica olha para sintomas, contexto, vínculos e desenvolvimento.</p>
         </div>
@@ -863,7 +881,7 @@
       <div class="container difference-layout">
         <div>
           <span class="eyebrow reveal">Diferenciais</span>
-          <h2 class="section-title reveal delay-1">Sofisticação, aqui, significa cuidado preciso.</h2>
+          <h2 class="section-title reveal delay-1">Sofisticação, aqui, significa cuidado <em>preciso</em>.</h2>
           <p class="section-lead reveal delay-2">Nada de promessa fácil, frase pronta ou psicologia de efeito. O trabalho é ético, humano e tecnicamente sustentado, com leitura clínica adequada para infância, adolescência e vida adulta.</p>
         </div>
         <div class="difference-list">
@@ -879,7 +897,7 @@
       <div class="container ecosystem-grid">
         <div>
           <span class="eyebrow reveal">Ecossistema Psi Real</span>
-          <h2 class="section-title reveal delay-1">Clínica, produtos para psis, app e empresas no mesmo universo.</h2>
+          <h2 class="section-title reveal delay-1">Clínica, produtos para psis, app e empresas no mesmo <em>universo</em>.</h2>
           <p class="section-lead reveal delay-2">Além da psicoterapia, Psi Real reúne inventários clínicos, recursos para psicólogas, biblioteca, aplicativo e soluções para empresas. Cada frente tem uma função clara, sem perder a mesma identidade de cuidado e profundidade.</p>
           <div class="system-actions reveal delay-3">
             <a class="button-primary" href="https://psireal.app" target="_blank" rel="noopener">Abrir psireal.app</a>
@@ -953,7 +971,7 @@
       <div class="container contact-grid">
         <div>
           <span class="eyebrow reveal">Contato</span>
-          <h2 class="section-title reveal delay-1">Uma primeira conversa, sem pressa e sem compromisso.</h2>
+          <h2 class="section-title reveal delay-1">Uma primeira conversa, sem pressa e sem <em>compromisso</em>.</h2>
           <p class="section-lead reveal delay-2">Se você sente que chegou a hora de parar de atravessar tudo sozinha, deixe seus dados. O retorno é feito pelo WhatsApp.</p>
         </div>
         <form id="contactForm" class="reveal delay-2">
@@ -972,7 +990,7 @@
     <section class="final-cta">
       <div class="container-narrow">
         <span class="eyebrow reveal">Uma decisão de cada vez</span>
-        <h2 class="reveal delay-1">Você não precisa continuar vivendo no automático.</h2>
+        <h2 class="reveal delay-1">Você não precisa continuar vivendo no <em>automático</em>.</h2>
         <p class="reveal delay-2">Para uma criança, um adolescente ou um adulto, ansiedade não precisa virar modo de vida. O primeiro passo não precisa resolver tudo. Ele só precisa começar.</p>
         <a class="button-primary reveal delay-3" href="https://wa.me/5511947388423?text=Ol%C3%A1%20Michelle%2C%20gostaria%20de%20agendar%20uma%20conversa%20inicial." target="_blank" rel="noopener">Agendar conversa inicial</a>
       </div>
@@ -985,7 +1003,7 @@
         <div class="footer-note">CRP 06/93008 - Jarinu/SP - Online para todo o Brasil</div>
       </div>
       <div class="footer-links" aria-label="Páginas secundárias">
-        <a href="terapia.html">Terapia</a>
+        <a href="#terapia">Terapia</a>
         <a href="supervisao.html">Supervisão</a>
         <a href="corporativo.html">Corporativo</a>
         <a href="inventarios.html">Inventários</a>
