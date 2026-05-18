@@ -141,6 +141,11 @@ section{padding:80px 5vw}
 /* PLANOS */
 .planos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;max-width:980px;margin-left:auto;margin-right:auto}
 .planos-grid.oferta-unica{grid-template-columns:minmax(320px,560px);justify-content:center;max-width:560px}
+.compra-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:980px;margin:42px auto 0}
+.compra-step{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px}
+.compra-step-num{width:32px;height:32px;border-radius:999px;background:var(--gold3);color:var(--brand);display:flex;align-items:center;justify-content:center;font-family:"DM Mono",monospace;font-size:12px;margin-bottom:16px}
+.compra-step h4{font-size:18px;margin-bottom:10px}
+.compra-step p{font-size:15px;line-height:1.7;color:var(--ink2)}
 .plano{border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;transition:all .2s;background:var(--white)}
 .plano:hover{box-shadow:0 8px 32px rgba(61,32,40,.1);transform:translateY(-2px)}
 .plano.popular{border-color:var(--brand);border-width:2px;position:relative}
@@ -206,7 +211,7 @@ footer{background:var(--ink);padding:48px 5vw 28px;color:rgba(255,255,255,.55)}
 .f-crp{font-family:"DM Mono",monospace;font-size:11px;color:rgba(255,255,255,.25)}
 
 @media(max-width:860px){
-  .problema-grid,.features-grid,.map-inner,.dep-grid,.planos-grid,.footer-grid{grid-template-columns:1fr}
+  .problema-grid,.features-grid,.map-inner,.dep-grid,.planos-grid,.compra-grid,.footer-grid{grid-template-columns:1fr}
   .numeros-grid{grid-template-columns:1fr 1fr}
   .como-steps{grid-template-columns:1fr 1fr;gap:24px}
   .como-steps::before{display:none}
@@ -649,11 +654,37 @@ footer{background:var(--ink);padding:48px 5vw 28px;color:rgba(255,255,255,.55)}
           <li>Biblioteca de literatura TE/TCC</li>
           <li>Insights clínicos com referência</li>
         </ul>
-        <a href="painel-tcc.html" class="btn-plano btn-plano-p">Começar agora</a>
+        <a href="https://pay.kiwify.com.br/inventarios-psi-real" target="_blank" class="btn-plano btn-plano-p">Assinar pela Kiwify</a>
       </div>
     </div>
   </div>
   <div style="text-align:center;margin-top:20px;font-size:13px;color:var(--ink3)">Módulo de Esquemas já incluído na assinatura · Nota fiscal incluída · Aceita cartão, Pix e boleto · Kiwify</div>
+</section>
+
+<!-- COMO COMPRAR -->
+<section style="background:var(--white)">
+  <div class="center">
+    <div class="section-badge">Como acessar</div>
+    <h2 class="section-title">Você assina. Nós liberamos seu painel.</h2>
+    <p class="section-sub center">O pagamento é feito pela Kiwify em assinatura mensal. Depois da compra, você informa seu telefone para receber a ativação do acesso.</p>
+  </div>
+  <div class="compra-grid">
+    <div class="compra-step">
+      <div class="compra-step-num">01</div>
+      <h4>Assine pela Kiwify</h4>
+      <p>Você conclui a assinatura mensal com segurança pela página de pagamento da Kiwify.</p>
+    </div>
+    <div class="compra-step">
+      <div class="compra-step-num">02</div>
+      <h4>Informe seu telefone</h4>
+      <p>Após a compra, deixe seu WhatsApp para que possamos localizar sua assinatura e preparar seu acesso.</p>
+    </div>
+    <div class="compra-step">
+      <div class="compra-step-num">03</div>
+      <h4>Receba seu acesso</h4>
+      <p>Seu cadastro é liberado e você recebe as orientações para entrar no PsiReal TCC e começar a aplicar os instrumentos.</p>
+    </div>
+  </div>
 </section>
 
 <!-- FAQ -->
@@ -684,6 +715,10 @@ footer{background:var(--ink);padding:48px 5vw 28px;color:rgba(255,255,255,.55)}
       <div class="faq-a">Sim, sem burocracia. Você cancela pelo painel ou por e-mail e a assinatura encerra no fim do ciclo já pago. Seus dados ficam disponíveis por 30 dias após o cancelamento para você exportar.</div>
     </div>
     <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Como recebo meu acesso depois da compra? <span class="faq-ch">▾</span></div>
+      <div class="faq-a">A assinatura é feita pela Kiwify. Depois do pagamento, você informa seu telefone para que o acesso seja liberado e receba as orientações de entrada no PsiReal TCC.</div>
+    </div>
+    <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">A plataforma é indicada apenas para Terapia do Esquema? <span class="faq-ch">▾</span></div>
       <div class="faq-a">Não. Os instrumentos de ansiedade, depressão, ACT e TDAH são aplicáveis a diferentes práticas em TCC. O módulo de Terapia do Esquema (YSQ + SMI + mapeamento de ativação) já está incluído na assinatura para quem deseja aprofundar essa leitura clínica.</div>
     </div>
@@ -695,7 +730,7 @@ footer{background:var(--ink);padding:48px 5vw 28px;color:rgba(255,255,255,.55)}
   <div class="cta-bg"></div>
   <h2>Sua clínica merece<br><em>ferramentas à altura</em>.</h2>
   <p>R$ 11,90/mês durante 6 meses. Depois, R$ 29,90/mês com o módulo de Esquemas incluído.</p>
-  <a href="painel-tcc.html" class="btn-cta-w">Entrar no PsiReal TCC ↗</a>
+  <a href="https://pay.kiwify.com.br/inventarios-psi-real" target="_blank" class="btn-cta-w">Assinar pela Kiwify ↗</a>
   <div class="cta-note">Construído por Michelle Donegá dos Santos · CRP 06/93008 · Psicóloga clínica em Jarinu, SP</div>
 </section>
 
