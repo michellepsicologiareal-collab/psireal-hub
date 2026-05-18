@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>PHQ-9 - Depressao | Psi Real</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--r1:#3D2235;--r2:#7A4060;--rose:#C8908A;--rose-pale:#F7F0F2;--rose-border:#DFBFBA;--sage:#4A7C6A;--sage-pale:#EDF5F0;--ink:#1E1018;--ink-2:#5A3048;--ink-3:#9A7088;--bg:#FDFBFC;--white:#fff;--border:#E8D8DF;--surface:#F8F2F4;--radius:18px;--radius-sm:11px}
+    body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+    nav{height:60px;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:#fff}
+    .brand{font-family:'Instrument Serif',serif;font-size:24px;color:var(--r1)}
+    .nav-note,.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+    .hero{max-width:760px;margin:0 auto;padding:3rem 1.5rem 1.5rem;text-align:center}
+    .eyebrow{margin-bottom:.75rem}
+    h1{font-family:'Instrument Serif',serif;font-size:clamp(30px,5vw,46px);font-weight:400;line-height:1.05;margin-bottom:.75rem}
+    .hero p{font-size:15px;color:var(--ink-2);max-width:620px;margin:0 auto}
+    .wrap{max-width:760px;margin:0 auto;padding:0 1.5rem 5rem}
+    .intro,.ident-card,.question-card,.result-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius)}
+    .intro{padding:1.4rem 1.5rem;background:var(--surface);margin:1rem 0 1.25rem}
+    .intro p{font-size:14px;color:var(--ink-2)}
+    .ident-card{padding:1.25rem;margin-bottom:1rem;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+    input{width:100%;border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;font:inherit;background:#fff}
+    .questions{display:grid;gap:12px}
+    .question-card{padding:1.25rem}
+    .q-head{display:flex;gap:12px;margin-bottom:1rem}
+    .q-num{font-size:12px;font-weight:700;color:var(--ink-3);padding-top:3px}
+    .q-text{font-size:15px;color:var(--ink)}
+    .options{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+    .option input{display:none}
+    .option span{display:flex;min-height:58px;align-items:center;justify-content:center;text-align:center;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:12px;color:var(--ink-2);cursor:pointer;transition:.15s}
+    .option input:checked+span{background:var(--r1);border-color:var(--r1);color:#fff}
+    .actions{position:sticky;bottom:0;background:rgba(253,251,252,.96);backdrop-filter:blur(10px);border-top:1px solid var(--border);margin-top:1.5rem;padding:1rem 0}
+    .actions-inner{display:flex;align-items:center;gap:12px}
+    .progress{flex:1;height:8px;border-radius:99px;background:var(--rose-pale);overflow:hidden}
+    .progress div{height:100%;width:0;background:linear-gradient(90deg,var(--r1),var(--rose));transition:width .2s}
+    .progress-text{font-size:12px;color:var(--ink-3);white-space:nowrap}
+    button{border:none;border-radius:var(--radius-sm);padding:12px 18px;background:var(--r1);color:#fff;font:inherit;font-weight:600;cursor:pointer}
+    button:disabled{opacity:.45;cursor:not-allowed}
+    #result{display:none;margin-top:1rem}
+    .result-card{padding:1.5rem}
+    .result-score{font-family:'Instrument Serif',serif;font-size:48px;color:var(--r1);line-height:1}
+    .result-level{font-size:14px;font-weight:600;color:var(--sage);margin-top:.35rem}
+    .result-copy{font-size:14px;color:var(--ink-2);margin-top:1rem}
+    .success{display:none;margin-bottom:1rem;padding:1rem;border-radius:var(--radius-sm);background:var(--sage-pale);color:var(--sage);font-size:14px}
+    @media(max-width:700px){.ident-card,.options{grid-template-columns:1fr}.actions-inner{flex-wrap:wrap}.progress{order:3;flex-basis:100%}}
+  </style>
+</head>
+<body>
+  <nav><div class="brand">Psi Real</div><div class="nav-note">Instrumento enviado por sua psicologa</div></nav>
+  <section class="hero">
+    <div class="eyebrow">Depressao - acompanhamento clinico</div>
+    <h1>PHQ-9</h1>
+    <p>Nas ultimas duas semanas, com que frequencia voce se sentiu incomodado(a) pelos problemas abaixo?</p>
+  </section>
+  <main class="wrap">
+    <div class="intro"><p>Responda pensando no periodo recente. O objetivo e apoiar o acompanhamento clinico ao longo do processo terapeutico.</p></div>
+    <section class="ident-card">
+      <div><label for="pacNome">Seu nome</label><input id="pacNome" placeholder="Como gostaria de ser chamado(a)"/></div>
+      <div><label for="pacNasc">Data de nascimento</label><input id="pacNasc" type="date"/></div>
+    </section>
+    <section class="questions" id="questions"></section>
+    <section id="result">
+      <div class="success" id="success">Respostas enviadas com sucesso.</div>
+      <div class="result-card">
+        <div class="eyebrow">Resultado</div>
+        <div class="result-score" id="score">0</div>
+        <div class="result-level" id="level"></div>
+        <p class="result-copy">Este resultado e um apoio clinico e deve ser interpretado junto com a avaliacao profissional.</p>
+        <p class="result-copy" id="safetyNote" style="display:none;color:#8a4738">Se voce marcou pensamentos de morte ou de se ferir, avise sua psicologa o quanto antes para que ela possa acolher e avaliar esse sinal com voce.</p>
+      </div>
+    </section>
+    <div class="actions">
+      <div class="actions-inner">
+        <div class="progress"><div id="bar"></div></div>
+        <div class="progress-text" id="progressText">0 / 9</div>
+        <button id="submitBtn" disabled>Concluir</button>
+      </div>
+    </div>
+  </main>
+  <script>
+    const SB_URL='https://qpwjxacdjzzsyjbuuwsq.supabase.co';
+    const SB_KEY='sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
+    const PATIENT_TOKEN=new URLSearchParams(window.location.search).get('token');
+    const ITEMS=[
+      'Pouco interesse ou prazer em fazer as coisas.',
+      'Sentir-se para baixo, deprimido(a) ou sem esperanca.',
+      'Dificuldade para pegar no sono, continuar dormindo ou dormir demais.',
+      'Sentir-se cansado(a) ou com pouca energia.',
+      'Falta de apetite ou comer demais.',
+      'Sentir-se mal consigo mesmo(a), achar que fracassou ou decepcionou a si ou a familia.',
+      'Dificuldade para se concentrar em coisas como ler ou assistir televisao.',
+      'Mover-se ou falar tao devagar que outras pessoas poderiam notar, ou o oposto: ficar tao agitado(a) que se movimenta mais do que o habitual.',
+      'Pensar que seria melhor estar morto(a) ou em se ferir de alguma maneira.'
+    ];
+    const OPTIONS=[{v:0,l:'Nenhuma vez'},{v:1,l:'Varios dias'},{v:2,l:'Mais da metade dos dias'},{v:3,l:'Quase todos os dias'}];
+    const answers={};
+    function build(){document.getElementById('questions').innerHTML=ITEMS.map((item,idx)=>`<article class="question-card"><div class="q-head"><div class="q-num">${idx+1}</div><div class="q-text">${item}</div></div><div class="options">${OPTIONS.map(opt=>`<label class="option"><input type="radio" name="q${idx+1}" value="${opt.v}" onchange="answer(${idx+1},${opt.v})"/><span>${opt.l}</span></label>`).join('')}</div></article>`).join('')}
+    function answer(n,v){answers[n]=v;const done=Object.keys(answers).length;document.getElementById('bar').style.width=`${Math.round(done/9*100)}%`;document.getElementById('progressText').textContent=`${done} / 9`;document.getElementById('submitBtn').disabled=done<9}
+    function levelFor(score){if(score<=4)return'Depressao minima';if(score<=9)return'Depressao leve';if(score<=14)return'Depressao moderada';if(score<=19)return'Depressao moderadamente grave';return'Depressao grave'}
+    async function submit(){const nome=document.getElementById('pacNome').value.trim();const nasc=document.getElementById('pacNasc').value||null;if(!nome)return alert('Informe seu nome para continuar.');if(!PATIENT_TOKEN)return alert('Link invalido.');const total=Object.values(answers).reduce((sum,v)=>sum+Number(v),0);const payload={p_token:PATIENT_TOKEN,p_patient_name:nome,p_patient_birth:nasc,p_instrumento:'PHQ-9',p_respostas:answers,p_scores:{total,nivel:levelFor(total),item9:Number(answers[9]||0)},p_score_total:total};const btn=document.getElementById('submitBtn');btn.disabled=true;btn.textContent='Enviando...';try{const res=await fetch(`${SB_URL}/rest/v1/rpc/submit_patient_response`,{method:'POST',headers:{'Content-Type':'application/json',apikey:SB_KEY,Authorization:'Bearer '+SB_KEY},body:JSON.stringify(payload)});showResult(total,res.ok)}catch(_){showResult(total,false)}}
+    function showResult(total,saved){document.getElementById('questions').style.display='none';document.querySelector('.actions').style.display='none';document.getElementById('score').textContent=total;document.getElementById('level').textContent=levelFor(total);document.getElementById('success').style.display=saved?'block':'none';document.getElementById('safetyNote').style.display=Number(answers[9]||0)>0?'block':'none';document.getElementById('result').style.display='block';window.scrollTo({top:0,behavior:'smooth'})}
+    document.getElementById('submitBtn').addEventListener('click',submit);build();
+  </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Painel de Instrumento - PsiReal TCC</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--brand:#3D2028;--brand2:#7A4A55;--brand3:#B08090;--gold:#A0703A;--ink:#1E1014;--ink2:#5A3A42;--ink3:#9A7A84;--bg:#FDFAF8;--bg2:#F8F2F4;--border:#E8D8DC;--white:#fff}
+    body{font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}
+    .lock{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+    .lock-card,.card{background:var(--white);border:1px solid var(--border);border-radius:18px}
+    .lock-card{width:min(420px,100%);padding:28px}
+    .lock-card h1,.title{font-family:Georgia,serif;font-weight:400}
+    .lock-card p{color:var(--ink2);margin:8px 0 18px}
+    input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:12px;margin-bottom:10px}
+    button,.btn{border:0;border-radius:12px;padding:12px 16px;background:var(--brand);color:#fff;cursor:pointer;text-decoration:none;display:inline-block}
+    #app{display:none}
+    nav{height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;border-bottom:1px solid var(--border);background:#fff}
+    main{max-width:1180px;margin:0 auto;padding:28px 20px}
+    .head{display:flex;justify-content:space-between;gap:16px;align-items:end;margin-bottom:22px}
+    .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink3)}
+    .title{font-size:34px;margin-top:4px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}
+    .card{padding:20px}
+    .metric{font-size:34px;font-family:Georgia,serif}
+    .label{font-size:13px;color:var(--ink3);margin-top:6px}
+    .content{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,.8fr);gap:16px}
+    .chart-wrap{height:320px}
+    .history{display:grid;gap:10px}
+    .row{display:flex;justify-content:space-between;gap:10px;padding:12px;border:1px solid var(--border);border-radius:12px}
+    .row small{color:var(--ink3)}
+    .empty{padding:28px;color:var(--ink3);text-align:center}
+    .warn{display:none;margin-top:12px;background:#fff4ef;border:1px solid #edc9bd;color:#8a4738;padding:12px;border-radius:12px}
+    @media(max-width:800px){.grid,.content{grid-template-columns:1fr}.head{display:block}.title{font-size:28px}}
+  </style>
+</head>
+<body>
+  <section class="lock" id="lock">
+    <div class="lock-card">
+      <h1>Dashboard clinico</h1>
+      <p>Acesse com o mesmo e-mail e senha do painel da psi.</p>
+      <input id="email" type="email" placeholder="seu e-mail"/>
+      <input id="password" type="password" placeholder="sua senha"/>
+      <button onclick="login()">Entrar</button>
+      <div class="warn" id="err"></div>
+    </div>
+  </section>
+  <div id="app">
+    <nav><strong>PsiReal TCC</strong><a class="btn" href="painel-psi.html">Voltar ao painel</a></nav>
+    <main>
+      <div class="head">
+        <div>
+          <div class="eyebrow" id="subtitle"></div>
+          <h1 class="title" id="title"></h1>
+        </div>
+      </div>
+      <section class="grid" id="metrics"></section>
+      <section class="content">
+        <article class="card">
+          <div class="eyebrow">Evolucao longitudinal</div>
+          <div class="chart-wrap"><canvas id="lineChart"></canvas></div>
+        </article>
+        <article class="card">
+          <div class="eyebrow">Historico recente</div>
+          <div class="history" id="history"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+  <script>
+    const SB='https://qpwjxacdjzzsyjbuuwsq.supabase.co';
+    const KEY='sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
+    const params=new URLSearchParams(location.search);
+    const instrumento=params.get('instrumento') || 'GAD-7';
+    const configs={
+      'GAD-7':{title:'Dashboard de ansiedade',subtitle:'GAD-7',range:'0-21'},
+      'PHQ-9':{title:'Dashboard de depressao',subtitle:'PHQ-9',range:'0-27'}
+    };
+    let token='', chart;
+    async function login(){
+      const email=document.getElementById('email').value.trim();
+      const password=document.getElementById('password').value;
+      const res=await fetch(`${SB}/auth/v1/token?grant_type=password`,{method:'POST',headers:{apikey:KEY,'Content-Type':'application/json'},body:JSON.stringify({email,password})});
+      const data=await res.json();
+      if(!res.ok||!data.access_token)return showErr('Login invalido.');
+      token=data.access_token;
+      document.getElementById('lock').style.display='none';
+      document.getElementById('app').style.display='block';
+      load();
+    }
+    function showErr(msg){const el=document.getElementById('err');el.textContent=msg;el.style.display='block'}
+    async function load(){
+      const cfg=configs[instrumento]||configs['GAD-7'];
+      document.getElementById('title').textContent=cfg.title;
+      document.getElementById('subtitle').textContent=`${cfg.subtitle} · faixa ${cfg.range}`;
+      const res=await fetch(`${SB}/rest/v1/respostas_clinicas?instrumento=eq.${encodeURIComponent(instrumento)}&select=*&order=created_at.asc`,{headers:{apikey:KEY,Authorization:'Bearer '+token}});
+      const rows=await res.json();
+      if(!rows.length){document.getElementById('metrics').innerHTML='<div class="card empty">Nenhuma resposta recebida ainda.</div>';document.getElementById('history').innerHTML='';return}
+      const latest=rows[rows.length-1], first=rows[0];
+      const latestScore=Number(latest.score_total ?? latest.scores?.total ?? 0);
+      const firstScore=Number(first.score_total ?? first.scores?.total ?? 0);
+      const diff=latestScore-firstScore;
+      const patients=[...new Set(rows.map(r=>r.paciente_nome).filter(Boolean))].length;
+      document.getElementById('metrics').innerHTML=`
+        <div class="card"><div class="metric">${latestScore}</div><div class="label">Ultimo score</div></div>
+        <div class="card"><div class="metric">${rows.length}</div><div class="label">Aplicacoes recebidas</div></div>
+        <div class="card"><div class="metric">${diff>0?'+':''}${diff}</div><div class="label">Variacao desde a primeira</div></div>`;
+      document.getElementById('history').innerHTML=rows.slice().reverse().slice(0,8).map(r=>`<div class="row"><div><strong>${r.paciente_nome||'Sem nome'}</strong><br><small>${new Date(r.created_at).toLocaleDateString('pt-BR')}</small></div><strong>${Number(r.score_total ?? r.scores?.total ?? 0)}</strong></div>`).join('');
+      if(chart) chart.destroy();
+      chart=new Chart(document.getElementById('lineChart'),{type:'line',data:{labels:rows.map(r=>new Date(r.created_at).toLocaleDateString('pt-BR')),datasets:[{data:rows.map(r=>Number(r.score_total ?? r.scores?.total ?? 0)),borderColor:'#7A4A55',backgroundColor:'rgba(176,128,144,.18)',fill:true,tension:.3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
+    }
+  </script>
+</body>
+</html>

@@ -544,7 +544,8 @@ function openPaciente(id) {
   document.getElementById('notasText').value = r.notas_psi || '';
 
   // Scores
-  const scores = typeof r.respostas_json === 'string' ? JSON.parse(r.respostas_json) : r.respostas_json;
+  const rawScores = r.scores || r.respostas_json || {};
+  const scores = typeof rawScores === 'string' ? JSON.parse(rawScores) : rawScores;
   renderMetrics(scores);
   renderCharts(scores);
   renderTable(scores);
