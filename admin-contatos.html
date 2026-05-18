@@ -395,6 +395,79 @@
       line-height: 1;
       align-self: flex-end;
     }
+    .psi-admin-grid {
+      display: grid;
+      grid-template-columns: minmax(320px, .8fr) minmax(0, 1.2fr);
+      gap: 22px;
+      align-items: start;
+    }
+    .psi-card {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      padding: 22px;
+    }
+    .psi-card h2 {
+      margin: 0 0 8px;
+      font-family: var(--serif);
+      font-size: 28px;
+      line-height: 1.05;
+    }
+    .psi-card p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .psi-form {
+      display: grid;
+      gap: 12px;
+    }
+    .psi-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+    .field label {
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .field input, .field select {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+    }
+    .psi-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 6px;
+    }
+    .helper {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border: 1px solid var(--line);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .status-pill.active { color: #2e6b45; background: #edf6ef; border-color: #cfe3d4; }
+    .status-pill.inactive { color: #8d3c42; background: #fbefef; border-color: #ead0d3; }
     #toast {
       position: fixed;
       right: 18px;
@@ -416,12 +489,14 @@
       .hero-admin { grid-template-columns: 1fr; }
       .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .links-grid { grid-template-columns: 1fr; }
+      .psi-admin-grid { grid-template-columns: 1fr; }
       .schemas-layout, .schema-grid, .schema-charts { grid-template-columns: 1fr; }
       .schemas-list { border-right: 0; border-bottom: 1px solid var(--line); }
     }
     @media (max-width: 560px) {
       main { width: min(100% - 28px, 1240px); }
       .metrics { grid-template-columns: 1fr; }
+      .psi-form-grid { grid-template-columns: 1fr; }
       .toolbar { align-items: stretch; }
       .search, .select, .primary-btn { width: 100%; }
       .lock-card { padding: 30px 22px; }
@@ -474,6 +549,7 @@
       <button class="tab-btn active" type="button" data-tab="contacts" onclick="setTab('contacts')">Contatos</button>
       <button class="tab-btn" type="button" data-tab="tests" onclick="setTab('tests')">Testes</button>
       <button class="tab-btn" type="button" data-tab="schemas" onclick="setTab('schemas')">Esquemas</button>
+      <button class="tab-btn" type="button" data-tab="psis" onclick="setTab('psis')">Psicólogas</button>
       <button class="tab-btn" type="button" data-tab="links" onclick="setTab('links')">Links do sistema</button>
     </div>
 
@@ -547,6 +623,75 @@
       </div>
     </section>
 
+    <section class="panel" id="panel-psis">
+      <div class="psi-admin-grid">
+        <div class="psi-card">
+          <div class="eyebrow">Nova assinante</div>
+          <h2>Cadastrar psicóloga</h2>
+          <p>Cria o login no Supabase Auth e o registro clínico na tabela <code>psis</code> em uma única operação segura.</p>
+          <form class="psi-form" id="psiForm" onsubmit="createPsi(event)">
+            <div class="field">
+              <label for="psiNome">Nome</label>
+              <input id="psiNome" required placeholder="Nome da psicóloga" />
+            </div>
+            <div class="psi-form-grid">
+              <div class="field">
+                <label for="psiEmail">E-mail</label>
+                <input id="psiEmail" type="email" required placeholder="email@exemplo.com" />
+              </div>
+              <div class="field">
+                <label for="psiWhatsapp">WhatsApp</label>
+                <input id="psiWhatsapp" placeholder="5511999999999" />
+              </div>
+            </div>
+            <div class="psi-form-grid">
+              <div class="field">
+                <label for="psiSlug">psi_id</label>
+                <input id="psiSlug" required placeholder="ana-silva" />
+              </div>
+              <div class="field">
+                <label for="psiPlano">Plano</label>
+                <select id="psiPlano">
+                  <option value="mensal">Mensal</option>
+                  <option value="fundadora">Fundadora</option>
+                  <option value="cortesia">Cortesia</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="psiPassword">Senha inicial</label>
+              <input id="psiPassword" type="password" required minlength="8" placeholder="mínimo 8 caracteres" />
+            </div>
+            <div class="psi-actions">
+              <button class="primary-btn" id="createPsiBtn" type="submit">Cadastrar psi</button>
+              <span class="helper">Depois você envia o e-mail e a senha inicial para ela.</span>
+            </div>
+          </form>
+        </div>
+
+        <div class="psi-card">
+          <div class="toolbar">
+            <input class="search" id="psiSearch" type="search" placeholder="Buscar por nome, e-mail ou psi_id..." oninput="renderPsis()" />
+          </div>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Psicóloga</th>
+                  <th>E-mail</th>
+                  <th>psi_id</th>
+                  <th>Plano</th>
+                  <th>Status</th>
+                  <th>Cadastro</th>
+                </tr>
+              </thead>
+              <tbody id="psisBody"><tr><td colspan="6" class="empty">Carregando psicólogas...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="panel" id="panel-links">
       <div class="links-grid">
         <a class="link-card" href="https://psireal.app" target="_blank" rel="noopener"><div><strong>psireal.app</strong><span>Aplicativo e hub principal do ecossistema Psi Real.</span></div><em>↗</em></a>
@@ -571,6 +716,7 @@
 
     let contacts = [];
     let tests = [];
+    let psis = [];
     let statusFilter = 'todos';
     let activeSchemaId = null;
     let radarChart = null;
@@ -668,11 +814,12 @@
     });
 
     async function loadAll() {
-      await Promise.allSettled([loadContacts(), loadTests()]);
+      await Promise.allSettled([loadContacts(), loadTests(), loadPsis()]);
       updateMetrics();
       renderContacts();
       renderTests();
       renderSchemas();
+      renderPsis();
     }
     async function loadContacts() {
       const res = await fetch(`${SB_URL}/rest/v1/contatos?select=*&limit=500`, {
@@ -688,6 +835,13 @@
       if (!res.ok) throw new Error('respostas_clinicas ' + res.status);
       tests = (await res.json()).sort((a, b) => safeDate(getCreatedAt(b)) - safeDate(getCreatedAt(a)));
     }
+    async function loadPsis() {
+      const res = await fetch(`${SB_URL}/rest/v1/psis?select=*&order=created_at.desc`, {
+        headers: authHeaders()
+      });
+      if (!res.ok) throw new Error('psis ' + res.status);
+      psis = await res.json();
+    }
     function updateMetrics() {
       const today = new Date().toDateString();
       document.getElementById('mContacts').textContent = contacts.length;
@@ -701,6 +855,60 @@
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tab));
       document.querySelectorAll('.panel').forEach(panel => panel.classList.remove('active'));
       document.getElementById('panel-' + tab).classList.add('active');
+    }
+    async function createPsi(event) {
+      event.preventDefault();
+      const button = document.getElementById('createPsiBtn');
+      const payload = {
+        nome: document.getElementById('psiNome').value.trim(),
+        email: document.getElementById('psiEmail').value.trim(),
+        whatsapp: document.getElementById('psiWhatsapp').value.trim(),
+        psi_id: document.getElementById('psiSlug').value.trim().toLowerCase(),
+        plano: document.getElementById('psiPlano').value,
+        password: document.getElementById('psiPassword').value
+      };
+      button.disabled = true;
+      button.textContent = 'Cadastrando...';
+      try {
+        const res = await fetch(`${SB_URL}/functions/v1/create-psi-user`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...authHeaders()
+          },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.error || 'Falha ao cadastrar');
+        document.getElementById('psiForm').reset();
+        await loadPsis();
+        renderPsis();
+        showToast('Psicóloga cadastrada');
+      } catch (err) {
+        showToast(err.message || 'Erro ao cadastrar psicóloga');
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Cadastrar psi';
+      }
+    }
+    function renderPsis() {
+      const body = document.getElementById('psisBody');
+      if (!body) return;
+      const q = normalize(document.getElementById('psiSearch').value);
+      let rows = psis.slice();
+      if (q) rows = rows.filter(p => normalize([p.nome, p.email, p.psi_id, p.plano].join(' ')).includes(q));
+      if (!rows.length) {
+        body.innerHTML = '<tr><td colspan="6" class="empty">Nenhuma psicóloga cadastrada.</td></tr>';
+        return;
+      }
+      body.innerHTML = rows.map(p => `<tr>
+        <td><div class="name">${esc(p.nome || '-')}</div></td>
+        <td>${esc(p.email || '-')}</td>
+        <td><span class="tag">${esc(p.psi_id || '-')}</span></td>
+        <td>${esc(p.plano || '-')}</td>
+        <td><span class="status-pill ${p.ativa ? 'active' : 'inactive'}">${p.ativa ? 'Ativa' : 'Inativa'}</span></td>
+        <td>${formatDate(p.created_at)}</td>
+      </tr>`).join('');
     }
     function setStatusFilter(button) {
       document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));

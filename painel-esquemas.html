@@ -438,8 +438,6 @@
 <script>
 const SB_URL = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
 const SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
-const params = new URLSearchParams(window.location.search);
-const PSI_ID = params.get('psi') || 'michelle';
 let SB_SESSION_TOKEN = sessionStorage.getItem('sb_session_token') || '';
 let refreshTimer;
 
@@ -461,7 +459,7 @@ let radarInst = null, barInst = null;
 // Load psi name
 async function loadPsi() {
   try {
-    const res = await fetch(`${SB_URL}/rest/v1/psis?psi_id=eq.${PSI_ID}&select=nome`, {
+    const res = await fetch(`${SB_URL}/rest/v1/psis?select=nome`, {
       headers: authHeaders()
     });
     const data = await res.json();
@@ -472,7 +470,7 @@ async function loadPsi() {
 async function loadRespostas() {
   try {
     const res = await fetch(
-      `${SB_URL}/rest/v1/respostas_clinicas?psi_id=eq.${PSI_ID}&formulario=eq.YSQ-S3&order=criado_em.desc&limit=100`,
+      `${SB_URL}/rest/v1/respostas_clinicas?or=(instrumento.eq.YSQ-S3,formulario.eq.YSQ-S3)&order=created_at.desc&limit=100`,
       {headers: authHeaders()}
     );
     allRespostas = await res.json();
@@ -495,7 +493,7 @@ function renderList() {
   }
 
   document.getElementById('pacList').innerHTML = rows.map(r => {
-    const data = new Date(r.criado_em).toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit',year:'2-digit'});
+    const data = new Date(r.criado_em || r.created_at).toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit',year:'2-digit'});
     const statusCls = r.visualizado ? 'status-visto' : 'status-novo';
     const statusLbl = r.visualizado ? 'Visto' : 'Novo';
     return `<div class="pac-item${r.id === currentId ? ' active' : ''}" onclick="openPaciente(${r.id})">
@@ -528,7 +526,7 @@ function openPaciente(id) {
 
   // Nome e meta
   const nasc = r.paciente_nascimento ? new Date(r.paciente_nascimento).toLocaleDateString('pt-BR') : null;
-  const data = new Date(r.criado_em).toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  const data = new Date(r.criado_em || r.created_at).toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
   document.getElementById('detNome').innerHTML = esc(r.paciente_nome);
   document.getElementById('detMeta').innerHTML =
     `<span class="det-tag">YSQ-S3</span>` +

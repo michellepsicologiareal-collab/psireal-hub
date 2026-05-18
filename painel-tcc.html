@@ -225,6 +225,16 @@ body {
 }
 .card-action { font-size: 11px; color: var(--lilac); cursor: pointer; font-weight: 500; }
 .card-body { padding: 20px; }
+.empty-state {
+  padding: 18px 0;
+  color: var(--ink3);
+  font-size: 13px;
+}
+.empty-row {
+  color: var(--ink3);
+  text-align: center;
+  padding: 24px 16px !important;
+}
 
 /* ── TABLE ────────────────────────────────────────────── */
 .table { width: 100%; border-collapse: collapse; }
@@ -639,7 +649,7 @@ body{
       <div class="nav-item" onclick="showScreen('pacientes', this)">
         <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="6" r="3"/><path d="M3 15c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
         Pacientes
-        <span class="nav-badge">24</span>
+        <span class="nav-badge" id="navPatientsCount">0</span>
       </div>
     </div>
 
@@ -652,7 +662,7 @@ body{
       <div class="nav-item" onclick="showScreen('aplicacoes', this)">
         <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2h6z"/><circle cx="9" cy="13" r="1"/><path d="M7 6h4M7 9h2"/></svg>
         Aplicações
-        <span class="nav-badge">7</span>
+        <span class="nav-badge" id="navApplicationsCount">0</span>
       </div>
       <div class="nav-item" onclick="showScreen('evolucao', this)">
         <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="2,13 6,8 9,10 13,5 16,7"/><line x1="2" y1="16" x2="16" y2="16"/></svg>
@@ -680,8 +690,8 @@ body{
   <div class="sidebar-user">
     <div class="user-avatar">MD</div>
     <div>
-      <div class="user-name">Michelle Donegá</div>
-      <div class="user-plan">Pro · Fundadora</div>
+      <div class="user-name" id="sidebarUserName">Psicóloga</div>
+      <div class="user-plan" id="sidebarUserPlan">Plano ativo</div>
     </div>
   </div>
 </aside>
@@ -720,26 +730,26 @@ body{
       <div class="stats-grid">
         <div class="stat-card lilac">
           <div class="stat-label">Pacientes ativos</div>
-          <div class="stat-value">24</div>
-          <div class="stat-delta">↑ 3 este mês</div>
+          <div class="stat-value" id="statPatients">0</div>
+          <div class="stat-delta" id="statPatientsMeta">Aguardando dados</div>
           <svg class="stat-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-5.3 0-8 2.7-8 5v1h16v-1c0-2.3-2.7-5-8-5z"/></svg>
         </div>
         <div class="stat-card brown">
           <div class="stat-label">Aplicações pendentes</div>
-          <div class="stat-value">7</div>
-          <div class="stat-delta down">↑ 2 sem resposta</div>
+          <div class="stat-value" id="statPending">0</div>
+          <div class="stat-delta down" id="statPendingMeta">Nenhuma pendência</div>
           <svg class="stat-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
         </div>
         <div class="stat-card teal">
           <div class="stat-label">Taxa de adesão</div>
-          <div class="stat-value">87<span style="font-size:20px">%</span></div>
-          <div class="stat-delta">↑ 4% vs. mês anterior</div>
+          <div class="stat-value" id="statAdherence">0<span style="font-size:20px">%</span></div>
+          <div class="stat-delta" id="statAdherenceMeta">Sem aplicações suficientes</div>
           <svg class="stat-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </div>
         <div class="stat-card amber">
           <div class="stat-label">Insights gerados</div>
-          <div class="stat-value">12</div>
-          <div class="stat-delta">Esta semana</div>
+          <div class="stat-value" id="statAnswered">0</div>
+          <div class="stat-delta" id="statAnsweredMeta">Respostas recebidas</div>
           <svg class="stat-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
         </div>
       </div>
@@ -803,7 +813,7 @@ body{
             <span class="card-title">Pendentes</span>
             <span class="card-action">Ver todos</span>
           </div>
-          <div class="card-body" style="padding:0 20px">
+          <div class="card-body" id="dashboardPendingList" style="padding:0 20px">
             <div class="pending-item">
               <div class="pending-av"><div class="avatar" style="background:linear-gradient(135deg,#3D2028,#B08090)">MC</div></div>
               <div><div class="pending-name">Maria Clara</div><div class="pending-instr">BAI — Ansiedade de Beck</div></div>
@@ -833,7 +843,7 @@ body{
             <span class="card-title">Atividade recente</span>
             <span class="card-action">Ver histórico</span>
           </div>
-          <div class="card-body" style="padding:0 20px">
+          <div class="card-body" id="dashboardActivityList" style="padding:0 20px">
             <div class="activity">
               <div class="activity-item">
                 <div class="act-dot" style="background:var(--teal)"></div>
@@ -899,10 +909,10 @@ body{
     </div>
     <div class="content">
       <div class="filter-tabs">
-        <div class="filter-tab active">Todos (24)</div>
-        <div class="filter-tab">Ativos (18)</div>
-        <div class="filter-tab">Pendentes (4)</div>
-        <div class="filter-tab">Em pausa (2)</div>
+        <div class="filter-tab active" id="patientsFilterAll">Todos (0)</div>
+        <div class="filter-tab" id="patientsFilterActive">Ativos (0)</div>
+        <div class="filter-tab" id="patientsFilterPending">Pendentes (0)</div>
+        <div class="filter-tab" id="patientsFilterPaused">Em pausa (0)</div>
       </div>
       <div class="card">
         <table class="table">
@@ -917,7 +927,7 @@ body{
               <th></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="patientsTableBody">
             <tr>
               <td><div style="display:flex;align-items:center;gap:10px"><div class="avatar" style="background:linear-gradient(135deg,#3D2028,#B08090)">MC</div><div><div class="name">Maria Clara</div><div style="font-size:11px;color:var(--ink3)">Ansiedade generalizada</div></div></div></td>
               <td>Hoje, 14h22<br><span style="font-size:11px;color:var(--ink3)">YSQ-S3</span></td>
@@ -1153,7 +1163,7 @@ body{
           <thead>
             <tr><th>Paciente</th><th>Instrumento</th><th>Enviado</th><th>Prazo</th><th>Status</th><th>Ação</th></tr>
           </thead>
-          <tbody>
+          <tbody id="applicationsTableBody">
             <tr><td class="name">Maria Clara</td><td><span class="badge badge-lilac">YSQ-S3</span></td><td>17/05 14h00</td><td>20/05</td><td><span class="badge badge-active">Respondido</span></td><td><button class="btn btn-ghost" style="padding:4px 10px;font-size:11px">Ver resultado</button></td></tr>
             <tr><td class="name">João Pedro</td><td><span class="badge badge-teal">BAI</span></td><td>16/05 09h30</td><td>18/05</td><td><span class="badge badge-pending">Aguardando</span></td><td><button class="btn btn-ghost" style="padding:4px 10px;font-size:11px">Reenviar</button></td></tr>
             <tr><td class="name">Ana Sofia</td><td><span class="badge badge-teal">GAD-7</span></td><td>14/05 10h15</td><td>17/05</td><td><span class="badge badge-active">Respondido</span></td><td><button class="btn btn-ghost" style="padding:4px 10px;font-size:11px">Ver resultado</button></td></tr>
@@ -1456,6 +1466,9 @@ body{
 const SB_URL = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
 const SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
 let SB_SESSION_TOKEN = sessionStorage.getItem('sb_session_token') || '';
+let PSI_PROFILE = null;
+let PATIENT_LINKS = [];
+let CLINICAL_RESPONSES = [];
 
 async function tryLogin() {
   const email = document.getElementById('lockEmail');
@@ -1478,7 +1491,7 @@ async function tryLogin() {
     const data = await res.json();
     SB_SESSION_TOKEN = data.access_token;
     sessionStorage.setItem('sb_session_token', SB_SESSION_TOKEN);
-    document.getElementById('lockScreen').style.display = 'none';
+    await bootstrapAuthenticatedApp();
   } catch (e) {
     error.style.display = 'block';
   }
@@ -1494,7 +1507,7 @@ async function restoreAuth() {
       }
     });
     if (!res.ok) throw new Error('invalid session');
-    document.getElementById('lockScreen').style.display = 'none';
+    await bootstrapAuthenticatedApp();
   } catch (e) {
     SB_SESSION_TOKEN = '';
     sessionStorage.removeItem('sb_session_token');
@@ -1508,6 +1521,291 @@ document.getElementById('lockPassword').addEventListener('keydown', e => {
   if (e.key === 'Enter') tryLogin();
 });
 restoreAuth();
+
+async function supabaseSelect(path) {
+  const res = await fetch(`${SB_URL}/rest/v1/${path}`, {
+    headers: {
+      apikey: SB_KEY,
+      Authorization: 'Bearer ' + SB_SESSION_TOKEN
+    }
+  });
+  if (!res.ok) throw new Error(`Falha ao carregar ${path}`);
+  return res.json();
+}
+
+async function bootstrapAuthenticatedApp() {
+  const [profiles, links, responses] = await Promise.all([
+    supabaseSelect('psis?select=nome,plano,ativa'),
+    supabaseSelect('patient_links?select=id,patient_name,instrumento,status,created_at,expires_at&order=created_at.desc'),
+    supabaseSelect('respostas_clinicas?select=id,paciente_nome,instrumento,formulario,score_total,scores,status,created_at&order=created_at.desc')
+  ]);
+
+  PSI_PROFILE = profiles[0];
+  if (!PSI_PROFILE || !PSI_PROFILE.ativa) {
+    throw new Error('Conta inativa ou não cadastrada');
+  }
+
+  PATIENT_LINKS = links || [];
+  CLINICAL_RESPONSES = responses || [];
+  renderAuthenticatedApp();
+  document.getElementById('lockScreen').style.display = 'none';
+}
+
+function renderAuthenticatedApp() {
+  renderPsiIdentity();
+  renderDashboardStats();
+  renderDashboardPending();
+  renderDashboardActivity();
+  renderPatientsTable();
+  renderApplicationsTable();
+}
+
+function renderPsiIdentity() {
+  const name = PSI_PROFILE?.nome || 'Psicóloga';
+  const plan = PSI_PROFILE?.plano || 'Plano ativo';
+  document.getElementById('sidebarUserName').textContent = name;
+  document.getElementById('sidebarUserPlan').textContent = formatPlan(plan);
+  const initials = initialsFromName(name);
+  const avatar = document.querySelector('.sidebar-user .user-avatar');
+  if (avatar) avatar.textContent = initials;
+}
+
+function renderDashboardStats() {
+  const patients = buildPatients();
+  const pending = PATIENT_LINKS.filter(link => link.status === 'ativo');
+  const answered = PATIENT_LINKS.filter(link => link.status === 'respondido');
+  const totalLinks = PATIENT_LINKS.length;
+  const adherence = totalLinks ? Math.round((answered.length / totalLinks) * 100) : 0;
+  const answeredThisWeek = CLINICAL_RESPONSES.filter(item => isWithinDays(item.created_at, 7)).length;
+
+  setText('navPatientsCount', patients.length);
+  setText('navApplicationsCount', pending.length);
+  setText('statPatients', patients.length);
+  setText('statPatientsMeta', patients.length ? `${patients.length} paciente(s) com histórico` : 'Nenhum paciente ainda');
+  setText('statPending', pending.length);
+  setText('statPendingMeta', pending.length ? `${pending.length} aguardando resposta` : 'Nenhuma pendência');
+  setHtml('statAdherence', `${adherence}<span style="font-size:20px">%</span>`);
+  setText('statAdherenceMeta', totalLinks ? `${answered.length} de ${totalLinks} aplicações respondidas` : 'Sem aplicações ainda');
+  setText('statAnswered', answeredThisWeek);
+  setText('statAnsweredMeta', answeredThisWeek === 1 ? 'Resposta nesta semana' : 'Respostas nesta semana');
+}
+
+function renderDashboardPending() {
+  const root = document.getElementById('dashboardPendingList');
+  const pending = PATIENT_LINKS.filter(link => link.status === 'ativo').slice(0, 4);
+  if (!pending.length) {
+    root.innerHTML = `<div class="empty-state">Nenhuma aplicação pendente.</div>`;
+    return;
+  }
+  root.innerHTML = pending.map(link => `
+    <div class="pending-item">
+      <div class="pending-av"><div class="avatar" style="background:linear-gradient(135deg,#3D2028,#B08090)">${initialsFromName(link.patient_name)}</div></div>
+      <div>
+        <div class="pending-name">${escapeHtml(link.patient_name)}</div>
+        <div class="pending-instr">${escapeHtml(link.instrumento)}</div>
+      </div>
+      <div class="pending-due">${relativeDate(link.created_at)}</div>
+      <button class="pending-send">Aguardando</button>
+    </div>
+  `).join('');
+}
+
+function renderDashboardActivity() {
+  const root = document.getElementById('dashboardActivityList');
+  const events = [
+    ...CLINICAL_RESPONSES.map(item => ({
+      type: 'response',
+      date: item.created_at,
+      text: `<strong>${escapeHtml(item.paciente_nome || 'Paciente')}</strong> respondeu ${escapeHtml(instrumentName(item))}`
+    })),
+    ...PATIENT_LINKS.map(item => ({
+      type: 'link',
+      date: item.created_at,
+      text: `Link enviado para <strong>${escapeHtml(item.patient_name)}</strong> · ${escapeHtml(item.instrumento)}`
+    }))
+  ].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 4);
+
+  if (!events.length) {
+    root.innerHTML = `<div class="empty-state">A atividade aparecerá aqui quando você começar a aplicar instrumentos.</div>`;
+    return;
+  }
+
+  root.innerHTML = `
+    <div class="activity">
+      ${events.map(event => `
+        <div class="activity-item">
+          <div class="act-dot" style="background:${event.type === 'response' ? 'var(--teal)' : 'var(--lilac)'}"></div>
+          <div>
+            <div class="act-text">${event.text}</div>
+            <div class="act-time">${relativeDate(event.date)}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderPatientsTable() {
+  const patients = buildPatients();
+  const body = document.getElementById('patientsTableBody');
+  setText('patientsFilterAll', `Todos (${patients.length})`);
+  setText('patientsFilterActive', `Ativos (${patients.length})`);
+  setText('patientsFilterPending', `Pendentes (${patients.filter(patient => patient.pendingCount > 0).length})`);
+  setText('patientsFilterPaused', 'Em pausa (0)');
+
+  if (!patients.length) {
+    body.innerHTML = `<tr><td colspan="7" class="empty-row">Nenhum paciente com respostas ainda.</td></tr>`;
+    return;
+  }
+
+  body.innerHTML = patients.map(patient => `
+    <tr>
+      <td>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="avatar" style="background:linear-gradient(135deg,#3D2028,#B08090)">${initialsFromName(patient.name)}</div>
+          <div>
+            <div class="name">${escapeHtml(patient.name)}</div>
+            <div style="font-size:11px;color:var(--ink3)">${patient.totalResponses} resposta(s)</div>
+          </div>
+        </div>
+      </td>
+      <td>${formatDateTime(patient.latestResponse?.created_at)}<br><span style="font-size:11px;color:var(--ink3)">${escapeHtml(instrumentName(patient.latestResponse))}</span></td>
+      <td>${patient.instruments.map(inst => `<span class="badge badge-lilac">${escapeHtml(inst)}</span>`).join(' ')}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:8px">
+          <div class="progress" style="width:64px"><div class="progress-fill" style="width:${patient.adherence}%;background:var(--teal)"></div></div>
+          <span style="font-size:11px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink)">${patient.adherence}%</span>
+        </div>
+      </td>
+      <td><span style="font-size:11px;color:var(--ink3)">${patient.totalResponses > 1 ? 'Histórico ativo' : 'Primeira aplicação'}</span></td>
+      <td><span class="badge ${patient.pendingCount ? 'badge-pending' : 'badge-active'}">${patient.pendingCount ? 'Pendente' : 'Ativo'}</span></td>
+      <td><button class="btn btn-ghost" style="padding:5px 10px;font-size:11px" onclick="openPatientDashboard('${encodeURIComponent(patient.name)}')">Ver</button></td>
+    </tr>
+  `).join('');
+}
+
+function renderApplicationsTable() {
+  const body = document.getElementById('applicationsTableBody');
+  if (!PATIENT_LINKS.length) {
+    body.innerHTML = `<tr><td colspan="6" class="empty-row">Nenhuma aplicação criada ainda.</td></tr>`;
+    return;
+  }
+  body.innerHTML = PATIENT_LINKS.map(link => `
+    <tr>
+      <td class="name">${escapeHtml(link.patient_name)}</td>
+      <td><span class="badge badge-lilac">${escapeHtml(link.instrumento)}</span></td>
+      <td>${formatDateTime(link.created_at)}</td>
+      <td>${link.expires_at ? formatDate(link.expires_at) : 'Sem prazo'}</td>
+      <td><span class="badge ${applicationBadgeClass(link.status)}">${applicationStatusLabel(link.status)}</span></td>
+      <td><button class="btn btn-ghost" style="padding:4px 10px;font-size:11px">${link.status === 'respondido' ? 'Ver resultado' : 'Aguardando'}</button></td>
+    </tr>
+  `).join('');
+}
+
+function buildPatients() {
+  const responseMap = new Map();
+  CLINICAL_RESPONSES.forEach(response => {
+    const key = response.paciente_nome || 'Paciente sem nome';
+    if (!responseMap.has(key)) responseMap.set(key, []);
+    responseMap.get(key).push(response);
+  });
+  PATIENT_LINKS.forEach(link => {
+    const key = link.patient_name || 'Paciente sem nome';
+    if (!responseMap.has(key)) responseMap.set(key, []);
+  });
+
+  return [...responseMap.entries()].map(([name, responses]) => {
+    const ownLinks = PATIENT_LINKS.filter(link => link.patient_name === name);
+    const answered = ownLinks.filter(link => link.status === 'respondido').length;
+    const adherence = ownLinks.length ? Math.round((answered / ownLinks.length) * 100) : 100;
+    return {
+      name,
+      responses,
+      latestResponse: responses[0],
+      totalResponses: responses.length,
+      instruments: [...new Set(responses.map(instrumentName).filter(Boolean))],
+      pendingCount: ownLinks.filter(link => link.status === 'ativo').length,
+      adherence
+    };
+  });
+}
+
+function openPatientDashboard(name) {
+  const decoded = decodeURIComponent(name);
+  const patient = buildPatients().find(item => item.name === decoded);
+  const hasYsq = patient?.instruments.includes('YSQ-S3');
+  window.location.href = hasYsq ? 'painel-esquemas.html' : 'painel-psi.html';
+}
+
+function instrumentName(item) {
+  return item?.instrumento || item?.formulario || '';
+}
+
+function initialsFromName(name = '') {
+  return name.split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]?.toUpperCase()).join('') || 'PS';
+}
+
+function formatPlan(plan) {
+  return String(plan || '').charAt(0).toUpperCase() + String(plan || '').slice(1);
+}
+
+function formatDate(value) {
+  if (!value) return '—';
+  return new Date(value).toLocaleDateString('pt-BR');
+}
+
+function formatDateTime(value) {
+  if (!value) return '—';
+  return new Date(value).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
+}
+
+function relativeDate(value) {
+  if (!value) return '—';
+  const diffMs = Date.now() - new Date(value).getTime();
+  const diffHours = Math.max(0, Math.floor(diffMs / 36e5));
+  if (diffHours < 1) return 'agora';
+  if (diffHours < 24) return `há ${diffHours}h`;
+  const diffDays = Math.floor(diffHours / 24);
+  return diffDays === 1 ? 'há 1 dia' : `há ${diffDays} dias`;
+}
+
+function isWithinDays(value, days) {
+  if (!value) return false;
+  return Date.now() - new Date(value).getTime() <= days * 864e5;
+}
+
+function applicationStatusLabel(status) {
+  return {
+    ativo: 'Aguardando',
+    respondido: 'Respondido',
+    revogado: 'Revogado',
+    expirado: 'Expirado'
+  }[status] || status;
+}
+
+function applicationBadgeClass(status) {
+  return status === 'respondido' ? 'badge-active' : status === 'ativo' ? 'badge-pending' : 'badge-paused';
+}
+
+function setText(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = value;
+}
+
+function setHtml(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.innerHTML = value;
+}
+
+function escapeHtml(value = '') {
+  return String(value).replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  }[char]));
+}
 
 function showScreen(id, el) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
