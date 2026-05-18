@@ -1,5 +1,36 @@
 (() => {
   const nav = document.querySelector('.site-nav, body > nav');
+  const navLinks = nav?.querySelector('.nav-links');
+
+  if (navLinks) {
+    navLinks.innerHTML = `
+      <div class="desktop-menu-group">
+        <button class="desktop-menu-trigger" type="button">Pacientes <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="desktop-menu-panel">
+          <a href="terapia.html"><strong>Terapia</strong><span>Atendimento clínico</span></a>
+          <a href="ansiedade.html"><strong>Ansiedade</strong><span>Guia para pacientes</span></a>
+          <a href="index.html#processo"><strong>Processo</strong><span>Como funciona</span></a>
+          <a href="index.html#sobre"><strong>Sobre</strong><span>Conheça a psicóloga</span></a>
+        </div>
+      </div>
+      <div class="desktop-menu-group">
+        <button class="desktop-menu-trigger" type="button">Psicólogas <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="desktop-menu-panel">
+          <a href="supervisao.html"><strong>Supervisão</strong><span>Desenvolvimento clínico</span></a>
+          <a href="psireal-tcc.html"><strong>PsiReal TCC</strong><span>Plataforma clínica</span></a>
+          <a href="https://michellepsicologiareal-collab.github.io/biblioteca-psi-real/"><strong>Biblioteca</strong><span>Materiais e recursos</span></a>
+        </div>
+      </div>
+      <div class="desktop-menu-group">
+        <button class="desktop-menu-trigger" type="button">Empresas <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="desktop-menu-panel">
+          <a href="corporativo.html"><strong>Corporativo</strong><span>Palestras e soluções</span></a>
+        </div>
+      </div>
+      <a href="index.html#faq">FAQ</a>
+      <a class="nav-cta" href="https://wa.me/5511947388423" target="_blank" rel="noopener">Agendar</a>
+    `;
+  }
 
   if (nav && !document.querySelector('[data-mobile-menu]')) {
     const button = document.createElement('button');
