@@ -48,7 +48,7 @@
     </div>
   </section>
   <div id="app">
-    <nav><strong>PsiReal TCC</strong><a class="btn" href="painel-psi.html">Voltar ao painel</a></nav>
+    <nav><strong>PsiReal TCC</strong><a class="btn" href="painel-tcc.html">Voltar ao painel</a></nav>
     <main>
       <div class="head">
         <div>
@@ -74,11 +74,12 @@
     const KEY='sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
     const params=new URLSearchParams(location.search);
     const instrumento=params.get('instrumento') || 'GAD-7';
+    const paciente=params.get('paciente') || '';
     const configs={
       'GAD-7':{title:'Dashboard de ansiedade',subtitle:'GAD-7',range:'0-21'},
       'PHQ-9':{title:'Dashboard de depressao',subtitle:'PHQ-9',range:'0-27'}
     };
-    let token='', chart;
+    let token=sessionStorage.getItem('sb_session_token') || '', chart;
     async function login(){
       const email=document.getElementById('email').value.trim();
       const password=document.getElementById('password').value;
@@ -86,6 +87,7 @@
       const data=await res.json();
       if(!res.ok||!data.access_token)return showErr('Login invalido.');
       token=data.access_token;
+      sessionStorage.setItem('sb_session_token', token);
       document.getElementById('lock').style.display='none';
       document.getElementById('app').style.display='block';
       load();
@@ -95,7 +97,9 @@
       const cfg=configs[instrumento]||configs['GAD-7'];
       document.getElementById('title').textContent=cfg.title;
       document.getElementById('subtitle').textContent=`${cfg.subtitle} · faixa ${cfg.range}`;
-      const res=await fetch(`${SB}/rest/v1/respostas_clinicas?instrumento=eq.${encodeURIComponent(instrumento)}&select=*&order=created_at.asc`,{headers:{apikey:KEY,Authorization:'Bearer '+token}});
+      const filters = [`instrumento=eq.${encodeURIComponent(instrumento)}`];
+      if (paciente) filters.push(`paciente_nome=eq.${encodeURIComponent(paciente)}`);
+      const res=await fetch(`${SB}/rest/v1/respostas_clinicas?${filters.join('&')}&select=*&order=created_at.asc`,{headers:{apikey:KEY,Authorization:'Bearer '+token}});
       const rows=await res.json();
       if(!rows.length){document.getElementById('metrics').innerHTML='<div class="card empty">Nenhuma resposta recebida ainda.</div>';document.getElementById('history').innerHTML='';return}
       const latest=rows[rows.length-1], first=rows[0];
@@ -111,6 +115,15 @@
       if(chart) chart.destroy();
       chart=new Chart(document.getElementById('lineChart'),{type:'line',data:{labels:rows.map(r=>new Date(r.created_at).toLocaleDateString('pt-BR')),datasets:[{data:rows.map(r=>Number(r.score_total ?? r.scores?.total ?? 0)),borderColor:'#7A4A55',backgroundColor:'rgba(176,128,144,.18)',fill:true,tension:.3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
     }
+    async function restore(){
+      if(!token)return;
+      const res=await fetch(`${SB}/auth/v1/user`,{headers:{apikey:KEY,Authorization:'Bearer '+token}});
+      if(!res.ok){sessionStorage.removeItem('sb_session_token');token='';return}
+      document.getElementById('lock').style.display='none';
+      document.getElementById('app').style.display='block';
+      load();
+    }
+    restore();
   </script>
 </body>
 </html>

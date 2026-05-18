@@ -106,6 +106,7 @@ body {
   position: relative;
 }
 .nav-item:hover { background: var(--bg2); color: var(--ink); }
+.nav a.nav-item { text-decoration: none; color: var(--ink2); }
 .nav-item.active {
   background: var(--lilac4); color: var(--brown);
   font-weight: 500;
@@ -235,6 +236,42 @@ body {
   text-align: center;
   padding: 24px 16px !important;
 }
+.modal-backdrop{
+  position:fixed; inset:0; z-index:200;
+  background:rgba(30,16,20,.38);
+  display:none; align-items:center; justify-content:center;
+  padding:20px;
+}
+.modal-backdrop.open{display:flex}
+.modal-card{
+  width:min(460px,100%);
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:22px;
+  box-shadow:var(--shadow-md);
+  padding:24px;
+}
+.modal-head{
+  display:flex; align-items:flex-start; justify-content:space-between;
+  gap:16px; margin-bottom:18px;
+}
+.modal-title{font-size:20px;font-weight:700}
+.modal-close{
+  border:0;background:transparent;color:var(--ink3);cursor:pointer;font-size:22px;line-height:1;
+}
+.modal-grid{display:grid;gap:14px}
+.field label{
+  display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:6px;
+}
+.field input,.field select{
+  width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:14px;background:#fff;font:inherit;color:var(--ink);
+}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+.generated-link{
+  margin-top:16px;padding:14px;border-radius:16px;background:var(--bg2);border:1px solid var(--border);display:none;
+}
+.generated-link.open{display:block}
+.generated-link code{display:block;word-break:break-all;font-size:12px;color:var(--ink2);margin-bottom:10px}
 
 /* ── TABLE ────────────────────────────────────────────── */
 .table { width: 100%; border-collapse: collapse; }
@@ -315,6 +352,22 @@ body {
   background: #F5EDE7; border: none; padding: 5px 12px;
   border-radius: var(--radius); cursor: pointer; transition: all .15s;
 }
+.btn-apply[disabled]{
+  opacity:.55;
+  cursor:not-allowed;
+}
+.inv-status{
+  display:inline-flex;
+  align-items:center;
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.04em;
+}
+.inv-status.live{background:var(--green3);color:var(--green)}
+.inv-status.prep{background:var(--amber3);color:var(--amber)}
+.inv-status.license{background:var(--coral3);color:var(--coral)}
 .btn-apply:hover { background: var(--brown); color: #fff; }
 
 /* ── FILTER TABS ──────────────────────────────────────── */
@@ -639,8 +692,14 @@ body{
     </div>
   </div>
 
-  <nav class="nav">
-    <div class="nav-section">
+  <nav class="nav"><!-- stale profile link moved
+      <a class="nav-item" href="painel-perfil-clinico.html">
+        <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 14c3-7 9-7 12 0"/><path d="M5 9c1.5-4 6.5-4 8 0"/><circle cx="9" cy="6" r="2"/><path d="M4 14h10"/></svg>
+        Mapa de AtivaÃ§Ã£o
+      </a>
+    </div>
+
+    --><div class="nav-section">
       <div class="nav-label">Principal</div>
       <div class="nav-item active" onclick="showScreen('dashboard', this)">
         <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="6" height="6" rx="1.5"/><rect x="10" y="2" width="6" height="6" rx="1.5"/><rect x="2" y="10" width="6" height="6" rx="1.5"/><rect x="10" y="10" width="6" height="6" rx="1.5"/></svg>
@@ -672,6 +731,10 @@ body{
         <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="9" r="7"/><path d="M9 5v4l2 2"/></svg>
         Insights Clínicos
       </div>
+      <a class="nav-item" href="painel-perfil-clinico.html">
+        <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 14c3-7 9-7 12 0"/><path d="M5 9c1.5-4 6.5-4 8 0"/><circle cx="9" cy="6" r="2"/><path d="M4 14h10"/></svg>
+        Mapa de AtivaÃ§Ã£o
+      </a>
     </div>
 
     <div class="nav-section">
@@ -723,7 +786,7 @@ body{
           <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M12 12l3 3"/></svg>
           Buscar
         </button>
-        <button class="btn btn-primary">+ Nova aplicação</button>
+        <button class="btn btn-primary" onclick="openApplicationModal()">+ Nova aplicação</button>
       </div>
     </div>
     <div class="content">
@@ -904,7 +967,7 @@ body{
       <div><div class="topbar-title">Pacientes</div></div>
       <div class="topbar-actions">
         <button class="btn btn-ghost">Exportar</button>
-        <button class="btn btn-primary">+ Novo paciente</button>
+        <button class="btn btn-primary" onclick="openApplicationModal()">+ Novo paciente</button>
       </div>
     </div>
     <div class="content">
@@ -1038,7 +1101,7 @@ body{
           <div class="inv-desc">Avalia 18 Esquemas Iniciais Desadaptativos distribuídos em 5 domínios. Instrumento central para formulação de caso em Terapia do Esquema.</div>
           <div class="inv-footer">
             <span class="inv-items">90 itens · Likert 1–6</span>
-            <button class="btn-apply">Aplicar →</button>
+            <button class="btn-apply" data-instrument="YSQ-S3">Aplicar →</button>
           </div>
         </div>
 
@@ -1051,7 +1114,7 @@ body{
           <div class="inv-desc">Avalia a frequência de ativação de 14 modos esquemáticos agrupados em 5 domínios. Adaptação brasileira validada (Damasceno, 2020 / GAAPCC).</div>
           <div class="inv-footer">
             <span class="inv-items">124 itens · Likert 1–6</span>
-            <button class="btn-apply">Aplicar →</button>
+            <button class="btn-apply" data-instrument="SMI" disabled>Em preparação</button>
           </div>
         </div>
 
@@ -1064,7 +1127,7 @@ body{
           <div class="inv-desc">Avalia a intensidade de sintomas de ansiedade somática e cognitiva. Amplamente utilizado em TCC para monitoramento de tratamento.</div>
           <div class="inv-footer">
             <span class="inv-items">21 itens · Likert 0–3</span>
-            <button class="btn-apply">Aplicar →</button>
+            <button class="btn-apply" data-instrument="BAI" disabled>Licenciamento</button>
           </div>
         </div>
 
@@ -1077,7 +1140,7 @@ body{
           <div class="inv-desc">Rastreio e avaliação de severidade do Transtorno de Ansiedade Generalizada. Sensível a mudanças ao longo do tratamento.</div>
           <div class="inv-footer">
             <span class="inv-items">7 itens · Likert 0–3</span>
-            <button class="btn-apply">Aplicar →</button>
+            <button class="btn-apply" data-instrument="GAD-7">Aplicar →</button>
           </div>
         </div>
 
@@ -1090,7 +1153,7 @@ body{
           <div class="inv-desc">Rastreio e mensuração de severidade da depressão baseado nos critérios do DSM. Recomendado para measurement-based care.</div>
           <div class="inv-footer">
             <span class="inv-items">9 itens · Likert 0–3</span>
-            <button class="btn-apply">Aplicar →</button>
+            <button class="btn-apply" data-instrument="PHQ-9">Aplicar →</button>
           </div>
         </div>
 
@@ -1103,7 +1166,20 @@ body{
           <div class="inv-desc">Avalia inflexibilidade psicológica e evitação experiencial. Instrumento central para monitoramento de resultados em ACT.</div>
           <div class="inv-footer">
             <span class="inv-items">7 itens · Likert 1–7</span>
-            <button class="btn-apply">Aplicar →</button>
+            <button class="btn-apply" data-instrument="AAQ-II" disabled>Em preparação</button>
+          </div>
+        </div>
+
+        <div class="inv-card">
+          <div class="inv-card-top">
+            <span class="inv-cat" style="background:var(--green3);color:var(--green)">ACT</span>
+            <span class="inv-time">8-12 min</span>
+          </div>
+          <div class="inv-name">Roda da Vida ACT - Valores e acao comprometida</div>
+          <div class="inv-desc">Mapeia areas de vida, grau de satisfacao, presenca de valores e distancia entre o que importa e o que tem sido vivido. Material clinico para formulacao, metas e flexibilidade psicologica.</div>
+          <div class="inv-footer">
+            <span class="inv-items">10 areas - Escala 0-10</span>
+            <button class="btn-apply" data-instrument="RODA-ACT" disabled>Proximo material</button>
           </div>
         </div>
 
@@ -1116,7 +1192,7 @@ body{
           <div class="inv-desc">Avalia a presença e a intensidade de sintomas depressivos cognitivos, afetivos, somáticos e vegetativos.</div>
           <div class="inv-footer">
             <span class="inv-items">21 itens · Múltipla escolha</span>
-            <button class="btn-apply">Aplicar →</button>
+            <button class="btn-apply" data-instrument="BDI-II" disabled>Licenciamento</button>
           </div>
         </div>
 
@@ -1129,7 +1205,7 @@ body{
           <div class="inv-desc">Avalia múltiplas facetas da desregulação emocional: consciência, clareza, estratégias, impulso e metas.</div>
           <div class="inv-footer">
             <span class="inv-items">36 itens · Likert 1–5</span>
-            <button class="btn-apply">Aplicar →</button>
+            <button class="btn-apply" data-instrument="DERS" disabled>Em preparação</button>
           </div>
         </div>
 
@@ -1142,7 +1218,7 @@ body{
           <div class="inv-desc">Rastreio de sintomas de TDAH em adultos desenvolvido pela OMS. Avalia desatenção e hiperatividade/impulsividade.</div>
           <div class="inv-footer">
             <span class="inv-items">18 itens · Likert 0–4</span>
-            <button class="btn-apply">Aplicar →</button>
+            <button class="btn-apply" data-instrument="ASRS-v1.1" disabled>Em preparação</button>
           </div>
         </div>
       </div>
@@ -1154,7 +1230,7 @@ body{
     <div class="topbar">
       <div><div class="topbar-title">Aplicações</div></div>
       <div class="topbar-actions">
-        <button class="btn btn-primary">+ Nova aplicação</button>
+        <button class="btn btn-primary" onclick="openApplicationModal()">+ Nova aplicação</button>
       </div>
     </div>
     <div class="content">
@@ -1462,6 +1538,44 @@ body{
 
 </main>
 
+<div class="modal-backdrop" id="applicationModal" aria-hidden="true">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div>
+        <div class="modal-title">Nova aplicação</div>
+        <div style="font-size:13px;color:var(--ink3);margin-top:4px">Crie o paciente e gere o primeiro link em um único passo.</div>
+      </div>
+      <button class="modal-close" onclick="closeApplicationModal()" aria-label="Fechar">×</button>
+    </div>
+    <div class="modal-grid">
+      <div class="field">
+        <label for="newPatientName">Nome do paciente</label>
+        <input id="newPatientName" placeholder="Ex: Maria Silva">
+      </div>
+      <div class="field">
+        <label for="newInstrument">Instrumento</label>
+        <select id="newInstrument">
+          <option value="YSQ-S3" data-page="formulario-esquemas">YSQ-S3 — Esquemas de Young</option>
+          <option value="SMI" data-page="formulario-smi" disabled>SMI — em preparação</option>
+          <option value="GAD-7" data-page="formulario-gad7">GAD-7 — Ansiedade</option>
+          <option value="PHQ-9" data-page="formulario-phq9">PHQ-9 — Depressão</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeApplicationModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="createApplication()">Gerar link</button>
+    </div>
+    <div class="generated-link" id="generatedLinkBox">
+      <code id="generatedLinkText"></code>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-ghost" onclick="copyGeneratedLink()">Copiar link</button>
+        <a class="btn btn-primary" id="generatedWhatsappLink" target="_blank" rel="noopener">Enviar no WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 const SB_URL = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
 const SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
@@ -1654,12 +1768,15 @@ function renderPatientsTable() {
   setText('patientsFilterPaused', 'Em pausa (0)');
 
   if (!patients.length) {
-    body.innerHTML = `<tr><td colspan="7" class="empty-row">Nenhum paciente com respostas ainda.</td></tr>`;
+    body.innerHTML = `<tr><td colspan="7" class="empty-row">
+      Nenhum paciente com respostas ainda.<br>
+      <button class="btn btn-primary" style="margin-top:12px" onclick="openApplicationModal()">Criar primeira aplicação</button>
+    </td></tr>`;
     return;
   }
 
   body.innerHTML = patients.map(patient => `
-    <tr>
+    <tr onclick="openPatientDashboard('${encodeURIComponent(patient.name)}')" style="cursor:pointer">
       <td>
         <div style="display:flex;align-items:center;gap:10px">
           <div class="avatar" style="background:linear-gradient(135deg,#3D2028,#B08090)">${initialsFromName(patient.name)}</div>
@@ -1679,7 +1796,7 @@ function renderPatientsTable() {
       </td>
       <td><span style="font-size:11px;color:var(--ink3)">${patient.totalResponses > 1 ? 'Histórico ativo' : 'Primeira aplicação'}</span></td>
       <td><span class="badge ${patient.pendingCount ? 'badge-pending' : 'badge-active'}">${patient.pendingCount ? 'Pendente' : 'Ativo'}</span></td>
-      <td><button class="btn btn-ghost" style="padding:5px 10px;font-size:11px" onclick="openPatientDashboard('${encodeURIComponent(patient.name)}')">Ver</button></td>
+      <td><button class="btn btn-ghost" style="padding:5px 10px;font-size:11px" onclick="event.stopPropagation();openPatientDashboard('${encodeURIComponent(patient.name)}')">Ver</button></td>
     </tr>
   `).join('');
 }
@@ -1697,7 +1814,7 @@ function renderApplicationsTable() {
       <td>${formatDateTime(link.created_at)}</td>
       <td>${link.expires_at ? formatDate(link.expires_at) : 'Sem prazo'}</td>
       <td><span class="badge ${applicationBadgeClass(link.status)}">${applicationStatusLabel(link.status)}</span></td>
-      <td><button class="btn btn-ghost" style="padding:4px 10px;font-size:11px">${link.status === 'respondido' ? 'Ver resultado' : 'Aguardando'}</button></td>
+      <td><button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" ${link.status === 'respondido' ? `onclick="openInstrumentDashboard('${escapeHtml(link.instrumento)}')"` : 'disabled'}>${link.status === 'respondido' ? 'Ver resultado' : 'Aguardando'}</button></td>
     </tr>
   `).join('');
 }
@@ -1733,8 +1850,97 @@ function buildPatients() {
 function openPatientDashboard(name) {
   const decoded = decodeURIComponent(name);
   const patient = buildPatients().find(item => item.name === decoded);
-  const hasYsq = patient?.instruments.includes('YSQ-S3');
-  window.location.href = hasYsq ? 'painel-esquemas.html' : 'painel-psi.html';
+  const latestInstrument = instrumentName(patient?.latestResponse);
+  if (latestInstrument === 'YSQ-S3') {
+    window.location.href = 'painel-esquemas.html';
+    return;
+  }
+  if (latestInstrument) {
+    window.location.href = `painel-instrumento.html?instrumento=${encodeURIComponent(latestInstrument)}&paciente=${encodeURIComponent(decoded)}`;
+    return;
+  }
+  showScreen('aplicacoes', document.querySelector('[onclick*=\"aplicacoes\"]'));
+}
+
+function openInstrumentDashboard(instrument) {
+  if (instrument === 'YSQ-S3') {
+    window.location.href = 'painel-esquemas.html';
+    return;
+  }
+  window.location.href = `painel-instrumento.html?instrumento=${encodeURIComponent(instrument)}`;
+}
+
+function openApplicationModal(instrument = 'YSQ-S3') {
+  const modal = document.getElementById('applicationModal');
+  const select = document.getElementById('newInstrument');
+  const option = [...select.options].find(item => item.value === instrument && !item.disabled);
+  select.value = option ? instrument : 'YSQ-S3';
+  document.getElementById('generatedLinkBox').classList.remove('open');
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+  setTimeout(() => document.getElementById('newPatientName').focus(), 0);
+}
+
+function closeApplicationModal() {
+  const modal = document.getElementById('applicationModal');
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+}
+
+async function createApplication() {
+  const name = document.getElementById('newPatientName').value.trim();
+  const select = document.getElementById('newInstrument');
+  const instrument = select.value;
+  const page = select.options[select.selectedIndex].dataset.page;
+  if (!name) {
+    alert('Informe o nome do paciente.');
+    return;
+  }
+  try {
+    const res = await fetch(`${SB_URL}/rest/v1/rpc/create_patient_link`, {
+      method: 'POST',
+      headers: {
+        apikey: SB_KEY,
+        Authorization: 'Bearer ' + SB_SESSION_TOKEN,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        p_patient_name: name,
+        p_patient_birth: null,
+        p_instrumento: instrument,
+        p_expires_at: null
+      })
+    });
+    const data = await res.json();
+    if (!res.ok || !data?.[0]?.token) throw new Error('Falha ao gerar link');
+    const token = encodeURIComponent(data[0].token);
+    const link = `${location.origin}${location.pathname.replace(/painel-tcc\.html$/, '')}${page}.html?token=${token}&nome=${encodeURIComponent(name)}`;
+    document.getElementById('generatedLinkText').textContent = link;
+    document.getElementById('generatedWhatsappLink').href = `https://wa.me/?text=${encodeURIComponent(`Olá ${name}! Segue seu questionário para responder antes da próxima sessão:\n${link}`)}`;
+    document.getElementById('generatedLinkBox').classList.add('open');
+    await refreshPanelData();
+  } catch (error) {
+    alert('Não foi possível gerar o link. Verifique se a sessão está ativa e tente novamente.');
+  }
+}
+
+async function copyGeneratedLink() {
+  const link = document.getElementById('generatedLinkText').textContent;
+  await navigator.clipboard.writeText(link);
+}
+
+async function refreshPanelData() {
+  const [links, responses] = await Promise.all([
+    supabaseSelect('patient_links?select=id,patient_name,instrumento,status,created_at,expires_at&order=created_at.desc'),
+    supabaseSelect('respostas_clinicas?select=id,paciente_nome,instrumento,formulario,score_total,scores,status,created_at&order=created_at.desc')
+  ]);
+  PATIENT_LINKS = links || [];
+  CLINICAL_RESPONSES = responses || [];
+  renderDashboardStats();
+  renderDashboardPending();
+  renderDashboardActivity();
+  renderPatientsTable();
+  renderApplicationsTable();
 }
 
 function instrumentName(item) {
@@ -1834,18 +2040,10 @@ document.querySelectorAll('.filter-tab').forEach(tab => {
   });
 });
 
-// Btn apply feedback
 document.querySelectorAll('.btn-apply').forEach(btn => {
   btn.addEventListener('click', function() {
-    const orig = this.textContent;
-    this.textContent = 'Link gerado ✓';
-    this.style.background = 'var(--teal)';
-    this.style.color = '#fff';
-    setTimeout(() => {
-      this.textContent = orig;
-      this.style.background = '';
-      this.style.color = '';
-    }, 2000);
+    if (this.disabled) return;
+    openApplicationModal(this.dataset.instrument || 'YSQ-S3');
   });
 });
 </script>

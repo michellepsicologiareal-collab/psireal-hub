@@ -3,1159 +3,391 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Michelle Donegá - Psicóloga Clínica | Crianças, Adolescentes e Adultos</title>
-  <meta name="description" content="Psicoterapia baseada em evidências para crianças, adolescentes e adultos, com atenção especial para ansiedade, sobrecarga emocional, relações e autocobrança. Atendimento online e presencial em Jarinu/SP." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="manifest" href="manifest.json" />
+  <title>Formulação de Caso — Jacqueline Persons | Biblioteca Psi Real</title>
   <style>
-    *, *::before, *::after { box-sizing: border-box; }
-    * { margin: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --rose: #8B4A52;
+      --rose-light: #F8EDEB;
+      --rose-hover: #FBF4F2;
+      --rose-border: #F0E8E3;
+      --rose-mid: #D4909A;
+      --ink: #2A1A18;
+      --ink-muted: #8A7370;
+      --ink-faint: #C4A8A4;
+      --bg: #FAFAFA;
+      --white: #FFFFFF;
+      --border: #EDE6E0;
+      --surface: #F5F2EF;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
     html { scroll-behavior: smooth; }
-    body {
-      --paper: #fcfaf8;
-      --paper-deep: #f2e7e1;
-      --ink: #2f2423;
-      --muted: #72615d;
-      --soft: #9d8a84;
-      --line: #e7ddd8;
-      --wine: #6a4742;
-      --wine-2: #81584f;
-      --rose: #b86f5a;
-      --brown: #4f3b37;
-      --white: #fffdfb;
-      --serif: 'Instrument Serif', Georgia, serif;
-      --sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-family: var(--sans);
-      background: var(--paper);
-      color: var(--ink);
-      line-height: 1.65;
-      font-weight: 300;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: geometricPrecision;
-    }
-    img { display: block; max-width: 100%; }
-    a { color: inherit; }
-    button, input, textarea, select { font: inherit; }
-    ::selection { background: var(--wine); color: var(--paper); }
-    .site-nav {
-      position: fixed;
-      inset: 0 0 auto;
-      height: 72px;
-      z-index: 20;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 28px;
-      padding: 0 clamp(20px, 4vw, 64px);
-      background: color-mix(in srgb, var(--paper) 91%, transparent);
-      border-bottom: 1px solid transparent;
-      backdrop-filter: blur(18px);
-      transition: border-color .25s ease, height .25s ease;
-    }
-    .site-nav.scrolled { border-bottom-color: var(--line); height: 64px; }
-    .brand {
-      font-family: var(--serif);
-      font-size: 24px;
-      line-height: 1;
-      text-decoration: none;
-      letter-spacing: 0;
-      white-space: nowrap;
-    }
-    .brand span { color: var(--rose); }
-    .nav-links { display: flex; align-items: center; gap: 30px; }
-    .nav-links a:not(.nav-cta) {
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: .12em;
-      text-decoration: none;
-      text-transform: uppercase;
-      transition: color .2s ease;
-    }
-    .nav-links a:hover { color: var(--ink); }
-    .nav-cta, .button-primary, .button-secondary, .form-button {
-      min-height: 48px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      border: 1px solid var(--wine);
-      border-radius: 2px;
-      padding: 0 24px;
-      background: var(--wine);
-      color: var(--paper);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      text-decoration: none;
-      cursor: pointer;
-      transition: transform .25s ease, background .25s ease, color .25s ease, box-shadow .25s ease;
-    }
-    .nav-cta { min-height: 42px; padding: 0 18px; }
-    .button-primary:hover, .nav-cta:hover, .form-button:hover {
-      transform: translateY(-2px);
-      background: var(--wine-2);
-      box-shadow: 0 18px 42px rgba(58, 22, 36, .18);
-    }
-    .button-secondary {
-      background: transparent;
-      color: var(--wine);
-      border-color: color-mix(in srgb, var(--wine) 30%, transparent);
-    }
-    .button-secondary:hover { border-color: var(--wine); transform: translateY(-2px); }
-    main { overflow: hidden; }
-    section { padding: clamp(78px, 10vw, 144px) 0; }
-    .container { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
-    .container-wide { width: min(1360px, calc(100% - 40px)); margin: 0 auto; }
-    .container-narrow { width: min(780px, calc(100% - 40px)); margin: 0 auto; }
-    .eyebrow {
-      display: inline-block;
-      margin-bottom: 20px;
-      color: var(--rose);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-    }
-    .section-title {
-      font-family: var(--serif);
-      font-size: clamp(42px, 6vw, 76px);
-      font-weight: 400;
-      line-height: .96;
-      letter-spacing: 0;
-      max-width: 820px;
-    }
-    .section-lead {
-      max-width: 620px;
-      margin-top: 26px;
-      color: var(--muted);
-      font-size: clamp(16px, 1.5vw, 19px);
-      line-height: 1.9;
-    }
-    .hero {
-      min-height: 100svh;
-      padding: 112px 0 44px;
-      display: flex;
-      align-items: stretch;
-      background: linear-gradient(90deg, transparent 0 62%, var(--paper-deep) 62% 100%);
-    }
-    .hero-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.03fr) minmax(340px, .78fr);
-      gap: clamp(36px, 5vw, 82px);
-      align-items: center;
-      min-height: calc(100svh - 156px);
-    }
-    .hero-copy { padding: 46px 0; }
-    .hero-kicker {
-      max-width: 560px;
-      margin-bottom: 30px;
-      color: var(--brown);
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-    }
-    .hero h1 {
-      max-width: 760px;
-      font-family: var(--serif);
-      font-size: clamp(52px, 7vw, 96px);
-      font-weight: 400;
-      line-height: .9;
-      letter-spacing: 0;
-    }
-    .hero h1 em { color: var(--rose); font-style: italic; }
-    .hero-sub {
-      max-width: 570px;
-      margin-top: 34px;
-      color: var(--muted);
-      font-size: clamp(17px, 1.7vw, 22px);
-      line-height: 1.72;
-    }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 38px; }
-    .hero-note {
-      margin-top: 28px;
-      color: var(--soft);
-      font-size: 12px;
-      letter-spacing: .09em;
-      text-transform: uppercase;
-    }
-    .service-entry {
-      padding: 0;
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      background: var(--white);
-    }
-    .service-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-    .service-link {
-      min-height: 178px;
-      display: grid;
-      align-content: space-between;
-      gap: 18px;
-      padding: 30px clamp(20px, 3vw, 34px);
-      text-decoration: none;
-      border-right: 1px solid var(--line);
-      transition: background .25s ease;
-    }
-    .service-mark {
-      width: 42px;
-      height: 42px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid var(--line);
-      color: var(--wine);
-      background: rgba(255,255,255,.72);
-    }
-    .service-mark svg {
-      width: 20px;
-      height: 20px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 1.7;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-    .service-link:last-child { border-right: 0; }
-    .service-link span {
-      color: var(--rose);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-    }
-    .service-link strong {
-      display: block;
-      font-family: var(--serif);
-      font-size: clamp(28px, 2.5vw, 36px);
-      font-weight: 400;
-      line-height: 1;
-    }
-    .service-link small {
-      display: block;
-      max-width: 290px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.7;
-    }
-    .service-link:hover { background: var(--paper-deep); }
-    .anxiety-strip {
-      padding: 0;
-      background: var(--paper);
-    }
-    .anxiety-strip a {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      min-height: 86px;
-      text-decoration: none;
-      border-bottom: 1px solid var(--line);
-    }
-    .anxiety-strip strong {
-      font-family: var(--serif);
-      font-size: clamp(24px, 2.6vw, 34px);
-      font-weight: 400;
-    }
-    .anxiety-strip span {
-      color: var(--muted);
-      font-size: 13px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-    .hero-media {
-      position: relative;
-      align-self: stretch;
-      min-height: 640px;
-      display: grid;
-      align-items: center;
-    }
-    .portrait-frame {
-      position: relative;
-      height: min(72svh, 700px);
-      min-height: 520px;
-      overflow: hidden;
-      background: var(--wine);
-    }
-    .portrait-frame::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(58,22,36,.03), rgba(58,22,36,.28));
-      pointer-events: none;
-    }
-    .portrait-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 18%;
-      filter: saturate(.88) contrast(.96) brightness(.96);
-    }
-    .portrait-caption {
-      position: absolute;
-      left: 24px;
-      right: 24px;
-      bottom: 24px;
-      z-index: 2;
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      color: rgba(255,253,249,.78);
-      font-size: 11px;
-      letter-spacing: .13em;
-      text-transform: uppercase;
-    }
-    .hero-index {
-      position: absolute;
-      top: 26px;
-      left: -64px;
-      width: 154px;
-      padding: 24px 20px;
-      background: var(--paper);
-      border-left: 1px solid var(--line);
-      color: var(--muted);
-    }
-    .hero-index strong {
-      display: block;
-      margin-bottom: 8px;
-      font-family: var(--serif);
-      color: var(--wine);
-      font-size: 42px;
-      font-weight: 400;
-      line-height: 1;
-    }
-    .hero-index span { font-size: 11px; letter-spacing: .11em; text-transform: uppercase; }
-    .manifesto { background: var(--wine); color: var(--paper); }
-    .manifesto-grid {
-      display: grid;
-      grid-template-columns: minmax(0, .85fr) minmax(0, 1fr);
-      gap: clamp(42px, 8vw, 120px);
-      align-items: start;
-    }
-    .manifesto .eyebrow { color: #d7a39b; }
-    .manifesto .section-title { color: var(--paper); }
-    .manifesto .section-lead { color: rgba(250,247,243,.68); }
-    .symptom-list { border-top: 1px solid rgba(250,247,243,.18); }
-    .symptom {
-      display: grid;
-      grid-template-columns: 52px 1fr;
-      gap: 22px;
-      padding: 25px 0;
-      border-bottom: 1px solid rgba(250,247,243,.18);
-      color: rgba(250,247,243,.78);
-    }
-    .symptom span {
-      color: #d7a39b;
-      font-family: var(--serif);
-      font-size: 22px;
-      line-height: 1;
-    }
-    .symptom strong {
-      display: block;
-      margin-bottom: 5px;
-      color: var(--paper);
-      font-size: 16px;
-      font-weight: 500;
-    }
-    .process-head {
-      display: grid;
-      grid-template-columns: .9fr 1fr;
-      gap: clamp(36px, 6vw, 88px);
-      align-items: end;
-      margin-bottom: 62px;
-    }
-    .process-list { border-top: 1px solid var(--line); }
-    .process-item {
-      display: grid;
-      grid-template-columns: 120px minmax(220px, .42fr) 1fr;
-      gap: 32px;
-      padding: 34px 0;
-      border-bottom: 1px solid var(--line);
-      align-items: baseline;
-    }
-    .process-num {
-      font-family: var(--serif);
-      color: var(--rose);
-      font-size: 40px;
-      line-height: 1;
-    }
-    .process-item h3 { font-size: 18px; font-weight: 500; color: var(--wine); }
-    .process-item p { color: var(--muted); max-width: 610px; }
-    .approach { padding: 0; }
-    .approach-band {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      background: var(--white);
-    }
-    .approach-item {
-      min-height: 238px;
-      padding: clamp(30px, 4vw, 54px);
-      border-right: 1px solid var(--line);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .approach-item:last-child { border-right: 0; }
-    .approach-item h3 { font-family: var(--serif); font-size: clamp(34px, 4vw, 54px); font-weight: 400; line-height: .95; }
-    .approach-item p { margin-top: 24px; color: var(--muted); max-width: 340px; }
-    .about { background: var(--paper-deep); }
-    .about-grid {
-      display: grid;
-      grid-template-columns: minmax(280px, .76fr) minmax(0, 1fr);
-      gap: clamp(44px, 7vw, 104px);
-      align-items: center;
-    }
-    .about-photo {
-      position: relative;
-      min-height: 620px;
-      overflow: hidden;
-      background: var(--wine);
-    }
-    .about-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 18%; filter: saturate(.86) contrast(.97); }
-    .about-copy p { max-width: 650px; margin-top: 24px; color: var(--muted); font-size: 17px; line-height: 1.9; }
-    .about-copy strong { color: var(--ink); font-weight: 500; }
-    .credentials { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px; }
-    .credential {
-      border: 1px solid color-mix(in srgb, var(--wine) 18%, transparent);
-      padding: 10px 14px;
-      color: var(--wine);
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-    }
-    .specialties-head {
-      display: grid;
-      grid-template-columns: 1fr .86fr;
-      gap: clamp(36px, 6vw, 84px);
-      margin-bottom: 60px;
-      align-items: end;
-    }
-    .specialty-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border-top: 1px solid var(--line);
-      border-left: 1px solid var(--line);
-    }
-    .specialty {
-      min-height: 210px;
-      padding: clamp(26px, 3.4vw, 44px);
-      border-right: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      background: rgba(255,253,249,.34);
-      transition: background .25s ease, transform .25s ease;
-    }
-    .specialty:hover { background: var(--white); transform: translateY(-2px); }
-    .specialty small {
-      display: block;
-      margin-bottom: 34px;
-      color: var(--rose);
-      font-family: var(--serif);
-      font-size: 25px;
-    }
-    .specialty h3 { color: var(--wine); font-size: 17px; font-weight: 500; }
-    .specialty p { margin-top: 12px; color: var(--muted); font-size: 14.5px; line-height: 1.75; }
-    .difference { background: var(--white); }
-    .difference-layout {
-      display: grid;
-      grid-template-columns: minmax(0, .84fr) minmax(0, 1fr);
-      gap: clamp(42px, 7vw, 110px);
-    }
-    .difference-list { border-top: 1px solid var(--line); }
-    .difference-row {
-      display: grid;
-      grid-template-columns: 34px 1fr;
-      gap: 28px;
-      padding: 28px 0;
-      border-bottom: 1px solid var(--line);
-    }
-    .difference-row span { color: var(--rose); font-family: var(--serif); font-size: 24px; line-height: 1; }
-    .difference-row h3 { color: var(--wine); font-size: 17px; font-weight: 500; }
-    .difference-row p { margin-top: 8px; color: var(--muted); }
-    .ecosystem {
-      background: var(--paper);
-      color: var(--ink);
-    }
-    .ecosystem-grid {
-      display: grid;
-      grid-template-columns: minmax(0, .82fr) minmax(0, 1fr);
-      gap: clamp(42px, 7vw, 104px);
-      align-items: start;
-    }
-    .ecosystem .eyebrow { color: var(--rose); }
-    .ecosystem .section-title { color: var(--ink); }
-    .ecosystem .section-lead { color: var(--muted); }
-    .ecosystem .section-title {
-      max-width: 560px;
-      font-size: clamp(34px, 4.2vw, 54px);
-      line-height: .98;
-    }
-    .system-panel { border-top: 1px solid var(--line); }
-    .system-row {
-      display: grid;
-      grid-template-columns: 88px 1fr;
-      gap: 28px;
-      padding: 30px 0;
-      border-bottom: 1px solid var(--line);
-      background: transparent;
-    }
-    .system-row span {
-      color: var(--rose);
-      font-family: var(--serif);
-      font-size: 32px;
-      line-height: 1;
-    }
-    .system-row h3 {
-      color: var(--ink);
-      font-size: 18px;
-      font-weight: 500;
-    }
-    .system-row p {
-      margin-top: 8px;
-      color: var(--muted);
-    }
-    .ecosystem .system-row {
-      padding-left: 0;
-      padding-right: 0;
-      border-radius: 0;
-      box-shadow: none;
-    }
-    .system-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 34px;
-    }
-    .portal-links {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 30px;
-    }
-    .portal-link {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      min-height: 62px;
-      padding: 16px 18px;
-      border: 1px solid var(--line);
-      color: var(--muted);
-      text-decoration: none;
-      transition: border-color .25s ease, background .25s ease, transform .25s ease;
-    }
-    .portal-link:hover {
-      background: var(--paper-2);
-      border-color: var(--rose-line);
-      transform: translateY(-2px);
-    }
-    .portal-link strong {
-      display: block;
-      color: var(--ink);
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-    .portal-link small {
-      display: block;
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.45;
-    }
-    .portal-link em {
-      color: var(--rose);
-      font-family: var(--serif);
-      font-size: 24px;
-      font-style: normal;
-      line-height: 1;
-    }
-    .ecosystem .button-primary {
-      background: var(--wine);
-      color: var(--paper);
-      border-color: var(--wine);
-    }
-    .ecosystem .button-secondary {
-      color: var(--wine);
-      border-color: var(--line);
-    }
-    .ecosystem .button-secondary:hover { border-color: var(--wine); }
-    .faq .section-title, .faq .section-lead { text-align: center; margin-left: auto; margin-right: auto; }
-    .faq-list { margin-top: 54px; border-top: 1px solid var(--line); }
-    .faq-item { border-bottom: 1px solid var(--line); }
-    .faq-q {
-      width: 100%;
-      min-height: 78px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 24px;
-      padding: 0;
-      border: 0;
-      background: transparent;
-      color: var(--ink);
-      text-align: left;
-      font-size: 17px;
-      font-weight: 500;
-      cursor: pointer;
-    }
-    .faq-icon { color: var(--rose); font-family: var(--serif); font-size: 30px; transition: transform .25s ease; }
-    .faq-a {
-      max-height: 0;
-      overflow: hidden;
-      color: var(--muted);
-      transition: max-height .35s ease, padding-bottom .35s ease;
-    }
-    .faq-item.open .faq-a { max-height: 240px; padding-bottom: 28px; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .contact { background: var(--paper-deep); }
-    .contact-grid {
-      display: grid;
-      grid-template-columns: minmax(0, .82fr) minmax(320px, 1fr);
-      gap: clamp(42px, 7vw, 96px);
-      align-items: start;
-    }
-    form {
-      padding: clamp(28px, 4vw, 54px);
-      background: var(--paper);
-      border: 1px solid var(--line);
-    }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-    .form-group { margin-bottom: 18px; }
-    label {
-      display: block;
-      margin-bottom: 8px;
-      color: var(--brown);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-    input, select, textarea {
-      width: 100%;
-      border: 1px solid var(--line);
-      border-radius: 0;
-      background: var(--white);
-      color: var(--ink);
-      padding: 15px 16px;
-      outline: none;
-      transition: border-color .2s ease, box-shadow .2s ease;
-    }
-    textarea { min-height: 130px; resize: vertical; }
-    input:focus, select:focus, textarea:focus { border-color: var(--wine); box-shadow: 0 0 0 3px rgba(58,22,36,.08); }
-    .form-button { width: 100%; margin-top: 4px; border: 0; }
-    .form-message { display: none; margin-bottom: 18px; font-size: 14px; }
-    .form-message.success { color: #496a50; }
-    .form-message.error { color: #8a3a34; }
-    .final-cta {
-      min-height: 76svh;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      background: var(--wine);
-      color: var(--paper);
-    }
-    .final-cta .eyebrow { color: #d7a39b; }
-    .final-cta h2 {
-      margin: 0 auto;
-      max-width: 900px;
-      font-family: var(--serif);
-      font-size: clamp(56px, 8vw, 112px);
-      font-weight: 400;
-      line-height: .9;
-    }
-    .final-cta p {
-      max-width: 610px;
-      margin: 32px auto 0;
-      color: rgba(250,247,243,.72);
-      font-size: 18px;
-      line-height: 1.85;
-    }
-    .final-cta .button-primary { margin-top: 38px; background: var(--paper); color: var(--wine); border-color: var(--paper); }
-    .final-cta .button-primary:hover { background: #fff; }
-    footer { padding: 48px 0; background: #160c10; color: rgba(250,247,243,.68); }
-    .footer-grid { display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: center; }
-    .footer-brand { font-family: var(--serif); color: var(--paper); font-size: 28px; }
-    .footer-links { display: flex; flex-wrap: wrap; gap: 18px 26px; justify-content: flex-end; }
-    .footer-links a { color: rgba(250,247,243,.68); font-size: 12px; letter-spacing: .11em; text-transform: uppercase; text-decoration: none; }
-    .footer-links a:hover { color: var(--paper); }
-    .footer-note { margin-top: 12px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
-    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .75s cubic-bezier(.22,1,.36,1), transform .75s cubic-bezier(.22,1,.36,1); }
-    .reveal.visible { opacity: 1; transform: none; }
-    .delay-1 { transition-delay: .08s; }
-    .delay-2 { transition-delay: .16s; }
-    .delay-3 { transition-delay: .24s; }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
-      .reveal { opacity: 1; transform: none; }
-    }
-    @media (max-width: 980px) {
-      .nav-links a:not(.nav-cta) { display: none; }
-      .hero { background: var(--paper); padding-top: 92px; }
-      .hero-grid, .manifesto-grid, .process-head, .about-grid, .specialties-head, .difference-layout, .ecosystem-grid, .contact-grid { grid-template-columns: 1fr; }
-      .service-grid { grid-template-columns: 1fr; }
-      .service-link {
-        min-height: 0;
-        border-right: 0;
-        border-bottom: 1px solid var(--line);
-      }
-      .service-link:last-child { border-bottom: 0; }
-      .hero-grid { min-height: auto; gap: 24px; }
-      .hero-copy { padding: 28px 0 8px; }
-      .hero-media { min-height: auto; }
-      .portrait-frame { height: 62svh; min-height: 420px; }
-      .hero-index { top: auto; bottom: -1px; left: 0; width: 144px; }
-      .approach-band, .specialty-grid { grid-template-columns: 1fr; }
-      .approach-item, .specialty { border-right: 0; }
-      .process-item { grid-template-columns: 72px 1fr; gap: 20px; }
-      .process-item p { grid-column: 2; }
-      .about-photo { min-height: 520px; }
-    }
-    @media (max-width: 640px) {
-      .site-nav { height: 64px; padding: 0 18px; }
-      .brand { font-size: 21px; }
-      .nav-cta { min-height: 38px; padding: 0 14px; font-size: 10px; }
-      .container, .container-wide, .container-narrow { width: min(100% - 32px, 1120px); }
-      section { padding: 72px 0; }
-      .hero h1 { font-size: clamp(52px, 17vw, 76px); }
-      .hero-actions { flex-direction: column; align-items: stretch; }
-      .button-primary, .button-secondary { width: 100%; }
-      .portrait-frame { height: 58svh; min-height: 380px; }
-      .portrait-caption { flex-direction: column; gap: 5px; }
-      .symptom { grid-template-columns: 38px 1fr; gap: 16px; }
-      .process-item { grid-template-columns: 1fr; }
-      .process-item p { grid-column: auto; }
-      .system-row { grid-template-columns: 1fr; gap: 12px; }
-      .portal-links { grid-template-columns: 1fr; }
-      .service-link,
-      .system-row,
-      .portal-links a,
-      .symptom,
-      .process-item,
-      .specialty,
-      .difference-item {
-        min-width: 0;
-      }
-      .service-link strong,
-      .service-link span,
-      .system-row strong,
-      .system-row p,
-      .portal-links strong,
-      .portal-links span,
-      .symptom strong,
-      .symptom p,
-      .process-item h3,
-      .process-item p,
-      .specialty h3,
-      .specialty p,
-      .difference-item h3,
-      .difference-item p {
-        overflow-wrap: anywhere;
-      }
-      .form-row { grid-template-columns: 1fr; gap: 0; }
-      .footer-grid { grid-template-columns: 1fr; }
-      .footer-links { justify-content: flex-start; }
-    }
+    body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--ink); }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--rose-border);
+      padding: 0 2rem; height: 54px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-back { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--ink-muted); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: var(--rose); }
+    .nav-back-arrow { font-size: 16px; }
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .nav-title { font-size: 13px; color: var(--ink-faint); }
+    .nav-site { font-size: 13px; color: var(--rose); text-decoration: none; }
+
+    .layout { display: flex; max-width: 1060px; margin: 0 auto; padding: 0 2rem; gap: 2.5rem; }
+
+    .sidebar {
+      width: 210px; min-width: 210px; flex-shrink: 0;
+      position: sticky; top: 70px;
+      height: calc(100vh - 78px); overflow-y: auto;
+      padding: 2rem 0;
+    }
+    .sidebar::-webkit-scrollbar { width: 3px; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .toc-label { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.75rem; padding: 0 8px; }
+    .toc-list { list-style: none; }
+    .toc-list a {
+      display: block; font-size: 13px; color: var(--ink-muted);
+      text-decoration: none; padding: 6px 10px; border-radius: var(--radius-sm);
+      transition: all 0.15s; line-height: 1.35; margin-bottom: 1px;
+    }
+    .toc-list a:hover { color: var(--ink); background: var(--rose-hover); }
+    .toc-list a.active { color: var(--rose); background: var(--rose-light); font-weight: 500; }
+    .toc-num { font-size: 10px; color: var(--ink-faint); margin-right: 5px; }
+
+    .content { flex: 1; min-width: 0; padding: 2.5rem 0 5rem; }
+
+    .doc-header { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+    .breadcrumb { font-size: 12px; color: var(--ink-faint); margin-bottom: 1rem; }
+    .breadcrumb a { color: var(--rose); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .doc-tags { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 1.1rem; }
+    .doc-tag {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 99px;
+    }
+    .tag-tcc { background: var(--rose-light); color: var(--rose); border: 1px solid var(--rose-border); }
+    .tag-form { background: #FFF6F0; color: #8B5A3A; border: 1px solid #F5D5B8; }
+
+    h1.doc-title {
+      font-size: clamp(24px, 3.5vw, 36px); font-weight: 500;
+      line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 0.9rem;
+    }
+    .doc-intro { font-size: 15px; color: var(--ink-muted); line-height: 1.75; max-width: 580px; }
+    .doc-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.25rem; }
+    .doc-meta-item { font-size: 12px; color: var(--ink-faint); }
+    .doc-meta-item strong { color: var(--ink-muted); font-weight: 500; }
+
+    .doc-section { margin-bottom: 3.5rem; scroll-margin-top: 78px; }
+    .sec-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.3rem; }
+    h2.sec-title {
+      font-size: clamp(18px, 2.5vw, 24px); font-weight: 500; letter-spacing: -0.01em;
+      color: var(--ink); margin-bottom: 1.1rem;
+      padding-bottom: 0.65rem; border-bottom: 1px solid var(--border);
+    }
+    h3.sub-title { font-size: 15px; font-weight: 500; color: var(--ink); margin: 1.75rem 0 0.65rem; }
+    p.body { font-size: 15px; line-height: 1.8; color: var(--ink); margin-bottom: 0.9rem; }
+
+    .callout {
+      border-left: 3px solid var(--rose-mid);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      background: var(--rose-light); padding: 0.9rem 1.25rem; margin: 1.25rem 0;
+    }
+    .callout p { font-size: 14px; line-height: 1.7; color: var(--rose); margin: 0; }
+    .callout strong { font-weight: 500; }
+    .callout-warm { background: #FFF6F0; border-left-color: #D4A882; }
+    .callout-warm p { color: #7A4020; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 1.1rem 0; }
+    @media (max-width: 540px) { .two-col { grid-template-columns: 1fr; } }
+
+    .info-box {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1rem 1.1rem;
+    }
+    .info-box-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--rose); margin-bottom: 0.5rem; }
+    .info-box p, .info-box li { font-size: 13px; line-height: 1.65; color: var(--ink-muted); }
+    .info-box ul { padding-left: 1rem; margin-top: 4px; }
+    .info-box li { margin-bottom: 3px; }
+
+    .comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); gap: 10px; margin: 1.25rem 0; }
+    .comp-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1rem 1.1rem;
+      transition: border-color 0.15s;
+    }
+    .comp-card:hover { border-color: var(--rose-border); }
+    .comp-n { font-size: 10px; color: var(--ink-faint); margin-bottom: 4px; font-weight: 500; }
+    .comp-name { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 5px; }
+    .comp-desc { font-size: 12px; line-height: 1.6; color: var(--ink-muted); }
+
+    .steps { list-style: none; margin: 1.1rem 0; }
+    .steps li {
+      display: flex; gap: 13px; align-items: flex-start;
+      padding: 0.7rem 0; border-bottom: 1px solid var(--border);
+      font-size: 14px; line-height: 1.65; color: var(--ink);
+    }
+    .steps li:last-child { border-bottom: none; }
+    .step-dot {
+      min-width: 24px; height: 24px; border-radius: 50%;
+      background: var(--rose-light); border: 1px solid var(--rose-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 500; color: var(--rose); margin-top: 2px; flex-shrink: 0;
+    }
+
+    .hl-row {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 0.75rem 1rem;
+      margin: 5px 0; font-size: 14px; line-height: 1.65; color: var(--ink);
+    }
+    .hl-row strong { font-weight: 500; color: var(--rose); }
+
+    .ref-item { font-size: 13px; color: var(--ink-muted); line-height: 1.7; padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .ref-item:last-child { border-bottom: none; }
+
+    @media (max-width: 720px) { .sidebar { display: none; } .layout { padding: 0 1.25rem; } }
   </style>
-  <link rel="stylesheet" href="brand-refresh.css?v=20260518-4" />
 </head>
 <body>
-  <nav class="site-nav" id="siteNav" aria-label="Navegação principal">
-    <a href="index.html" class="brand">Psicologia <span>Real</span></a>
-    <div class="nav-links">
-      <div class="desktop-menu-group">
-        <button class="desktop-menu-trigger" type="button">Pacientes <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="desktop-menu-panel">
-          <a href="terapia.html"><strong>Terapia</strong><span>Atendimento clínico</span></a>
-          <a href="ansiedade.html"><strong>Ansiedade</strong><span>Guia para pacientes</span></a>
-          <a href="#processo"><strong>Processo</strong><span>Como funciona</span></a>
-          <a href="#sobre"><strong>Sobre</strong><span>Conheça a psicóloga</span></a>
-        </div>
+
+<nav>
+  <a class="nav-back" href="../../index.html">
+    <span class="nav-back-arrow">←</span> Biblioteca Psi Real
+  </a>
+  <div class="nav-actions">
+    <a class="nav-site" href="../../../index.html">Voltar ao site</a>
+    <span class="nav-title">Formulação de Caso · Persons</span>
+  </div>
+</nav>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="toc-label">Neste material</div>
+    <ul class="toc-list" id="toc">
+      <li><a href="#s1"><span class="toc-num">01</span>Quem é Persons?</a></li>
+      <li><a href="#s2"><span class="toc-num">02</span>O que é formulação</a></li>
+      <li><a href="#s3"><span class="toc-num">03</span>Dois níveis</a></li>
+      <li><a href="#s4"><span class="toc-num">04</span>Os 7 componentes</a></li>
+      <li><a href="#s5"><span class="toc-num">05</span>Hipótese de trabalho</a></li>
+      <li><a href="#s6"><span class="toc-num">06</span>Construindo na prática</a></li>
+      <li><a href="#s7"><span class="toc-num">07</span>Plano de tratamento</a></li>
+      <li><a href="#s8"><span class="toc-num">08</span>Obstáculos</a></li>
+      <li><a href="#s9"><span class="toc-num">09</span>Críticas e limites</a></li>
+      <li><a href="#s10"><span class="toc-num">10</span>Referências</a></li>
+    </ul>
+  </aside>
+
+  <main class="content">
+    <div class="doc-header">
+      <div class="breadcrumb"><a href="../../index.html">Biblioteca Psi Real</a> / TCC / Formulação de Caso</div>
+      <div class="doc-tags">
+        <span class="doc-tag tag-tcc">TCC</span>
+        <span class="doc-tag tag-form">Formulação de Caso</span>
       </div>
-      <div class="desktop-menu-group">
-        <button class="desktop-menu-trigger" type="button">Para psis <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="desktop-menu-panel">
-          <a href="supervisao.html"><strong>Supervisão</strong><span>Desenvolvimento clínico</span></a>
-          <a href="psireal-tcc.html"><strong>PsiReal TCC</strong><span>Plataforma clínica</span></a>
-          <a href="biblioteca-tcc/index.html"><strong>Biblioteca TCC</strong><span>Materiais e recursos</span></a>
-        </div>
+      <h1 class="doc-title">Formulação de Caso<br>segundo Jacqueline Persons</h1>
+      <p class="doc-intro">Um guia estruturado sobre o modelo cognitivo-comportamental de formulação de caso — da teoria à prática clínica, para supervisoras e terapeutas em TCC.</p>
+      <div class="doc-meta">
+        <div class="doc-meta-item"><strong>Referência:</strong> Persons, 2008</div>
+        <div class="doc-meta-item"><strong>Área:</strong> TCC / Supervisão</div>
+        <div class="doc-meta-item"><strong>Seções:</strong> 10</div>
       </div>
-      <div class="desktop-menu-group">
-        <button class="desktop-menu-trigger" type="button">Empresas <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="desktop-menu-panel">
-          <a href="corporativo.html"><strong>Corporativo</strong><span>Palestras e soluções</span></a>
-        </div>
-      </div>
-      <a href="#faq">FAQ</a>
-      <a class="nav-cta" href="https://wa.me/5511947388423?text=Ol%C3%A1%20Michelle%2C%20gostaria%20de%20agendar%20uma%20conversa%20inicial." target="_blank" rel="noopener">Agendar</a>
     </div>
-  </nav>
-  <main>
-    <section class="hero" id="inicio">
-      <div class="container-wide hero-grid">
-        <div class="hero-copy">
-          <p class="hero-kicker reveal">Psicoterapia para crianças, adolescentes e adultos</p>
-          <h1 class="reveal delay-1">Talvez <em>carregar tudo</em> tenha ficado pesado demais.</h1>
-          <p class="hero-sub reveal delay-2">Um espaço clínico para ansiedade, sobrecarga emocional, relações difíceis e fases de desenvolvimento que pedem cuidado. Atendimento para crianças, adolescentes e adultos, com método, acolhimento e profundidade.</p>
-          <div class="hero-actions reveal delay-3">
-            <a class="button-primary" href="https://wa.me/5511947388423?text=Ol%C3%A1%20Michelle%2C%20gostaria%20de%20agendar%20uma%20conversa%20inicial." target="_blank" rel="noopener">Agendar conversa inicial</a>
-            <a class="button-secondary" href="terapia.html">Conhecer a terapia</a>
-          </div>
-          <nav class="mobile-paths" aria-label="Atalhos principais">
-            <a href="#terapia"><span>Quero</span><strong>Terapia</strong></a>
-            <a href="ansiedade.html"><span>Quero entender</span><strong>Ansiedade</strong></a>
-            <a href="supervisao.html"><span>Sou psicóloga</span><strong>Supervisão</strong></a>
-            <a href="corporativo.html"><span>Sou empresa</span><strong>Corporativo</strong></a>
-          </nav>
-          <p class="hero-note reveal delay-3">Presencial em Jarinu/SP - Online para todo o Brasil - CRP 06/93008</p>
+
+    <div class="doc-section" id="s1">
+      <div class="sec-eyebrow">Seção 01</div>
+      <h2 class="sec-title">Quem é Jacqueline Persons?</h2>
+      <p class="body">Jacqueline B. Persons é psicóloga clínica e pesquisadora americana, diretora do Centro de Terapia Cognitivo-Comportamental de Oakland. É uma das principais figuras no desenvolvimento e sistematização da <em>formulação de caso</em> dentro da TCC.</p>
+      <p class="body">Sua contribuição mais influente é o livro <em>The Case Formulation Approach to Cognitive-Behavior Therapy</em> (2008), referência central para clínicos e supervisores em todo o mundo.</p>
+      <div class="callout">
+        <p><strong>Por que ela importa para supervisão?</strong> Persons propõe que o terapeuta TCC não deve apenas aplicar protocolos, mas construir um mapa individualizado do paciente — a formulação — que guia cada decisão clínica, da avaliação ao término.</p>
+      </div>
+    </div>
+
+    <div class="doc-section" id="s2">
+      <div class="sec-eyebrow">Seção 02</div>
+      <h2 class="sec-title">O que é formulação de caso em TCC?</h2>
+      <p class="body">A formulação de caso é uma hipótese sobre os mecanismos psicológicos que causam e mantêm os problemas de um paciente específico. Funciona como um mapa clínico individualizado que conecta os problemas do paciente com teorias cognitivo-comportamentais.</p>
+      <div class="two-col">
+        <div class="info-box">
+          <div class="info-box-label">Diagnóstico (DSM)</div>
+          <p>Classifica sintomas em categorias. Responde: <em>"O que o paciente tem?"</em></p>
         </div>
-        <div class="hero-media reveal delay-2">
-          <figure class="portrait-frame">
-            <img src="michelle-hero.jpg" alt="Michelle Donegá dos Santos, psicóloga clínica" />
-            <figcaption class="portrait-caption"><span>Michelle Donegá dos Santos</span><span>Psicóloga clínica</span></figcaption>
-          </figure>
-          <div class="hero-index" aria-label="Experiência clínica e profissional"><strong>20+</strong><span>anos de experiência humana, clínica e corporativa</span></div>
+        <div class="info-box">
+          <div class="info-box-label">Formulação de Caso</div>
+          <p>Explica os mecanismos individuais. Responde: <em>"Por que e como esse paciente sofre?"</em></p>
         </div>
       </div>
-    </section>
-    <section class="service-entry" aria-label="Frentes de atuação">
-      <div class="service-grid">
-        <a class="service-link" href="terapia.html">
-          <span class="service-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 19c2.5-5.5 11.5-5.5 14 0"/><path d="M8 8a4 4 0 1 0 8 0 4 4 0 0 0-8 0Z"/></svg></span>
-          <span>Clínica</span>
-          <strong>Terapia</strong>
-          <small>Atendimento para crianças, adolescentes e adultos, com formulário próprio para novos pacientes.</small>
-        </a>
-        <a class="service-link" href="supervisao.html">
-          <span class="service-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 18h16"/><path d="M7 18V9h10v9"/><path d="M9 6h6"/><path d="M12 6V3"/></svg></span>
-          <span>Para psicólogas</span>
-          <strong>Supervisão</strong>
-          <small>Supervisão clínica em TCC com página e formulário próprios para profissionais.</small>
-        </a>
-        <a class="service-link" href="corporativo.html">
-          <span class="service-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V8l8-4 8 4v12"/><path d="M9 20v-5h6v5"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/></svg></span>
-          <span>Para empresas</span>
-          <strong>Corporativo</strong>
-          <small>Palestras e consultoria em saúde mental com captação própria para organizações.</small>
-        </a>
-      </div>
-    </section>
-    <section class="anxiety-strip" aria-label="Guia sobre ansiedade">
-      <div class="container">
-        <a href="ansiedade.html">
-          <strong>Como lidar com sua ansiedade</strong>
-          <span>Abrir guia</span>
-        </a>
-      </div>
-    </section>
-    <section class="editorial-visual">
-      <div class="container">
-        <figure class="editorial-frame">
-          <img src="therapy-room-editorial.webp" alt="Consultório em tons suaves" />
-        </figure>
-      </div>
-    </section>
-    <section class="manifesto" id="identificacao">
-      <div class="container manifesto-grid">
-        <div>
-          <span class="eyebrow reveal">Quando procurar terapia</span>
-          <h2 class="section-title reveal delay-1">Ansiedade nem sempre aparece como <em>crise</em>.</h2>
-          <p class="section-lead reveal delay-2">Em crianças, pode surgir como irritação, medos, recusa escolar ou dificuldade de dormir. Em adolescentes, como isolamento, autocobrança, explosões ou queda de rendimento. Em adultos, muitas vezes aparece como controle, exaustão, pensamento acelerado e sensação de estar sempre devendo algo.</p>
+      <h3 class="sub-title">Funções da formulação</h3>
+      <ul class="steps">
+        <li><div class="step-dot">1</div><div>Guiar as intervenções com base na teoria cognitivo-comportamental</div></li>
+        <li><div class="step-dot">2</div><div>Adaptar protocolos baseados em evidências ao paciente individual</div></li>
+        <li><div class="step-dot">3</div><div>Priorizar problemas e focos de intervenção</div></li>
+        <li><div class="step-dot">4</div><div>Prever e manejar obstáculos ao tratamento</div></li>
+        <li><div class="step-dot">5</div><div>Monitorar o progresso e revisar hipóteses ao longo do tempo</div></li>
+      </ul>
+    </div>
+
+    <div class="doc-section" id="s3">
+      <div class="sec-eyebrow">Seção 03</div>
+      <h2 class="sec-title">Os dois níveis da formulação</h2>
+      <div class="two-col">
+        <div class="info-box">
+          <div class="info-box-label">Nível Nomotético (do transtorno)</div>
+          <ul>
+            <li>Baseado na teoria e em evidências do transtorno</li>
+            <li>Modelos cognitivos do Pânico, Depressão, TOC etc.</li>
+            <li>Fornece o "mapa geral" do problema</li>
+          </ul>
         </div>
-        <div class="symptom-list">
-          <div class="symptom reveal"><span>01</span><div><strong>Crianças ansiosas</strong>Medos intensos, insegurança, irritabilidade, dificuldade de separação, sono ruim, queixas físicas ou recusa diante de situações novas.</div></div>
-          <div class="symptom reveal"><span>02</span><div><strong>Adolescentes em sofrimento</strong>Autocobrança, comparação, isolamento, explosões emocionais, ansiedade social, baixa autoestima ou sensação de não dar conta.</div></div>
-          <div class="symptom reveal"><span>03</span><div><strong>Adultos sobrecarregados</strong>Pensamento acelerado, controle, culpa, exaustão, dificuldade de descansar e a sensação constante de que algo pode sair do eixo.</div></div>
-          <div class="symptom reveal"><span>04</span><div><strong>Famílias buscando clareza</strong>Quando os responsáveis percebem mudanças de comportamento e precisam entender se é fase, ansiedade, adaptação ou pedido de ajuda.</div></div>
-          <div class="symptom reveal"><span>05</span><div><strong>Relações e padrões emocionais</strong>Limites confusos, medo de decepcionar, dependência emocional, conflitos repetidos e dificuldade de sustentar escolhas próprias.</div></div>
+        <div class="info-box">
+          <div class="info-box-label">Nível Idiográfico (do indivíduo)</div>
+          <ul>
+            <li>Aplicação do modelo ao paciente específico</li>
+            <li>Incorpora história de vida e contexto único</li>
+            <li>Personaliza o protocolo ao sujeito</li>
+          </ul>
         </div>
       </div>
-    </section>
-    <section id="processo">
-      <div class="container">
-        <div class="process-head">
-          <div>
-            <span class="eyebrow reveal">Como funciona</span>
-            <h2 class="section-title reveal delay-1">Um processo com escuta, direção e cuidado <em>real</em>.</h2>
-          </div>
-          <p class="section-lead reveal delay-2">A terapia não é uma conversa solta. O processo muda conforme a idade e a demanda: com crianças, envolve linguagem lúdica e orientação aos responsáveis; com adolescentes, acolhe identidade, pressão social e autonomia; com adultos, aprofunda padrões emocionais, ansiedade e escolhas.</p>
+      <div class="callout">
+        <p><strong>Integração clínica:</strong> Persons defende que o terapeuta parte do modelo nomotético e o refina com dados idiográficos. A formulação é sempre uma hipótese provisória e revisável.</p>
+      </div>
+    </div>
+
+    <div class="doc-section" id="s4">
+      <div class="sec-eyebrow">Seção 04</div>
+      <h2 class="sec-title">Os 7 componentes do modelo</h2>
+      <div class="comp-grid">
+        <div class="comp-card"><div class="comp-n">01</div><div class="comp-name">Lista de problemas</div><div class="comp-desc">Inventário abrangente — psicológicos, interpessoais, ocupacionais, médicos, financeiros.</div></div>
+        <div class="comp-card"><div class="comp-n">02</div><div class="comp-name">Diagnóstico</div><div class="comp-desc">Diagnósticos DSM correspondentes, âncora nomotética da formulação.</div></div>
+        <div class="comp-card"><div class="comp-n">03</div><div class="comp-name">Hipótese de trabalho</div><div class="comp-desc">Crenças nucleares e mecanismos que conectam todos os problemas.</div></div>
+        <div class="comp-card"><div class="comp-n">04</div><div class="comp-name">Origens</div><div class="comp-desc">Experiências de vida que explicam como os mecanismos se formaram.</div></div>
+        <div class="comp-card"><div class="comp-n">05</div><div class="comp-name">Precipitantes</div><div class="comp-desc">Situações atuais que disparam ou exacerbam os problemas.</div></div>
+        <div class="comp-card"><div class="comp-n">06</div><div class="comp-name">Plano de tratamento</div><div class="comp-desc">Objetivos e estratégias derivados da hipótese de trabalho.</div></div>
+        <div class="comp-card"><div class="comp-n">07</div><div class="comp-name">Obstáculos previstos</div><div class="comp-desc">Barreiras antecipadas — adesão, aliança, crenças do paciente.</div></div>
+      </div>
+    </div>
+
+    <div class="doc-section" id="s5">
+      <div class="sec-eyebrow">Seção 05</div>
+      <h2 class="sec-title">O mecanismo central — a hipótese de trabalho</h2>
+      <p class="body">A hipótese de trabalho é o coração da formulação. Propõe um mecanismo psicológico que explica como e por que os problemas se desenvolveram e se mantêm.</p>
+      <h3 class="sub-title">Elementos da hipótese de trabalho</h3>
+      <div class="hl-row"><strong>Crenças nucleares:</strong> Crenças absolutas, rígidas e globais sobre si, os outros e o mundo. Ex: "Sou incompetente", "Não sou amável".</div>
+      <div class="hl-row"><strong>Regras intermediárias:</strong> Crenças condicionais que conectam crenças nucleares ao comportamento. Ex: "Se não for perfeito, serei rejeitado".</div>
+      <div class="hl-row"><strong>Pensamentos automáticos:</strong> Conteúdo cognitivo situacional que surge em resposta a gatilhos específicos.</div>
+      <div class="hl-row"><strong>Comportamentos de evitação:</strong> Estratégias que aliviam a angústia no curto prazo, mas mantêm o problema no longo prazo.</div>
+      <div class="callout callout-warm">
+        <p><strong>Atenção na supervisão:</strong> Formulações que se limitam à origem histórica sem explicar os mecanismos de manutenção atuais são incompletas. A pergunta essencial: "O que mantém esse problema <em>agora</em>?"</p>
+      </div>
+    </div>
+
+    <div class="doc-section" id="s6">
+      <div class="sec-eyebrow">Seção 06</div>
+      <h2 class="sec-title">Como construir a formulação na prática</h2>
+      <p class="body">Persons propõe uma abordagem iterativa — a formulação é construída, testada e revisada continuamente, não é um produto fixo das primeiras sessões.</p>
+      <ul class="steps">
+        <li><div class="step-dot">1</div><div><strong>Construir a lista de problemas</strong> com clareza operacional, incluindo problemas não mencionados espontaneamente.</div></li>
+        <li><div class="step-dot">2</div><div><strong>Nomear os diagnósticos</strong> e selecionar o modelo nomotético mais adequado.</div></li>
+        <li><div class="step-dot">3</div><div><strong>Formular a hipótese de trabalho</strong> — identificar crenças nucleares e mecanismos comportamentais.</div></li>
+        <li><div class="step-dot">4</div><div><strong>Mapear as origens</strong> — conectar mecanismos com experiências formativas.</div></li>
+        <li><div class="step-dot">5</div><div><strong>Identificar precipitantes atuais</strong> que ativam os mecanismos no presente.</div></li>
+        <li><div class="step-dot">6</div><div><strong>Derivar o plano de tratamento</strong> a partir da hipótese de trabalho.</div></li>
+        <li><div class="step-dot">7</div><div><strong>Testar e revisar:</strong> quando não funciona, revisar a formulação antes de mudar a técnica.</div></li>
+      </ul>
+      <div class="callout">
+        <p><strong>Princípio central:</strong> Quando o tratamento não avança, o primeiro passo não é trocar a técnica — é revisar a formulação.</p>
+      </div>
+    </div>
+
+    <div class="doc-section" id="s7">
+      <div class="sec-eyebrow">Seção 07</div>
+      <h2 class="sec-title">Formulação e plano de tratamento</h2>
+      <p class="body">A formulação deriva o plano — não como lista genérica de técnicas, mas como conjunto de decisões clínicas sustentadas pela hipótese de trabalho.</p>
+      <div class="two-col">
+        <div class="info-box">
+          <div class="info-box-label">Objetivos do tratamento</div>
+          <ul>
+            <li>Redução de sintomas específicos</li>
+            <li>Mudança de crenças nucleares disfuncionais</li>
+            <li>Aquisição de habilidades comportamentais</li>
+            <li>Melhora no funcionamento identificado</li>
+          </ul>
         </div>
-        <div class="process-list">
-          <div class="process-item reveal"><div class="process-num">01</div><h3>Primeira avaliação</h3><p>Entendemos a demanda, a idade, o contexto familiar, escolar, social ou profissional e o que precisa ser cuidado primeiro.</p></div>
-          <div class="process-item reveal"><div class="process-num">02</div><h3>Mapa da ansiedade</h3><p>Investigamos gatilhos, sintomas, pensamentos, comportamentos de evitação e padrões emocionais que mantêm o sofrimento.</p></div>
-          <div class="process-item reveal"><div class="process-num">03</div><h3>Plano para cada fase</h3><p>Crianças, adolescentes e adultos precisam de recursos diferentes. O plano terapêutico respeita desenvolvimento, linguagem e autonomia.</p></div>
-          <div class="process-item reveal"><div class="process-num">04</div><h3>Intervenções baseadas em evidências</h3><p>Aplicamos estratégias da TCC, Terapia do Esquema e ACT com ritmo possível, incluindo psicoeducação, regulação emocional e enfrentamento gradual.</p></div>
-          <div class="process-item reveal"><div class="process-num">05</div><h3>Acompanhamento e orientação</h3><p>O processo é revisado com clareza. Quando envolve crianças e adolescentes, os responsáveis também recebem orientação clínica.</p></div>
+        <div class="info-box">
+          <div class="info-box-label">Estratégias derivadas</div>
+          <ul>
+            <li>Reestruturação cognitiva das crenças</li>
+            <li>Experimentos comportamentais</li>
+            <li>Exposição quando evitação é central</li>
+            <li>Treinamento de habilidades conforme necessário</li>
+          </ul>
         </div>
       </div>
-    </section>
-    <section class="approach" aria-label="Abordagens terapêuticas">
-      <div class="approach-band">
-        <div class="approach-item reveal"><h3>TCC</h3><p>Clareza sobre pensamentos, emoções e comportamentos que mantêm o sofrimento.</p></div>
-        <div class="approach-item reveal delay-1"><h3>Esquema</h3><p>Profundidade para compreender padrões antigos que continuam organizando escolhas atuais.</p></div>
-        <div class="approach-item reveal delay-2"><h3>ACT</h3><p>Flexibilidade psicológica para agir com mais presença, valores e autonomia.</p></div>
+      <h3 class="sub-title">Priorização dos problemas</h3>
+      <div class="hl-row"><strong>Risco imediato:</strong> comportamentos que ameaçam a vida têm prioridade absoluta.</div>
+      <div class="hl-row"><strong>Mecanismos centrais:</strong> problemas do mesmo mecanismo podem ser tratados juntos.</div>
+      <div class="hl-row"><strong>Motivação do paciente:</strong> começar pelo que o paciente prioriza fortalece a aliança.</div>
+      <div class="hl-row"><strong>Pragmatismo:</strong> resolver o problema que bloqueia o tratamento de outro.</div>
+    </div>
+
+    <div class="doc-section" id="s8">
+      <div class="sec-eyebrow">Seção 08</div>
+      <h2 class="sec-title">Obstáculos ao tratamento</h2>
+      <p class="body">Persons inclui os obstáculos antecipados na formulação — transformando dificuldades previsíveis em alvos clínicos, não em surpresas.</p>
+      <div class="comp-grid">
+        <div class="comp-card"><div class="comp-name">Obstáculos cognitivos</div><div class="comp-desc">Crenças que interferem com o tratamento. Ex: "Mudar significa que estou fraco".</div></div>
+        <div class="comp-card"><div class="comp-name">Obstáculos comportamentais</div><div class="comp-desc">Evitação de tarefas, não adesão às tarefas de casa, não realização de experimentos.</div></div>
+        <div class="comp-card"><div class="comp-name">Obstáculos relacionais</div><div class="comp-desc">Dificuldades na aliança decorrentes das crenças nucleares ativadas na relação.</div></div>
+        <div class="comp-card"><div class="comp-name">Obstáculos externos</div><div class="comp-desc">Instabilidade financeira, relações que reforçam os problemas, acesso limitado.</div></div>
       </div>
-    </section>
-    <section class="about" id="sobre">
-      <div class="container about-grid">
-        <div class="about-copy">
-          <span class="eyebrow reveal">Sobre a psicóloga</span>
-          <h2 class="section-title reveal delay-1">Autoridade clínica sem perder presença <em>humana</em>.</h2>
-          <p class="reveal delay-2">Sou Michelle Donegá dos Santos, psicóloga clínica. Minha atuação integra ciência, escuta ativa e raciocínio clínico profundo para construir um processo terapêutico que faça sentido para a pessoa que está diante de mim, seja criança, adolescente ou adulta.</p>
-          <p class="reveal delay-2">Trabalho com psicoterapia baseada em evidências, especialmente Terapia Cognitivo-Comportamental, Terapia do Esquema e ACT, com atenção especial para ansiedade e padrões emocionais. A técnica importa, mas ela precisa encontrar uma pessoa inteira: sua história, seus vínculos, seus medos, suas defesas e suas possibilidades.</p>
-          <p class="reveal delay-3"><strong>Acolher não é suavizar tudo.</strong> É oferecer um espaço seguro o bastante para olhar com honestidade, nomear o que dói e construir um caminho possível.</p>
-          <div class="credentials reveal delay-3">
-            <span class="credential">CRP 06/93008</span>
-            <span class="credential">Jarinu/SP</span>
-            <span class="credential">Online Brasil</span>
-            <span class="credential">Baseada em evidências</span>
-          </div>
-        </div>
+      <div class="callout">
+        <p><strong>Na supervisão:</strong> Quando o supervisionando diz "o paciente não colabora" — essa dificuldade estava prevista na formulação? Se não, a formulação precisa ser revisada.</p>
       </div>
-    </section>
-    <section class="editorial-visual editorial-visual-soft">
-      <div class="container">
-        <figure class="editorial-frame editorial-frame-wide">
-          <img src="anxiety-editorial.webp" alt="Caderno, xícara e flores em composição clara" />
-        </figure>
+    </div>
+
+    <div class="doc-section" id="s9">
+      <div class="sec-eyebrow">Seção 09</div>
+      <h2 class="sec-title">Críticas e limitações do modelo</h2>
+      <div class="hl-row"><strong>Validade e confiabilidade:</strong> Estudos mostram baixa concordância entre terapeutas ao formular o mesmo caso.</div>
+      <div class="hl-row"><strong>Tempo de construção:</strong> Formular exige tempo que nem sempre está disponível em saúde pública.</div>
+      <div class="hl-row"><strong>Risco de super-interpretação:</strong> Sem rigor, pode se tornar especulativa — projetando teorias no paciente.</div>
+      <div class="hl-row"><strong>Tensão com protocolos:</strong> Individualizar em excesso pode afastar da intervenção com maior evidência.</div>
+      <div class="callout callout-warm">
+        <p><strong>Posição de Persons:</strong> A formulação deve ser sempre tratada como hipótese científica — provisória, falsificável e sujeita à revisão com base nos dados clínicos.</p>
       </div>
-    </section>
-    <section id="terapia">
-      <div class="container">
-        <div class="specialties-head">
-          <div>
-            <span class="eyebrow reveal">Terapia</span>
-            <h2 class="section-title reveal delay-1">Cuidado clínico para diferentes idades e formas de <em>ansiedade</em>.</h2>
-          </div>
-          <p class="section-lead reveal delay-2">A ansiedade é um dos eixos centrais do atendimento, mas ela aparece de formas muito diferentes em cada fase da vida. A clínica olha para sintomas, contexto, vínculos e desenvolvimento.</p>
-        </div>
-        <div class="specialty-grid">
-          <div class="specialty reveal"><small>01</small><h3>Ansiedade infantil</h3><p>Medos, insegurança, queixas físicas, irritabilidade, dificuldade de separação, sono e adaptação escolar.</p></div>
-          <div class="specialty reveal"><small>02</small><h3>Adolescentes</h3><p>Ansiedade social, autoestima, comparação, pressão escolar, identidade, conflitos familiares e regulação emocional.</p></div>
-          <div class="specialty reveal"><small>03</small><h3>Adultos ansiosos</h3><p>Preocupação excessiva, crises, controle, autocobrança, culpa, procrastinação emocional e exaustão.</p></div>
-          <div class="specialty reveal"><small>04</small><h3>Orientação parental</h3><p>Leitura clínica do comportamento, manejo emocional, limites, rotina e apoio aos responsáveis no processo terapêutico.</p></div>
-          <div class="specialty reveal"><small>05</small><h3>Relacionamentos</h3><p>Limites, dependência emocional, conflitos, repetições, comunicação difícil e escolhas afetivas.</p></div>
-          <div class="specialty reveal"><small>06</small><h3>Burnout e autocobrança</h3><p>Esgotamento, perfeccionismo, pressão profissional, dificuldade de descansar e sensação de nunca bastar.</p></div>
-        </div>
-      </div>
-    </section>
-    <section class="difference">
-      <div class="container difference-layout">
-        <div>
-          <span class="eyebrow reveal">Diferenciais</span>
-          <h2 class="section-title reveal delay-1">Sofisticação, aqui, significa cuidado <em>preciso</em>.</h2>
-          <p class="section-lead reveal delay-2">Nada de promessa fácil, frase pronta ou psicologia de efeito. O trabalho é ético, humano e tecnicamente sustentado, com leitura clínica adequada para infância, adolescência e vida adulta.</p>
-        </div>
-        <div class="difference-list">
-          <div class="difference-row reveal"><span>01</span><div><h3>Atendimento por fase da vida</h3><p>A linguagem e as intervenções mudam para crianças, adolescentes e adultos, sem perder rigor clínico.</p></div></div>
-          <div class="difference-row reveal"><span>02</span><div><h3>Especial atenção à ansiedade</h3><p>O trabalho identifica gatilhos, evitação, sintomas físicos, pensamentos antecipatórios e recursos de enfrentamento.</p></div></div>
-          <div class="difference-row reveal"><span>03</span><div><h3>Raciocínio clínico profundo</h3><p>Antes de intervir, entendemos a função dos sintomas, o contexto familiar e os padrões que os mantêm.</p></div></div>
-          <div class="difference-row reveal"><span>04</span><div><h3>Abordagem baseada em evidências</h3><p>Método clínico com TCC, Terapia do Esquema, ACT e instrumentos quando fizer sentido.</p></div></div>
-          <div class="difference-row reveal"><span>05</span><div><h3>Cuidado ético e seguro</h3><p>Sigilo, clareza de combinados, orientação aos responsáveis quando necessário e decisão sem pressão.</p></div></div>
-        </div>
-      </div>
-    </section>
-    <section class="ecosystem" id="para-psicologos">
-      <div class="container ecosystem-grid">
-        <div>
-          <span class="eyebrow reveal">Ecossistema Psi Real</span>
-          <h2 class="section-title reveal delay-1">Clínica, produtos para psis, app e empresas no mesmo <em>universo</em>.</h2>
-          <p class="section-lead reveal delay-2">Além da psicoterapia, Psi Real reúne uma plataforma clínica para terapeutas cognitivo-comportamentais, recursos para psicólogas, biblioteca, aplicativo e soluções para empresas. Cada frente tem uma função clara, sem perder a mesma identidade de cuidado e profundidade.</p>
-          <div class="system-actions reveal delay-3">
-            <a class="button-primary" href="https://psireal.app" target="_blank" rel="noopener">Abrir psireal.app</a>
-            <a class="button-secondary" href="psireal-tcc.html">PsiReal TCC</a>
-            <a class="button-secondary" href="corporativo.html">Palestras para empresas</a>
-          </div>
-          <div class="portal-links reveal delay-3" aria-label="Links do ecossistema Psi Real">
-            <a class="portal-link" href="psireal-tcc.html"><span><strong>PsiReal TCC</strong><small>Inventários, aplicações, evolução clínica e insights em uma única plataforma</small></span><em>→</em></a>
-            <a class="portal-link" href="https://psireal.app" target="_blank" rel="noopener"><span><strong>psireal.app</strong><small>Aplicativo criado para ampliar a experiência Psi Real</small></span><em>↗</em></a>
-            <a class="portal-link" href="biblioteca-tcc/index.html"><span><strong>Biblioteca TCC</strong><small>Materiais e recursos para psicólogas</small></span><em>→</em></a>
-            <a class="portal-link" href="painel-psi.html"><span><strong>Área da assinante</strong><small>Acesso das psicólogas à plataforma clínica e aos pacientes</small></span><em>→</em></a>
-          </div>
-        </div>
-        <div class="system-panel">
-          <div class="system-row reveal">
-            <span>01</span>
-            <div>
-              <h3>PsiReal TCC</h3>
-              <p>Plataforma clínica para terapeutas com biblioteca de instrumentos, aplicações via link, evolução visual e insights baseados em evidências.</p>
-            </div>
-          </div>
-          <div class="system-row reveal">
-            <span>02</span>
-            <div>
-              <h3>Painel clínico integrado</h3>
-              <p>O painel de esquemas passa a viver dentro da plataforma, junto dos demais instrumentos e da evolução global de cada paciente.</p>
-            </div>
-          </div>
-          <div class="system-row reveal">
-            <span>03</span>
-            <div>
-              <h3>App e biblioteca Psi Real</h3>
-              <p>O aplicativo e a biblioteca ampliam o ecossistema com conteúdo, materiais e recursos práticos para psicólogas.</p>
-            </div>
-          </div>
-          <div class="system-row reveal">
-            <span>04</span>
-            <div>
-              <h3>Supervisão clínica</h3>
-              <p>Uma frente própria para psicólogas que buscam mais segurança técnica, raciocínio clínico e desenvolvimento profissional.</p>
-            </div>
-          </div>
-          <div class="system-row reveal">
-            <span>05</span>
-            <div>
-              <h3>Palestras e soluções para empresas</h3>
-              <p>A frente corporativa leva saúde mental, ansiedade, liderança e autocuidado para equipes com repertório clínico e experiência organizacional.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="faq" id="faq">
-      <div class="container-narrow">
-        <span class="eyebrow reveal">Dúvidas frequentes</span>
-        <h2 class="section-title reveal delay-1">Antes de começar</h2>
-        <p class="section-lead reveal delay-2">Algumas respostas para tornar o primeiro passo mais simples.</p>
-        <div class="faq-list">
-          <div class="faq-item reveal"><button class="faq-q" type="button">Como é a primeira sessão?<span class="faq-icon">+</span></button><div class="faq-a">É uma conversa inicial para compreender a demanda, a história recente e o que precisa ser cuidado. No atendimento infantil, essa etapa pode envolver os responsáveis para entender rotina, escola, comportamento e contexto familiar.</div></div>
-          <div class="faq-item reveal"><button class="faq-q" type="button">Você atende crianças e adolescentes?<span class="faq-icon">+</span></button><div class="faq-a">Sim. O atendimento considera a fase de desenvolvimento, a linguagem da criança ou adolescente e, quando necessário, inclui orientação aos responsáveis.</div></div>
-          <div class="faq-item reveal"><button class="faq-q" type="button">Você trabalha com ansiedade?<span class="faq-icon">+</span></button><div class="faq-a">Sim. Ansiedade é um dos focos centrais da clínica, incluindo ansiedade infantil, ansiedade social, crises, preocupação excessiva, autocobrança, evitação e sintomas físicos associados.</div></div>
-          <div class="faq-item reveal"><button class="faq-q" type="button">O atendimento online funciona?<span class="faq-icon">+</span></button><div class="faq-a">Sim. O atendimento online é realizado por videochamada, com os mesmos critérios de sigilo, preparo e cuidado clínico do presencial.</div></div>
-          <div class="faq-item reveal"><button class="faq-q" type="button">Qual a duração e frequência?<span class="faq-icon">+</span></button><div class="faq-a">As sessões costumam ser semanais e duram cerca de 50 minutos. Ajustes podem ser conversados conforme a necessidade clínica.</div></div>
-          <div class="faq-item reveal"><button class="faq-q" type="button">A terapia tem prazo?<span class="faq-icon">+</span></button><div class="faq-a">Depende dos objetivos, da complexidade da demanda e do ritmo do processo. O caminho é acompanhado e revisado com clareza.</div></div>
-          <div class="faq-item reveal"><button class="faq-q" type="button">Tudo que eu disser é sigiloso?<span class="faq-icon">+</span></button><div class="faq-a">Sim. O sigilo é parte essencial do trabalho psicológico, respeitando as normas éticas da profissão.</div></div>
-          <div class="faq-item reveal"><button class="faq-q" type="button">Como agendar?<span class="faq-icon">+</span></button><div class="faq-a">Você pode enviar uma mensagem pelo WhatsApp ou preencher o formulário. O retorno acontece pelo WhatsApp com as próximas possibilidades de horário.</div></div>
-        </div>
-      </div>
-    </section>
-    <section class="contact" id="contato">
-      <div class="container contact-grid">
-        <div>
-          <span class="eyebrow reveal">Contato</span>
-          <h2 class="section-title reveal delay-1">Uma primeira conversa, sem pressa e sem <em>compromisso</em>.</h2>
-          <p class="section-lead reveal delay-2">Se você sente que chegou a hora de parar de atravessar tudo sozinha, deixe seus dados. O retorno é feito pelo WhatsApp.</p>
-        </div>
-        <form id="contactForm" class="reveal delay-2">
-          <div class="form-row">
-            <div class="form-group"><label for="nome">Nome</label><input id="nome" name="nome" type="text" placeholder="Seu nome" required /></div>
-            <div class="form-group"><label for="whatsapp">WhatsApp</label><input id="whatsapp" name="whatsapp" type="tel" placeholder="(11) 99999-0000" required /></div>
-          </div>
-          <div class="form-group"><label for="servico">O que você busca</label><select id="servico" name="servico" required><option value="">Selecione</option><option>Terapia infantil</option><option>Terapia para adolescente</option><option>Terapia para adulto</option><option>Ansiedade</option><option>Orientação parental</option><option>Relacionamentos</option><option>Autocobrança e burnout</option><option>Dúvida inicial</option></select></div>
-          <div class="form-group"><label for="mensagem">Mensagem opcional</label><textarea id="mensagem" name="mensagem" placeholder="Conte brevemente o que está buscando."></textarea></div>
-          <div class="form-message success" id="formSuccess">Mensagem enviada. Em instantes abriremos o WhatsApp para continuar.</div>
-          <div class="form-message error" id="formError">Não foi possível enviar agora. Tente novamente ou use o WhatsApp.</div>
-          <button class="form-button" id="formBtn" type="submit"><span id="formBtnText">Enviar mensagem</span></button>
-        </form>
-      </div>
-    </section>
-    <section class="final-cta">
-      <div class="container-narrow">
-        <span class="eyebrow reveal">Uma decisão de cada vez</span>
-        <h2 class="reveal delay-1">Você não precisa continuar vivendo no <em>automático</em>.</h2>
-        <p class="reveal delay-2">Para uma criança, um adolescente ou um adulto, ansiedade não precisa virar modo de vida. O primeiro passo não precisa resolver tudo. Ele só precisa começar.</p>
-        <a class="button-primary reveal delay-3" href="https://wa.me/5511947388423?text=Ol%C3%A1%20Michelle%2C%20gostaria%20de%20agendar%20uma%20conversa%20inicial." target="_blank" rel="noopener">Agendar conversa inicial</a>
-      </div>
-    </section>
+    </div>
+
+    <div class="doc-section" id="s10">
+      <div class="sec-eyebrow">Seção 10</div>
+      <h2 class="sec-title">Referências</h2>
+      <div class="ref-item">Persons, J. B. (1989). <em>Cognitive Therapy in Practice: A Case Formulation Approach.</em> W. W. Norton & Company.</div>
+      <div class="ref-item">Persons, J. B. (2008). <em>The Case Formulation Approach to Cognitive-Behavior Therapy.</em> Guilford Press.</div>
+      <div class="ref-item">Persons, J. B., & Tompkins, M. A. (2007). Cognitive-behavioral case formulation. Em T. D. Eells (Ed.), <em>Handbook of Psychotherapy Case Formulation</em> (2ª ed.). Guilford Press.</div>
+      <div class="ref-item">Beck, J. S. (2021). <em>Cognitive Behavior Therapy: Basics and Beyond</em> (3ª ed.). Guilford Press.</div>
+      <div class="ref-item">Eells, T. D. (2007). <em>Handbook of Psychotherapy Case Formulation</em> (2ª ed.). Guilford Press.</div>
+    </div>
   </main>
-  <footer>
-    <div class="container footer-grid">
-      <div>
-        <div class="footer-brand">Psicologia Real</div>
-        <div class="footer-note">CRP 06/93008 - Jarinu/SP - Online para todo o Brasil</div>
-      </div>
-      <div class="footer-links" aria-label="Páginas secundárias">
-        <a href="#terapia">Terapia</a>
-        <a href="supervisao.html">Supervisão</a>
-        <a href="corporativo.html">Corporativo</a>
-        <a href="psireal-tcc.html">PsiReal TCC</a>
-        <a href="https://psireal.app" target="_blank" rel="noopener">psireal.app</a>
-        <a href="biblioteca-tcc/index.html">Biblioteca TCC</a>
-        <a href="painel-psi.html">Área da assinante</a>
-        <a href="painel-esquemas.html">Painel Esquemas</a>
-        <a class="admin-entry" href="admin-contatos.html">Acesso restrito</a>
-        <a href="formulario-esquemas.html">Formulário YSQ</a>
-        <a href="ansiedade.html">Guia ansiedade</a>
-      </div>
-    </div>
-  </footer>
-  <script>
-    const nav = document.getElementById('siteNav');
-    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 24));
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.08 });
-    reveals.forEach((el) => observer.observe(el));
-    document.querySelectorAll('.faq-q').forEach((button) => {
-      button.addEventListener('click', () => {
-        const item = button.closest('.faq-item');
-        const wasOpen = item.classList.contains('open');
-        document.querySelectorAll('.faq-item.open').forEach((openItem) => openItem.classList.remove('open'));
-        if (!wasOpen) item.classList.add('open');
-      });
-    });
-    const SB_URL = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
-    const SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
-    document.getElementById('contactForm').addEventListener('submit', async (event) => {
-      event.preventDefault();
-      const btn = document.getElementById('formBtn');
-      const btnText = document.getElementById('formBtnText');
-      const success = document.getElementById('formSuccess');
-      const error = document.getElementById('formError');
-      const payload = {
-        nome: document.getElementById('nome').value.trim(),
-        whatsapp: document.getElementById('whatsapp').value.trim(),
-        servico: document.getElementById('servico').value,
-        mensagem: document.getElementById('mensagem').value.trim() || null,
-        pagina: 'index-terapia-premium',
-        status: 'novo'
-      };
-      btn.disabled = true;
-      btnText.textContent = 'Enviando...';
-      success.style.display = 'none';
-      error.style.display = 'none';
-      try {
-        const response = await fetch(SB_URL + '/rest/v1/contatos', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': SB_KEY,
-            'Authorization': 'Bearer ' + SB_KEY,
-            'Prefer': 'return=minimal'
-          },
-          body: JSON.stringify(payload)
-        });
-        if (!response.ok && response.status !== 201) throw new Error(String(response.status));
-        success.style.display = 'block';
-        document.getElementById('contactForm').reset();
-        const message = encodeURIComponent('Ola Michelle! Me chamo ' + payload.nome + '.\nInteresse: ' + payload.servico + (payload.mensagem ? '\n\n' + payload.mensagem : ''));
-        setTimeout(() => window.open('https://wa.me/5511947388423?text=' + message, '_blank'), 700);
-      } catch (err) {
-        error.style.display = 'block';
-      } finally {
-        btn.disabled = false;
-        btnText.textContent = 'Enviar mensagem';
+</div>
+
+<script>
+  const sections = document.querySelectorAll('.doc-section');
+  const links = document.querySelectorAll('.toc-list a');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const l = document.querySelector(`.toc-list a[href="#${e.target.id}"]`);
+        if (l) l.classList.add('active');
       }
     });
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
-    }
-  </script>
-  <script src="site-shell.js?v=20260518-4"></script>
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => obs.observe(s));
+</script>
 </body>
 </html>
