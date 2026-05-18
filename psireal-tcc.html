@@ -140,6 +140,7 @@ section{padding:80px 5vw}
 
 /* PLANOS */
 .planos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;max-width:980px;margin-left:auto;margin-right:auto}
+.planos-grid.oferta-unica{grid-template-columns:minmax(320px,560px);justify-content:center;max-width:560px}
 .plano{border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;transition:all .2s;background:var(--white)}
 .plano:hover{box-shadow:0 8px 32px rgba(61,32,40,.1);transform:translateY(-2px)}
 .plano.popular{border-color:var(--brand);border-width:2px;position:relative}
@@ -246,7 +247,7 @@ footer{background:var(--ink);padding:48px 5vw 28px;color:rgba(255,255,255,.55)}
     <a href="#produto" class="btn btn-ghost">Ver como funciona</a>
   </div>
   <div class="hero-proof">
-    <span>Sem cartão de crédito</span>
+    <span>Módulo de Esquemas incluído</span>
     <span class="proof-div"></span>
     <span>Dados criptografados</span>
     <span class="proof-div"></span>
@@ -620,90 +621,39 @@ footer{background:var(--ink);padding:48px 5vw 28px;color:rgba(255,255,255,.55)}
 <!-- PLANOS -->
 <section style="background:var(--bg2)" id="planos">
   <div class="center">
-    <div class="section-badge">Planos</div>
-    <h2 class="section-title">Simples. Transparente.<br>Sem surpresas.</h2>
-    <p class="section-sub center">30 dias grátis em qualquer plano. Sem cartão de crédito. Cancele quando quiser.</p>
+    <div class="section-badge">Assinatura</div>
+    <h2 class="section-title">Tudo em um só acesso.<br>Sem fragmentar sua prática.</h2>
+    <p class="section-sub center">Acesso de lançamento por R$ 11,90/mês durante 6 meses. Depois, R$ 29,90/mês.</p>
   </div>
-  <div class="planos-grid" style="margin-top:48px">
-
-    <div class="plano">
+  <div class="planos-grid oferta-unica" style="margin-top:48px">
+    <div class="plano popular">
+      <div class="popular-badge">Oferta de lançamento</div>
       <div class="plano-head">
-        <div class="plano-nome">Essencial</div>
-        <div class="plano-desc">Para psicólogos que querem começar bem</div>
+        <div class="plano-nome">PsiReal TCC</div>
+        <div class="plano-desc">Plataforma clínica completa para psicólogos</div>
         <div class="plano-preco">
           <span class="plano-moeda">R$</span>
-          <span class="plano-val">19</span>
+          <span class="plano-val">11</span>
           <span class="plano-period">,90/mês</span>
         </div>
+        <div class="plano-desc" style="margin-top:10px">por 6 meses · depois R$ 29,90/mês</div>
       </div>
       <div class="plano-body">
         <ul class="plano-ul">
-          <li>Até 30 pacientes ativos</li>
-          <li>BAI, PHQ-9, GAD-7, BDI-II</li>
+          <li>Inventários clínicos em um único painel</li>
           <li>Links para pacientes via WhatsApp</li>
-          <li>Painel de evolução longitudinal</li>
-          <li>Measurement-based care</li>
-          <li class="off">YSQ-S3 e SMI</li>
-          <li class="off">Mapeamento de ativação</li>
-          <li class="off">Insights automáticos</li>
-        </ul>
-        <a href="painel-tcc.html" class="btn-plano btn-plano-g">Entrar no sistema</a>
-      </div>
-    </div>
-
-    <div class="plano popular" style="margin-top:-8px">
-      <div class="popular-badge">Mais escolhido</div>
-      <div class="plano-head">
-        <div class="plano-nome">Pro</div>
-        <div class="plano-desc">Para clínicas e especialistas em TE/TCC</div>
-        <div class="plano-preco">
-          <span class="plano-moeda">R$</span>
-          <span class="plano-val">39</span>
-          <span class="plano-period">,90/mês</span>
-        </div>
-      </div>
-      <div class="plano-body">
-        <ul class="plano-ul">
-          <li>Pacientes ilimitados</li>
-          <li>Todos os 9 instrumentos</li>
-          <li>YSQ-S3 e SMI completos</li>
-          <li>Mapeamento de ativação terapêutica</li>
-          <li>Perfil clínico da psi</li>
-          <li>Alertas de ressonância e modo</li>
+          <li>Evolução clínica longitudinal</li>
+          <li>YSQ-S3 e módulo de Esquemas incluídos</li>
+          <li>SMI e mapeamento de ativação terapêutica</li>
+          <li>Perfil clínico da psi e alertas de ressonância</li>
           <li>Biblioteca de literatura TE/TCC</li>
-          <li>Insights automáticos com referência</li>
+          <li>Insights clínicos com referência</li>
         </ul>
-        <a href="painel-tcc.html" class="btn-plano btn-plano-p">Entrar no sistema</a>
+        <a href="painel-tcc.html" class="btn-plano btn-plano-p">Começar agora</a>
       </div>
     </div>
-
-    <div class="plano">
-      <div class="plano-head">
-        <div class="plano-nome">Mapa Esquemas</div>
-        <div class="plano-desc">Produto avulso — acesso vitalício</div>
-        <div class="plano-preco">
-          <span class="plano-moeda">R$</span>
-          <span class="plano-val">97</span>
-          <span class="plano-period"> único</span>
-        </div>
-      </div>
-      <div class="plano-body">
-        <ul class="plano-ul">
-          <li>YSQ-S3 completo</li>
-          <li>SMI 1.1 por domínios</li>
-          <li>Cruzamento automático</li>
-          <li>Relatório de ativação por paciente</li>
-          <li>Baseado em Young (2003)</li>
-          <li class="off">Painel longitudinal</li>
-          <li class="off">Instrumentos adicionais</li>
-          <li class="off">Insights automáticos</li>
-        </ul>
-        <a href="#" class="btn-plano btn-plano-g">Comprar acesso</a>
-      </div>
-    </div>
-
   </div>
-  <div style="text-align:center;margin-top:20px;font-size:13px;color:var(--ink3)">Nota fiscal incluída · Aceita cartão, Pix e boleto · Kiwify</div>
+  <div style="text-align:center;margin-top:20px;font-size:13px;color:var(--ink3)">Módulo de Esquemas já incluído na assinatura · Nota fiscal incluída · Aceita cartão, Pix e boleto · Kiwify</div>
 </section>
 
 <!-- FAQ -->
@@ -735,7 +685,7 @@ footer{background:var(--ink);padding:48px 5vw 28px;color:rgba(255,255,255,.55)}
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">A plataforma é indicada apenas para Terapia do Esquema? <span class="faq-ch">▾</span></div>
-      <div class="faq-a">Não. Os instrumentos de ansiedade, depressão, ACT e TDAH são aplicáveis a qualquer abordagem de TCC. O módulo de Terapia do Esquema (YSQ + SMI + mapeamento de ativação) é diferencial para especialistas em TE, mas você pode usar o Essencial sem nunca tocar nesses instrumentos.</div>
+      <div class="faq-a">Não. Os instrumentos de ansiedade, depressão, ACT e TDAH são aplicáveis a diferentes práticas em TCC. O módulo de Terapia do Esquema (YSQ + SMI + mapeamento de ativação) já está incluído na assinatura para quem deseja aprofundar essa leitura clínica.</div>
     </div>
   </div>
 </section>
@@ -744,7 +694,7 @@ footer{background:var(--ink);padding:48px 5vw 28px;color:rgba(255,255,255,.55)}
 <section class="cta-section">
   <div class="cta-bg"></div>
   <h2>Sua clínica merece<br><em>ferramentas à altura</em>.</h2>
-  <p>30 dias gratuitos. Sem cartão de crédito. Comece hoje e veja a diferença na primeira semana.</p>
+  <p>R$ 11,90/mês durante 6 meses. Depois, R$ 29,90/mês com o módulo de Esquemas incluído.</p>
   <a href="painel-tcc.html" class="btn-cta-w">Entrar no PsiReal TCC ↗</a>
   <div class="cta-note">Construído por Michelle Donegá dos Santos · CRP 06/93008 · Psicóloga clínica em Jarinu, SP</div>
 </section>
