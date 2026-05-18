@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Biblioteca Psi Real</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --rose: #8B4A52;
+      --rose-light: #F8EDEB;
+      --rose-hover: #FBF4F2;
+      --rose-border: #F0E8E3;
+      --ink: #2A1A18;
+      --ink-muted: #8A7370;
+      --ink-faint: #C4A8A4;
+      --bg: #FAFAFA;
+      --white: #FFFFFF;
+      --border: #EDE6E0;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--rose-border);
+      padding: 0 2rem; height: 58px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-icon {
+      width: 30px; height: 30px; background: var(--rose);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    }
+    .nav-logo-icon svg { width: 17px; height: 17px; stroke: #fff; fill: none; stroke-width: 1.8; }
+    .nav-logo-text { font-size: 16px; font-weight: 500; color: var(--ink); }
+    .nav-logo-text span { color: var(--rose); }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a { font-size: 14px; color: var(--ink-muted); text-decoration: none; transition: color 0.15s; }
+    .nav-links a:hover { color: var(--ink); }
+
+    .hero { max-width: 780px; margin: 0 auto; padding: 5.5rem 2rem 4rem; text-align: center; }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--rose); background: var(--rose-light); border: 1px solid var(--rose-border);
+      padding: 5px 14px; border-radius: 99px; margin-bottom: 1.75rem;
+    }
+    .hero-tag::before { content: '●'; font-size: 7px; }
+    h1 {
+      font-size: clamp(32px, 5.5vw, 52px); font-weight: 500;
+      line-height: 1.12; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 1.1rem;
+    }
+    h1 em { color: var(--rose); font-style: italic; }
+    .hero-sub { font-size: 16px; color: var(--ink-muted); line-height: 1.75; max-width: 500px; margin: 0 auto 2.25rem; }
+    .hero-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--rose); color: #fff; border: none;
+      font-size: 14px; font-weight: 500; padding: 11px 22px;
+      border-radius: var(--radius-sm); text-decoration: none; font-family: inherit;
+      transition: opacity 0.15s; cursor: pointer;
+    }
+    .btn-primary:hover { opacity: 0.88; }
+    .btn-secondary {
+      background: transparent; color: var(--ink);
+      font-size: 14px; font-weight: 400; padding: 10px 20px;
+      border-radius: var(--radius-sm); border: 1px solid var(--border);
+      text-decoration: none; transition: background 0.15s;
+    }
+    .btn-secondary:hover { background: var(--rose-hover); }
+
+    .stats {
+      display: flex; justify-content: center; gap: 3.5rem;
+      padding: 2.5rem 2rem; background: var(--white);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .stat { text-align: center; }
+    .stat-n { font-size: 28px; font-weight: 500; color: var(--rose); letter-spacing: -0.02em; }
+    .stat-l { font-size: 12px; color: var(--ink-faint); margin-top: 2px; }
+
+    .section { max-width: 1020px; margin: 0 auto; padding: 4.5rem 2rem; }
+    .sec-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rose); margin-bottom: 0.4rem; }
+    h2 { font-size: clamp(22px, 3.5vw, 32px); font-weight: 500; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 0.4rem; }
+    .sec-sub { font-size: 14px; color: var(--ink-muted); margin-bottom: 2.25rem; }
+
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(295px, 1fr)); gap: 12px; }
+
+    .card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      text-decoration: none; color: inherit; display: block;
+      transition: transform 0.18s, border-color 0.18s;
+    }
+    .card:hover { transform: translateY(-2px); border-color: var(--rose-border); }
+    .card-soon { opacity: 0.52; pointer-events: none; }
+    .card-soon:hover { transform: none; }
+
+    .card-thumb {
+      height: 148px; display: flex; align-items: center; justify-content: center;
+      position: relative; background: var(--rose-light);
+    }
+    .card-thumb svg {
+      width: 44px; height: 44px;
+      stroke: var(--rose); fill: none; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round;
+      opacity: 0.85;
+    }
+    .card-thumb-muted svg {
+      stroke: var(--ink-faint);
+    }
+    .card-thumb-muted { background: #F5F3F0; }
+    .card-thumb-label {
+      position: absolute; top: 11px; left: 11px;
+      font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 99px;
+    }
+    .label-rose { background: rgba(139,74,82,0.12); color: var(--rose); }
+    .label-soon { background: rgba(0,0,0,0.07); color: var(--ink-faint); }
+
+    .card-body { padding: 1.1rem 1.25rem 1.4rem; }
+    .card-title { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.4rem; line-height: 1.3; }
+    .card-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.6; margin-bottom: 0.9rem; }
+    .card-footer { display: flex; align-items: center; justify-content: space-between; }
+    .card-author { font-size: 11px; color: var(--ink-faint); }
+    .card-cta { font-size: 12px; font-weight: 500; color: var(--rose); display: flex; align-items: center; gap: 3px; }
+
+    hr.divider { border: none; border-top: 1px solid var(--border); }
+
+    .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
+    .how-n { font-size: 36px; font-weight: 500; color: var(--border); line-height: 1; margin-bottom: 0.75rem; }
+    .how-t { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+    .how-d { font-size: 13px; color: var(--ink-muted); line-height: 1.65; }
+
+    .cta-box {
+      background: var(--rose); color: #fff;
+      border-radius: var(--radius); padding: 2.5rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+    }
+    .cta-box h3 { font-size: 20px; font-weight: 500; margin-bottom: 0.4rem; }
+    .cta-box p { font-size: 13px; opacity: 0.78; max-width: 400px; }
+    .btn-white {
+      background: #fff; color: var(--rose);
+      font-size: 13px; font-weight: 500; padding: 10px 20px;
+      border-radius: var(--radius-sm); text-decoration: none; white-space: nowrap;
+      font-family: inherit; border: none; cursor: pointer; transition: opacity 0.15s;
+    }
+    .btn-white:hover { opacity: 0.9; }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 2rem;
+      text-align: center; background: var(--white);
+    }
+    .footer-logo { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+    .footer-logo span { color: var(--rose); }
+    footer p { font-size: 12px; color: var(--ink-faint); }
+    footer a { color: var(--rose); text-decoration: none; }
+
+    @media (max-width: 580px) {
+      .stats { gap: 2rem; flex-wrap: wrap; }
+      .cta-box { text-align: center; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 3c-1.5 0-3 .6-4 1.7C6.8 6 6 7.5 6 9c0 1.2.4 2.3 1 3.2-.3.6-.5 1.2-.5 1.8 0 2.2 2 4 4.5 4s4.5-1.8 4.5-4c0-.6-.2-1.2-.5-1.8.6-.9 1-2 1-3.2 0-1.5-.8-3-2-4.3C12.9 3.5 12 3 12 3z"/><path d="M9 15.5c0 1 1.3 1.5 3 1.5s3-.5 3-1.5"/></svg>
+    </div>
+    <span class="nav-logo-text">Biblioteca Psi<span>Real</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="../index.html">Voltar ao site</a>
+    <a href="#materiais">Materiais</a>
+    <a href="#como-funciona">Como funciona</a>
+    <a href="https://github.com/michellepsicologiareal-collab/biblioteca-psi-real" target="_blank">GitHub</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-tag">Supervisão em TCC</div>
+  <h1>Materiais clínicos<br>que fazem <em>sentido</em></h1>
+  <p class="hero-sub">Recursos estruturados e visualmente cuidados para supervisoras e terapeutas em TCC. Formulações, avaliações, técnicas — tudo em um só lugar.</p>
+  <div class="hero-actions">
+    <a href="#materiais" class="btn-primary">Explorar materiais</a>
+    <a href="../psireal-tcc.html" class="btn-secondary">Conhecer PsiReal TCC →</a>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat"><div class="stat-n">1</div><div class="stat-l">Material publicado</div></div>
+  <div class="stat"><div class="stat-n">TCC</div><div class="stat-l">Área de foco</div></div>
+  <div class="stat"><div class="stat-n">∞</div><div class="stat-l">Acesso gratuito</div></div>
+</div>
+
+<section class="section" id="materiais">
+  <div class="sec-eyebrow">Materiais disponíveis</div>
+  <h2>Formulações, técnicas<br>e recursos clínicos</h2>
+  <p class="sec-sub">Cada material é um guia completo, navegável e pronto para usar em supervisão.</p>
+
+  <div class="cards-grid">
+
+    <a href="materiais/persons-formulacao-caso/index.html" class="card">
+      <div class="card-thumb">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.44-4.14z"/>
+          <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.44-4.14z"/>
+        </svg>
+        <span class="card-thumb-label label-rose">TCC · Formulação</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Formulação de Caso — Jacqueline Persons</div>
+        <div class="card-desc">Os 7 componentes do modelo, hipótese de trabalho, crenças nucleares e como derivar o plano de tratamento.</div>
+        <div class="card-footer">
+          <span class="card-author">Persons, 2008</span>
+          <span class="card-cta">Acessar →</span>
+        </div>
+      </div>
+    </a>
+
+    <div class="card card-soon">
+      <div class="card-thumb card-thumb-muted">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="2" width="8" height="4" rx="1"/>
+          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+          <path d="M9 12h6M9 16h4"/>
+        </svg>
+        <span class="card-thumb-label label-soon">Em breve</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Avaliação Cognitivo-Comportamental</div>
+        <div class="card-desc">Anamnese, inventários e formulação da queixa principal na avaliação inicial em TCC.</div>
+        <div class="card-footer">
+          <span class="card-author">Beck, 2021</span>
+          <span class="card-cta">Em breve</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-soon">
+      <div class="card-thumb card-thumb-muted">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          <path d="M8 10h.01M12 10h.01M16 10h.01"/>
+        </svg>
+        <span class="card-thumb-label label-soon">Em breve</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Reestruturação Cognitiva</div>
+        <div class="card-desc">Técnicas de identificação e modificação de pensamentos automáticos e crenças intermediárias.</div>
+        <div class="card-footer">
+          <span class="card-author">Beck & Clark</span>
+          <span class="card-cta">Em breve</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-soon">
+      <div class="card-thumb card-thumb-muted">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+          <path d="M21 3v5h-5"/>
+          <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+          <path d="M8 16H3v5"/>
+        </svg>
+        <span class="card-thumb-label label-soon">Em breve</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Exposição e Prevenção de Rituais</div>
+        <div class="card-desc">Protocolo EPR para TOC e transtornos de ansiedade: hierarquia, graduação e manejo.</div>
+        <div class="card-footer">
+          <span class="card-author">Foa & Kozak</span>
+          <span class="card-cta">Em breve</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-soon">
+      <div class="card-thumb card-thumb-muted">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        <span class="card-thumb-label label-soon">Em breve</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Aliança Terapêutica em TCC</div>
+        <div class="card-desc">Como construir e manejar a relação terapêutica — rupturas e reparação dentro do modelo.</div>
+        <div class="card-footer">
+          <span class="card-author">Safran & Segal</span>
+          <span class="card-cta">Em breve</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-soon">
+      <div class="card-thumb card-thumb-muted">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 3v18h18"/>
+          <path d="m19 9-5 5-4-4-3 3"/>
+        </svg>
+        <span class="card-thumb-label label-soon">Em breve</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Monitoramento de Progresso</div>
+        <div class="card-desc">Uso sistemático de medidas de desfecho: inventários, escalas e gráficos de progresso em TCC.</div>
+        <div class="card-footer">
+          <span class="card-author">Lambert & Ogles</span>
+          <span class="card-cta">Em breve</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider" />
+
+<section class="section" id="como-funciona">
+  <div class="sec-eyebrow">Como funciona</div>
+  <h2>Simples de usar,<br>fácil de contribuir</h2>
+  <p class="sec-sub">Sem login, sem instalação. Abre e usa.</p>
+  <div class="how-grid">
+    <div>
+      <div class="how-n">01</div>
+      <div class="how-t">Acesse qualquer material</div>
+      <div class="how-d">Cada material é uma página HTML — funciona no celular, tablet e computador.</div>
+    </div>
+    <div>
+      <div class="how-n">02</div>
+      <div class="how-t">Use na supervisão</div>
+      <div class="how-d">Navegue pelo índice interativo e use as seções como roteiro de discussão clínica.</div>
+    </div>
+    <div>
+      <div class="how-n">03</div>
+      <div class="how-t">Contribua via GitHub</div>
+      <div class="how-d">Fork, crie seu material em HTML e abra um Pull Request. Toda contribuição é bem-vinda.</div>
+    </div>
+    <div>
+      <div class="how-n">04</div>
+      <div class="how-t">Acesso gratuito para sempre</div>
+      <div class="how-d">Open source publicado via GitHub Pages. Sem barreiras de acesso.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="cta-box">
+    <div>
+      <h3>Tem um material para contribuir?</h3>
+      <p>A biblioteca cresce com a comunidade. Se você tem um material estruturado sobre TCC, abre um PR no GitHub.</p>
+    </div>
+    <a href="https://github.com/michellepsicologiareal-collab/biblioteca-psi-real" target="_blank" class="btn-white">Contribuir no GitHub →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Biblioteca Psi<span>Real</span></div>
+  <p>Recursos clínicos em TCC · Acesso aberto · <a href="https://github.com/michellepsicologiareal-collab/biblioteca-psi-real" target="_blank">GitHub</a></p>
+</footer>
+
+</body>
+</html>

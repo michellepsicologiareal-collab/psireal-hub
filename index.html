@@ -736,12 +736,37 @@
       .process-item p { grid-column: auto; }
       .system-row { grid-template-columns: 1fr; gap: 12px; }
       .portal-links { grid-template-columns: 1fr; }
+      .service-link,
+      .system-row,
+      .portal-links a,
+      .symptom,
+      .process-item,
+      .specialty,
+      .difference-item {
+        min-width: 0;
+      }
+      .service-link strong,
+      .service-link span,
+      .system-row strong,
+      .system-row p,
+      .portal-links strong,
+      .portal-links span,
+      .symptom strong,
+      .symptom p,
+      .process-item h3,
+      .process-item p,
+      .specialty h3,
+      .specialty p,
+      .difference-item h3,
+      .difference-item p {
+        overflow-wrap: anywhere;
+      }
       .form-row { grid-template-columns: 1fr; gap: 0; }
       .footer-grid { grid-template-columns: 1fr; }
       .footer-links { justify-content: flex-start; }
     }
   </style>
-  <link rel="stylesheet" href="brand-refresh.css" />
+  <link rel="stylesheet" href="brand-refresh.css?v=20260518-4" />
 </head>
 <body>
   <nav class="site-nav" id="siteNav" aria-label="Navegação principal">
@@ -757,11 +782,11 @@
         </div>
       </div>
       <div class="desktop-menu-group">
-        <button class="desktop-menu-trigger" type="button">Psicólogas <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <button class="desktop-menu-trigger" type="button">Para psis <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
         <div class="desktop-menu-panel">
           <a href="supervisao.html"><strong>Supervisão</strong><span>Desenvolvimento clínico</span></a>
           <a href="psireal-tcc.html"><strong>PsiReal TCC</strong><span>Plataforma clínica</span></a>
-          <a href="https://michellepsicologiareal-collab.github.io/biblioteca-psi-real/"><strong>Biblioteca</strong><span>Materiais e recursos</span></a>
+          <a href="biblioteca-tcc/index.html"><strong>Biblioteca TCC</strong><span>Materiais e recursos</span></a>
         </div>
       </div>
       <div class="desktop-menu-group">
@@ -953,7 +978,7 @@
           <div class="portal-links reveal delay-3" aria-label="Links do ecossistema Psi Real">
             <a class="portal-link" href="psireal-tcc.html"><span><strong>PsiReal TCC</strong><small>Inventários, aplicações, evolução clínica e insights em uma única plataforma</small></span><em>→</em></a>
             <a class="portal-link" href="https://psireal.app" target="_blank" rel="noopener"><span><strong>psireal.app</strong><small>Aplicativo criado para ampliar a experiência Psi Real</small></span><em>↗</em></a>
-            <a class="portal-link" href="https://michellepsicologiareal-collab.github.io/biblioteca-psi-real/index.html" target="_blank" rel="noopener"><span><strong>Biblioteca</strong><small>Materiais e recursos para psicólogas</small></span><em>↗</em></a>
+            <a class="portal-link" href="biblioteca-tcc/index.html"><span><strong>Biblioteca TCC</strong><small>Materiais e recursos para psicólogas</small></span><em>→</em></a>
             <a class="portal-link" href="painel-psi.html"><span><strong>Área da assinante</strong><small>Acesso das psicólogas à plataforma clínica e aos pacientes</small></span><em>→</em></a>
           </div>
         </div>
@@ -1054,7 +1079,7 @@
         <a href="corporativo.html">Corporativo</a>
         <a href="psireal-tcc.html">PsiReal TCC</a>
         <a href="https://psireal.app" target="_blank" rel="noopener">psireal.app</a>
-        <a href="https://michellepsicologiareal-collab.github.io/biblioteca-psi-real/index.html" target="_blank" rel="noopener">Biblioteca</a>
+        <a href="biblioteca-tcc/index.html">Biblioteca TCC</a>
         <a href="painel-psi.html">Área da assinante</a>
         <a href="painel-esquemas.html">Painel Esquemas</a>
         <a class="admin-entry" href="admin-contatos.html">Acesso restrito</a>
@@ -1131,6 +1156,6 @@
       window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
     }
   </script>
-  <script src="site-shell.js"></script>
+  <script src="site-shell.js?v=20260518-4"></script>
 </body>
 </html>
