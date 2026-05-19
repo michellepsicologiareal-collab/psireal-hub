@@ -1245,18 +1245,6 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
           </div>
         </div>
 
-        <div class="inv-card">
-          <div class="inv-card-top">
-            <span class="inv-cat" style="background:var(--teal3);color:var(--teal)">Ansiedade</span>
-            <span class="inv-time">3–5 min</span>
-          </div>
-          <div class="inv-name">GAD-7 — Escala de Ansiedade Generalizada</div>
-          <div class="inv-desc">Rastreio e avaliação de severidade do Transtorno de Ansiedade Generalizada. Sensível a mudanças ao longo do tratamento.</div>
-          <div class="inv-footer">
-            <span class="inv-items">7 itens — Likert 0–3</span>
-            <button class="btn-apply" data-instrument="GAD-7">Aplicar —</button>
-          </div>
-        </div>
 
         <div class="inv-card">
           <div class="inv-card-top">
@@ -1949,17 +1937,35 @@ function openInstrumentDashboard(instrument) {
   window.location.href = `painel-instrumento.html?instrumento=${encodeURIComponent(instrument)}`;
 }
 
-function openApplicationModal(instrument = 'YSQ-S3') {
+function openApplicationModal(instrument = 'GAD-7') {
   const modal = document.getElementById('applicationModal');
   const select = document.getElementById('newInstrument');
-  const option = [...select.options].find(item => item.value === instrument && !item.disabled);
-  select.value = option ? instrument : 'YSQ-S3';
-  document.getElementById('generatedLinkBox').classList.remove('open');
+
+  // Reset all options visibility
+  [...select.options].forEach(o => { o.hidden = false; o.disabled = o.dataset.disabled === 'true'; });
+
+  // Select the instrument
+  const opt = [...select.options].find(o => o.value === instrument && !o.disabled);
+  if (opt) {
+    select.value = opt.value;
+  } else {
+    select.value = 'GAD-7';
+  }
+
+  // Update category filter buttons
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  const allBtn = document.querySelector('.cat-btn[onclick*="todos"]');
+  if (allBtn) allBtn.classList.add('active');
+
+  // Update help text
+  if (typeof updateInstrHelp === 'function') updateInstrHelp();
+
+  document.getElementById('generatedLinkBox')?.classList.remove('open');
   const errorBox = document.getElementById('applicationError');
   if (errorBox) { errorBox.style.display = 'none'; errorBox.textContent = ''; }
   modal.classList.add('open');
   modal.setAttribute('aria-hidden', 'false');
-  setTimeout(() => document.getElementById('newPatientName').focus(), 0);
+  setTimeout(() => document.getElementById('newPatientName')?.focus(), 50);
 }
 
 function closeApplicationModal() {
