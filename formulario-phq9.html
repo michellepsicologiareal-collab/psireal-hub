@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>PHQ-9 - Depressao | Psi Real</title>
+  <title>PHQ-9 - Depressão | Psi Real</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{--r1:#3D2235;--r2:#7A4060;--rose:#C8908A;--rose-pale:#F7F0F2;--rose-border:#DFBFBA;--sage:#4A7C6A;--sage-pale:#EDF5F0;--ink:#1E1018;--ink-2:#5A3048;--ink-3:#9A7088;--bg:#FDFBFC;--white:#fff;--border:#E8D8DF;--surface:#F8F2F4;--radius:18px;--radius-sm:11px}
-    body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
     nav{height:60px;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:#fff}
-    .brand{font-family:'Instrument Serif',serif;font-size:24px;color:var(--r1)}
+    .brand{font-family:'Inter',sans-serif;font-size:24px;color:var(--r1)}
     .nav-note,.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
     .hero{max-width:760px;margin:0 auto;padding:3rem 1.5rem 1.5rem;text-align:center}
     .eyebrow{margin-bottom:.75rem}
-    h1{font-family:'Instrument Serif',serif;font-size:clamp(30px,5vw,46px);font-weight:400;line-height:1.05;margin-bottom:.75rem}
+    h1{font-family:'Inter',sans-serif;font-size:clamp(30px,5vw,46px);font-weight:400;line-height:1.05;margin-bottom:.75rem}
     .hero p{font-size:15px;color:var(--ink-2);max-width:620px;margin:0 auto}
     .wrap{max-width:760px;margin:0 auto;padding:0 1.5rem 5rem}
     .intro,.ident-card,.question-card,.result-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius)}
@@ -42,22 +42,38 @@
     button:disabled{opacity:.45;cursor:not-allowed}
     #result{display:none;margin-top:1rem}
     .result-card{padding:1.5rem}
-    .result-score{font-family:'Instrument Serif',serif;font-size:48px;color:var(--r1);line-height:1}
+    .result-score{font-family:'Inter',sans-serif;font-size:48px;color:var(--r1);line-height:1}
     .result-level{font-size:14px;font-weight:600;color:var(--sage);margin-top:.35rem}
     .result-copy{font-size:14px;color:var(--ink-2);margin-top:1rem}
     .success{display:none;margin-bottom:1rem;padding:1rem;border-radius:var(--radius-sm);background:var(--sage-pale);color:var(--sage);font-size:14px}
     @media(max-width:700px){.ident-card,.options{grid-template-columns:1fr}.actions-inner{flex-wrap:wrap}.progress{order:3;flex-basis:100%}}
+  
+    /* PsiReal released form polish */
+    html,body,button,input,label,div,span,p,h1{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;letter-spacing:0!important}
+    body{background:#FDFAF8;color:#1E1014}
+    nav{height:72px!important;padding:0 clamp(18px,4vw,42px)!important;background:#fff!important;box-shadow:0 8px 26px rgba(61,32,40,.05)}
+    .brand{font-size:22px!important;font-weight:800!important;color:#3D2028!important}
+    .nav-note{font-size:12px!important;text-transform:none!important;color:#9A7A84!important;font-weight:600!important}
+    .hero{padding:54px 20px 28px!important}.eyebrow{font-size:12px!important;font-weight:800!important;letter-spacing:.12em!important;color:#9B5A66!important}
+    h1{font-size:clamp(34px,5vw,52px)!important;font-weight:800!important;color:#2F2023!important;line-height:1.05!important}.hero p{font-size:17px!important;line-height:1.65!important;color:#5A3A42!important}
+    .card,.question-card,.result-card,.ident-card{border:1px solid #E8D8DC!important;border-radius:22px!important;background:#fff!important;box-shadow:0 14px 30px rgba(61,32,40,.05)!important}
+    label{font-size:12px!important;color:#7A4A55!important}.q-num{background:#F8F2F4!important;color:#7A4A55!important;font-weight:800!important}.q-text{font-size:16px!important;font-weight:700!important;color:#1E1014!important;line-height:1.45!important}
+    .option{border:1px solid #E8D8DC!important;border-radius:16px!important;background:#FDFAF8!important;padding:13px 14px!important}.option:hover{border-color:#B08090!important;background:#F8F2F4!important}.option span{font-size:14px!important;color:#5A3A42!important}.option input:checked + span{font-weight:800!important;color:#3D2028!important}
+    .actions{background:rgba(253,250,248,.94)!important;backdrop-filter:blur(12px)!important}.progress{height:9px!important;border-radius:999px!important;background:#F8F2F4!important}.progress-bar{background:linear-gradient(90deg,#3D2028,#B08090)!important;border-radius:999px!important}
+    button{border-radius:16px!important;background:linear-gradient(135deg,#3D2028,#9B5A66)!important;color:#fff!important;font-weight:800!important;box-shadow:0 14px 28px rgba(61,32,40,.15)!important}button:disabled{opacity:.45!important;box-shadow:none!important}.result-score{font-size:52px!important;font-weight:800!important;color:#3D2028!important}.result-level{color:#7A4A55!important;font-weight:800!important}.success{background:#F2E4D4!important;color:#5A3A42!important;border:1px solid #E8D8DC!important}.error{display:none;margin-bottom:1rem;padding:1rem;border-radius:16px;background:#FFF4F2;color:#8A4738;border:1px solid #F0C8C0;font-size:14px;line-height:1.5}
+    @media(max-width:700px){nav{height:auto!important;min-height:68px!important;gap:8px;align-items:flex-start!important;flex-direction:column!important;padding:16px 18px!important}.nav-note{text-align:left!important}.hero{text-align:left!important}.ident-card,.options{grid-template-columns:1fr!important}.question-card{padding:18px!important}.actions-inner{gap:12px!important}.actions-inner button{width:100%!important}.progress{order:3;flex-basis:100%}}
+  
   </style>
 </head>
 <body>
-  <nav><div class="brand">Psi Real</div><div class="nav-note">Instrumento enviado por sua psicologa</div></nav>
+  <nav><div class="brand">Psi Real</div><div class="nav-note">Instrumento enviado pela sua psicóloga</div></nav>
   <section class="hero">
-    <div class="eyebrow">Depressao - acompanhamento clinico</div>
+    <div class="eyebrow">Depressão · acompanhamento clínico</div>
     <h1>PHQ-9</h1>
-    <p>Nas ultimas duas semanas, com que frequencia voce se sentiu incomodado(a) pelos problemas abaixo?</p>
+    <p>Nas últimas duas semanas, marque com que frequência cada sinal de humor apareceu para você.</p>
   </section>
   <main class="wrap">
-    <div class="intro"><p>Responda pensando no periodo recente. O objetivo e apoiar o acompanhamento clinico ao longo do processo terapeutico.</p></div>
+    <div class="intro"><p>Responda pensando no periodo recente. O objetivo e apoiar o acompanhamento clínico ao longo do processo terapeutico.</p></div>
     <section class="ident-card">
       <div><label for="pacNome">Seu nome</label><input id="pacNome" placeholder="Como gostaria de ser chamado(a)"/></div>
       <div><label for="pacNasc">Data de nascimento</label><input id="pacNasc" type="date"/></div>
@@ -69,8 +85,8 @@
         <div class="eyebrow">Resultado</div>
         <div class="result-score" id="score">0</div>
         <div class="result-level" id="level"></div>
-        <p class="result-copy">Este resultado e um apoio clinico e deve ser interpretado junto com a avaliacao profissional.</p>
-        <p class="result-copy" id="safetyNote" style="display:none;color:#8a4738">Se voce marcou pensamentos de morte ou de se ferir, avise sua psicologa o quanto antes para que ela possa acolher e avaliar esse sinal com voce.</p>
+        <p class="result-copy">Este resultado é um apoio clínico e deve ser interpretado junto com a avaliação profissional.</p>
+        <p class="result-copy" id="safetyNote" style="display:none;color:#8a4738">Se você marcou pensamentos de morte ou de se ferir, avise sua psicóloga o quanto antes para que ela possa acolher e avaliar esse sinal com você.</p>
       </div>
     </section>
     <div class="actions">
@@ -87,7 +103,7 @@
     const PATIENT_TOKEN=new URLSearchParams(window.location.search).get('token');
     const ITEMS=[
       'Pouco interesse ou prazer em fazer as coisas.',
-      'Sentir-se para baixo, deprimido(a) ou sem esperanca.',
+      'Sentir-se para baixo, deprimido(a) ou sem esperança.',
       'Dificuldade para pegar no sono, continuar dormindo ou dormir demais.',
       'Sentir-se cansado(a) ou com pouca energia.',
       'Falta de apetite ou comer demais.',
@@ -100,9 +116,9 @@
     const answers={};
     function build(){document.getElementById('questions').innerHTML=ITEMS.map((item,idx)=>`<article class="question-card"><div class="q-head"><div class="q-num">${idx+1}</div><div class="q-text">${item}</div></div><div class="options">${OPTIONS.map(opt=>`<label class="option"><input type="radio" name="q${idx+1}" value="${opt.v}" onchange="answer(${idx+1},${opt.v})"/><span>${opt.l}</span></label>`).join('')}</div></article>`).join('')}
     function answer(n,v){answers[n]=v;const done=Object.keys(answers).length;document.getElementById('bar').style.width=`${Math.round(done/9*100)}%`;document.getElementById('progressText').textContent=`${done} / 9`;document.getElementById('submitBtn').disabled=done<9}
-    function levelFor(score){if(score<=4)return'Depressao minima';if(score<=9)return'Depressao leve';if(score<=14)return'Depressao moderada';if(score<=19)return'Depressao moderadamente grave';return'Depressao grave'}
-    async function submit(){const nome=document.getElementById('pacNome').value.trim();const nasc=document.getElementById('pacNasc').value||null;if(!nome)return alert('Informe seu nome para continuar.');if(!PATIENT_TOKEN)return alert('Link invalido.');const total=Object.values(answers).reduce((sum,v)=>sum+Number(v),0);const payload={p_token:PATIENT_TOKEN,p_patient_name:nome,p_patient_birth:nasc,p_instrumento:'PHQ-9',p_respostas:answers,p_scores:{total,nivel:levelFor(total),item9:Number(answers[9]||0)},p_score_total:total};const btn=document.getElementById('submitBtn');btn.disabled=true;btn.textContent='Enviando...';try{const res=await fetch(`${SB_URL}/rest/v1/rpc/submit_patient_response`,{method:'POST',headers:{'Content-Type':'application/json',apikey:SB_KEY,Authorization:'Bearer '+SB_KEY},body:JSON.stringify(payload)});showResult(total,res.ok)}catch(_){showResult(total,false)}}
-    function showResult(total,saved){document.getElementById('questions').style.display='none';document.querySelector('.actions').style.display='none';document.getElementById('score').textContent=total;document.getElementById('level').textContent=levelFor(total);document.getElementById('success').style.display=saved?'block':'none';document.getElementById('safetyNote').style.display=Number(answers[9]||0)>0?'block':'none';document.getElementById('result').style.display='block';window.scrollTo({top:0,behavior:'smooth'})}
+    function levelFor(score){if(score<=4)return'Depressão mínima';if(score<=9)return'Depressão leve';if(score<=14)return'Depressão moderada';if(score<=19)return'Depressão moderadamente grave';return'Depressão grave'}
+    async function submit(){const nome=document.getElementById('pacNome').value.trim();const nasc=document.getElementById('pacNasc').value||null;if(!nome)return alert('Informe seu nome para continuar.');if(!PATIENT_TOKEN)return alert('Link inválido.');const total=Object.values(answers).reduce((sum,v)=>sum+Number(v),0);const payload={p_token:PATIENT_TOKEN,p_patient_name:nome,p_patient_birth:nasc,p_instrumento:'PHQ-9',p_respostas:answers,p_scores:{total,nivel:levelFor(total),item9:Number(answers[9]||0)},p_score_total:total};const btn=document.getElementById('submitBtn');btn.disabled=true;btn.textContent='Enviando...';try{const res=await fetch(`${SB_URL}/rest/v1/rpc/submit_patient_response`,{method:'POST',headers:{'Content-Type':'application/json',apikey:SB_KEY,Authorization:'Bearer '+SB_KEY},body:JSON.stringify(payload)});showResult(total,res.ok)}catch(_){showResult(total,false)}}
+    function showResult(total,saved){document.getElementById('questions').style.display='none';document.querySelector('.actions').style.display='none';document.getElementById('score').textContent=total;document.getElementById('level').textContent=levelFor(total);document.getElementById('success').style.display=saved?'block':'none';document.getElementById('sendError').style.display=saved?'none':'block';document.getElementById('safetyNote').style.display=Number(answers[9]||0)>0?'block':'none';document.getElementById('result').style.display='block';window.scrollTo({top:0,behavior:'smooth'})}
     document.getElementById('submitBtn').addEventListener('click',submit);build();
   </script>
 </body>
