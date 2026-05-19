@@ -1815,7 +1815,8 @@ function renderInsights() {
     const names = [...new Set(recent.map(r => r.paciente_nome).filter(Boolean))];
     insights.push({
       type: 'Atividade da semana', color: 'var(--lilac)', bg: 'var(--lilac4)',
-      text: `<strong>${recent.length} resposta(s)</strong> recebida(s) nos últimos 7 dias de <strong>${names.length} paciente(s)</strong>.`
+      text: `<strong>${recent.length} resposta(s)</strong> recebida(s) nos últimos 7 dias.`,
+      names
     });
   }
 
@@ -1829,7 +1830,8 @@ function renderInsights() {
   if (gadNames.length > 0) {
     insights.push({
       type: 'Atenção clínica', color: 'var(--amber)', bg: 'var(--amber3)',
-      text: `<strong>${gadNames.length} paciente(s)</strong> com score GAD-7 em nível moderado ou grave: ${gadNames.slice(0,3).join(', ')}${gadNames.length > 3 ? ' e outros' : ''}.`
+      text: `<strong>${gadNames.length} paciente(s)</strong> com score GAD-7 em nível moderado ou grave.`,
+      names: gadNames
     });
   }
 
@@ -1848,16 +1850,19 @@ function renderInsights() {
   if (improving.length > 0) {
     insights.push({
       type: 'Evolução positiva', color: 'var(--green)', bg: 'var(--green3)',
-      text: `<strong>${improving.length} paciente(s)</strong> com tendência de melhora nos scores longitudinais.`
+      text: `<strong>${improving.length} paciente(s)</strong> com tendência de melhora nos scores longitudinais.`,
+      names: improving.map(([name]) => name)
     });
   }
 
   // Insight 4: pending links
   const pending = links.filter(l => l.status === 'ativo');
   if (pending.length > 0) {
+    const pendingNames = [...new Set(pending.map(l => l.patient_name).filter(Boolean))];
     insights.push({
       type: 'Aplicações pendentes', color: 'var(--brown3)', bg: 'var(--lilac4)',
-      text: `<strong>${pending.length} link(s)</strong> enviado(s) aguardando resposta do paciente.`
+      text: `<strong>${pending.length} link(s)</strong> enviado(s) aguardando resposta do paciente.`,
+      names: pendingNames
     });
   }
 
@@ -1868,10 +1873,28 @@ function renderInsights() {
     });
   }
 
+  // Helper: initials avatar
+  function insightAvatar(name) {
+    const ini = (name||'?').split(' ').filter(Boolean).slice(0,2).map(p=>p[0].toUpperCase()).join('');
+    return `<span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--brown),var(--brown3));color:#fff;font-size:9px;font-weight:700;flex-shrink:0">${ini}</span>`;
+  }
+
+  function patientPills(names) {
+    if (!names || !names.length) return '';
+    return `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center">
+      ${names.slice(0,5).map(n => `
+        <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.7);border:1px solid rgba(0,0,0,.08);border-radius:99px;padding:2px 8px 2px 4px;font-size:11px;color:var(--ink2)">
+          ${insightAvatar(n)}${n}
+        </span>`).join('')}
+      ${names.length > 5 ? `<span style="font-size:11px;color:var(--ink3)">+${names.length-5} outros</span>` : ''}
+    </div>`;
+  }
+
   const html = insights.map(ins => `
-    <div style="padding:14px;background:${ins.bg};border-radius:var(--radius);border-left:3px solid ${ins.color}">
-      <div style="font-size:10px;color:${ins.color};font-weight:500;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">${ins.type}</div>
+    <div style="padding:14px 16px;background:${ins.bg};border-radius:var(--radius);border-left:3px solid ${ins.color}">
+      <div style="font-size:10px;color:${ins.color};font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">${ins.type}</div>
       <div style="font-size:13px;color:var(--ink);line-height:1.55">${ins.text}</div>
+      ${ins.names ? patientPills(ins.names) : ''}
     </div>`).join('');
 
   if (preview) preview.innerHTML = html;
