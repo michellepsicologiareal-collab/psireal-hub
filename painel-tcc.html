@@ -709,6 +709,10 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
 .inv-card:has(.btn-apply[disabled]){display:none!important}
 .beta-note{margin:0 0 18px;padding:14px 18px;border:1px solid #E8D8DC;border-radius:18px;background:#fff;color:#5A3A42;font-size:14px;line-height:1.5}
 
+
+/* Patient registration modal clarity */
+.field-help{font-size:12px;color:#9A7A84;margin-top:7px;line-height:1.45}.modal-error{display:none;margin:14px 0 0;padding:12px 14px;border:1px solid #E9C5C0;background:#FFF6F4;color:#8A4738;border-radius:14px;font-size:13px;line-height:1.45}.modal-card{max-width:480px!important}.generated-link{border-radius:16px!important;background:#F8F2F4!important;border:1px solid #E8D8DC!important}.generated-link code{word-break:break-all!important;white-space:normal!important;line-height:1.45!important}
+
 </style>
 </head>
 <body>
@@ -1007,7 +1011,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
       <div><div class="topbar-title">Pacientes</div></div>
       <div class="topbar-actions">
         <button class="btn btn-ghost">Exportar</button>
-        <button class="btn btn-primary" onclick="openApplicationModal()">+ Novo paciente</button>
+        <button class="btn btn-primary" onclick="openApplicationModal()">+ Cadastrar paciente</button>
       </div>
     </div>
     <div class="content">
@@ -1580,8 +1584,8 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
   <div class="modal-card">
     <div class="modal-head">
       <div>
-        <div class="modal-title">Nova aplicação</div>
-        <div style="font-size:13px;color:var(--ink3);margin-top:4px">Crie o paciente e gere o primeiro link em um único passo.</div>
+        <div class="modal-title">Cadastrar paciente</div>
+        <div style="font-size:13px;color:var(--ink3);margin-top:4px;line-height:1.45">Cadastre o paciente e escolha o primeiro instrumento. O sistema gera um link seguro para enviar pelo WhatsApp.</div>
       </div>
       <button class="modal-close" onclick="closeApplicationModal()" aria-label="Fechar">×</button>
     </div>
@@ -1597,11 +1601,13 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
           <option value="GAD-7" data-page="formulario-gad7">GAD-7 — Ansiedade</option>
           <option value="PHQ-9" data-page="formulario-phq9">PHQ-9 — Depressão</option>
         </select>
+        <div class="field-help">Por enquanto, o beta libera YSQ-S3, GAD-7 e PHQ-9.</div>
       </div>
     </div>
+    <div class="modal-error" id="applicationError"></div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeApplicationModal()">Cancelar</button>
-      <button class="btn btn-primary" onclick="createApplication()">Gerar link</button>
+      <button class="btn btn-primary" onclick="createApplication()">Cadastrar e gerar link</button>
     </div>
     <div class="generated-link" id="generatedLinkBox">
       <code id="generatedLinkText"></code>
@@ -1807,7 +1813,7 @@ function renderPatientsTable() {
   if (!patients.length) {
     body.innerHTML = `<tr><td colspan="7" class="empty-row">
       Nenhum paciente com respostas ainda.<br>
-      <button class="btn btn-primary" style="margin-top:12px" onclick="openApplicationModal()">Criar primeira aplicação</button>
+      <button class="btn btn-primary" style="margin-top:12px" onclick="openApplicationModal()">Cadastrar primeiro paciente</button>
     </td></tr>`;
     return;
   }
@@ -1917,6 +1923,8 @@ function openApplicationModal(instrument = 'YSQ-S3') {
   const option = [...select.options].find(item => item.value === instrument && !item.disabled);
   select.value = option ? instrument : 'YSQ-S3';
   document.getElementById('generatedLinkBox').classList.remove('open');
+  const errorBox = document.getElementById('applicationError');
+  if (errorBox) { errorBox.style.display = 'none'; errorBox.textContent = ''; }
   modal.classList.add('open');
   modal.setAttribute('aria-hidden', 'false');
   setTimeout(() => document.getElementById('newPatientName').focus(), 0);
@@ -1937,6 +1945,8 @@ async function createApplication() {
     alert('Informe o nome do paciente.');
     return;
   }
+  const errorBox = document.getElementById('applicationError');
+  if (errorBox) { errorBox.style.display = 'none'; errorBox.textContent = ''; }
   try {
     const res = await fetch(`${SB_URL}/rest/v1/rpc/create_patient_link`, {
       method: 'POST',
@@ -1961,7 +1971,12 @@ async function createApplication() {
     document.getElementById('generatedLinkBox').classList.add('open');
     await refreshPanelData();
   } catch (error) {
-    alert('Não foi possível gerar o link. Verifique se a sessão está ativa e tente novamente.');
+    if (errorBox) {
+      errorBox.textContent = 'Não foi possível cadastrar e gerar o link. Verifique se a psi está cadastrada/ativa no Supabase e se a função create_patient_link foi criada.';
+      errorBox.style.display = 'block';
+    } else {
+      alert('Não foi possível gerar o link. Verifique se a sessão está ativa e tente novamente.');
+    }
   }
 }
 
