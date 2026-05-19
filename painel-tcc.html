@@ -813,8 +813,8 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
     <div class="lock-logo"></div>
     <div class="lock-title">Entrar no PsiReal TCC</div>
     <div class="lock-sub">Acesso restrito para psicólogas assinantes.</div>
-    <input id="lockEmail" class="lock-input" type="email" placeholder="E-mail">
-    <input id="lockPassword" class="lock-input" type="password" placeholder="Senha">
+    <input id="lockEmail" class="lock-input" type="email" placeholder="E-mail" autocomplete="off" autocapitalize="none" spellcheck="false" name="psi_login_email_2026">
+    <input id="lockPassword" class="lock-input" type="password" placeholder="Senha" autocomplete="new-password" autocapitalize="none" spellcheck="false" name="psi_login_password_2026">
     <button class="lock-btn" onclick="tryLogin()">Entrar</button>
     <div id="lockError" class="lock-error">Não foi possível entrar. Verifique e-mail e senha.</div>
   </div>
@@ -1449,6 +1449,7 @@ const SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
 let SB_SESSION_TOKEN = sessionStorage.getItem('sb_session_token') || '';
 let SB_REFRESH_TOKEN = sessionStorage.getItem('sb_refresh_token') || '';
 let SB_EXPIRES_AT = Number(sessionStorage.getItem('sb_expires_at') || 0);
+let AUTH_USER = JSON.parse(sessionStorage.getItem('sb_auth_user') || 'null');
 let PSI_PROFILE = null;
 let PATIENT_LINKS = [];
 let CLINICAL_RESPONSES = [];
@@ -1457,18 +1458,22 @@ function saveSession(data) {
   SB_SESSION_TOKEN = data.access_token || '';
   SB_REFRESH_TOKEN = data.refresh_token || SB_REFRESH_TOKEN || '';
   SB_EXPIRES_AT = data.expires_at || (Date.now() / 1000 + Number(data.expires_in || 3600));
+  AUTH_USER = data.user || AUTH_USER || null;
   sessionStorage.setItem('sb_session_token', SB_SESSION_TOKEN);
   sessionStorage.setItem('sb_refresh_token', SB_REFRESH_TOKEN);
   sessionStorage.setItem('sb_expires_at', String(SB_EXPIRES_AT));
+  if (AUTH_USER) sessionStorage.setItem('sb_auth_user', JSON.stringify(AUTH_USER));
 }
 
 function clearSession() {
   SB_SESSION_TOKEN = '';
   SB_REFRESH_TOKEN = '';
   SB_EXPIRES_AT = 0;
+  AUTH_USER = null;
   sessionStorage.removeItem('sb_session_token');
   sessionStorage.removeItem('sb_refresh_token');
   sessionStorage.removeItem('sb_expires_at');
+  sessionStorage.removeItem('sb_auth_user');
 }
 
 async function refreshSessionIfNeeded(force = false) {
@@ -1508,10 +1513,21 @@ async function authFetch(url, options = {}, retry = true) {
 }
 
 async function tryLogin() {
-  const email = document.getElementById('lockEmail');
-  const password = document.getElementById('lockPassword');
+  const emailInput = document.getElementById('lockEmail');
+  const passwordInput = document.getElementById('lockPassword');
   const error = document.getElementById('lockError');
+  const email = String(emailInput.value || '').trim().toLowerCase();
+  const password = String(passwordInput.value || '');
+
   error.style.display = 'none';
+  error.textContent = 'Não foi possível entrar. Verifique e-mail e senha.';
+
+  if (!email || !password) {
+    error.textContent = 'Preencha e-mail e senha.';
+    error.style.display = 'block';
+    return;
+  }
+
   try {
     const res = await fetch(`${SB_URL}/auth/v1/token?grant_type=password`, {
       method: 'POST',
@@ -1519,16 +1535,30 @@ async function tryLogin() {
         apikey: SB_KEY,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        email: email.value.trim(),
-        password: password.value
-      })
+      body: JSON.stringify({ email, password })
     });
-    if (!res.ok) throw new Error('login failed');
-    const data = await res.json();
+
+    const raw = await res.text();
+    let data = {};
+    try { data = raw ? JSON.parse(raw) : {}; } catch (_) { data = { raw }; }
+
+    if (!res.ok) {
+      console.error('Login Supabase falhou:', res.status, data);
+      const msg = data.msg || data.error_description || data.message || 'Credenciais inválidas.';
+      throw new Error(msg);
+    }
+
     saveSession(data);
-    await bootstrapAuthenticatedApp();
+
+    try {
+      await bootstrapAuthenticatedApp();
+    } catch (profileError) {
+      console.error('Login autenticou, mas perfil do app falhou:', profileError);
+      error.textContent = profileError.message || 'Login ok, mas sua conta não está ativa na tabela psis.';
+      error.style.display = 'block';
+    }
   } catch (e) {
+    error.textContent = e.message || 'Não foi possível entrar. Verifique e-mail e senha.';
     error.style.display = 'block';
   }
 }
@@ -1540,6 +1570,9 @@ async function restoreAuth() {
     if (!ok) throw new Error('invalid session');
     const res = await authFetch(`${SB_URL}/auth/v1/user`);
     if (!res.ok) throw new Error('invalid session');
+    const userData = await res.json();
+    AUTH_USER = userData;
+    sessionStorage.setItem('sb_auth_user', JSON.stringify(AUTH_USER));
     await bootstrapAuthenticatedApp();
   } catch (e) {
     clearSession();
@@ -1561,15 +1594,32 @@ async function supabaseSelect(path) {
 }
 
 async function bootstrapAuthenticatedApp() {
-  const [profiles, links, responses] = await Promise.all([
-    supabaseSelect('psis?select=nome,plano,ativa'),
+  if (!AUTH_USER?.id) {
+    const userRes = await authFetch(`${SB_URL}/auth/v1/user`);
+    if (!userRes.ok) throw new Error('Sessão inválida. Faça login novamente.');
+    AUTH_USER = await userRes.json();
+    sessionStorage.setItem('sb_auth_user', JSON.stringify(AUTH_USER));
+  }
+
+  const userId = encodeURIComponent(AUTH_USER.id);
+  const userEmail = encodeURIComponent(String(AUTH_USER.email || '').toLowerCase());
+
+  let [profiles, links, responses] = await Promise.all([
+    supabaseSelect(`psis?select=id,psi_id,nome,email,plano,ativa,status,user_id&user_id=eq.${userId}&limit=1`),
     supabaseSelect('patient_links?select=id,token,patient_name,instrumento,status,created_at,expires_at&order=created_at.desc'),
     supabaseSelect('respostas_clinicas?select=id,paciente_nome,instrumento,formulario,score_total,scores,status,created_at&order=created_at.desc')
   ]);
 
-  PSI_PROFILE = profiles[0];
-  if (!PSI_PROFILE || !PSI_PROFILE.ativa) {
-    throw new Error('Conta inativa ou não cadastrada');
+  if ((!profiles || profiles.length === 0) && userEmail) {
+    profiles = await supabaseSelect(`psis?select=id,psi_id,nome,email,plano,ativa,status,user_id&email=eq.${userEmail}&limit=1`);
+  }
+
+  PSI_PROFILE = profiles?.[0];
+  if (!PSI_PROFILE) {
+    throw new Error(`Login feito, mas não encontrei este usuário na tabela psis: ${AUTH_USER.email}`);
+  }
+  if (!PSI_PROFILE.ativa || PSI_PROFILE.status === 'inativo') {
+    throw new Error('Login feito, mas esta conta está inativa na tabela psis.');
   }
 
   PATIENT_LINKS = links || [];
