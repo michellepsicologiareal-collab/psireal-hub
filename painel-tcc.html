@@ -1743,7 +1743,10 @@ function renderPatientsTable() {
       </td>
       <td><span style="font-size:11px;color:var(--ink3)">${patient.totalResponses > 1 ? 'Histórico ativo' : 'Primeira aplicação'}</span></td>
       <td><span class="badge ${patient.pendingCount ? 'badge-pending' : 'badge-active'}">${patient.pendingCount ? 'Pendente' : 'Ativo'}</span></td>
-      <td><button class="btn btn-ghost" style="padding:5px 10px;font-size:11px" onclick="event.stopPropagation();openPatientDashboard('${encodeURIComponent(patient.name)}')">Ver</button></td>
+      <td style="display:flex;gap:6px;align-items:center">
+        <button class="btn btn-ghost" style="padding:5px 10px;font-size:11px" onclick="event.stopPropagation();openPatientDashboard('${encodeURIComponent(patient.name)}')">Ver</button>
+        <button class="btn btn-ghost" style="padding:5px 10px;font-size:11px;color:#8A3030;border-color:#E0C0C0" onclick="event.stopPropagation();deletePatient('${encodeURIComponent(patient.name)}')">Excluir</button>
+      </td>
     </tr>
   `).join('');
 }
@@ -2046,20 +2049,22 @@ function renderInsights() {
   // Patient pills for dashboard preview
   function previewNames(names) {
     if (!names || !names.length) return '';
-    return `<div style="display:flex;align-items:center;gap:5px;margin-top:8px;flex-wrap:wrap">
-      ${names.slice(0, 4).map(n => av(n)).join('')}
-      <span style="font-size:11px;color:var(--ink3)">${names.length} paciente${names.length > 1 ? 's' : ''}</span>
+    const shown = names.slice(0, 4);
+    const rest = names.length - shown.length;
+    return `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;align-items:center">
+      ${shown.map(n => `<span style="font-size:11px;color:var(--ink2);background:var(--bg2);border:1px solid var(--border);border-radius:99px;padding:2px 8px">${n}</span>`).join('')}
+      ${rest > 0 ? `<span style="font-size:11px;color:var(--ink3)">+${rest} outros</span>` : ''}
     </div>`;
   }
 
-  // Full patient list for screen
   function screenNames(names) {
     if (!names || !names.length) return '';
-    return `<div class="insight-patients" style="margin-top:8px">
-      <span style="font-size:10px">Pacientes:</span>
-      ${names.slice(0, 5).map(n => av(n)).join('')}
-      ${names.length > 5 ? `<span>+${names.length - 5} outros</span>` : ''}
-      <span>${names.length} paciente${names.length > 1 ? 's' : ''}</span>
+    const shown = names.slice(0, 6);
+    const rest = names.length - shown.length;
+    return `<div class="insight-patients" style="margin-top:8px;flex-wrap:wrap;gap:4px">
+      <span style="font-size:10px;flex-shrink:0">Pacientes:</span>
+      ${shown.map(n => `<span style="font-size:11px;color:var(--ink2);background:var(--bg2);border:1px solid var(--border);border-radius:99px;padding:2px 8px">${n}</span>`).join('')}
+      ${rest > 0 ? `<span style="font-size:11px;color:var(--ink3)">+${rest} outros</span>` : ''}
     </div>`;
   }
 
@@ -2209,6 +2214,33 @@ function renderInsights() {
   const s = document.getElementById('insightsScreenContent');
   if (p) p.innerHTML = previewHtml;
   if (s) s.innerHTML = screenHtml;
+}
+
+
+async function deletePatient(encodedName) {
+  const name = decodeURIComponent(encodedName);
+  if (!confirm(`Excluir o paciente "${name}"?\n\nIsso remove todos os links e respostas associados. Esta ação não pode ser desfeita.`)) return;
+  try {
+    await fetch(`${SB_URL}/rest/v1/patient_links?patient_name=eq.${encodeURIComponent(name)}`, {
+      method: 'DELETE',
+      headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_SESSION_TOKEN, 'Content-Type': 'application/json', Prefer: 'return=minimal' }
+    });
+    await fetch(`${SB_URL}/rest/v1/respostas_clinicas?paciente_nome=eq.${encodeURIComponent(name)}`, {
+      method: 'DELETE',
+      headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_SESSION_TOKEN, 'Content-Type': 'application/json', Prefer: 'return=minimal' }
+    });
+    // Refresh data
+    const [links, responses] = await Promise.all([
+      supabaseSelect('patient_links?select=id,token,patient_name,instrumento,status,created_at,expires_at&order=created_at.desc'),
+      supabaseSelect('respostas_clinicas?select=id,paciente_nome,instrumento,formulario,score_total,scores,status,created_at&order=created_at.desc')
+    ]);
+    PATIENT_LINKS = links || [];
+    CLINICAL_RESPONSES = responses || [];
+    renderAuthenticatedApp();
+    renderInsights();
+  } catch(err) {
+    alert('Não foi possível excluir o paciente. Tente novamente.');
+  }
 }
 
 </script>
