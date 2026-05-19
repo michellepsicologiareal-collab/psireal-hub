@@ -1641,6 +1641,19 @@ async function bootstrapAuthenticatedApp() {
 }
 
 
+
+function initialsFromName(name = '') {
+  const cleanName = String(name || '').trim();
+  if (!cleanName) return 'PS';
+  return cleanName
+    .split(/\s+/)
+    .filter(Boolean)
+    .map(part => part.charAt(0))
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+}
+
 function formatPlan(plan) {
   const value = String(plan || '').trim().toLowerCase();
   if (!value) return 'Plano ativo';
