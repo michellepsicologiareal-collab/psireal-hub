@@ -713,6 +713,10 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
 /* Patient registration modal clarity */
 .field-help{font-size:12px;color:#9A7A84;margin-top:7px;line-height:1.45}.modal-error{display:none;margin:14px 0 0;padding:12px 14px;border:1px solid #E9C5C0;background:#FFF6F4;color:#8A4738;border-radius:14px;font-size:13px;line-height:1.45}.modal-card{max-width:480px!important}.generated-link{border-radius:16px!important;background:#F8F2F4!important;border:1px solid #E8D8DC!important}.generated-link code{word-break:break-all!important;white-space:normal!important;line-height:1.45!important}
 
+
+/* Sidebar account clarity */
+.sidebar-user{position:relative!important;align-items:center!important}.sidebar-account-label{position:absolute;top:8px;left:20px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#B08090;font-weight:800}.sidebar-user .user-avatar{margin-top:14px}.sidebar-user .user-name,.sidebar-user .user-plan{margin-top:14px}.user-plan::before{content:'Plano: ';color:#9A7A84;font-weight:500}
+
 </style>
 </head>
 <body>
@@ -788,6 +792,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
   </nav>
 
   <div class="sidebar-user">
+    <div class="sidebar-account-label">Conta da psicóloga</div>
     <div class="user-avatar">MD</div>
     <div>
       <div class="user-name" id="sidebarUserName">Psicóloga</div>
@@ -1719,7 +1724,8 @@ function renderAuthenticatedApp() {
 
 function renderPsiIdentity() {
   const name = PSI_PROFILE?.nome || 'Psicóloga';
-  const plan = PSI_PROFILE?.plano || 'Plano ativo';
+  const planRaw = PSI_PROFILE?.plano || 'ativo';
+  const plan = String(planRaw).charAt(0).toUpperCase() + String(planRaw).slice(1);
   document.getElementById('sidebarUserName').textContent = name;
   document.getElementById('sidebarUserPlan').textContent = formatPlan(plan);
   const initials = initialsFromName(name);
