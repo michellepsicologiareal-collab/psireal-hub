@@ -1447,9 +1447,65 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
 const SB_URL = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
 const SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
 let SB_SESSION_TOKEN = sessionStorage.getItem('sb_session_token') || '';
+let SB_REFRESH_TOKEN = sessionStorage.getItem('sb_refresh_token') || '';
+let SB_EXPIRES_AT = Number(sessionStorage.getItem('sb_expires_at') || 0);
 let PSI_PROFILE = null;
 let PATIENT_LINKS = [];
 let CLINICAL_RESPONSES = [];
+
+function saveSession(data) {
+  SB_SESSION_TOKEN = data.access_token || '';
+  SB_REFRESH_TOKEN = data.refresh_token || SB_REFRESH_TOKEN || '';
+  SB_EXPIRES_AT = data.expires_at || (Date.now() / 1000 + Number(data.expires_in || 3600));
+  sessionStorage.setItem('sb_session_token', SB_SESSION_TOKEN);
+  sessionStorage.setItem('sb_refresh_token', SB_REFRESH_TOKEN);
+  sessionStorage.setItem('sb_expires_at', String(SB_EXPIRES_AT));
+}
+
+function clearSession() {
+  SB_SESSION_TOKEN = '';
+  SB_REFRESH_TOKEN = '';
+  SB_EXPIRES_AT = 0;
+  sessionStorage.removeItem('sb_session_token');
+  sessionStorage.removeItem('sb_refresh_token');
+  sessionStorage.removeItem('sb_expires_at');
+}
+
+async function refreshSessionIfNeeded(force = false) {
+  if (!SB_SESSION_TOKEN) return false;
+  const expiresSoon = SB_EXPIRES_AT && (Date.now() / 1000 > SB_EXPIRES_AT - 120);
+  if (!force && !expiresSoon) return true;
+  if (!SB_REFRESH_TOKEN) return true;
+  const res = await fetch(`${SB_URL}/auth/v1/token?grant_type=refresh_token`, {
+    method: 'POST',
+    headers: {
+      apikey: SB_KEY,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ refresh_token: SB_REFRESH_TOKEN })
+  });
+  if (!res.ok) {
+    clearSession();
+    return false;
+  }
+  const data = await res.json();
+  saveSession(data);
+  return true;
+}
+
+async function authFetch(url, options = {}, retry = true) {
+  await refreshSessionIfNeeded(false);
+  const headers = {
+    ...(options.headers || {}),
+    apikey: SB_KEY,
+    Authorization: 'Bearer ' + SB_SESSION_TOKEN
+  };
+  const res = await fetch(url, { ...options, headers });
+  if ((res.status === 401 || res.status === 403) && retry && await refreshSessionIfNeeded(true)) {
+    return authFetch(url, options, false);
+  }
+  return res;
+}
 
 async function tryLogin() {
   const email = document.getElementById('lockEmail');
@@ -1470,8 +1526,7 @@ async function tryLogin() {
     });
     if (!res.ok) throw new Error('login failed');
     const data = await res.json();
-    SB_SESSION_TOKEN = data.access_token;
-    sessionStorage.setItem('sb_session_token', SB_SESSION_TOKEN);
+    saveSession(data);
     await bootstrapAuthenticatedApp();
   } catch (e) {
     error.style.display = 'block';
@@ -1481,17 +1536,13 @@ async function tryLogin() {
 async function restoreAuth() {
   if (!SB_SESSION_TOKEN) return;
   try {
-    const res = await fetch(`${SB_URL}/auth/v1/user`, {
-      headers: {
-        apikey: SB_KEY,
-        Authorization: 'Bearer ' + SB_SESSION_TOKEN
-      }
-    });
+    const ok = await refreshSessionIfNeeded(false);
+    if (!ok) throw new Error('invalid session');
+    const res = await authFetch(`${SB_URL}/auth/v1/user`);
     if (!res.ok) throw new Error('invalid session');
     await bootstrapAuthenticatedApp();
   } catch (e) {
-    SB_SESSION_TOKEN = '';
-    sessionStorage.removeItem('sb_session_token');
+    clearSession();
   }
 }
 
@@ -1504,12 +1555,7 @@ document.getElementById('lockPassword').addEventListener('keydown', e => {
 restoreAuth();
 
 async function supabaseSelect(path) {
-  const res = await fetch(`${SB_URL}/rest/v1/${path}`, {
-    headers: {
-      apikey: SB_KEY,
-      Authorization: 'Bearer ' + SB_SESSION_TOKEN
-    }
-  });
+  const res = await authFetch(`${SB_URL}/rest/v1/${path}`);
   if (!res.ok) throw new Error(`Falha ao carregar ${path}`);
   return res.json();
 }
@@ -1983,9 +2029,9 @@ async function createApplication() {
   const errorBox = document.getElementById('applicationError');
   if (errorBox) { errorBox.style.display='none'; errorBox.textContent=''; }
   try {
-    const res = await fetch(`${SB_URL}/rest/v1/rpc/create_patient_link`, {
+    const res = await authFetch(`${SB_URL}/rest/v1/rpc/create_patient_link`, {
       method:'POST',
-      headers:{apikey:SB_KEY, Authorization:'Bearer '+SB_SESSION_TOKEN, 'Content-Type':'application/json'},
+      headers:{'Content-Type':'application/json'},
       body:JSON.stringify({p_patient_name:name, p_patient_birth:null, p_instrumento:instrument, p_expires_at:null})
     });
     const data = await res.json();
@@ -2025,9 +2071,9 @@ async function deleteApplication(id) {
   if (!id) { alert('ID não encontrado.'); return; }
   if (!confirm('Excluir esta aplicação? O link enviado ao paciente deixará de funcionar.')) return;
   try {
-    await fetch(`${SB_URL}/rest/v1/patient_links?id=eq.${encodeURIComponent(id)}`, {
+    await authFetch(`${SB_URL}/rest/v1/patient_links?id=eq.${encodeURIComponent(id)}`, {
       method:'DELETE',
-      headers:{apikey:SB_KEY, Authorization:'Bearer '+SB_SESSION_TOKEN, 'Content-Type':'application/json', Prefer:'return=minimal'}
+      headers:{'Content-Type':'application/json', Prefer:'return=minimal'}
     });
     await refreshPanelData();
   } catch(_) { alert('Não foi possível excluir. Tente novamente.'); }
@@ -2037,11 +2083,11 @@ async function deletePatient(encodedName) {
   const name = decodeURIComponent(encodedName);
   if (!confirm(`Excluir o paciente "${name}"? Remove todos os links e respostas. Esta ação não pode ser desfeita.`)) return;
   try {
-    await fetch(`${SB_URL}/rest/v1/patient_links?patient_name=eq.${encodeURIComponent(name)}`, {
-      method:'DELETE', headers:{apikey:SB_KEY, Authorization:'Bearer '+SB_SESSION_TOKEN, 'Content-Type':'application/json', Prefer:'return=minimal'}
+    await authFetch(`${SB_URL}/rest/v1/patient_links?patient_name=eq.${encodeURIComponent(name)}`, {
+      method:'DELETE', headers:{'Content-Type':'application/json', Prefer:'return=minimal'}
     });
-    await fetch(`${SB_URL}/rest/v1/respostas_clinicas?paciente_nome=eq.${encodeURIComponent(name)}`, {
-      method:'DELETE', headers:{apikey:SB_KEY, Authorization:'Bearer '+SB_SESSION_TOKEN, 'Content-Type':'application/json', Prefer:'return=minimal'}
+    await authFetch(`${SB_URL}/rest/v1/respostas_clinicas?paciente_nome=eq.${encodeURIComponent(name)}`, {
+      method:'DELETE', headers:{'Content-Type':'application/json', Prefer:'return=minimal'}
     });
     await refreshPanelData();
   } catch(_) { alert('Não foi possível excluir. Tente novamente.'); }
