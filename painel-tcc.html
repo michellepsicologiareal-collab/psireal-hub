@@ -990,15 +990,8 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
             <span class="card-title">Insights da semana</span>
             <span class="card-action" onclick="showScreen('insights', document.querySelector('[onclick*=insights]'))">Ver todos</span>
           </div>
-          <div class="card-body" style="display:flex;flex-direction:column;gap:12px">
-            <div style="padding:14px;background:var(--lilac4);border-radius:var(--radius);border-left:3px solid var(--lilac)">
-              <div style="font-size:10px;color:var(--lilac);font-weight:500;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Padrão identificado</div>
-              <div style="font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;font-style:italic;color:var(--ink);line-height:1.5">"A elevação da preocupação excessiva aparece associada ao aumento da evitação comportamental em <strong style="font-style:normal">3 pacientes</strong>."</div>
-            </div>
-            <div style="padding:14px;background:var(--teal3);border-radius:var(--radius);border-left:3px solid var(--teal)">
-              <div style="font-size:10px;color:var(--teal);font-weight:500;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Evolução positiva</div>
-              <div style="font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;font-style:italic;color:var(--ink);line-height:1.5">"Redução de 22% nos scores de ansiedade geral (GAD-7) nas Últimas <strong style="font-style:normal">4 semanas</strong>."</div>
-            </div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:12px" id="insightsPreview">
+            <div style="font-size:13px;color:var(--ink3);text-align:center;padding:8px 0">Carregando...</div>
           </div>
         </div>
       </div>
@@ -1436,97 +1429,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
       <div class="section-title">Insights da semana</div>
       <div class="section-sub">Padrões identificados automaticamente a partir dos dados de avaliação do período</div>
 
-      <div class="grid-2" style="margin-bottom:0">
-
-        <div class="insight-card">
-          <div class="insight-header">
-            <div class="insight-dot" style="background:var(--amber)"></div>
-            <span class="insight-type">Padrão comportamental</span>
-            <span class="insight-level" style="background:var(--amber3);color:var(--amber)">— Atenção</span>
-          </div>
-          <div class="insight-text">"A elevação da <strong>preocupação excessiva</strong> aparece associada ao aumento da <strong>evitação comportamental</strong> nos últimos 14 dias."</div>
-          <div class="insight-patients"><span style="font-size:10px">Pacientes:</span>
-            <div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,#3D2028,#B08090)">MC</div>
-            <div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,#73856E,#98A892)">JP</div>
-            <div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,#3D2028,#7A4A55)">AS</div>
-            <span>3 pacientes</span>
-          </div>
-          <div class="insight-source">Baseado em: Clark & Beck (2010) — Craske & Barlow (2014)</div>
-        </div>
-
-        <div class="insight-card">
-          <div class="insight-header">
-            <div class="insight-dot" style="background:var(--teal)"></div>
-            <span class="insight-type">Evolução positiva</span>
-            <span class="insight-level" style="background:var(--green3);color:var(--green)">– Progresso</span>
-          </div>
-          <div class="insight-text">"Redução de <strong>22% nos scores de ansiedade geral</strong> (GAD-7) no grupo de pacientes em acompanhamento há mais de 8 semanas."</div>
-          <div class="insight-patients"><span style="font-size:10px">Pacientes:</span>
-            <div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,#3D2028,#B08090)">MC</div>
-            <div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,#3D2028,#7A4A55)">AS</div>
-            <span>2 pacientes</span>
-          </div>
-          <div class="insight-source">Baseado em: Beck (1985) — Dados GAD-7 longitudinal</div>
-        </div>
-
-        <div class="insight-card">
-          <div class="insight-header">
-            <div class="insight-dot" style="background:var(--lilac)"></div>
-            <span class="insight-type">Correlação esquemas — modos</span>
-            <span class="insight-level" style="background:var(--lilac4);color:var(--lilac)">Informativo</span>
-          </div>
-          <div class="insight-text">"O esquema de <strong>Autossacrifício</strong> elevado está associado — ativação do modo <strong>Capitulador Complacente</strong> — padrão consistente com a literatura."</div>
-          <div class="insight-patients"><span style="font-size:10px">Pacientes:</span>
-            <div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,#B07D3A,#C4956A)">CF</div>
-            <span>1 paciente</span>
-          </div>
-          <div class="insight-source">Baseado em: Young, Klosko & Weishaar (2003) — Cap. 2</div>
-        </div>
-
-        <div class="insight-card">
-          <div class="insight-header">
-            <div class="insight-dot" style="background:var(--coral)"></div>
-            <span class="insight-type">Combinação crítica</span>
-            <span class="insight-level" style="background:var(--coral3);color:var(--coral)">— Crítico</span>
-          </div>
-          <div class="insight-text">"<strong>Criança Vulnerável elevada + Protetor Desligado elevado</strong> — ciclo de hiporregulação com evitação emocional. Risco de estagnação terapêutica."</div>
-          <div class="insight-patients"><span style="font-size:10px">Pacientes:</span>
-            <div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,#73856E,#98A892)">JP</div>
-            <span>1 paciente</span>
-          </div>
-          <div class="insight-source">Baseado em: Arntz & Jacob (2012) — Lobbestael et al. (2010)</div>
-        </div>
-
-        <div class="insight-card">
-          <div class="insight-header">
-            <div class="insight-dot" style="background:var(--green)"></div>
-            <span class="insight-type">Flexibilidade psicológica</span>
-            <span class="insight-level" style="background:var(--green3);color:var(--green)">– Progresso</span>
-          </div>
-          <div class="insight-text">"Aumento de <strong>39% na flexibilidade psicológica</strong> (AAQ-II) em paciente com TAG — correlato esperado de intervenções de aceitação e defusão."</div>
-          <div class="insight-patients"><span style="font-size:10px">Pacientes:</span>
-            <div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,#3D2028,#B08090)">MC</div>
-            <span>1 paciente</span>
-          </div>
-          <div class="insight-source">Baseado em: Hayes et al. (2006) — Wells (2009)</div>
-        </div>
-
-        <div class="insight-card">
-          <div class="insight-header">
-            <div class="insight-dot" style="background:var(--brown2)"></div>
-            <span class="insight-type">Baixa adesão</span>
-            <span class="insight-level" style="background:#F5EDE7;color:var(--brown2)">Monitorar</span>
-          </div>
-          <div class="insight-text">"Taxa de resposta abaixo de <strong>65% nas Últimas 3 semanas</strong> em 2 pacientes — considerar reforço motivacional e revisão da frequência de envio."</div>
-          <div class="insight-patients"><span style="font-size:10px">Pacientes:</span>
-            <div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,#B07D3A,#C4956A)">CF</div>
-            <div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,#3D2028,#B08090)">RS</div>
-            <span>2 pacientes</span>
-          </div>
-          <div class="insight-source">Baseado em: Whipple et al. (2003) — Lambert (2010)</div>
-        </div>
-
-      </div>
+      <div class="grid-2" style="margin-bottom:0" id="insightsScreenContent"></div>
     </div>
   </div>
 
@@ -1705,6 +1608,7 @@ async function bootstrapAuthenticatedApp() {
   PATIENT_LINKS = links || [];
   CLINICAL_RESPONSES = responses || [];
   renderAuthenticatedApp();
+  renderInsights();
   document.getElementById('lockScreen').style.display = 'none';
 }
 
@@ -2097,6 +2001,7 @@ function showScreen(id, el) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('screen-' + id).classList.add('active');
   if (el) el.classList.add('active');
+  if (id === 'insights') renderInsights();
 
   const titles = {
     dashboard: 'Dashboard',
@@ -2125,6 +2030,187 @@ document.querySelectorAll('.btn-apply').forEach(btn => {
     openApplicationModal(this.dataset.instrument || 'YSQ-S3');
   });
 });
+
+function renderInsights() {
+  const responses = CLINICAL_RESPONSES || [];
+  const links = PATIENT_LINKS || [];
+
+  // Avatar helper
+  function av(name) {
+    const ini = (name || '?').split(' ').filter(Boolean).slice(0, 2).map(p => p[0].toUpperCase()).join('');
+    const colors = ['#3D2028,#B08090','#73856E,#98A892','#B07D3A,#C4956A','#7A4A55,#CDA7AE','#5C6B3A,#8A9B5A'];
+    const idx = name ? name.charCodeAt(0) % colors.length : 0;
+    return `<div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,${colors[idx]})">${ini}</div>`;
+  }
+
+  // Patient pills for dashboard preview
+  function previewNames(names) {
+    if (!names || !names.length) return '';
+    return `<div style="display:flex;align-items:center;gap:5px;margin-top:8px;flex-wrap:wrap">
+      ${names.slice(0, 4).map(n => av(n)).join('')}
+      <span style="font-size:11px;color:var(--ink3)">${names.length} paciente${names.length > 1 ? 's' : ''}</span>
+    </div>`;
+  }
+
+  // Full patient list for screen
+  function screenNames(names) {
+    if (!names || !names.length) return '';
+    return `<div class="insight-patients" style="margin-top:8px">
+      <span style="font-size:10px">Pacientes:</span>
+      ${names.slice(0, 5).map(n => av(n)).join('')}
+      ${names.length > 5 ? `<span>+${names.length - 5} outros</span>` : ''}
+      <span>${names.length} paciente${names.length > 1 ? 's' : ''}</span>
+    </div>`;
+  }
+
+  const cutoff7 = new Date(); cutoff7.setDate(cutoff7.getDate() - 7);
+  const recent7 = responses.filter(r => new Date(r.created_at) >= cutoff7);
+  const insights = [];
+
+  // 1. Atividade da semana
+  if (recent7.length > 0) {
+    const names = [...new Set(recent7.map(r => r.paciente_nome).filter(Boolean))];
+    insights.push({
+      dot: 'var(--lilac)', type: 'Atividade da semana',
+      level: 'Recente', levelBg: 'var(--lilac4)', levelColor: 'var(--lilac)',
+      text: `<strong>${recent7.length} resposta(s)</strong> recebida(s) nos últimos 7 dias.`,
+      names, source: 'Baseado nos dados do Supabase'
+    });
+  }
+
+  // 2. Atenção: GAD-7 moderado/grave
+  const gadSevere = responses.filter(r => {
+    const inst = (r.instrumento || r.formulario || '').toUpperCase();
+    return inst.includes('GAD') && Number(r.score_total ?? r.scores?.total ?? 0) >= 10;
+  });
+  const gadNames = [...new Set(gadSevere.map(r => r.paciente_nome).filter(Boolean))];
+  if (gadNames.length > 0) {
+    insights.push({
+      dot: 'var(--amber)', type: 'Atenção clínica — Ansiedade',
+      level: '— Atenção', levelBg: 'var(--amber3)', levelColor: 'var(--amber)',
+      text: `<strong>${gadNames.length} paciente(s)</strong> com GAD-7 em nível moderado ou grave (score ≥ 10).`,
+      names: gadNames, source: 'Baseado em: Spitzer et al. (2006) — Dados GAD-7'
+    });
+  }
+
+  // 3. Atenção: PHQ-9 moderado/grave
+  const phqSevere = responses.filter(r => {
+    const inst = (r.instrumento || r.formulario || '').toUpperCase();
+    return inst.includes('PHQ') && Number(r.score_total ?? r.scores?.total ?? 0) >= 10;
+  });
+  const phqNames = [...new Set(phqSevere.map(r => r.paciente_nome).filter(Boolean))];
+  if (phqNames.length > 0) {
+    insights.push({
+      dot: 'var(--coral)', type: 'Atenção clínica — Humor',
+      level: '— Atenção', levelBg: 'var(--coral3)', levelColor: 'var(--coral)',
+      text: `<strong>${phqNames.length} paciente(s)</strong> com PHQ-9 em nível moderado ou grave (score ≥ 10).`,
+      names: phqNames, source: 'Baseado em: Kroenke et al. (2001) — Dados PHQ-9'
+    });
+  }
+
+  // 4. Alerta: item 9 PHQ (ideação)
+  const ideacao = responses.filter(r => {
+    const inst = (r.instrumento || r.formulario || '').toUpperCase();
+    return inst.includes('PHQ') && Number(r.scores?.item9 ?? 0) > 0;
+  });
+  const ideacaoNames = [...new Set(ideacao.map(r => r.paciente_nome).filter(Boolean))];
+  if (ideacaoNames.length > 0) {
+    insights.push({
+      dot: '#8A2020', type: 'Alerta — Item 9 PHQ',
+      level: '— Crítico', levelBg: '#FAEAEA', levelColor: '#8A2020',
+      text: `<strong>${ideacaoNames.length} paciente(s)</strong> marcaram resposta diferente de "Nenhuma vez" no item 9 do PHQ-9. Avaliação prioritária indicada.`,
+      names: ideacaoNames, source: 'Protocolo de segurança clínica — avaliação imediata indicada'
+    });
+  }
+
+  // 5. Evolução positiva
+  const byPatient = {};
+  responses.forEach(r => {
+    const name = r.paciente_nome; if (!name) return;
+    if (!byPatient[name]) byPatient[name] = [];
+    byPatient[name].push({ score: Number(r.score_total ?? r.scores?.total ?? 0), date: new Date(r.created_at) });
+  });
+  const improving = Object.entries(byPatient).filter(([, arr]) => {
+    if (arr.length < 2) return false;
+    arr.sort((a, b) => a.date - b.date);
+    return arr[arr.length - 1].score < arr[0].score;
+  });
+  if (improving.length > 0) {
+    insights.push({
+      dot: 'var(--green)', type: 'Evolução positiva',
+      level: '– Progresso', levelBg: 'var(--green3)', levelColor: 'var(--green)',
+      text: `<strong>${improving.length} paciente(s)</strong> com tendência de melhora nos scores longitudinais.`,
+      names: improving.map(([n]) => n), source: 'Baseado nos dados longitudinais do Supabase'
+    });
+  }
+
+  // 6. Baixa adesão
+  const grouped = {};
+  links.forEach(l => {
+    if (!grouped[l.patient_name]) grouped[l.patient_name] = { total: 0, responded: 0 };
+    grouped[l.patient_name].total++;
+    if (l.status === 'respondido') grouped[l.patient_name].responded++;
+  });
+  const lowAdhere = Object.entries(grouped)
+    .filter(([, { total, responded }]) => total >= 2 && responded / total < 0.5)
+    .map(([name]) => name);
+  if (lowAdhere.length > 0) {
+    insights.push({
+      dot: 'var(--brown2)', type: 'Baixa adesão',
+      level: 'Monitorar', levelBg: '#F5EDE7', levelColor: 'var(--brown2)',
+      text: `<strong>${lowAdhere.length} paciente(s)</strong> com taxa de resposta abaixo de 50%. Considerar reforço motivacional.`,
+      names: lowAdhere, source: 'Baseado em: Whipple et al. (2003) — Lambert (2010)'
+    });
+  }
+
+  // 7. Aplicações pendentes
+  const pending = links.filter(l => l.status === 'ativo');
+  if (pending.length > 0) {
+    const pendingNames = [...new Set(pending.map(l => l.patient_name).filter(Boolean))];
+    insights.push({
+      dot: 'var(--brown3)', type: 'Aplicações pendentes',
+      level: 'Aguardando', levelBg: 'var(--lilac4)', levelColor: 'var(--brown3)',
+      text: `<strong>${pending.length} link(s)</strong> enviado(s) aguardando resposta do paciente.`,
+      names: pendingNames, source: 'Dados de patient_links — Supabase'
+    });
+  }
+
+  if (insights.length === 0) {
+    const empty = '<div style="grid-column:1/-1;text-align:center;padding:40px;font-size:13px;color:var(--ink3)">Nenhuma atividade registrada. Envie instrumentos para seus pacientes para visualizar insights aqui.</div>';
+    const p = document.getElementById('insightsPreview');
+    const s = document.getElementById('insightsScreenContent');
+    if (p) p.innerHTML = empty;
+    if (s) s.innerHTML = empty;
+    return;
+  }
+
+  // Dashboard preview: first 2 insights as mini cards
+  const previewHtml = insights.slice(0, 2).map(ins => `
+    <div style="padding:12px 14px;background:var(--bg2);border-radius:var(--radius);border-left:3px solid ${ins.dot}">
+      <div style="font-size:10px;color:${ins.dot};font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">${ins.type}</div>
+      <div style="font-size:13px;color:var(--ink);line-height:1.5">${ins.text}</div>
+      ${previewNames(ins.names)}
+    </div>`).join('');
+
+  // Full screen: all insights as insight-cards
+  const screenHtml = insights.map(ins => `
+    <div class="insight-card">
+      <div class="insight-header">
+        <div class="insight-dot" style="background:${ins.dot}"></div>
+        <span class="insight-type">${ins.type}</span>
+        <span class="insight-level" style="background:${ins.levelBg};color:${ins.levelColor}">${ins.level}</span>
+      </div>
+      <div class="insight-text">${ins.text}</div>
+      ${screenNames(ins.names)}
+      <div class="insight-source">${ins.source}</div>
+    </div>`).join('');
+
+  const p = document.getElementById('insightsPreview');
+  const s = document.getElementById('insightsScreenContent');
+  if (p) p.innerHTML = previewHtml;
+  if (s) s.innerHTML = screenHtml;
+}
+
 </script>
 </body>
 </html>
