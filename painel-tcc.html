@@ -813,8 +813,8 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
     <div class="lock-logo"></div>
     <div class="lock-title">Entrar no PsiReal TCC</div>
     <div class="lock-sub">Acesso restrito para psicólogas assinantes.</div>
-    <input id="lockEmail" class="lock-input" type="email" placeholder="E-mail" autocomplete="off" autocapitalize="none" spellcheck="false" name="psi_login_email_2026">
-    <input id="lockPassword" class="lock-input" type="password" placeholder="Senha" autocomplete="new-password" autocapitalize="none" spellcheck="false" name="psi_login_password_2026">
+    <input id="lockEmail" class="lock-input" type="email" placeholder="E-mail">
+    <input id="lockPassword" class="lock-input" type="password" placeholder="Senha">
     <button class="lock-btn" onclick="tryLogin()">Entrar</button>
     <div id="lockError" class="lock-error">Não foi possível entrar. Verifique e-mail e senha.</div>
   </div>
@@ -1447,87 +1447,53 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
 const SB_URL = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
 const SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
 let SB_SESSION_TOKEN = sessionStorage.getItem('sb_session_token') || '';
-let SB_REFRESH_TOKEN = sessionStorage.getItem('sb_refresh_token') || '';
-let SB_EXPIRES_AT = Number(sessionStorage.getItem('sb_expires_at') || 0);
-let AUTH_USER = JSON.parse(sessionStorage.getItem('sb_auth_user') || 'null');
 let PSI_PROFILE = null;
 let PATIENT_LINKS = [];
 let CLINICAL_RESPONSES = [];
+let SB_AUTH_USER = null;
 
-function saveSession(data) {
-  SB_SESSION_TOKEN = data.access_token || '';
-  SB_REFRESH_TOKEN = data.refresh_token || SB_REFRESH_TOKEN || '';
-  SB_EXPIRES_AT = data.expires_at || (Date.now() / 1000 + Number(data.expires_in || 3600));
-  AUTH_USER = data.user || AUTH_USER || null;
-  sessionStorage.setItem('sb_session_token', SB_SESSION_TOKEN);
-  sessionStorage.setItem('sb_refresh_token', SB_REFRESH_TOKEN);
-  sessionStorage.setItem('sb_expires_at', String(SB_EXPIRES_AT));
-  if (AUTH_USER) sessionStorage.setItem('sb_auth_user', JSON.stringify(AUTH_USER));
-}
-
-function clearSession() {
-  SB_SESSION_TOKEN = '';
-  SB_REFRESH_TOKEN = '';
-  SB_EXPIRES_AT = 0;
-  AUTH_USER = null;
-  sessionStorage.removeItem('sb_session_token');
-  sessionStorage.removeItem('sb_refresh_token');
-  sessionStorage.removeItem('sb_expires_at');
-  sessionStorage.removeItem('sb_auth_user');
-}
-
-async function refreshSessionIfNeeded(force = false) {
-  if (!SB_SESSION_TOKEN) return false;
-  const expiresSoon = SB_EXPIRES_AT && (Date.now() / 1000 > SB_EXPIRES_AT - 120);
-  if (!force && !expiresSoon) return true;
-  if (!SB_REFRESH_TOKEN) return true;
-  const res = await fetch(`${SB_URL}/auth/v1/token?grant_type=refresh_token`, {
-    method: 'POST',
-    headers: {
-      apikey: SB_KEY,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ refresh_token: SB_REFRESH_TOKEN })
-  });
-  if (!res.ok) {
-    clearSession();
-    return false;
-  }
-  const data = await res.json();
-  saveSession(data);
-  return true;
-}
-
-async function authFetch(url, options = {}, retry = true) {
-  await refreshSessionIfNeeded(false);
-  const headers = {
-    ...(options.headers || {}),
-    apikey: SB_KEY,
-    Authorization: 'Bearer ' + SB_SESSION_TOKEN
+function formatPlan(plan) {
+  if (!plan) return 'Plano ativo';
+  const raw = String(plan).trim();
+  const normalized = raw.toLowerCase();
+  const plans = {
+    ativo: 'Plano ativo',
+    essencial: 'Plano Essencial',
+    premium: 'Plano Premium',
+    profissional: 'Plano Profissional',
+    basico: 'Plano Básico',
+    básico: 'Plano Básico',
+    gratuito: 'Plano Gratuito',
+    trial: 'Plano Trial'
   };
-  const res = await fetch(url, { ...options, headers });
-  if ((res.status === 401 || res.status === 403) && retry && await refreshSessionIfNeeded(true)) {
-    return authFetch(url, options, false);
+  return plans[normalized] || raw.charAt(0).toUpperCase() + raw.slice(1);
+}
+
+function initialsFromName(name = '') {
+  const clean = String(name || '').trim();
+  if (!clean) return 'PS';
+  return clean
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map(part => part.charAt(0))
+    .join('')
+    .toUpperCase();
+}
+
+function hideLockScreen() {
+  const lock = document.getElementById('lockScreen');
+  if (lock) {
+    lock.style.display = 'none';
+    lock.setAttribute('aria-hidden', 'true');
   }
-  return res;
 }
 
 async function tryLogin() {
-  const emailInput = document.getElementById('lockEmail');
-  const passwordInput = document.getElementById('lockPassword');
+  const email = document.getElementById('lockEmail');
+  const password = document.getElementById('lockPassword');
   const error = document.getElementById('lockError');
-  const email = String(emailInput.value || '').trim().toLowerCase();
-  const password = String(passwordInput.value || '');
-
   error.style.display = 'none';
-  error.textContent = 'Não foi possível entrar. Verifique e-mail e senha.';
-
-  if (!email || !password) {
-    error.textContent = 'Preencha e-mail e senha.';
-    error.style.display = 'block';
-    return;
-  }
-
   try {
     const res = await fetch(`${SB_URL}/auth/v1/token?grant_type=password`, {
       method: 'POST',
@@ -1535,30 +1501,20 @@ async function tryLogin() {
         apikey: SB_KEY,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({
+        email: email.value.trim(),
+        password: password.value
+      })
     });
-
-    const raw = await res.text();
-    let data = {};
-    try { data = raw ? JSON.parse(raw) : {}; } catch (_) { data = { raw }; }
-
-    if (!res.ok) {
-      console.error('Login Supabase falhou:', res.status, data);
-      const msg = data.msg || data.error_description || data.message || 'Credenciais inválidas.';
-      throw new Error(msg);
-    }
-
-    saveSession(data);
-
-    try {
-      await bootstrapAuthenticatedApp();
-    } catch (profileError) {
-      console.error('Login autenticou, mas perfil do app falhou:', profileError);
-      error.textContent = profileError.message || 'Login ok, mas sua conta não está ativa na tabela psis.';
-      error.style.display = 'block';
-    }
+    if (!res.ok) throw new Error('login failed');
+    const data = await res.json();
+    SB_SESSION_TOKEN = data.access_token;
+    SB_AUTH_USER = data.user || null;
+    sessionStorage.setItem('sb_session_token', SB_SESSION_TOKEN);
+    await bootstrapAuthenticatedApp();
   } catch (e) {
-    error.textContent = e.message || 'Não foi possível entrar. Verifique e-mail e senha.';
+    console.error('Falha no login:', e);
+    error.textContent = e?.message || 'Não foi possível entrar. Verifique e-mail e senha.';
     error.style.display = 'block';
   }
 }
@@ -1566,16 +1522,19 @@ async function tryLogin() {
 async function restoreAuth() {
   if (!SB_SESSION_TOKEN) return;
   try {
-    const ok = await refreshSessionIfNeeded(false);
-    if (!ok) throw new Error('invalid session');
-    const res = await authFetch(`${SB_URL}/auth/v1/user`);
+    const res = await fetch(`${SB_URL}/auth/v1/user`, {
+      headers: {
+        apikey: SB_KEY,
+        Authorization: 'Bearer ' + SB_SESSION_TOKEN
+      }
+    });
     if (!res.ok) throw new Error('invalid session');
-    const userData = await res.json();
-    AUTH_USER = userData;
-    sessionStorage.setItem('sb_auth_user', JSON.stringify(AUTH_USER));
+    SB_AUTH_USER = await res.json();
     await bootstrapAuthenticatedApp();
   } catch (e) {
-    clearSession();
+    SB_SESSION_TOKEN = '';
+    SB_AUTH_USER = null;
+    sessionStorage.removeItem('sb_session_token');
   }
 }
 
@@ -1588,82 +1547,51 @@ document.getElementById('lockPassword').addEventListener('keydown', e => {
 restoreAuth();
 
 async function supabaseSelect(path) {
-  const res = await authFetch(`${SB_URL}/rest/v1/${path}`);
+  const res = await fetch(`${SB_URL}/rest/v1/${path}`, {
+    headers: {
+      apikey: SB_KEY,
+      Authorization: 'Bearer ' + SB_SESSION_TOKEN
+    }
+  });
   if (!res.ok) throw new Error(`Falha ao carregar ${path}`);
   return res.json();
 }
 
-async function bootstrapAuthenticatedApp() {
-  if (!AUTH_USER?.id) {
-    const userRes = await authFetch(`${SB_URL}/auth/v1/user`);
-    if (!userRes.ok) throw new Error('Sessão inválida. Faça login novamente.');
-    AUTH_USER = await userRes.json();
-    sessionStorage.setItem('sb_auth_user', JSON.stringify(AUTH_USER));
+async function loadPsiProfile() {
+  if (SB_AUTH_USER?.id) {
+    const byUserId = await supabaseSelect(`psis?select=nome,plano,ativa,email,user_id&user_id=eq.${encodeURIComponent(SB_AUTH_USER.id)}&limit=1`);
+    if (byUserId?.length) return byUserId[0];
   }
 
-  const userId = encodeURIComponent(AUTH_USER.id);
-  const userEmail = encodeURIComponent(String(AUTH_USER.email || '').toLowerCase());
+  if (SB_AUTH_USER?.email) {
+    const byEmail = await supabaseSelect(`psis?select=nome,plano,ativa,email,user_id&email=eq.${encodeURIComponent(SB_AUTH_USER.email)}&limit=1`);
+    if (byEmail?.length) return byEmail[0];
+  }
 
-  let [profiles, links, responses] = await Promise.all([
-    supabaseSelect(`psis?select=id,psi_id,nome,email,plano,ativa,status,user_id&user_id=eq.${userId}&limit=1`),
+  const fallback = await supabaseSelect('psis?select=nome,plano,ativa,email,user_id&limit=1');
+  return fallback?.[0] || null;
+}
+
+async function bootstrapAuthenticatedApp() {
+  const [profile, links, responses] = await Promise.all([
+    loadPsiProfile(),
     supabaseSelect('patient_links?select=id,token,patient_name,instrumento,status,created_at,expires_at&order=created_at.desc'),
     supabaseSelect('respostas_clinicas?select=id,paciente_nome,instrumento,formulario,score_total,scores,status,created_at&order=created_at.desc')
   ]);
 
-  if ((!profiles || profiles.length === 0) && userEmail) {
-    profiles = await supabaseSelect(`psis?select=id,psi_id,nome,email,plano,ativa,status,user_id&email=eq.${userEmail}&limit=1`);
-  }
-
-  PSI_PROFILE = profiles?.[0];
-  if (!PSI_PROFILE) {
-    throw new Error(`Login feito, mas não encontrei este usuário na tabela psis: ${AUTH_USER.email}`);
-  }
-  if (!PSI_PROFILE.ativa || PSI_PROFILE.status === 'inativo') {
-    throw new Error('Login feito, mas esta conta está inativa na tabela psis.');
+  PSI_PROFILE = profile;
+  if (!PSI_PROFILE || !PSI_PROFILE.ativa) {
+    throw new Error('Conta inativa ou não cadastrada na tabela psis');
   }
 
   PATIENT_LINKS = links || [];
   CLINICAL_RESPONSES = responses || [];
   window.RESPONSES_CLINICAS = CLINICAL_RESPONSES;
   window.PATIENT_LINKS = PATIENT_LINKS;
-  setTimeout(renderInsights, 100);
-  window.RESPONSES_CLINICAS = CLINICAL_RESPONSES;
-  window.PATIENT_LINKS = PATIENT_LINKS;
   renderAuthenticatedApp();
+  setTimeout(renderInsights, 100);
   setTimeout(renderInsights, 200);
-  const lock = document.getElementById('lockScreen');
-  if (lock) {
-    lock.style.display = 'none';
-    lock.style.visibility = 'hidden';
-    lock.style.pointerEvents = 'none';
-    lock.remove();
-  }
-}
-
-
-
-function initialsFromName(name = '') {
-  const cleanName = String(name || '').trim();
-  if (!cleanName) return 'PS';
-  return cleanName
-    .split(/\s+/)
-    .filter(Boolean)
-    .map(part => part.charAt(0))
-    .join('')
-    .slice(0, 2)
-    .toUpperCase();
-}
-
-function formatPlan(plan) {
-  const value = String(plan || '').trim().toLowerCase();
-  if (!value) return 'Plano ativo';
-  const plans = {
-    ativo: 'Plano ativo',
-    essencial: 'Plano Essencial',
-    premium: 'Plano Premium',
-    profissional: 'Plano Profissional'
-  };
-  return plans[value] || String(plan);
+  hideLockScreen();
 }
 
 function renderAuthenticatedApp() {
@@ -2110,9 +2038,9 @@ async function createApplication() {
   const errorBox = document.getElementById('applicationError');
   if (errorBox) { errorBox.style.display='none'; errorBox.textContent=''; }
   try {
-    const res = await authFetch(`${SB_URL}/rest/v1/rpc/create_patient_link`, {
+    const res = await fetch(`${SB_URL}/rest/v1/rpc/create_patient_link`, {
       method:'POST',
-      headers:{'Content-Type':'application/json'},
+      headers:{apikey:SB_KEY, Authorization:'Bearer '+SB_SESSION_TOKEN, 'Content-Type':'application/json'},
       body:JSON.stringify({p_patient_name:name, p_patient_birth:null, p_instrumento:instrument, p_expires_at:null})
     });
     const data = await res.json();
@@ -2152,9 +2080,9 @@ async function deleteApplication(id) {
   if (!id) { alert('ID não encontrado.'); return; }
   if (!confirm('Excluir esta aplicação? O link enviado ao paciente deixará de funcionar.')) return;
   try {
-    await authFetch(`${SB_URL}/rest/v1/patient_links?id=eq.${encodeURIComponent(id)}`, {
+    await fetch(`${SB_URL}/rest/v1/patient_links?id=eq.${encodeURIComponent(id)}`, {
       method:'DELETE',
-      headers:{'Content-Type':'application/json', Prefer:'return=minimal'}
+      headers:{apikey:SB_KEY, Authorization:'Bearer '+SB_SESSION_TOKEN, 'Content-Type':'application/json', Prefer:'return=minimal'}
     });
     await refreshPanelData();
   } catch(_) { alert('Não foi possível excluir. Tente novamente.'); }
@@ -2164,11 +2092,11 @@ async function deletePatient(encodedName) {
   const name = decodeURIComponent(encodedName);
   if (!confirm(`Excluir o paciente "${name}"? Remove todos os links e respostas. Esta ação não pode ser desfeita.`)) return;
   try {
-    await authFetch(`${SB_URL}/rest/v1/patient_links?patient_name=eq.${encodeURIComponent(name)}`, {
-      method:'DELETE', headers:{'Content-Type':'application/json', Prefer:'return=minimal'}
+    await fetch(`${SB_URL}/rest/v1/patient_links?patient_name=eq.${encodeURIComponent(name)}`, {
+      method:'DELETE', headers:{apikey:SB_KEY, Authorization:'Bearer '+SB_SESSION_TOKEN, 'Content-Type':'application/json', Prefer:'return=minimal'}
     });
-    await authFetch(`${SB_URL}/rest/v1/respostas_clinicas?paciente_nome=eq.${encodeURIComponent(name)}`, {
-      method:'DELETE', headers:{'Content-Type':'application/json', Prefer:'return=minimal'}
+    await fetch(`${SB_URL}/rest/v1/respostas_clinicas?paciente_nome=eq.${encodeURIComponent(name)}`, {
+      method:'DELETE', headers:{apikey:SB_KEY, Authorization:'Bearer '+SB_SESSION_TOKEN, 'Content-Type':'application/json', Prefer:'return=minimal'}
     });
     await refreshPanelData();
   } catch(_) { alert('Não foi possível excluir. Tente novamente.'); }
