@@ -1,367 +1,623 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Biblioteca Psi Real</title>
+  <title>Biblioteca Psi Real — Recursos clínicos em TCC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --rose: #8B4A52;
-      --rose-light: #F8EDEB;
-      --rose-hover: #FBF4F2;
-      --rose-border: #F0E8E3;
-      --ink: #2A1A18;
-      --ink-muted: #8A7370;
-      --ink-faint: #C4A8A4;
-      --bg: #FAFAFA;
+      --r1: #3D2028;
+      --r2: #7A4A55;
+      --r3: #B08090;
+      --r-light: #EEE0E4;
+      --r-pale: #F8F2F4;
+      --r-border: #DDD0D6;
+      --grad: linear-gradient(135deg, #3D2028 0%, #7A4A55 50%, #B08090 100%);
+      --grad-subtle: linear-gradient(135deg, #F8F2F4 0%, #F0E6EA 50%, #E8D8DE 100%);
+      --ink: #1E1014;
+      --ink-2: #5A3040;
+      --ink-3: #9A7080;
+      --ink-4: #C8A8B4;
+      --bg: #FFFFFF;
       --white: #FFFFFF;
-      --border: #EDE6E0;
-      --radius: 12px;
-      --radius-sm: 8px;
+      --border: #E2D0D8;
+      --surface: #F5EEF1;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow-card: 0 2px 12px rgba(90,48,64,0.06), 0 1px 3px rgba(90,48,64,0.04);
+      --shadow-hover: 0 12px 40px rgba(90,48,64,0.12), 0 4px 12px rgba(90,48,64,0.06);
     }
     html { scroll-behavior: smooth; }
-    body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
+    body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; }
 
+    /* ── NAV ── */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--rose-border);
-      padding: 0 2rem; height: 58px;
+      background: rgba(250,246,247,0.92);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--r-border);
+      padding: 0 2.5rem; height: 62px;
       display: flex; align-items: center; justify-content: space-between;
     }
     .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
     .nav-logo-icon {
-      width: 30px; height: 30px; background: var(--rose);
-      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      width: 33px; height: 33px;
+      background: var(--grad);
+      border-radius: 9px; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 3px 10px rgba(90,48,64,0.18);
     }
     .nav-logo-icon svg { width: 17px; height: 17px; stroke: #fff; fill: none; stroke-width: 1.8; }
-    .nav-logo-text { font-size: 16px; font-weight: 500; color: var(--ink); }
-    .nav-logo-text span { color: var(--rose); }
-    .nav-links { display: flex; gap: 1.5rem; }
-    .nav-links a { font-size: 14px; color: var(--ink-muted); text-decoration: none; transition: color 0.15s; }
-    .nav-links a:hover { color: var(--ink); }
+    .nav-logo-text { font-size: 16px; font-weight: 500; color: var(--ink); letter-spacing: -0.01em; }
+    .nav-logo-text span { color: var(--r1); }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; }
+    .nav-links a {
+      font-size: 13.5px; color: var(--ink-3); text-decoration: none;
+      padding: 6px 12px; border-radius: 8px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-links a:hover { color: var(--ink); background: var(--r-light); }
+    .nav-links .nav-cta {
+      background: var(--grad); color: #fff !important;
+      font-weight: 500; padding: 7px 15px;
+      box-shadow: 0 2px 8px rgba(90,48,64,0.13);
+    }
+    .nav-links .nav-cta:hover { opacity: 0.9; background: var(--grad); }
 
-    .hero { max-width: 780px; margin: 0 auto; padding: 5.5rem 2rem 4rem; text-align: center; }
+    /* ── HERO ── */
+    .hero-wrap {
+      position: relative; overflow: hidden;
+      background: #FFFFFF;
+      padding: 6rem 2rem 5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-wrap::before { content: none; }
+    .hero-wrap::after { content: none; }
+    .hero-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; text-align: center; }
     .hero-tag {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--rose); background: var(--rose-light); border: 1px solid var(--rose-border);
-      padding: 5px 14px; border-radius: 99px; margin-bottom: 1.75rem;
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--ink-2); background: var(--r-light);
+      border: 1px solid var(--r-border);
+      padding: 5px 15px; border-radius: 99px; margin-bottom: 2rem;
     }
-    .hero-tag::before { content: 'â—'; font-size: 7px; }
-    h1 {
-      font-size: clamp(32px, 5.5vw, 52px); font-weight: 500;
-      line-height: 1.12; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 1.1rem;
+    .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--r2); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.85)} }
+    .hero h1 {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: clamp(36px, 6vw, 62px);
+      font-weight: 700; line-height: 1.05; letter-spacing: -0.03em;
+      color: var(--ink); margin-bottom: 1.25rem;
     }
-    h1 em { color: var(--rose); font-style: italic; }
-    .hero-sub { font-size: 16px; color: var(--ink-muted); line-height: 1.75; max-width: 500px; margin: 0 auto 2.25rem; }
+    .hero h1 em { font-style: italic; color: var(--r1); }
+    .hero-sub {
+      font-size: 16px; line-height: 1.75;
+      color: var(--ink-3); max-width: 480px; margin: 0 auto 2.5rem;
+      font-weight: 400;
+    }
     .hero-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-    .btn-primary {
-      background: var(--rose); color: #fff; border: none;
-      font-size: 14px; font-weight: 500; padding: 11px 22px;
+    .btn-white {
+      background: var(--grad); color: #fff;
+      font-size: 14px; font-weight: 500; padding: 12px 28px;
       border-radius: var(--radius-sm); text-decoration: none; font-family: inherit;
-      transition: opacity 0.15s; cursor: pointer;
+      border: none; cursor: pointer;
+      box-shadow: var(--shadow-hover);
+      transition: transform 0.15s, opacity 0.15s;
     }
-    .btn-primary:hover { opacity: 0.88; }
-    .btn-secondary {
-      background: transparent; color: var(--ink);
-      font-size: 14px; font-weight: 400; padding: 10px 20px;
-      border-radius: var(--radius-sm); border: 1px solid var(--border);
-      text-decoration: none; transition: background 0.15s;
+    .btn-white:hover { transform: translateY(-1px); opacity: 0.92; }
+    .btn-ghost {
+      background: transparent; color: var(--ink-2);
+      font-size: 14px; font-weight: 400; padding: 11px 22px;
+      border-radius: var(--radius-sm); border: 1.5px solid var(--border);
+      text-decoration: none; transition: border-color 0.15s, color 0.15s;
     }
-    .btn-secondary:hover { background: var(--rose-hover); }
+    .btn-ghost:hover { border-color: var(--r2); color: var(--r1); }
 
+    /* ── STATS ── */
     .stats {
-      display: flex; justify-content: center; gap: 3.5rem;
-      padding: 2.5rem 2rem; background: var(--white);
-      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      display: flex; justify-content: center; gap: 0; flex-wrap: wrap;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      max-width: 100%;
     }
-    .stat { text-align: center; }
-    .stat-n { font-size: 28px; font-weight: 500; color: var(--rose); letter-spacing: -0.02em; }
-    .stat-l { font-size: 12px; color: var(--ink-faint); margin-top: 2px; }
+    .stat {
+      text-align: center; padding: 1.75rem 3rem;
+      border-right: 1px solid var(--border);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-n {
+      font-family: 'Instrument Serif', serif;
+      font-size: 32px; font-weight: 600; color: var(--r1);
+      background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; letter-spacing: -0.025em;
+    }
+    .stat-l { font-size: 12px; color: var(--ink-3); margin-top: 2px; font-weight: 400; }
 
-    .section { max-width: 1020px; margin: 0 auto; padding: 4.5rem 2rem; }
-    .sec-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rose); margin-bottom: 0.4rem; }
-    h2 { font-size: clamp(22px, 3.5vw, 32px); font-weight: 500; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 0.4rem; }
-    .sec-sub { font-size: 14px; color: var(--ink-muted); margin-bottom: 2.25rem; }
+    /* ── SECTIONS ── */
+    .section { max-width: 1080px; margin: 0 auto; padding: 5rem 2.5rem; }
+    .sec-eyebrow {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--r1); margin-bottom: 0.6rem;
+    }
+    .sec-eyebrow::before { content: ''; width: 18px; height: 2px; background: var(--grad); border-radius: 1px; }
+    h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(26px, 4vw, 40px); font-weight: 700;
+      letter-spacing: -0.025em; color: var(--ink); margin-bottom: 0.5rem; line-height: 1.12;
+    }
+    .sec-sub { font-size: 14px; color: var(--ink-3); margin-bottom: 2.5rem; font-weight: 400; line-height: 1.7; }
 
-    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(295px, 1fr)); gap: 12px; }
+    /* ── CARDS GRID ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 16px; }
 
     .card {
-      background: var(--white); border: 1px solid var(--border);
+      background: var(--white);
+      border: 1px solid var(--border);
       border-radius: var(--radius); overflow: hidden;
-      text-decoration: none; color: inherit; display: block;
-      transition: transform 0.18s, border-color 0.18s;
+      text-decoration: none; color: inherit; display: flex; flex-direction: column;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.22s cubic-bezier(.22,.68,0,1.2), box-shadow 0.22s, border-color 0.2s;
     }
-    .card:hover { transform: translateY(-2px); border-color: var(--rose-border); }
-    .card-soon { opacity: 0.52; pointer-events: none; }
-    .card-soon:hover { transform: none; }
+    .card:not(.card-soon):hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--r3);
+    }
+    .card-soon { opacity: 0.5; pointer-events: none; }
 
     .card-thumb {
-      height: 148px; display: flex; align-items: center; justify-content: center;
-      position: relative; background: var(--rose-light);
+      height: 160px; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      background: var(--grad-subtle);
+    }
+    .card-thumb-active {
+      background: var(--grad);
+    }
+    .card-thumb-active::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Ccircle cx='20' cy='20' r='12' stroke='%23ffffff' stroke-opacity='0.08' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E");
     }
     .card-thumb svg {
-      width: 44px; height: 44px;
-      stroke: var(--rose); fill: none; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round;
-      opacity: 0.85;
+      width: 48px; height: 48px; position: relative; z-index: 1;
+      fill: none; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round;
     }
-    .card-thumb-muted svg {
-      stroke: var(--ink-faint);
-    }
-    .card-thumb-muted { background: #F5F3F0; }
+    .card-thumb-active svg { stroke: rgba(255,255,255,0.92); }
+    .card-thumb:not(.card-thumb-active) svg { stroke: var(--r2); opacity: 0.8; }
+    .card-thumb-muted svg { stroke: var(--ink-4); }
+
     .card-thumb-label {
-      position: absolute; top: 11px; left: 11px;
-      font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
-      padding: 3px 10px; border-radius: 99px;
+      position: absolute; top: 12px; left: 12px; z-index: 2;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 4px 11px; border-radius: 99px;
     }
-    .label-rose { background: rgba(139,74,82,0.12); color: var(--rose); }
-    .label-soon { background: rgba(0,0,0,0.07); color: var(--ink-faint); }
+    .label-rose { background: rgba(255,255,255,0.22); color: #fff; border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(6px); }
+    .label-rose-soft { background: var(--r-light); color: var(--r1); border: 1px solid var(--r-border); }
+    .label-soon { background: rgba(0,0,0,0.06); color: var(--ink-4); }
 
-    .card-body { padding: 1.1rem 1.25rem 1.4rem; }
-    .card-title { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.4rem; line-height: 1.3; }
-    .card-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.6; margin-bottom: 0.9rem; }
-    .card-footer { display: flex; align-items: center; justify-content: space-between; }
-    .card-author { font-size: 11px; color: var(--ink-faint); }
-    .card-cta { font-size: 12px; font-weight: 500; color: var(--rose); display: flex; align-items: center; gap: 3px; }
+    .card-body { padding: 1.35rem 1.5rem 1.6rem; flex: 1; display: flex; flex-direction: column; }
+    .card-title { font-size: 15.5px; font-weight: 600; color: var(--ink); margin-bottom: 0.45rem; line-height: 1.3; letter-spacing: -0.01em; }
+    .card-desc { font-size: 13px; color: var(--ink-3); line-height: 1.65; margin-bottom: 1rem; font-weight: 400; flex: 1; }
+    .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+    .card-author { font-size: 11px; color: var(--ink-4); font-style: italic; }
+    .card-cta {
+      font-size: 12px; font-weight: 600; color: var(--r1);
+      display: flex; align-items: center; gap: 4px;
+      padding: 6px 14px; border-radius: 20px;
+      background: var(--r-light); border: 1px solid var(--r-border);
+      transition: background 0.15s, transform 0.15s;
+    }
+    .card:hover .card-cta { background: var(--r1); color: #fff; transform: translateX(2px); }
 
+    /* ── FEATURED CARD (wide) ── */
+    .card-featured {
+      grid-column: 1 / -1;
+      display: grid; grid-template-columns: 280px 1fr;
+      flex-direction: unset;
+    }
+    .card-featured .card-thumb { height: auto; min-height: 180px; }
+    @media (max-width: 620px) {
+      .card-featured { grid-template-columns: 1fr; display: flex; flex-direction: column; }
+      .card-featured .card-thumb { height: 140px; }
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; }
+    .how-n {
+      font-family: 'Instrument Serif', serif;
+      font-size: 42px; font-weight: 400;
+      background: var(--grad-subtle);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      border: 1.5px solid var(--r-border);
+      width: 58px; height: 58px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .how-t { font-size: 14.5px; font-weight: 500; color: var(--ink); margin-bottom: 0.4rem; }
+    .how-d { font-size: 13px; color: var(--ink-3); line-height: 1.7; font-weight: 400; }
+
+    /* ── APP BANNER ── */
+    .app-banner {
+      display: flex; align-items: center; gap: 1.5rem;
+      background: var(--white); border: 1.5px solid var(--r-border);
+      border-radius: var(--radius); padding: 1.5rem 2rem;
+      text-decoration: none; color: inherit;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+    }
+    .app-banner:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: var(--r3); }
+    .app-banner-icon {
+      width: 52px; height: 52px; flex-shrink: 0;
+      background: var(--grad); border-radius: 13px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 12px rgba(90,48,64,0.15);
+    }
+    .app-banner-icon svg { width: 26px; height: 26px; stroke: #fff; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+    .app-banner-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--r1); margin-bottom: 3px; }
+    .app-banner-title { font-size: 16px; font-weight: 500; color: var(--ink); margin-bottom: 3px; letter-spacing: -0.01em; }
+    .app-banner-desc { font-size: 13px; color: var(--ink-3); font-weight: 400; }
+    .app-banner-arrow { font-size: 14px; font-weight: 600; color: var(--r1); white-space: nowrap; flex-shrink: 0; margin-left: auto; }
+
+    /* ── CTA BOX ── */
+    .cta-box {
+      background: var(--grad);
+      border-radius: var(--radius); padding: 3rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 2rem; flex-wrap: wrap;
+      position: relative; overflow: hidden;
+      box-shadow: 0 8px 40px rgba(90,48,64,0.15);
+    }
+    .cta-box::before {
+      content: '';
+      position: absolute; right: -60px; top: -60px;
+      width: 240px; height: 240px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+    .cta-box::after {
+      content: '';
+      position: absolute; right: 60px; bottom: -80px;
+      width: 180px; height: 180px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
+    }
+    .cta-box h3 { font-family: 'Instrument Serif', serif; font-size: 24px; font-weight: 400; color: #fff; margin-bottom: 0.5rem; }
+    .cta-box p { font-size: 13.5px; color: rgba(255,255,255,0.82); max-width: 420px; font-weight: 400; line-height: 1.65; }
+    .btn-cta-white {
+      position: relative; z-index: 1;
+      background: #fff; color: var(--r1);
+      font-size: 13.5px; font-weight: 600; padding: 12px 24px;
+      border-radius: var(--radius-sm); text-decoration: none; white-space: nowrap;
+      font-family: inherit; border: none; cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-cta-white:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+
+    /* ── DIVIDER ── */
     hr.divider { border: none; border-top: 1px solid var(--border); }
 
-    .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
-    .how-n { font-size: 36px; font-weight: 500; color: var(--border); line-height: 1; margin-bottom: 0.75rem; }
-    .how-t { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
-    .how-d { font-size: 13px; color: var(--ink-muted); line-height: 1.65; }
-
-    .cta-box {
-      background: var(--rose); color: #fff;
-      border-radius: var(--radius); padding: 2.5rem;
-      display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
-    }
-    .cta-box h3 { font-size: 20px; font-weight: 500; margin-bottom: 0.4rem; }
-    .cta-box p { font-size: 13px; opacity: 0.78; max-width: 400px; }
-    .btn-white {
-      background: #fff; color: var(--rose);
-      font-size: 13px; font-weight: 500; padding: 10px 20px;
-      border-radius: var(--radius-sm); text-decoration: none; white-space: nowrap;
-      font-family: inherit; border: none; cursor: pointer; transition: opacity 0.15s;
-    }
-    .btn-white:hover { opacity: 0.9; }
-
+    /* ── FOOTER ── */
     footer {
-      border-top: 1px solid var(--border); padding: 2rem;
+      border-top: 1px solid var(--border); padding: 2.5rem;
       text-align: center; background: var(--white);
     }
-    .footer-logo { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
-    .footer-logo span { color: var(--rose); }
-    footer p { font-size: 12px; color: var(--ink-faint); }
-    footer a { color: var(--rose); text-decoration: none; }
+    .footer-logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 18px; font-weight: 400; color: var(--ink); margin-bottom: 6px;
+    }
+    .footer-logo span { color: var(--r1); }
+    footer p { font-size: 12px; color: var(--ink-4); font-weight: 400; }
+    footer a { color: var(--r1); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
 
-    @media (max-width: 580px) {
-      .stats { gap: 2rem; flex-wrap: wrap; }
-      .cta-box { text-align: center; justify-content: center; }
+    /* ── PWA BANNER ── */
+    #pwa-install-banner {
+      display: none; position: fixed; bottom: 1.25rem; left: 50%;
+      transform: translateX(-50%); z-index: 9999;
+      background: var(--white); border: 1px solid var(--r-border);
+      border-radius: var(--radius); box-shadow: 0 8px 40px rgba(90,48,64,0.12);
+      padding: 0.9rem 1.1rem; align-items: center; gap: 0.9rem;
+      max-width: 360px; width: calc(100% - 2rem);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav { padding: 0 1.25rem; }
+      .nav-links a:not(.nav-cta):not([target]) { display: none; }
+      .hero-wrap { padding: 4rem 1.5rem 4rem; }
+      .section { padding: 3.5rem 1.5rem; }
+      .stats { flex-direction: column; }
+      .stat { border-right: none; border-bottom: 1px solid var(--border); padding: 1.25rem 2rem; }
+      .stat:last-child { border-bottom: none; }
+      .cta-box { text-align: center; justify-content: center; padding: 2rem 1.5rem; }
     }
   </style>
+  <!-- PWA -->
+  <link rel="manifest" href="/psireal-hub/biblioteca-tcc/manifest.json" />
+  <meta name="theme-color" content="#3D2028" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Psi Real" />
+  <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512.png" />
+  <link rel="sitemap" type="application/xml" href="/psireal-hub/biblioteca-tcc/sitemap.xml" />
 </head>
 <body>
 
+<!-- PWA Install Banner -->
+<div id="pwa-install-banner" style="display:none; position:fixed; bottom:1.25rem; left:50%; transform:translateX(-50%); z-index:9999; background:#fff; border:1px solid #DDD0D6; border-radius:16px; box-shadow:0 8px 40px rgba(90,48,64,0.12); padding:0.9rem 1.1rem; align-items:center; gap:0.9rem; max-width:360px; width:calc(100% - 2rem);">
+  <div style="width:38px;height:38px;background:linear-gradient(135deg,#3D2028,#7A4A55);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6s4-2 11-2 11 2 11 2v13s-4-2-11-2S1 19 1 19z"/><line x1="12" y1="4" x2="12" y2="17"/></svg>
+  </div>
+  <div style="flex:1;min-width:0;">
+    <div style="font-size:13px;font-weight:500;color:#1C0F13;">Instalar Psi Real</div>
+    <div style="font-size:11px;color:#9E7882;font-weight:400;">Acesse offline, como um app</div>
+  </div>
+  <button onclick="installPWA()" style="background:linear-gradient(135deg,#3D2028,#7A4A55);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:inherit;">Instalar</button>
+  <button onclick="dismissInstallBanner()" style="background:none;border:none;color:#C9ADB4;cursor:pointer;padding:4px;line-height:1;" aria-label="Fechar">✕</button>
+</div>
+
 <nav>
-  <a class="nav-logo" href="index.html">
+  <a class="nav-logo" href="/psireal-hub/biblioteca-tcc/index.html">
     <div class="nav-logo-icon">
       <svg viewBox="0 0 24 24"><path d="M12 3c-1.5 0-3 .6-4 1.7C6.8 6 6 7.5 6 9c0 1.2.4 2.3 1 3.2-.3.6-.5 1.2-.5 1.8 0 2.2 2 4 4.5 4s4.5-1.8 4.5-4c0-.6-.2-1.2-.5-1.8.6-.9 1-2 1-3.2 0-1.5-.8-3-2-4.3C12.9 3.5 12 3 12 3z"/><path d="M9 15.5c0 1 1.3 1.5 3 1.5s3-.5 3-1.5"/></svg>
     </div>
     <span class="nav-logo-text">Biblioteca Psi<span>Real</span></span>
   </a>
   <div class="nav-links">
-    <a href="https://michellepsicologiareal-collab.github.io/psireal-hub/index.html">Voltar ao site</a>
+    <a href="/psireal-hub/index.html">Voltar ao site</a>
     <a href="#materiais">Materiais</a>
+    <a href="./resenhas/">Resenhas</a>
     <a href="#como-funciona">Como funciona</a>
-    <a href="https://michellepsicologiareal-collab.github.io/psireal-hub/psireal-tcc.html">PsiReal TCC</a>
+    <a href="https://psireal.app/" target="_blank" class="nav-cta">Psi Real App ↗</a>
+    <a href="https://wa.me/5511947388423" target="_blank">WhatsApp</a>
   </div>
 </nav>
 
-<section class="hero">
-  <div class="hero-tag">SupervisÃ£o em TCC</div>
-  <h1>Materiais clÃ­nicos<br>que fazem <em>sentido</em></h1>
-  <p class="hero-sub">Recursos estruturados e visualmente cuidados para supervisoras e terapeutas em TCC. FormulaÃ§Ãµes, avaliaÃ§Ãµes, tÃ©cnicas â€” tudo em um sÃ³ lugar.</p>
-  <div class="hero-actions">
-    <a href="#materiais" class="btn-primary">Explorar materiais</a>
-    <a href="https://michellepsicologiareal-collab.github.io/psireal-hub/psireal-tcc.html" class="btn-secondary">Conhecer PsiReal TCC â†’</a>
+<!-- HERO -->
+<section class="hero-wrap">
+  <div class="hero-inner">
+    <div class="hero-tag">Supervisão em TCC · Acesso livre</div>
+    <h1>Materiais clínicos<br>que fazem <em>sentido</em></h1>
+    <p class="hero-sub">Recursos estruturados e visualmente cuidados para supervisoras e terapeutas em TCC. Formulações, avaliações, técnicas — tudo em um só lugar.</p>
+    <div class="hero-actions">
+      <a href="#materiais" class="btn-white">Explorar materiais</a>
+      <a href="https://wa.me/5511947388423" target="_blank" class="btn-ghost">Falar no WhatsApp →</a>
+    </div>
   </div>
 </section>
 
+<!-- STATS -->
 <div class="stats">
-  <div class="stat"><div class="stat-n">1</div><div class="stat-l">Material publicado</div></div>
-  <div class="stat"><div class="stat-n">TCC</div><div class="stat-l">Ãrea de foco</div></div>
-  <div class="stat"><div class="stat-n">âˆž</div><div class="stat-l">Acesso gratuito</div></div>
+  <div class="stat"><div class="stat-n">6</div><div class="stat-l">Materiais publicados</div></div>
+  <div class="stat"><div class="stat-n">TCC</div><div class="stat-l">Área de foco</div></div>
+  <div class="stat"><div class="stat-n">∞</div><div class="stat-l">Acesso gratuito</div></div>
 </div>
 
+<!-- MATERIAIS -->
 <section class="section" id="materiais">
-  <div class="sec-eyebrow">Materiais disponÃ­veis</div>
-  <h2>FormulaÃ§Ãµes, tÃ©cnicas<br>e recursos clÃ­nicos</h2>
-  <p class="sec-sub">Cada material Ã© um guia completo, navegÃ¡vel e pronto para usar em supervisÃ£o.</p>
+  <div class="sec-eyebrow">Materiais disponíveis</div>
+  <h2>Formulações, técnicas<br>e recursos clínicos</h2>
+  <p class="sec-sub">Cada material é um guia completo, navegável e pronto para usar em supervisão.</p>
 
   <div class="cards-grid">
 
-    <a href="materiais/persons-formulacao-caso/index.html" class="card">
-      <div class="card-thumb">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <!-- FORMULAÇÃO DE CASO — card destaque -->
+    <a href="/psireal-hub/biblioteca-tcc/materiais/persons-formulacao-caso/index.html" class="card card-featured">
+      <div class="card-thumb card-thumb-active" style="min-height:200px;">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:52px;height:52px;">
           <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.44-4.14z"/>
           <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.44-4.14z"/>
         </svg>
-        <span class="card-thumb-label label-rose">TCC Â· FormulaÃ§Ã£o</span>
+        <span class="card-thumb-label label-rose">TCC · Formulação</span>
       </div>
       <div class="card-body">
-        <div class="card-title">FormulaÃ§Ã£o de Caso â€” Jacqueline Persons</div>
-        <div class="card-desc">Os 7 componentes do modelo, hipÃ³tese de trabalho, crenÃ§as nucleares e como derivar o plano de tratamento.</div>
+        <div class="card-title" style="font-size:17px;">Formulação de Caso — Jacqueline Persons</div>
+        <div class="card-desc" style="font-size:14px;">Os 7 componentes do modelo, hipótese de trabalho, crenças nucleares e como derivar o plano de tratamento. O guia mais completo para a conceitualização de casos em TCC.</div>
         <div class="card-footer">
           <span class="card-author">Persons, 2008</span>
-          <span class="card-cta">Acessar â†’</span>
+          <span class="card-cta">Acessar →</span>
         </div>
       </div>
     </a>
 
-    <div class="card card-soon">
-      <div class="card-thumb card-thumb-muted">
+    <!-- AVALIAÇÃO TCC -->
+    <a class="card" href="/psireal-hub/biblioteca-tcc/materiais/avaliacao-tcc/index.html">
+      <div class="card-thumb card-thumb-active">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <rect x="8" y="2" width="8" height="4" rx="1"/>
-          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
-          <path d="M9 12h6M9 16h4"/>
+          <rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6M9 16h4"/>
         </svg>
-        <span class="card-thumb-label label-soon">Em breve</span>
+        <span class="card-thumb-label label-rose">TCC · Avaliação</span>
       </div>
       <div class="card-body">
-        <div class="card-title">AvaliaÃ§Ã£o Cognitivo-Comportamental</div>
-        <div class="card-desc">Anamnese, inventÃ¡rios e formulaÃ§Ã£o da queixa principal na avaliaÃ§Ã£o inicial em TCC.</div>
+        <div class="card-title">Avaliação Cognitivo-Comportamental</div>
+        <div class="card-desc">Anamnese, inventários e formulação da queixa principal na avaliação inicial em TCC.</div>
         <div class="card-footer">
           <span class="card-author">Beck, 2021</span>
-          <span class="card-cta">Em breve</span>
+          <span class="card-cta">Acessar →</span>
         </div>
       </div>
-    </div>
+    </a>
 
-    <div class="card card-soon">
-      <div class="card-thumb card-thumb-muted">
+    <!-- REESTRUTURAÇÃO COGNITIVA -->
+    <a class="card" href="/psireal-hub/biblioteca-tcc/materiais/reestruturacao-cognitiva/index.html">
+      <div class="card-thumb card-thumb-active">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-          <path d="M8 10h.01M12 10h.01M16 10h.01"/>
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h.01M12 10h.01M16 10h.01"/>
         </svg>
-        <span class="card-thumb-label label-soon">Em breve</span>
+        <span class="card-thumb-label label-rose">TCC · Técnica</span>
       </div>
       <div class="card-body">
-        <div class="card-title">ReestruturaÃ§Ã£o Cognitiva</div>
-        <div class="card-desc">TÃ©cnicas de identificaÃ§Ã£o e modificaÃ§Ã£o de pensamentos automÃ¡ticos e crenÃ§as intermediÃ¡rias.</div>
+        <div class="card-title">Reestruturação Cognitiva</div>
+        <div class="card-desc">Identificação e modificação de pensamentos automáticos e crenças intermediárias.</div>
         <div class="card-footer">
           <span class="card-author">Beck & Clark</span>
-          <span class="card-cta">Em breve</span>
+          <span class="card-cta">Acessar →</span>
         </div>
       </div>
-    </div>
+    </a>
 
-    <div class="card card-soon">
-      <div class="card-thumb card-thumb-muted">
+    <!-- EXPOSIÇÃO EPR -->
+    <a class="card" href="/psireal-hub/biblioteca-tcc/materiais/exposicao-epr/index.html">
+      <div class="card-thumb card-thumb-active">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
-          <path d="M21 3v5h-5"/>
-          <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
-          <path d="M8 16H3v5"/>
+          <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/>
         </svg>
-        <span class="card-thumb-label label-soon">Em breve</span>
+        <span class="card-thumb-label label-rose">TCC · Protocolo</span>
       </div>
       <div class="card-body">
-        <div class="card-title">ExposiÃ§Ã£o e PrevenÃ§Ã£o de Rituais</div>
-        <div class="card-desc">Protocolo EPR para TOC e transtornos de ansiedade: hierarquia, graduaÃ§Ã£o e manejo.</div>
+        <div class="card-title">Exposição e Prevenção de Rituais</div>
+        <div class="card-desc">Protocolo EPR para TOC e transtornos de ansiedade: hierarquia, graduação e manejo.</div>
         <div class="card-footer">
           <span class="card-author">Foa & Kozak</span>
-          <span class="card-cta">Em breve</span>
+          <span class="card-cta">Acessar →</span>
         </div>
       </div>
-    </div>
+    </a>
 
-    <div class="card card-soon">
-      <div class="card-thumb card-thumb-muted">
+    <!-- ALIANÇA TERAPÊUTICA -->
+    <a href="/psireal-hub/biblioteca-tcc/materiais/alianca-terapeutica/index.html" class="card">
+      <div class="card-thumb card-thumb-active">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
         </svg>
-        <span class="card-thumb-label label-soon">Em breve</span>
+        <span class="card-thumb-label label-rose">TCC · Aliança</span>
       </div>
       <div class="card-body">
-        <div class="card-title">AlianÃ§a TerapÃªutica em TCC</div>
-        <div class="card-desc">Como construir e manejar a relaÃ§Ã£o terapÃªutica â€” rupturas e reparaÃ§Ã£o dentro do modelo.</div>
+        <div class="card-title">Aliança Terapêutica em TCC</div>
+        <div class="card-desc">Como construir e manejar a relação terapêutica — rupturas e reparação dentro do modelo.</div>
         <div class="card-footer">
           <span class="card-author">Safran & Segal</span>
-          <span class="card-cta">Em breve</span>
+          <span class="card-cta">Ler material →</span>
         </div>
       </div>
-    </div>
+    </a>
 
-    <div class="card card-soon">
-      <div class="card-thumb card-thumb-muted">
+    <!-- MONITORAMENTO DE PROGRESSO — NOVO! -->
+    <a href="/psireal-hub/biblioteca-tcc/materiais/monitoramento-progresso/index.html" class="card">
+      <div class="card-thumb card-thumb-active">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3 3v18h18"/>
-          <path d="m19 9-5 5-4-4-3 3"/>
+          <path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>
         </svg>
-        <span class="card-thumb-label label-soon">Em breve</span>
+        <span class="card-thumb-label label-rose">TCC · Monitoramento</span>
+        <span style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.25);color:#fff;font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:3px 9px;border-radius:99px;border:1px solid rgba(255,255,255,0.35);backdrop-filter:blur(6px);">Novo ✦</span>
       </div>
       <div class="card-body">
         <div class="card-title">Monitoramento de Progresso</div>
-        <div class="card-desc">Uso sistemÃ¡tico de medidas de desfecho: inventÃ¡rios, escalas e grÃ¡ficos de progresso em TCC.</div>
+        <div class="card-desc">Uso sistemático de medidas de desfecho: PHQ-9, BDI-II, GAD-7, gráficos de progresso e protocolo clínico em TCC.</div>
         <div class="card-footer">
-          <span class="card-author">Lambert & Ogles</span>
-          <span class="card-cta">Em breve</span>
+          <span class="card-author">Lambert & Ogles · Beck</span>
+          <span class="card-cta">Acessar →</span>
         </div>
       </div>
-    </div>
+    </a>
 
   </div>
 </section>
 
 <hr class="divider" />
 
+<!-- COMO FUNCIONA -->
 <section class="section" id="como-funciona">
-  <div class="sec-eyebrow">Como funciona</div>
-  <h2>Simples de usar,<br>fácil de consultar</h2>
-  <p class="sec-sub">Sem login, sem instalaÃ§Ã£o. Abre e usa.</p>
+  <div class="sec-eyebrow">Para quem é</div>
+  <h2>Feito para o trabalho<br>clínico real</h2>
+  <p class="sec-sub">Do consultório à supervisão — materiais que acompanham o raciocínio clínico, não o substituem.</p>
   <div class="how-grid">
     <div>
-      <div class="how-n">01</div>
-      <div class="how-t">Acesse qualquer material</div>
-      <div class="how-d">Cada material Ã© uma pÃ¡gina HTML â€” funciona no celular, tablet e computador.</div>
+      <div class="how-n" style="-webkit-text-fill-color:var(--r2);background:none;font-size:32px;font-weight:400;">01</div>
+      <div class="how-t">Estudo com profundidade</div>
+      <div class="how-d">Cada material apresenta o modelo teórico completo — não resumos rasos. Ideal para aprofundar antes de aplicar com pacientes.</div>
     </div>
     <div>
-      <div class="how-n">02</div>
-      <div class="how-t">Use na supervisÃ£o</div>
-      <div class="how-d">Navegue pelo Ã­ndice interativo e use as seÃ§Ãµes como roteiro de discussÃ£o clÃ­nica.</div>
+      <div class="how-n" style="-webkit-text-fill-color:var(--r2);background:none;font-size:32px;font-weight:400;">02</div>
+      <div class="how-t">Suporte para supervisão</div>
+      <div class="how-d">Use as seções como roteiro de discussão clínica. Os materiais seguem a lógica do caso — da avaliação ao plano de tratamento.</div>
     </div>
     <div>
-      <div class="how-n">03</div>
-      <div class="how-t">Explore por tema</div>
-      <div class="how-d">Use a biblioteca como porta de entrada para materiais, protocolos e recursos do ecossistema PsiReal.</div>
+      <div class="how-n" style="-webkit-text-fill-color:var(--r2);background:none;font-size:32px;font-weight:400;">03</div>
+      <div class="how-t">Consulta rápida</div>
+      <div class="how-d">Antes de uma sessão difícil, acesse o material específico. Navegação por âncoras, leitura rápida — sem precisar abrir um livro inteiro.</div>
     </div>
     <div>
-      <div class="how-n">04</div>
-      <div class="how-t">Acesso aberto</div>
-      <div class="how-d">Materiais disponíveis para consulta clínica, supervisão e estudo continuado.</div>
+      <div class="how-n" style="-webkit-text-fill-color:var(--r2);background:none;font-size:32px;font-weight:400;">04</div>
+      <div class="how-t">Acesso livre, sempre</div>
+      <div class="how-d">Sem assinatura, sem cadastro, sem paywall. Aberto para psicólogos em formação e experientes.</div>
     </div>
   </div>
 </section>
 
-<section class="section">
+<section class="section" style="padding-top:0;">
+  <a href="https://psireal.app/" target="_blank" class="app-banner">
+    <div class="app-banner-icon">
+      <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 7h4M7 11h2"/><rect x="13" y="7" width="4" height="5" rx="1"/></svg>
+    </div>
+    <div style="flex:1;min-width:0;">
+      <div class="app-banner-label">Conheça o app</div>
+      <div class="app-banner-title">Psi Real — Gestão Inteligente para Psicólogos</div>
+      <div class="app-banner-desc">Prontuário, agenda, financeiro e supervisão integrada. Tudo pensado para a prática clínica.</div>
+    </div>
+    <div class="app-banner-arrow">Conhecer →</div>
+  </a>
+</section>
+
+<section class="section" style="padding-top:0;">
   <div class="cta-box">
     <div>
-      <h3>Quer aprofundar com recursos clÃ­nicos?</h3>
-      <p>Conheça o PsiReal TCC: plataforma clínica com instrumentos, aplicações por link, evolução visual e protocolos.</p>
+      <h3>Uma biblioteca que cresce com a clínica.</h3>
+      <p>Novos materiais chegam continuamente. Se você tem um conteúdo estruturado em TCC e quer contribuir, fala com a gente.</p>
     </div>
-    <a href="https://michellepsicologiareal-collab.github.io/psireal-hub/psireal-tcc.html" class="btn-white">Conhecer PsiReal TCC →</a>
+    <a href="https://wa.me/5511947388423" target="_blank" class="btn-cta-white">Falar no WhatsApp →</a>
   </div>
 </section>
 
 <footer>
   <div class="footer-logo">Biblioteca Psi<span>Real</span></div>
-  <p>Recursos clínicos em TCC · Acesso aberto · PsiReal</p>
+  <p>Recursos clínicos em TCC · Acesso aberto · <a href="https://psireal.app/" target="_blank">Psi Real App</a></p>
 </footer>
 
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/psireal-hub/biblioteca-tcc/sw.js')
+        .catch(err => console.warn('SW registration failed:', err));
+    });
+  }
+  let deferredPrompt = null;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault(); deferredPrompt = e;
+    const b = document.getElementById('pwa-install-banner');
+    if (b) b.style.display = 'flex';
+  });
+  window.addEventListener('appinstalled', () => {
+    const b = document.getElementById('pwa-install-banner');
+    if (b) b.style.display = 'none';
+    deferredPrompt = null;
+  });
+  function installPWA() {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+  }
+  function dismissInstallBanner() {
+    const b = document.getElementById('pwa-install-banner');
+    if (b) b.style.display = 'none';
+    sessionStorage.setItem('pwa-banner-dismissed', '1');
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    if (sessionStorage.getItem('pwa-banner-dismissed')) {
+      const b = document.getElementById('pwa-install-banner');
+      if (b) b.style.display = 'none';
+    }
+  });
+</script>
 </body>
 </html>
-
