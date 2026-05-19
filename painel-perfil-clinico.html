@@ -345,7 +345,7 @@ textarea,
   .esquema-score{text-align:left}
 }
 
-#lockScreen{
+#lockScreen{display:none !important;
   position:fixed; inset:0; z-index:9999;
   display:grid; place-items:center;
   background:var(--bg2);
@@ -432,7 +432,7 @@ html, body, button, input, select, textarea, a, div, span, p, h1, h2, h3, h4, h5
 </head>
 <body>
 
-<div id="lockScreen">
+<div id="lockScreen" style="display:none">
   <div class="lock-card">
     <div class="lock-logo"></div>
     <div class="lock-title">Perfil Clínico</div>
@@ -467,36 +467,36 @@ html, body, button, input, select, textarea, a, div, span, p, h1, h2, h3, h4, h5
   <nav class="nav">
     <div class="nav-section">
       <div class="nav-label">Principal</div>
-      <div class="nav-item">
+      <a class="nav-item" href="painel-tcc.html">
         <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
         Dashboard
-      </div>
-      <div class="nav-item">
+      </a>
+      <a class="nav-item" href="painel-tcc.html#pacientes">
         <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5"/></svg>
         Pacientes
-      </div>
+      </a>
     </div>
     <div class="nav-section">
       <div class="nav-label">Clínico</div>
-      <div class="nav-item">
+      <a class="nav-item" href="painel-tcc.html#biblioteca">
         <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2h8l2 2v10a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z"/><path d="M5 8h6M5 11h4"/></svg>
         Biblioteca TCC
-      </div>
-      <div class="nav-item">
+      </a>
+      <a class="nav-item" href="painel-tcc.html#evolucao">
         <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="2,12 5,7 8,9 12,4 14,6"/></svg>
         Evolução Clínica
-      </div>
+      </a>
     </div>
     <div class="nav-section">
       <div class="nav-label">Minha conta</div>
-      <div class="nav-item active">
+      <a class="nav-item active" href="painel-perfil-clinico.html">
         <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M3 14c0-2.2 2.2-4 5-4s5 1.8 5 4"/><circle cx="12" cy="4" r="1.5" fill="currentColor" stroke="none"/></svg>
         Perfil Clínico
-      </div>
-      <div class="nav-item">
+      </a>
+      <a class="nav-item" href="painel-tcc.html#configuracoes">
         <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3.2 3.2l1 1M11.8 11.8l1 1M11.8 3.2l-1 1M3.2 11.8l1 1"/></svg>
         Configurações
-      </div>
+      </a>
     </div>
   </nav>
   <div class="sidebar-user">
@@ -1310,6 +1310,9 @@ async function tryLogin() {
 }
 
 async function restoreAuth() {
+  // Use session token shared from painel-tcc.html
+  const stored = sessionStorage.getItem('sb_session_token');
+  if (stored) { SB_SESSION_TOKEN = stored; }
   if (!SB_SESSION_TOKEN) return;
   try {
     const res = await fetch(`${SB_URL}/auth/v1/user`, {
