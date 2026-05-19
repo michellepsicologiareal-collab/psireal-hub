@@ -588,21 +588,27 @@
     showResult(total, saved);
   }
 
-  // Init
-  if (PATIENT_NAME_PARAM) {
-    document.addEventListener('DOMContentLoaded', () => {
+  // Init — tudo dentro de DOMContentLoaded para garantir que o DOM existe
+  document.addEventListener('DOMContentLoaded', () => {
+    // Pre-fill name from URL
+    if (PATIENT_NAME_PARAM) {
       const el = document.getElementById('pacNome');
       if (el) el.value = decodeURIComponent(PATIENT_NAME_PARAM);
-    });
-  }
-  if (!PATIENT_TOKEN) {
-    document.addEventListener('DOMContentLoaded', () => showTokenError('Link inválido ou expirado. Solicite um novo link à sua psicóloga.'));
-  } else {
-    checkTokenStatus();
-  }
+    }
 
-  document.getElementById('submitBtn').addEventListener('click', submit);
-  build();
+    // Build questions
+    build();
+
+    // Submit button
+    document.getElementById('submitBtn').addEventListener('click', submit);
+
+    // Token check
+    if (!PATIENT_TOKEN) {
+      showTokenError('Link inválido ou expirado. Solicite um novo link à sua psicóloga.');
+    } else {
+      checkTokenStatus();
+    }
+  });
 </script>
 </body>
 </html>
