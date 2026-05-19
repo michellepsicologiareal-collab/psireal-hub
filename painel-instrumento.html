@@ -600,7 +600,16 @@ Escreva de forma tecnica e direta, em paragrafos corridos por secao. Sem marcado
     const result = await response.json();
     textEl.innerHTML = '';
     if (result.analysis) {
-      textEl.textContent = result.analysis;
+      // Render markdown-like formatting
+      const html = result.analysis
+        .replace(/^## (.+)$/gm, '<div style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--brown2);margin:18px 0 8px">$1</div>')
+        .replace(/^# (.+)$/gm, '<div style="font-size:14px;font-weight:700;color:var(--brown);margin:0 0 12px">$1</div>')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        .replace(/\(([a-z]|[0-9])\)/g, '<span style="font-weight:600;color:var(--brown2)">($1)</span>')
+        .replace(/\n\n/g, '</p><p style="margin:8px 0">')
+        .replace(/\n/g, '<br>');
+      textEl.innerHTML = '<p style="margin:0">' + html + '</p>';
     } else {
       textEl.textContent = 'Nao foi possivel gerar a analise. Tente novamente.';
     }
