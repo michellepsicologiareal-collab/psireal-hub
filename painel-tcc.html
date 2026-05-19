@@ -1290,35 +1290,38 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
   <div id="screen-evolucao" class="screen">
     <div class="topbar">
       <div><div class="topbar-title">Evolução Clínica</div></div>
-      <div class="topbar-actions">
-        <div class="filter-tabs" style="margin:0">
-          <div class="filter-tab active">3 meses</div>
-          <div class="filter-tab">6 meses</div>
-          <div class="filter-tab">1 ano</div>
+      <div class="topbar-actions" style="display:flex;align-items:center;gap:12px">
+        <select id="evoPatientSelect" onchange="renderEvolucao()" style="font:inherit;font-size:13px;padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--ink);cursor:pointer;outline:none;min-width:160px">
+          <option value="">Todos os pacientes</option>
+        </select>
+        <div class="filter-tabs" style="margin:0" id="evoPeriodTabs">
+          <div class="filter-tab active" onclick="setEvoPeriod(3,this)">3 meses</div>
+          <div class="filter-tab" onclick="setEvoPeriod(6,this)">6 meses</div>
+          <div class="filter-tab" onclick="setEvoPeriod(12,this)">1 ano</div>
         </div>
       </div>
     </div>
     <div class="content">
-      <div style="margin-bottom:20px">
-        <div class="section-title">Painel de evolução — Maria Clara</div>
-        <div class="section-sub">Measurement-based care — Última atualização hoje</div>
+      <div style="margin-bottom:20px" id="evoHeader">
+        <div class="section-title" id="evoTitle">Painel de evolução</div>
+        <div class="section-sub" id="evoSub">Measurement-based care — carregando...</div>
       </div>
 
       <!-- Measures summary -->
       <div class="card" style="margin-bottom:20px">
         <div class="card-header"><span class="card-title">Scores atuais vs. linha de base</span></div>
         <div class="card-body">
-          <div class="measure-row">
+          <div class="measure-row" data-label="GAD-7">
             <div class="measure-label">Ansiedade (GAD-7)</div>
-            <div class="measure-bar"><div class="progress"><div class="progress-fill" style="width:52%;background:var(--lilac)"></div></div></div>
-            <div class="measure-val">26</div>
-            <div class="measure-delta dn">— 18</div>
+            <div class="measure-bar"><div class="progress"><div class="progress-fill evo-measure-fill" style="width:52%;background:var(--lilac)"></div></div></div>
+            <div class="measure-val evo-measure-val">26</div>
+            <div class="measure-delta dn evo-measure-delta">— 18</div>
           </div>
-          <div class="measure-row">
+          <div class="measure-row" data-label="PHQ-9">
             <div class="measure-label">Humor (PHQ-9)</div>
-            <div class="measure-bar"><div class="progress"><div class="progress-fill" style="width:38%;background:var(--teal)"></div></div></div>
-            <div class="measure-val">11</div>
-            <div class="measure-delta dn">— 7</div>
+            <div class="measure-bar"><div class="progress"><div class="progress-fill evo-measure-fill" style="width:38%;background:var(--teal)"></div></div></div>
+            <div class="measure-val evo-measure-val">11</div>
+            <div class="measure-delta dn evo-measure-delta">— 7</div>
           </div>
           <div class="measure-row">
             <div class="measure-label">Evitação (AAQ-II)</div>
@@ -1349,15 +1352,11 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
               <div style="font-size:11px;color:var(--ink3)">Ansiedade de Beck</div>
             </div>
             <div style="text-align:right">
-              <div class="evo-score" style="color:var(--lilac)">26</div>
-              <span class="evo-delta-badge" style="background:var(--green3);color:var(--green)">— 41%</span>
+              <div class="evo-score" id="evoScoreGAD" style="color:var(--lilac)">—</div>
+              <span class="evo-delta-badge" id="evoDeltaGAD" style="background:var(--bg2);color:var(--ink3)">—</span>
             </div>
           </div>
-          <svg width="100%" height="80" viewBox="0 0 300 80">
-            <path d="M0 65 C30 62, 60 58, 90 52 C120 46, 150 44, 180 38 C210 32, 240 30, 300 22" stroke="var(--lilac)" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <circle cx="300" cy="22" r="4" fill="var(--lilac)"/>
-            <path d="M0 65 C30 62, 60 58, 90 52 C120 46, 150 44, 180 38 C210 32, 240 30, 300 22 L300 80 L0 80 Z" fill="var(--lilac3)" opacity=".4"/>
-          </svg>
+          <canvas id="evoChartGAD" width="300" height="80" style="width:100%;height:80px"></canvas>
         </div>
 
         <div class="evo-card">
@@ -1367,15 +1366,11 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
               <div style="font-size:11px;color:var(--ink3)">Questionário de saúde</div>
             </div>
             <div style="text-align:right">
-              <div class="evo-score" style="color:var(--teal)">11</div>
-              <span class="evo-delta-badge" style="background:var(--green3);color:var(--green)">— 39%</span>
+              <div class="evo-score" id="evoScorePHQ" style="color:var(--teal)">—</div>
+              <span class="evo-delta-badge" id="evoDeltaPHQ" style="background:var(--bg2);color:var(--ink3)">—</span>
             </div>
           </div>
-          <svg width="100%" height="80" viewBox="0 0 300 80">
-            <path d="M0 70 C40 65, 80 60, 120 52 C160 44, 200 40, 300 28" stroke="var(--teal)" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <circle cx="300" cy="28" r="4" fill="var(--teal)"/>
-            <path d="M0 70 C40 65, 80 60, 120 52 C160 44, 200 40, 300 28 L300 80 L0 80 Z" fill="var(--teal3)" opacity=".4"/>
-          </svg>
+          <canvas id="evoChartPHQ" width="300" height="80" style="width:100%;height:80px"></canvas>
         </div>
 
         <div class="evo-card">
@@ -2005,6 +2000,7 @@ function showScreen(id, el) {
   document.getElementById('screen-' + id).classList.add('active');
   if (el) el.classList.add('active');
   if (id === 'insights') renderInsights();
+  if (id === 'evolucao') renderEvolucao();
 
   const titles = {
     dashboard: 'Dashboard',
@@ -2241,6 +2237,136 @@ async function deletePatient(encodedName) {
   } catch(err) {
     alert('Não foi possível excluir o paciente. Tente novamente.');
   }
+}
+
+
+let EVO_PERIOD_MONTHS = 3;
+
+function setEvoPeriod(months, el) {
+  EVO_PERIOD_MONTHS = months;
+  document.querySelectorAll('#evoPeriodTabs .filter-tab').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderEvolucao();
+}
+
+function renderEvolucao() {
+  const responses = CLINICAL_RESPONSES || [];
+  const select = document.getElementById('evoPatientSelect');
+  const filterVal = select ? select.value : '';
+
+  // Populate patient select
+  if (select) {
+    const allPatients = [...new Set(responses.map(r => r.paciente_nome).filter(Boolean))].sort();
+    const cur = select.value;
+    select.innerHTML = '<option value="">Todos os pacientes</option>' +
+      allPatients.map(p => `<option value="${p}" ${p === cur ? 'selected' : ''}>${p}</option>`).join('');
+    if (cur) select.value = cur;
+  }
+
+  // Filter by period
+  const cutoff = new Date();
+  cutoff.setMonth(cutoff.getMonth() - EVO_PERIOD_MONTHS);
+  let filtered = responses.filter(r => new Date(r.created_at) >= cutoff);
+  if (filterVal) filtered = filtered.filter(r => r.paciente_nome === filterVal);
+
+  const patientLabel = filterVal || 'Todos os pacientes';
+  const lastUpdate = filtered.length
+    ? new Date(Math.max(...filtered.map(r => new Date(r.created_at)))).toLocaleDateString('pt-BR')
+    : '—';
+
+  const titleEl = document.getElementById('evoTitle');
+  const subEl = document.getElementById('evoSub');
+  if (titleEl) titleEl.textContent = `Painel de evolução — ${patientLabel}`;
+  if (subEl) subEl.textContent = `Measurement-based care — Última atualização: ${lastUpdate}`;
+
+  function byInst(inst) {
+    return filtered.filter(r => {
+      const k = (r.instrumento || r.formulario || '').toUpperCase().replace(/[-\s]/g,'');
+      return k.includes(inst.replace(/[-\s]/g,''));
+    }).sort((a,b) => new Date(a.created_at) - new Date(b.created_at));
+  }
+
+  const gad = byInst('GAD7');
+  const phq = byInst('PHQ9');
+
+  function measureRow(rows, max, label, color) {
+    const el = document.querySelector(`.measure-row[data-label="${label}"]`);
+    if (!el) return;
+    if (!rows.length) {
+      el.querySelector('.evo-measure-val').textContent = '—';
+      el.querySelector('.evo-measure-delta').textContent = '—';
+      el.querySelector('.evo-measure-fill').style.width = '0%';
+      return;
+    }
+    const latest = Number(rows[rows.length-1].score_total ?? rows[rows.length-1].scores?.total ?? 0);
+    const first = Number(rows[0].score_total ?? rows[0].scores?.total ?? 0);
+    const delta = latest - first;
+    el.querySelector('.evo-measure-val').textContent = latest;
+    el.querySelector('.evo-measure-delta').textContent = delta !== 0 ? `${delta > 0 ? '+' : ''}${delta}` : '=';
+    el.querySelector('.evo-measure-delta').style.color = delta < 0 ? 'var(--green)' : delta > 0 ? 'var(--coral)' : 'var(--ink3)';
+    el.querySelector('.evo-measure-fill').style.width = Math.round(latest/max*100) + '%';
+    el.querySelector('.evo-measure-fill').style.background = color;
+  }
+
+  // Update measure rows if they exist
+  measureRow(gad, 21, 'GAD-7', 'var(--lilac)');
+  measureRow(phq, 27, 'PHQ-9', 'var(--teal)');
+
+  // Update mini charts
+  function updateChart(canvasId, rows, max, color) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas || !rows.length) return;
+    const ctx = canvas.getContext('2d');
+    const W = canvas.offsetWidth || 300, H = canvas.offsetHeight || 80;
+    canvas.width = W; canvas.height = H;
+    ctx.clearRect(0,0,W,H);
+    const scores = rows.map(r => Number(r.score_total ?? r.scores?.total ?? 0));
+    if (scores.length === 1) {
+      const x = W/2, y = H - (scores[0]/max)*H + 8;
+      ctx.beginPath(); ctx.arc(x,y,4,0,2*Math.PI);
+      ctx.fillStyle = color; ctx.fill(); return;
+    }
+    const step = W/(scores.length-1);
+    ctx.beginPath();
+    scores.forEach((s,i) => {
+      const x = i*step, y = H - (s/max)*(H-16) + 8;
+      i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    });
+    ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.stroke();
+    // area
+    ctx.beginPath();
+    scores.forEach((s,i) => { const x=i*step, y=H-(s/max)*(H-16)+8; i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
+    ctx.lineTo((scores.length-1)*step,H); ctx.lineTo(0,H); ctx.closePath();
+    ctx.fillStyle = color.replace(')',', 0.12)').replace('var(--','rgba(').replace('lilac','176,128,144').replace('teal','160,112,58');
+    ctx.fill();
+    const lx=(scores.length-1)*step, ly=H-(scores[scores.length-1]/max)*(H-16)+8;
+    ctx.beginPath(); ctx.arc(lx,ly,4,0,2*Math.PI); ctx.fillStyle=color; ctx.fill();
+  }
+
+  requestAnimationFrame(() => {
+    updateChart('evoChartGAD', gad, 21, 'var(--lilac)');
+    updateChart('evoChartPHQ', phq, 27, 'var(--teal)');
+  });
+
+  // Update score display on cards
+  function updateCard(scoreId, deltaId, rows, max) {
+    const scoreEl = document.getElementById(scoreId);
+    const deltaEl = document.getElementById(deltaId);
+    if (!scoreEl || !rows.length) return;
+    const latest = Number(rows[rows.length-1].score_total ?? rows[rows.length-1].scores?.total ?? 0);
+    const first = Number(rows[0].score_total ?? rows[0].scores?.total ?? 0);
+    const delta = latest - first;
+    const pct = first > 0 ? Math.round(Math.abs(delta)/first*100) : 0;
+    scoreEl.textContent = latest;
+    if (deltaEl) {
+      deltaEl.textContent = delta !== 0 ? `${delta < 0 ? '—' : '+'} ${pct}%` : '=';
+      deltaEl.style.background = delta < 0 ? 'var(--green3)' : delta > 0 ? 'var(--coral3)' : 'var(--bg2)';
+      deltaEl.style.color = delta < 0 ? 'var(--green)' : delta > 0 ? 'var(--coral)' : 'var(--ink3)';
+    }
+  }
+
+  updateCard('evoScoreGAD', 'evoDeltaGAD', gad, 21);
+  updateCard('evoScorePHQ', 'evoDeltaPHQ', phq, 27);
 }
 
 </script>
