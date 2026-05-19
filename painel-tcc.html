@@ -1595,7 +1595,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
           <button type="button" class="cat-btn" onclick="filterInstr('sono')">Sono</button>
           <button type="button" class="cat-btn" onclick="filterInstr('esquemas')">Esquemas</button>
         </div>
-        <select id="newInstrument" size="4" style="border-radius:10px;width:100%;font:inherit;font-size:13px;padding:4px;border:1px solid var(--border);background:var(--bg);color:var(--ink);cursor:pointer;outline:none;display:none" onchange="updateInstrHelp()">
+        <select id="newInstrument" size="4" style="border-radius:10px;width:100%;font:inherit;font-size:13px;padding:4px;border:1px solid var(--border);background:var(--bg);color:var(--ink);cursor:pointer;outline:none" onchange="updateInstrHelp()">
           <option value="YSQ-S3" data-cat="esquemas" data-page="formulario-esquemas">YSQ-S3 — Esquemas de Young</option>
           <option value="GAD-7" data-cat="ansiedade" data-page="formulario-gad7">GAD-7 — Ansiedade Generalizada</option>
           <option value="OASIS" data-cat="ansiedade" data-page="formulario-oasis">OASIS — Severidade da Ansiedade</option>
@@ -1937,42 +1937,28 @@ function openInstrumentDashboard(instrument) {
   window.location.href = `painel-instrumento.html?instrumento=${encodeURIComponent(instrument)}`;
 }
 
-function openApplicationModal(instrument) {
+function openApplicationModal(instrument = 'GAD-7') {
   const modal = document.getElementById('applicationModal');
   const select = document.getElementById('newInstrument');
-  const cats = document.getElementById('instrCats');
-  const instrLabel = modal.querySelector('label[for="newInstrument"], label');
 
-  // Reset options
-  [...select.options].forEach(o => { o.hidden = false; o.disabled = false; });
+  // Reset all options visibility
+  [...select.options].forEach(o => { o.hidden = false; o.disabled = o.dataset.disabled === 'true'; });
 
-  if (instrument) {
-    // Called from biblioteca — pre-select instrument, hide category filter and select UI
-    select.style.display = 'none';
-    if (cats) cats.style.display = 'none';
-    document.getElementById('instrHelpText').style.display = 'none';
-
-    // Show instrument name as read-only badge
-    let badge = document.getElementById('instrBadge');
-    if (!badge) {
-      badge = document.createElement('div');
-      badge.id = 'instrBadge';
-      badge.style.cssText = 'padding:8px 12px;background:var(--lilac4);border:1px solid var(--border);border-radius:10px;font-size:13px;font-weight:500;color:var(--brown);margin-top:0';
-      select.parentNode.insertBefore(badge, select);
-    }
-    badge.style.display = 'block';
-    const names = {'YSQ-S3':'YSQ-S3 — Esquemas de Young','GAD-7':'GAD-7 — Ansiedade Generalizada','OASIS':'OASIS — Severidade da Ansiedade','PHQ-9':'PHQ-9 — Depressão','AAQ-II':'AAQ-II — Flexibilidade Psicológica','CFQ':'CFQ — Fusão Cognitiva','Rosenberg':'Rosenberg — Autoestima','PSS':'PSS-10 — Estresse Percebido','ISI':'ISI — Severidade da Insônia'};
-    badge.textContent = names[instrument] || instrument;
-    select.value = instrument;
+  // Select the instrument
+  const opt = [...select.options].find(o => o.value === instrument && !o.disabled);
+  if (opt) {
+    select.value = opt.value;
   } else {
-    // Called from pacientes — show full category filter
-    select.style.display = '';
-    if (cats) cats.style.display = '';
-    document.getElementById('instrHelpText').style.display = '';
-    const badge = document.getElementById('instrBadge');
-    if (badge) badge.style.display = 'none';
-    filterInstr('todos');
+    select.value = 'GAD-7';
   }
+
+  // Update category filter buttons
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  const allBtn = document.querySelector('.cat-btn[onclick*="todos"]');
+  if (allBtn) allBtn.classList.add('active');
+
+  // Update help text
+  if (typeof updateInstrHelp === 'function') updateInstrHelp();
 
   document.getElementById('generatedLinkBox')?.classList.remove('open');
   const errorBox = document.getElementById('applicationError');
@@ -2085,13 +2071,7 @@ async function createApplication() {
 }
 
 
-function instrumentPage(instrument = '') {
-  const key = String(instrument || '').toUpperCase().replace(/\s+/g, '');
-  if (key === 'YSQ-S3' || key === 'YSQ') return 'formulario-esquemas';
-  if (key === 'GAD-7' || key === 'GAD7') return 'formulario-gad7';
-  if (key === 'PHQ-9' || key === 'PHQ9') return 'formulario-phq9';
-  return 'formulario-esquemas';
-}
+
 
 function buildApplicationLink(token, instrument, patientName = '') {
   const page = instrumentPage(instrument);
