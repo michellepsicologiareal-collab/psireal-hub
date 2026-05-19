@@ -267,12 +267,6 @@ body {
   width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:14px;background:#fff;font:inherit;color:var(--ink);
 }
 .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
-.instr-cat{border:1px solid var(--border);border-radius:99px;padding:4px 12px;font:500 11px/1 'Inter',sans-serif;background:var(--bg2);color:var(--ink3);cursor:pointer;transition:all .15s;letter-spacing:.02em}
-.instr-cat:hover{border-color:var(--brown3);color:var(--brown)}
-.instr-cat.active{background:var(--brown);border-color:var(--brown);color:#fff}
-#newInstrument{width:100%;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--ink);outline:none;transition:border-color .15s;cursor:pointer}
-#newInstrument option{padding:8px 12px;font-size:13px}
-#newInstrument option:checked{background:var(--brown);color:#fff}
 .generated-link{
   margin-top:16px;padding:14px;border-radius:16px;background:var(--bg2);border:1px solid var(--border);display:none;
 }
@@ -719,10 +713,6 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
 /* Patient registration modal clarity */
 .field-help{font-size:12px;color:#9A7A84;margin-top:7px;line-height:1.45}.modal-error{display:none;margin:14px 0 0;padding:12px 14px;border:1px solid #E9C5C0;background:#FFF6F4;color:#8A4738;border-radius:14px;font-size:13px;line-height:1.45}.modal-card{max-width:480px!important}.generated-link{border-radius:16px!important;background:#F8F2F4!important;border:1px solid #E8D8DC!important}.generated-link code{word-break:break-all!important;white-space:normal!important;line-height:1.45!important}
 
-
-/* Sidebar account clarity */
-.sidebar-user{position:relative!important;align-items:center!important}.sidebar-account-label{position:absolute;top:8px;left:20px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#B08090;font-weight:800}.sidebar-user .user-avatar{margin-top:14px}.sidebar-user .user-name,.sidebar-user .user-plan{margin-top:14px}.user-plan::before{content:'Plano: ';color:#9A7A84;font-weight:500}
-
 </style>
 </head>
 <body>
@@ -798,7 +788,6 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
   </nav>
 
   <div class="sidebar-user">
-    <div class="sidebar-account-label">Conta da psicóloga</div>
     <div class="user-avatar">MD</div>
     <div>
       <div class="user-name" id="sidebarUserName">Psicóloga</div>
@@ -1001,8 +990,15 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
             <span class="card-title">Insights da semana</span>
             <span class="card-action" onclick="showScreen('insights', document.querySelector('[onclick*=insights]'))">Ver todos</span>
           </div>
-          <div class="card-body" style="display:flex;flex-direction:column;gap:12px" id="insightsPreview">
-            <div style="font-size:13px;color:var(--ink3);text-align:center;padding:12px 0">Carregando insights...</div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:12px">
+            <div style="padding:14px;background:var(--lilac4);border-radius:var(--radius);border-left:3px solid var(--lilac)">
+              <div style="font-size:10px;color:var(--lilac);font-weight:500;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Padrão identificado</div>
+              <div style="font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;font-style:italic;color:var(--ink);line-height:1.5">"A elevação da preocupação excessiva aparece associada ao aumento da evitação comportamental em <strong style="font-style:normal">3 pacientes</strong>."</div>
+            </div>
+            <div style="padding:14px;background:var(--teal3);border-radius:var(--radius);border-left:3px solid var(--teal)">
+              <div style="font-size:10px;color:var(--teal);font-weight:500;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Evolução positiva</div>
+              <div style="font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;font-style:italic;color:var(--ink);line-height:1.5">"Redução de 22% nos scores de ansiedade geral (GAD-7) nas Últimas <strong style="font-style:normal">4 semanas</strong>."</div>
+            </div>
           </div>
         </div>
       </div>
@@ -1014,7 +1010,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
     <div class="topbar">
       <div><div class="topbar-title">Pacientes</div></div>
       <div class="topbar-actions">
-        <button class="btn btn-ghost" onclick="exportPatientsCsv()">Exportar</button>
+        <button class="btn btn-ghost">Exportar</button>
         <button class="btn btn-primary" onclick="openApplicationModal()">+ Cadastrar paciente</button>
       </div>
     </div>
@@ -1301,19 +1297,130 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
   <div id="screen-evolucao" class="screen">
     <div class="topbar">
       <div><div class="topbar-title">Evolução Clínica</div></div>
-      <div class="topbar-actions" style="display:flex;align-items:center;gap:12px">
-        <select id="evoPatientFilter" onchange="renderEvolucao()" style="font:inherit;font-size:13px;padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--ink);cursor:pointer;outline:none">
-          <option value="">Todos os pacientes</option>
-        </select>
-        <div class="filter-tabs" style="margin:0" id="evoPeriodTabs">
-          <div class="filter-tab active" onclick="setEvoPeriod(3,this)">3 meses</div>
-          <div class="filter-tab" onclick="setEvoPeriod(6,this)">6 meses</div>
-          <div class="filter-tab" onclick="setEvoPeriod(12,this)">1 ano</div>
+      <div class="topbar-actions">
+        <div class="filter-tabs" style="margin:0">
+          <div class="filter-tab active">3 meses</div>
+          <div class="filter-tab">6 meses</div>
+          <div class="filter-tab">1 ano</div>
         </div>
       </div>
     </div>
-    <div class="content" id="evoContent">
-      <div style="text-align:center;padding:60px 20px;font-size:13px;color:var(--ink3)">Carregando dados clínicos...</div>
+    <div class="content">
+      <div style="margin-bottom:20px">
+        <div class="section-title">Painel de evolução — Maria Clara</div>
+        <div class="section-sub">Measurement-based care — Última atualização hoje</div>
+      </div>
+
+      <!-- Measures summary -->
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-header"><span class="card-title">Scores atuais vs. linha de base</span></div>
+        <div class="card-body">
+          <div class="measure-row">
+            <div class="measure-label">Ansiedade (GAD-7)</div>
+            <div class="measure-bar"><div class="progress"><div class="progress-fill" style="width:52%;background:var(--lilac)"></div></div></div>
+            <div class="measure-val">26</div>
+            <div class="measure-delta dn">— 18</div>
+          </div>
+          <div class="measure-row">
+            <div class="measure-label">Humor (PHQ-9)</div>
+            <div class="measure-bar"><div class="progress"><div class="progress-fill" style="width:38%;background:var(--teal)"></div></div></div>
+            <div class="measure-val">11</div>
+            <div class="measure-delta dn">— 7</div>
+          </div>
+          <div class="measure-row">
+            <div class="measure-label">Evitação (AAQ-II)</div>
+            <div class="measure-bar"><div class="progress"><div class="progress-fill" style="width:65%;background:var(--amber)"></div></div></div>
+            <div class="measure-val">32</div>
+            <div class="measure-delta dn">— 4</div>
+          </div>
+          <div class="measure-row">
+            <div class="measure-label">Esquemas (YSQ médio)</div>
+            <div class="measure-bar"><div class="progress"><div class="progress-fill" style="width:72%;background:var(--coral)"></div></div></div>
+            <div class="measure-val">3.8</div>
+            <div class="measure-delta dn">— 0.6</div>
+          </div>
+          <div class="measure-row">
+            <div class="measure-label">Flex. psicológica</div>
+            <div class="measure-bar"><div class="progress"><div class="progress-fill" style="width:78%;background:var(--green)"></div></div></div>
+            <div class="measure-val">39</div>
+            <div class="measure-delta up">— 11</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="evo-charts">
+        <div class="evo-card">
+          <div class="evo-card-head">
+            <div>
+              <div class="evo-name">Ansiedade — GAD-7</div>
+              <div style="font-size:11px;color:var(--ink3)">Ansiedade de Beck</div>
+            </div>
+            <div style="text-align:right">
+              <div class="evo-score" style="color:var(--lilac)">26</div>
+              <span class="evo-delta-badge" style="background:var(--green3);color:var(--green)">— 41%</span>
+            </div>
+          </div>
+          <svg width="100%" height="80" viewBox="0 0 300 80">
+            <path d="M0 65 C30 62, 60 58, 90 52 C120 46, 150 44, 180 38 C210 32, 240 30, 300 22" stroke="var(--lilac)" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <circle cx="300" cy="22" r="4" fill="var(--lilac)"/>
+            <path d="M0 65 C30 62, 60 58, 90 52 C120 46, 150 44, 180 38 C210 32, 240 30, 300 22 L300 80 L0 80 Z" fill="var(--lilac3)" opacity=".4"/>
+          </svg>
+        </div>
+
+        <div class="evo-card">
+          <div class="evo-card-head">
+            <div>
+              <div class="evo-name">Humor — PHQ-9</div>
+              <div style="font-size:11px;color:var(--ink3)">Questionário de saúde</div>
+            </div>
+            <div style="text-align:right">
+              <div class="evo-score" style="color:var(--teal)">11</div>
+              <span class="evo-delta-badge" style="background:var(--green3);color:var(--green)">— 39%</span>
+            </div>
+          </div>
+          <svg width="100%" height="80" viewBox="0 0 300 80">
+            <path d="M0 70 C40 65, 80 60, 120 52 C160 44, 200 40, 300 28" stroke="var(--teal)" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <circle cx="300" cy="28" r="4" fill="var(--teal)"/>
+            <path d="M0 70 C40 65, 80 60, 120 52 C160 44, 200 40, 300 28 L300 80 L0 80 Z" fill="var(--teal3)" opacity=".4"/>
+          </svg>
+        </div>
+
+        <div class="evo-card">
+          <div class="evo-card-head">
+            <div>
+              <div class="evo-name">Esquemas — YSQ-S3</div>
+              <div style="font-size:11px;color:var(--ink3)">Score médio geral</div>
+            </div>
+            <div style="text-align:right">
+              <div class="evo-score" style="color:var(--coral)">3.8</div>
+              <span class="evo-delta-badge" style="background:var(--green3);color:var(--green)">— 14%</span>
+            </div>
+          </div>
+          <svg width="100%" height="80" viewBox="0 0 300 80">
+            <path d="M0 72 C50 70, 100 68, 150 62 C200 56, 240 50, 300 40" stroke="var(--coral)" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <circle cx="300" cy="40" r="4" fill="var(--coral)"/>
+            <path d="M0 72 C50 70, 100 68, 150 62 C200 56, 240 50, 300 40 L300 80 L0 80 Z" fill="var(--coral3)" opacity=".4"/>
+          </svg>
+        </div>
+
+        <div class="evo-card">
+          <div class="evo-card-head">
+            <div>
+              <div class="evo-name">Flex. Psicológica — AAQ-II</div>
+              <div style="font-size:11px;color:var(--ink3)">Aceitação e ação</div>
+            </div>
+            <div style="text-align:right">
+              <div class="evo-score" style="color:var(--green)">39</div>
+              <span class="evo-delta-badge" style="background:var(--green3);color:var(--green)">— 39%</span>
+            </div>
+          </div>
+          <svg width="100%" height="80" viewBox="0 0 300 80">
+            <path d="M0 60 C50 58, 100 52, 150 46 C200 40, 250 34, 300 20" stroke="var(--green)" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <circle cx="300" cy="20" r="4" fill="var(--green)"/>
+            <path d="M0 60 C50 58, 100 52, 150 46 C200 40, 250 34, 300 20 L300 80 L0 80 Z" fill="var(--green3)" opacity=".4"/>
+          </svg>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1322,15 +1429,104 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
     <div class="topbar">
       <div><div class="topbar-title">Insights Clínicos</div></div>
       <div class="topbar-actions">
-        <span style="font-size:11px;color:var(--ink3)" id="insightsDate">Baseado nos dados do Supabase</span>
+        <span style="font-size:11px;color:var(--ink3)">Gerado em 17/05/2026 — baseado em Young (2003), Beck (1985)</span>
       </div>
     </div>
     <div class="content">
       <div class="section-title">Insights da semana</div>
       <div class="section-sub">Padrões identificados automaticamente a partir dos dados de avaliação do período</div>
-      <div id="insightsScreenContent" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:0"></div>
 
+      <div class="grid-2" style="margin-bottom:0">
 
+        <div class="insight-card">
+          <div class="insight-header">
+            <div class="insight-dot" style="background:var(--amber)"></div>
+            <span class="insight-type">Padrão comportamental</span>
+            <span class="insight-level" style="background:var(--amber3);color:var(--amber)">— Atenção</span>
+          </div>
+          <div class="insight-text">"A elevação da <strong>preocupação excessiva</strong> aparece associada ao aumento da <strong>evitação comportamental</strong> nos últimos 14 dias."</div>
+          <div class="insight-patients"><span style="font-size:10px">Pacientes:</span>
+            <div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,#3D2028,#B08090)">MC</div>
+            <div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,#73856E,#98A892)">JP</div>
+            <div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,#3D2028,#7A4A55)">AS</div>
+            <span>3 pacientes</span>
+          </div>
+          <div class="insight-source">Baseado em: Clark & Beck (2010) — Craske & Barlow (2014)</div>
+        </div>
+
+        <div class="insight-card">
+          <div class="insight-header">
+            <div class="insight-dot" style="background:var(--teal)"></div>
+            <span class="insight-type">Evolução positiva</span>
+            <span class="insight-level" style="background:var(--green3);color:var(--green)">– Progresso</span>
+          </div>
+          <div class="insight-text">"Redução de <strong>22% nos scores de ansiedade geral</strong> (GAD-7) no grupo de pacientes em acompanhamento há mais de 8 semanas."</div>
+          <div class="insight-patients"><span style="font-size:10px">Pacientes:</span>
+            <div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,#3D2028,#B08090)">MC</div>
+            <div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,#3D2028,#7A4A55)">AS</div>
+            <span>2 pacientes</span>
+          </div>
+          <div class="insight-source">Baseado em: Beck (1985) — Dados GAD-7 longitudinal</div>
+        </div>
+
+        <div class="insight-card">
+          <div class="insight-header">
+            <div class="insight-dot" style="background:var(--lilac)"></div>
+            <span class="insight-type">Correlação esquemas — modos</span>
+            <span class="insight-level" style="background:var(--lilac4);color:var(--lilac)">Informativo</span>
+          </div>
+          <div class="insight-text">"O esquema de <strong>Autossacrifício</strong> elevado está associado — ativação do modo <strong>Capitulador Complacente</strong> — padrão consistente com a literatura."</div>
+          <div class="insight-patients"><span style="font-size:10px">Pacientes:</span>
+            <div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,#B07D3A,#C4956A)">CF</div>
+            <span>1 paciente</span>
+          </div>
+          <div class="insight-source">Baseado em: Young, Klosko & Weishaar (2003) — Cap. 2</div>
+        </div>
+
+        <div class="insight-card">
+          <div class="insight-header">
+            <div class="insight-dot" style="background:var(--coral)"></div>
+            <span class="insight-type">Combinação crítica</span>
+            <span class="insight-level" style="background:var(--coral3);color:var(--coral)">— Crítico</span>
+          </div>
+          <div class="insight-text">"<strong>Criança Vulnerável elevada + Protetor Desligado elevado</strong> — ciclo de hiporregulação com evitação emocional. Risco de estagnação terapêutica."</div>
+          <div class="insight-patients"><span style="font-size:10px">Pacientes:</span>
+            <div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,#73856E,#98A892)">JP</div>
+            <span>1 paciente</span>
+          </div>
+          <div class="insight-source">Baseado em: Arntz & Jacob (2012) — Lobbestael et al. (2010)</div>
+        </div>
+
+        <div class="insight-card">
+          <div class="insight-header">
+            <div class="insight-dot" style="background:var(--green)"></div>
+            <span class="insight-type">Flexibilidade psicológica</span>
+            <span class="insight-level" style="background:var(--green3);color:var(--green)">– Progresso</span>
+          </div>
+          <div class="insight-text">"Aumento de <strong>39% na flexibilidade psicológica</strong> (AAQ-II) em paciente com TAG — correlato esperado de intervenções de aceitação e defusão."</div>
+          <div class="insight-patients"><span style="font-size:10px">Pacientes:</span>
+            <div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,#3D2028,#B08090)">MC</div>
+            <span>1 paciente</span>
+          </div>
+          <div class="insight-source">Baseado em: Hayes et al. (2006) — Wells (2009)</div>
+        </div>
+
+        <div class="insight-card">
+          <div class="insight-header">
+            <div class="insight-dot" style="background:var(--brown2)"></div>
+            <span class="insight-type">Baixa adesão</span>
+            <span class="insight-level" style="background:#F5EDE7;color:var(--brown2)">Monitorar</span>
+          </div>
+          <div class="insight-text">"Taxa de resposta abaixo de <strong>65% nas Últimas 3 semanas</strong> em 2 pacientes — considerar reforço motivacional e revisão da frequência de envio."</div>
+          <div class="insight-patients"><span style="font-size:10px">Pacientes:</span>
+            <div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,#B07D3A,#C4956A)">CF</div>
+            <div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,#3D2028,#B08090)">RS</div>
+            <span>2 pacientes</span>
+          </div>
+          <div class="insight-source">Baseado em: Whipple et al. (2003) — Lambert (2010)</div>
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -1399,33 +1595,13 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
         <input id="newPatientName" placeholder="Ex: Maria Silva">
       </div>
       <div class="field">
-        <label for="newPatientPhone">WhatsApp (opcional)</label>
-        <input id="newPatientPhone" placeholder="Ex: 5511999999999" type="tel">
-      </div>
-      <div class="field" style="grid-column:1/-1">
-        <label>Instrumento</label>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px" id="instrCategories">
-          <button type="button" class="instr-cat active" onclick="filterInstr('todos')">Todos</button>
-          <button type="button" class="instr-cat" onclick="filterInstr('ansiedade')">Ansiedade</button>
-          <button type="button" class="instr-cat" onclick="filterInstr('humor')">Humor</button>
-          <button type="button" class="instr-cat" onclick="filterInstr('act')">ACT</button>
-          <button type="button" class="instr-cat" onclick="filterInstr('autoestima')">Autoestima</button>
-          <button type="button" class="instr-cat" onclick="filterInstr('estresse')">Estresse</button>
-          <button type="button" class="instr-cat" onclick="filterInstr('sono')">Sono</button>
-          <button type="button" class="instr-cat" onclick="filterInstr('esquemas')">Esquemas</button>
-        </div>
-        <select id="newInstrument" size="4" style="border-radius:10px;padding:4px;font-size:13px" onchange="updateInstrHelp()">
-          <option value="YSQ-S3" data-cat="esquemas" data-page="formulario-esquemas">YSQ-S3 — Esquemas de Young</option>
-          <option value="GAD-7" data-cat="ansiedade" data-page="formulario-gad7">GAD-7 — Ansiedade Generalizada</option>
-          <option value="OASIS" data-cat="ansiedade" data-page="formulario-oasis">OASIS — Severidade da Ansiedade</option>
-          <option value="PHQ-9" data-cat="humor" data-page="formulario-phq9">PHQ-9 — Depressão</option>
-          <option value="AAQ-II" data-cat="act" data-page="formulario-aaq2">AAQ-II — Flexibilidade Psicológica</option>
-          <option value="CFQ" data-cat="act" data-page="formulario-cfq">CFQ — Fusão Cognitiva</option>
-          <option value="Rosenberg" data-cat="autoestima" data-page="formulario-rosenberg">Rosenberg — Autoestima</option>
-          <option value="PSS" data-cat="estresse" data-page="formulario-pss">PSS-10 — Estresse Percebido</option>
-          <option value="ISI" data-cat="sono" data-page="formulario-isi">ISI — Severidade da Insônia</option>
+        <label for="newInstrument">Instrumento</label>
+        <select id="newInstrument">
+          <option value="YSQ-S3" data-page="formulario-esquemas">YSQ-S3 — Esquemas de Young</option>
+          <option value="GAD-7" data-page="formulario-gad7">GAD-7 — Ansiedade</option>
+          <option value="PHQ-9" data-page="formulario-phq9">PHQ-9 — Depressão</option>
         </select>
-        <div class="field-help" id="instrHelp">Selecione um instrumento acima.</div>
+        <div class="field-help">Por enquanto, o beta libera YSQ-S3, GAD-7 e PHQ-9.</div>
       </div>
     </div>
     <div class="modal-error" id="applicationError"></div>
@@ -1450,241 +1626,6 @@ let SB_SESSION_TOKEN = sessionStorage.getItem('sb_session_token') || '';
 let PSI_PROFILE = null;
 let PATIENT_LINKS = [];
 let CLINICAL_RESPONSES = [];
-
-/* PATCH PSI REAL — helpers preservando filtros e relatórios */
-let EVO_PERIOD_MONTHS = 3;
-
-function setText(id, value) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = value;
-}
-
-function escapeHtml(value = '') {
-  return String(value ?? '')
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#039;');
-}
-
-function formatDate(value) {
-  if (!value) return '—';
-  const d = new Date(value);
-  if (Number.isNaN(d.getTime())) return '—';
-  return d.toLocaleDateString('pt-BR');
-}
-
-function formatDateTime(value) {
-  if (!value) return '—';
-  const d = new Date(value);
-  if (Number.isNaN(d.getTime())) return '—';
-  return d.toLocaleString('pt-BR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
-}
-
-function formatPlan(plan) {
-  const normalized = String(plan || 'ativo').toLowerCase();
-  const labels = {
-    essencial: 'Essencial',
-    premium: 'Premium',
-    profissional: 'Profissional',
-    ativo: 'Ativo',
-    free: 'Gratuito',
-    teste: 'Teste'
-  };
-  return labels[normalized] || String(plan || 'Ativo');
-}
-
-function initialsFromName(name = '') {
-  const parts = String(name || 'Psi')
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean);
-  return (parts.length ? parts.slice(0,2).map(part => part[0]).join('') : 'PS').toUpperCase();
-}
-
-function instrumentName(item = {}) {
-  return item.instrumento || item.formulario || item.instrument || item.tipo || item.nome_instrumento || 'Instrumento';
-}
-
-function getResponseScore(item = {}) {
-  const raw = item.score_total ?? item.score ?? item.total ?? item.scores?.total ?? item.resultado?.score_total ?? item.resultado?.total;
-  const n = Number(raw);
-  return Number.isFinite(n) ? n : null;
-}
-
-function isWithinDays(value, days) {
-  if (!value) return false;
-  const d = new Date(value);
-  if (Number.isNaN(d.getTime())) return false;
-  const cutoff = new Date();
-  cutoff.setDate(cutoff.getDate() - days);
-  return d >= cutoff;
-}
-
-function applicationBadgeClass(status = '') {
-  const s = String(status || '').toLowerCase();
-  if (s.includes('respond')) return 'badge-active';
-  if (s.includes('venc') || s.includes('expir')) return 'badge-high';
-  if (s.includes('paus')) return 'badge-paused';
-  return 'badge-pending';
-}
-
-function applicationStatusLabel(status = '') {
-  const s = String(status || '').toLowerCase();
-  if (s.includes('respond')) return 'Respondido';
-  if (s.includes('venc') || s.includes('expir')) return 'Vencido';
-  if (s.includes('ativo')) return 'Aguardando';
-  if (s.includes('paus')) return 'Em pausa';
-  return status || 'Aguardando';
-}
-
-function scoreBadge(score) {
-  if (score === null || score === undefined) return '<span class="badge badge-paused">sem score</span>';
-  const n = Number(score);
-  if (n >= 15) return `<span class="badge badge-high">${n}</span>`;
-  if (n >= 10) return `<span class="badge badge-pending">${n}</span>`;
-  return `<span class="badge badge-active">${n}</span>`;
-}
-
-function ensureLockHidden() {
-  const lock = document.getElementById('lockScreen');
-  if (lock) {
-    lock.style.display = 'none';
-    lock.setAttribute('aria-hidden', 'true');
-  }
-}
-
-function setEvoPeriod(months, el) {
-  EVO_PERIOD_MONTHS = Number(months) || 3;
-  document.querySelectorAll('#evoPeriodTabs .filter-tab').forEach(tab => tab.classList.remove('active'));
-  if (el) el.classList.add('active');
-  renderEvolucao();
-}
-
-function renderEvolucao() {
-  const container = document.getElementById('evoContent');
-  if (!container) return;
-
-  const select = document.getElementById('evoPatientFilter');
-  const patients = [...new Set((CLINICAL_RESPONSES || []).map(r => r.paciente_nome).filter(Boolean))].sort();
-
-  if (select && select.options.length <= 1) {
-    patients.forEach(name => {
-      const opt = document.createElement('option');
-      opt.value = name;
-      opt.textContent = name;
-      select.appendChild(opt);
-    });
-  }
-
-  const selected = select?.value || '';
-  const cutoff = new Date();
-  cutoff.setMonth(cutoff.getMonth() - EVO_PERIOD_MONTHS);
-
-  let responses = (CLINICAL_RESPONSES || [])
-    .filter(r => !selected || r.paciente_nome === selected)
-    .filter(r => !r.created_at || new Date(r.created_at) >= cutoff)
-    .sort((a,b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
-
-  const patientCount = new Set(responses.map(r => r.paciente_nome).filter(Boolean)).size;
-  const answeredCount = responses.length;
-  const avgScore = (() => {
-    const scores = responses.map(getResponseScore).filter(v => v !== null);
-    if (!scores.length) return '—';
-    return Math.round(scores.reduce((a,b) => a+b,0) / scores.length);
-  })();
-
-  const byInstrument = responses.reduce((acc, r) => {
-    const key = instrumentName(r);
-    acc[key] = (acc[key] || 0) + 1;
-    return acc;
-  }, {});
-  const instrumentRows = Object.entries(byInstrument)
-    .sort((a,b) => b[1] - a[1])
-    .map(([name, count]) => `<div class="measure-row"><div class="measure-label">${escapeHtml(name)}</div><div class="measure-bar"><div class="progress"><div class="progress-fill" style="width:${Math.min(100, count*20)}%;background:var(--lilac)"></div></div></div><div class="measure-val">${count}</div></div>`)
-    .join('');
-
-  if (!responses.length) {
-    container.innerHTML = `
-      <div class="card">
-        <div class="card-body">
-          <div class="empty-state">Nenhuma resposta encontrada para esse filtro. Gere um link, peça ao paciente para responder e volte aqui para ver o relatório.</div>
-        </div>
-      </div>`;
-    return;
-  }
-
-  container.innerHTML = `
-    <div class="stats-grid">
-      <div class="stat-card lilac"><div class="stat-label">Pacientes no filtro</div><div class="stat-value">${patientCount}</div><div class="stat-delta">${selected ? escapeHtml(selected) : 'Todos os pacientes'}</div></div>
-      <div class="stat-card brown"><div class="stat-label">Respostas</div><div class="stat-value">${answeredCount}</div><div class="stat-delta">${EVO_PERIOD_MONTHS} meses</div></div>
-      <div class="stat-card teal"><div class="stat-label">Score médio</div><div class="stat-value">${avgScore}</div><div class="stat-delta">média simples dos scores</div></div>
-      <div class="stat-card amber"><div class="stat-label">Instrumentos</div><div class="stat-value">${Object.keys(byInstrument).length}</div><div class="stat-delta">utilizados no período</div></div>
-    </div>
-
-    <div class="grid-2">
-      <div class="card">
-        <div class="card-header"><span class="card-title">Relatório por instrumento</span></div>
-        <div class="card-body">${instrumentRows || '<div class="empty-state">Sem instrumentos no período.</div>'}</div>
-      </div>
-      <div class="card">
-        <div class="card-header"><span class="card-title">Resumo clínico do período</span></div>
-        <div class="card-body">
-          <p style="font-size:14px;color:var(--ink2);line-height:1.7">
-            Foram encontradas <strong>${answeredCount}</strong> resposta(s) em <strong>${EVO_PERIOD_MONTHS} meses</strong>.
-            ${selected ? `Filtro aplicado para <strong>${escapeHtml(selected)}</strong>.` : `Relatório consolidado de <strong>${patientCount}</strong> paciente(s).`}
-          </p>
-          <button class="btn btn-ghost" style="margin-top:14px" onclick="exportPatientsCsv()">Exportar relatório CSV</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header"><span class="card-title">Histórico filtrado</span></div>
-      <table class="table">
-        <thead><tr><th>Data</th><th>Paciente</th><th>Instrumento</th><th>Score</th><th>Status clínico</th></tr></thead>
-        <tbody>
-          ${responses.map(r => {
-            const score = getResponseScore(r);
-            return `<tr>
-              <td>${formatDateTime(r.created_at)}</td>
-              <td class="name">${escapeHtml(r.paciente_nome || 'Paciente')}</td>
-              <td><span class="badge badge-lilac">${escapeHtml(instrumentName(r))}</span></td>
-              <td>${scoreBadge(score)}</td>
-              <td>${score === null ? 'Resposta registrada' : (score >= 15 ? 'Atenção alta' : score >= 10 ? 'Atenção moderada' : 'Acompanhar evolução')}</td>
-            </tr>`;
-          }).join('')}
-        </tbody>
-      </table>
-    </div>`;
-}
-
-function exportPatientsCsv() {
-  const patients = buildPatients();
-  const rows = [
-    ['Paciente','Respostas','Instrumentos','Pendentes','Adesao'],
-    ...patients.map(p => [
-      p.name,
-      p.totalResponses,
-      (p.instruments || []).join(' | '),
-      p.pendingCount,
-      `${p.adherence}%`
-    ])
-  ];
-
-  const csv = rows.map(row => row.map(cell => `"${String(cell ?? '').replaceAll('"','""')}"`).join(';')).join('\n');
-  const blob = new Blob([csv], { type:'text/csv;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `psireal-relatorio-pacientes-${new Date().toISOString().slice(0,10)}.csv`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-}
-
 
 async function tryLogin() {
   const email = document.getElementById('lockEmail');
@@ -1763,14 +1704,8 @@ async function bootstrapAuthenticatedApp() {
 
   PATIENT_LINKS = links || [];
   CLINICAL_RESPONSES = responses || [];
-  window.RESPONSES_CLINICAS = CLINICAL_RESPONSES;
-  window.PATIENT_LINKS = PATIENT_LINKS;
-  setTimeout(renderInsights, 100);
-  window.RESPONSES_CLINICAS = CLINICAL_RESPONSES;
-  window.PATIENT_LINKS = PATIENT_LINKS;
   renderAuthenticatedApp();
-  setTimeout(renderInsights, 200);
-  ensureLockHidden();
+  document.getElementById('lockScreen').style.display = 'none';
 }
 
 function renderAuthenticatedApp() {
@@ -1780,22 +1715,16 @@ function renderAuthenticatedApp() {
   renderDashboardActivity();
   renderPatientsTable();
   renderApplicationsTable();
-  renderEvolucao();
 }
 
 function renderPsiIdentity() {
   const name = PSI_PROFILE?.nome || 'Psicóloga';
-  const planRaw = PSI_PROFILE?.plano || 'ativo';
-  const plan = String(planRaw).charAt(0).toUpperCase() + String(planRaw).slice(1);
+  const plan = PSI_PROFILE?.plano || 'Plano ativo';
   document.getElementById('sidebarUserName').textContent = name;
   document.getElementById('sidebarUserPlan').textContent = formatPlan(plan);
   const initials = initialsFromName(name);
   const avatar = document.querySelector('.sidebar-user .user-avatar');
   if (avatar) avatar.textContent = initials;
-  const heroTitle = document.querySelector('.hero-title');
-  if (heroTitle && name && !name.includes('Psicóloga')) {
-    heroTitle.textContent = `Bom dia, ${name.split(' ')[0]}.`;
-  }
 }
 
 function renderDashboardStats() {
@@ -1910,10 +1839,7 @@ function renderPatientsTable() {
       </td>
       <td><span style="font-size:11px;color:var(--ink3)">${patient.totalResponses > 1 ? 'Histórico ativo' : 'Primeira aplicação'}</span></td>
       <td><span class="badge ${patient.pendingCount ? 'badge-pending' : 'badge-active'}">${patient.pendingCount ? 'Pendente' : 'Ativo'}</span></td>
-      <td style="display:flex;gap:6px;align-items:center">
-        <button class="btn btn-ghost" style="padding:5px 10px;font-size:11px" onclick="event.stopPropagation();openPatientDashboard('${encodeURIComponent(patient.name)}')">Ver</button>
-        <button class="btn btn-ghost" style="padding:5px 10px;font-size:11px;color:var(--coral);border-color:var(--coral)" onclick="event.stopPropagation();deletePatient('${encodeURIComponent(patient.name)}')">Excluir</button>
-      </td>
+      <td><button class="btn btn-ghost" style="padding:5px 10px;font-size:11px" onclick="event.stopPropagation();openPatientDashboard('${encodeURIComponent(patient.name)}')">Ver</button></td>
     </tr>
   `).join('');
 }
@@ -1931,11 +1857,10 @@ function renderApplicationsTable() {
       <td>${formatDateTime(link.created_at)}</td>
       <td>${link.expires_at ? formatDate(link.expires_at) : 'Sem prazo'}</td>
       <td><span class="badge ${applicationBadgeClass(link.status)}">${applicationStatusLabel(link.status)}</span></td>
-      <td style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+      <td>
         ${link.status === 'respondido'
-          ? `<button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" onclick="openInstrumentDashboard('${escapeHtml(link.instrumento)}','${escapeHtml(link.patient_name || '')}')">Ver resultado</button>`
+          ? `<button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" onclick="openInstrumentDashboard('${escapeHtml(link.instrumento)}')">Ver resultado</button>`
           : `<button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" onclick="copyApplicationLink('${escapeHtml(link.token || '')}','${escapeHtml(link.instrumento || '')}','${escapeHtml(link.patient_name || '')}')">Copiar link</button>`}
-        <button class="btn btn-ghost" style="padding:4px 10px;font-size:11px;color:var(--coral);border-color:var(--coral)" onclick="deleteApplication('${escapeHtml(link.id || '')}')">Excluir</button>
       </td>
     </tr>
   `).join('');
@@ -1969,150 +1894,209 @@ function buildPatients() {
   });
 }
 
-
-
-function renderInsights() {
-  const responses = window.RESPONSES_CLINICAS || CLINICAL_RESPONSES || [];
-  const links = PATIENT_LINKS || [];
-  const preview = document.getElementById('insightsPreview');
-  const screenEl = document.getElementById('insightsScreenContent');
-  const dateEl = document.getElementById('insightsDate');
-
-  const now = new Date();
-  const cutoff7 = new Date(); cutoff7.setDate(now.getDate()-7);
-  const cutoff21 = new Date(); cutoff21.setDate(now.getDate()-21);
-
-  const recent7 = responses.filter(r => new Date(r.created_at) >= cutoff7);
-  const insights = [];
-
-  // Helper: initials avatar
-  function av(name) {
-    const ini=(name||'?').split(' ').filter(Boolean).slice(0,2).map(p=>p[0].toUpperCase()).join('');
-    return `<span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--brown),var(--brown3));color:#fff;font-size:9px;font-weight:700;flex-shrink:0">${ini}</span>`;
+function openPatientDashboard(name) {
+  const decoded = decodeURIComponent(name);
+  const patient = buildPatients().find(item => item.name === decoded);
+  const latestInstrument = instrumentName(patient?.latestResponse);
+  if (latestInstrument === 'YSQ-S3') {
+    window.location.href = 'painel-esquemas.html';
+    return;
   }
-  function pills(names) {
-    if(!names||!names.length) return '';
-    return `<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;align-items:center">
-      ${names.slice(0,5).map(n=>`<span style="display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.7);border:1px solid rgba(0,0,0,.08);border-radius:99px;padding:2px 8px 2px 4px;font-size:11px;color:var(--ink2)">${av(n)}${n}</span>`).join('')}
-      ${names.length>5?`<span style="font-size:11px;color:var(--ink3)">+${names.length-5} outros</span>`:''}
-    </div>`;
+  if (latestInstrument) {
+    window.location.href = `painel-instrumento.html?instrumento=${encodeURIComponent(latestInstrument)}&paciente=${encodeURIComponent(decoded)}`;
+    return;
   }
-
-  // 1. Atividade da semana
-  if (recent7.length > 0) {
-    const names=[...new Set(recent7.map(r=>r.paciente_nome).filter(Boolean))];
-    insights.push({type:'Atividade da semana',color:'var(--lilac)',bg:'var(--lilac4)',
-      text:`<strong>${recent7.length} resposta(s)</strong> recebida(s) nos últimos 7 dias.`,names});
-  }
-
-  // 2. Atenção: GAD-7 moderado/grave
-  const gadSevere=responses.filter(r=>{
-    const inst=(r.instrumento||r.formulario||'').toUpperCase();
-    const score=Number(r.score_total??r.scores?.total??0);
-    return (inst.includes('GAD'))&&score>=10;
-  });
-  const gadNames=[...new Set(gadSevere.map(r=>r.paciente_nome).filter(Boolean))];
-  if(gadNames.length>0){
-    insights.push({type:'Atenção clínica — Ansiedade',color:'var(--amber)',bg:'var(--amber3)',
-      text:`<strong>${gadNames.length} paciente(s)</strong> com GAD-7 em nível moderado ou grave (score ≥ 10).`,names:gadNames});
-  }
-
-  // 3. Atenção: PHQ-9 moderado/grave
-  const phqSevere=responses.filter(r=>{
-    const inst=(r.instrumento||r.formulario||'').toUpperCase();
-    const score=Number(r.score_total??r.scores?.total??0);
-    return inst.includes('PHQ')&&score>=10;
-  });
-  const phqNames=[...new Set(phqSevere.map(r=>r.paciente_nome).filter(Boolean))];
-  if(phqNames.length>0){
-    insights.push({type:'Atenção clínica — Humor',color:'var(--coral)',bg:'var(--coral3)',
-      text:`<strong>${phqNames.length} paciente(s)</strong> com PHQ-9 em nível moderado ou grave (score ≥ 10).`,names:phqNames});
-  }
-
-  // 4. Item 9 PHQ (ideação)
-  const ideacao=responses.filter(r=>{
-    const inst=(r.instrumento||r.formulario||'').toUpperCase();
-    const item9=Number(r.scores?.item9??0);
-    return inst.includes('PHQ')&&item9>0;
-  });
-  const ideacaoNames=[...new Set(ideacao.map(r=>r.paciente_nome).filter(Boolean))];
-  if(ideacaoNames.length>0){
-    insights.push({type:'Alerta — Item 9 PHQ',color:'#8A2020',bg:'#FAEAEA',
-      text:`<strong>${ideacaoNames.length} paciente(s)</strong> marcaram resposta diferente de "Nenhuma vez" no item 9 do PHQ-9 (pensamentos de morte ou autolesão). Avaliação prioritária indicada.`,names:ideacaoNames});
-  }
-
-  // 5. Evolução positiva longitudinal
-  const byPatient={};
-  responses.forEach(r=>{
-    const name=r.paciente_nome; if(!name) return;
-    if(!byPatient[name]) byPatient[name]=[];
-    byPatient[name].push({score:Number(r.score_total??r.scores?.total??0),date:new Date(r.created_at),inst:(r.instrumento||r.formulario||'')});
-  });
-  const improving=Object.entries(byPatient).filter(([,arr])=>{
-    if(arr.length<2) return false;
-    arr.sort((a,b)=>a.date-b.date);
-    return arr[arr.length-1].score<arr[0].score;
-  });
-  if(improving.length>0){
-    const pct=Math.round(Math.abs(improving.reduce(([,arr])=>arr,improving[0])[1][improving[0][1].length-1]?.score-improving[0][1][0]?.score||0)/Math.max(improving[0][1][0]?.score,1)*100);
-    insights.push({type:'Evolução positiva',color:'var(--green)',bg:'var(--green3)',
-      text:`<strong>${improving.length} paciente(s)</strong> com tendência de melhora nos scores longitudinais.`,names:improving.map(([n])=>n)});
-  }
-
-  // 6. Baixa adesão (pacientes com links enviados mas sem resposta há mais de 7 dias)
-  const lowAdhere=[];
-  const grouped={};
-  links.forEach(l=>{
-    if(!grouped[l.patient_name]) grouped[l.patient_name]={links:[],responded:0};
-    grouped[l.patient_name].links.push(l);
-    if(l.status==='respondido') grouped[l.patient_name].responded++;
-  });
-  Object.entries(grouped).forEach(([name,{links:ls,responded}])=>{
-    const total=ls.length;
-    const pct=total>0?Math.round(responded/total*100):0;
-    if(total>=2&&pct<50) lowAdhere.push(name);
-  });
-  if(lowAdhere.length>0){
-    insights.push({type:'Baixa adesão',color:'var(--brown2)',bg:'var(--amber3)',
-      text:`<strong>${lowAdhere.length} paciente(s)</strong> com taxa de resposta abaixo de 50%. Considerar reforço motivacional ou revisão da frequência de envio.`,names:lowAdhere});
-  }
-
-  // 7. Aplicações pendentes
-  const pending=links.filter(l=>l.status==='ativo');
-  if(pending.length>0){
-    const pendingNames=[...new Set(pending.map(l=>l.patient_name).filter(Boolean))];
-    insights.push({type:'Aplicações pendentes',color:'var(--brown3)',bg:'var(--lilac4)',
-      text:`<strong>${pending.length} link(s)</strong> enviado(s) aguardando resposta.`,names:pendingNames});
-  }
-
-  if(insights.length===0){
-    insights.push({type:'Sem dados',color:'var(--ink3)',bg:'var(--bg2)',
-      text:'Nenhuma atividade registrada ainda. Envie instrumentos para seus pacientes para visualizar insights aqui.',names:[]});
-  }
-
-  if(dateEl) dateEl.textContent=`Atualizado em ${now.toLocaleDateString('pt-BR')} — baseado em dados reais do Supabase`;
-
-  const html=insights.map(ins=>`
-    <div style="padding:14px 16px;background:${ins.bg};border-radius:var(--radius);border-left:3px solid ${ins.color}">
-      <div style="font-size:10px;color:${ins.color};font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">${ins.type}</div>
-      <div style="font-size:13px;color:var(--ink);line-height:1.55">${ins.text}</div>
-      ${ins.names&&ins.names.length?pills(ins.names):''}
-    </div>`).join('');
-
-  if(preview) preview.innerHTML=html;
-  if(screenEl) screenEl.innerHTML=html;
+  showScreen('aplicacoes', document.querySelector('[onclick*=\"aplicacoes\"]'));
 }
 
-// Hook: run renderEvolucao when screen is activated
-const _origShowScreen = window.showScreen;
+function openInstrumentDashboard(instrument) {
+  if (instrument === 'YSQ-S3') {
+    window.location.href = 'painel-esquemas.html';
+    return;
+  }
+  window.location.href = `painel-instrumento.html?instrumento=${encodeURIComponent(instrument)}`;
+}
+
+function openApplicationModal(instrument = 'YSQ-S3') {
+  const modal = document.getElementById('applicationModal');
+  const select = document.getElementById('newInstrument');
+  const option = [...select.options].find(item => item.value === instrument && !item.disabled);
+  select.value = option ? instrument : 'YSQ-S3';
+  document.getElementById('generatedLinkBox').classList.remove('open');
+  const errorBox = document.getElementById('applicationError');
+  if (errorBox) { errorBox.style.display = 'none'; errorBox.textContent = ''; }
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+  setTimeout(() => document.getElementById('newPatientName').focus(), 0);
+}
+
+function closeApplicationModal() {
+  const modal = document.getElementById('applicationModal');
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+}
+
+async function createApplication() {
+  const name = document.getElementById('newPatientName').value.trim();
+  const select = document.getElementById('newInstrument');
+  const instrument = select.value;
+  const page = instrumentPage(instrument);
+  if (!name) {
+    alert('Informe o nome do paciente.');
+    return;
+  }
+  const errorBox = document.getElementById('applicationError');
+  if (errorBox) { errorBox.style.display = 'none'; errorBox.textContent = ''; }
+  try {
+    const res = await fetch(`${SB_URL}/rest/v1/rpc/create_patient_link`, {
+      method: 'POST',
+      headers: {
+        apikey: SB_KEY,
+        Authorization: 'Bearer ' + SB_SESSION_TOKEN,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        p_patient_name: name,
+        p_patient_birth: null,
+        p_instrumento: instrument,
+        p_expires_at: null
+      })
+    });
+    const data = await res.json();
+    if (!res.ok || !data?.[0]?.token) throw new Error('Falha ao gerar link');
+    const token = encodeURIComponent(data[0].token);
+    const link = `${location.origin}${location.pathname.replace(/painel-tcc\.html$/, '')}${page}.html?token=${token}&nome=${encodeURIComponent(name)}`;
+    document.getElementById('generatedLinkText').textContent = link;
+    document.getElementById('generatedWhatsappLink').href = `https://wa.me/?text=${encodeURIComponent('Olá ' + name + '! Segue seu questionário para responder antes da próxima sessão:\n' + link)}`;
+    document.getElementById('generatedLinkBox').classList.add('open');
+    await refreshPanelData();
+  } catch (error) {
+    if (errorBox) {
+      errorBox.textContent = 'Não foi possível cadastrar e gerar o link. Verifique se a psi está cadastrada/ativa no Supabase e se a função create_patient_link foi criada.';
+      errorBox.style.display = 'block';
+    } else {
+      alert('Não foi possível gerar o link. Verifique se a sessão está ativa e tente novamente.');
+    }
+  }
+}
+
+
+function instrumentPage(instrument = '') {
+  const key = String(instrument || '').toUpperCase().replace(/\s+/g, '');
+  if (key === 'YSQ-S3' || key === 'YSQ') return 'formulario-esquemas';
+  if (key === 'GAD-7' || key === 'GAD7') return 'formulario-gad7';
+  if (key === 'PHQ-9' || key === 'PHQ9') return 'formulario-phq9';
+  return 'formulario-esquemas';
+}
+
+function buildApplicationLink(token, instrument, patientName = '') {
+  const page = instrumentPage(instrument);
+  const base = location.origin + location.pathname.replace(/painel-tcc\.html$/, '');
+  const nameParam = patientName ? '&nome=' + encodeURIComponent(patientName) : '';
+  return base + page + '.html?token=' + encodeURIComponent(token) + nameParam;
+}
+
+async function copyApplicationLink(token, instrument, patientName = '') {
+  if (!token) { alert('Link ainda não disponível. Gere a aplicação novamente.'); return; }
+  const link = buildApplicationLink(token, instrument, patientName);
+  await navigator.clipboard.writeText(link);
+  alert('Link do formulário copiado.');
+}
+
+async function copyGeneratedLink() {
+  const link = document.getElementById('generatedLinkText').textContent;
+  await navigator.clipboard.writeText(link);
+}
+
+async function refreshPanelData() {
+  const [links, responses] = await Promise.all([
+    supabaseSelect('patient_links?select=id,token,patient_name,instrumento,status,created_at,expires_at&order=created_at.desc'),
+    supabaseSelect('respostas_clinicas?select=id,paciente_nome,instrumento,formulario,score_total,scores,status,created_at&order=created_at.desc')
+  ]);
+  PATIENT_LINKS = links || [];
+  CLINICAL_RESPONSES = responses || [];
+  renderDashboardStats();
+  renderDashboardPending();
+  renderDashboardActivity();
+  renderPatientsTable();
+  renderApplicationsTable();
+}
+
+function instrumentName(item) {
+  return item?.instrumento || item?.formulario || '';
+}
+
+function initialsFromName(name = '') {
+  return name.split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]?.toUpperCase()).join('') || 'PS';
+}
+
+function formatPlan(plan) {
+  return String(plan || '').charAt(0).toUpperCase() + String(plan || '').slice(1);
+}
+
+function formatDate(value) {
+  if (!value) return '—';
+  return new Date(value).toLocaleDateString('pt-BR');
+}
+
+function formatDateTime(value) {
+  if (!value) return '—';
+  return new Date(value).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
+}
+
+function relativeDate(value) {
+  if (!value) return '—';
+  const diffMs = Date.now() - new Date(value).getTime();
+  const diffHours = Math.max(0, Math.floor(diffMs / 36e5));
+  if (diffHours < 1) return 'agora';
+  if (diffHours < 24) return `há ${diffHours}h`;
+  const diffDays = Math.floor(diffHours / 24);
+  return diffDays === 1 ? 'há 1 dia' : `há ${diffDays} dias`;
+}
+
+function isWithinDays(value, days) {
+  if (!value) return false;
+  return Date.now() - new Date(value).getTime() <= days * 864e5;
+}
+
+function applicationStatusLabel(status) {
+  return {
+    ativo: 'Aguardando',
+    respondido: 'Respondido',
+    revogado: 'Revogado',
+    expirado: 'Expirado'
+  }[status] || status;
+}
+
+function applicationBadgeClass(status) {
+  return status === 'respondido' ? 'badge-active' : status === 'ativo' ? 'badge-pending' : 'badge-paused';
+}
+
+function setText(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = value;
+}
+
+function setHtml(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.innerHTML = value;
+}
+
+function escapeHtml(value = '') {
+  return String(value).replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  }[char]));
+}
 
 function showScreen(id, el) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('screen-' + id).classList.add('active');
   if (el) el.classList.add('active');
-  if (id === 'evolucao') { setTimeout(renderEvolucao, 50); }
-  if (id === 'insights') { setTimeout(renderInsights, 50); }
 
   const titles = {
     dashboard: 'Dashboard',
@@ -2125,186 +2109,6 @@ function showScreen(id, el) {
   };
   document.querySelector('.topbar-title') &&
     (document.querySelector('#screen-' + id + ' .topbar-title') || document.querySelector('.topbar-title'));
-}
-
-const INSTR_MAP = {
-  'YSQ-S3':    'formulario-esquemas',
-  'GAD-7':     'formulario-gad7',
-  'OASIS':     'formulario-oasis',
-  'PHQ-9':     'formulario-phq9',
-  'AAQ-II':    'formulario-aaq2',
-  'CFQ':       'formulario-cfq',
-  'ROSENBERG': 'formulario-rosenberg',
-  'PSS':       'formulario-pss',
-  'ISI':       'formulario-isi',
-};
-
-function instrumentPage(instrument) {
-  const key = String(instrument||'').toUpperCase().replace(/[-\s]/g,'');
-  for (const [k,v] of Object.entries(INSTR_MAP)) {
-    if (k.replace(/[-\s]/g,'').toUpperCase() === key) return v;
-  }
-  return 'formulario-esquemas';
-}
-
-function filterInstr(cat) {
-  document.querySelectorAll('.instr-cat').forEach(b => b.classList.remove('active'));
-  document.querySelector(`.instr-cat[onclick*="${cat}"]`)?.classList.add('active');
-  const sel = document.getElementById('newInstrument');
-  let firstVisible = null;
-  [...sel.options].forEach(opt => {
-    const show = cat === 'todos' || (opt.dataset.cat||'') === cat;
-    opt.hidden = !show;
-    opt.disabled = !show;
-    if (show && !firstVisible) firstVisible = opt;
-  });
-  if (firstVisible) { sel.value = firstVisible.value; updateInstrHelp(); }
-}
-
-function updateInstrHelp() {
-  const sel = document.getElementById('newInstrument');
-  const opt = sel?.options[sel.selectedIndex];
-  const help = document.getElementById('instrHelp');
-  const descs = {
-    'YSQ-S3':    'Inventário de Esquemas de Young — 75 itens — Terapia do Esquema',
-    'GAD-7':     'Escala de Ansiedade Generalizada — 7 itens — Domínio público',
-    'OASIS':     'Escala de Severidade da Ansiedade — 5 itens — Transdiagnóstico',
-    'PHQ-9':     'Questionário de Saúde do Paciente — 9 itens — Depressão',
-    'AAQ-II':    'Questionário de Aceitação e Ação — 7 itens — ACT',
-    'CFQ':       'Questionário de Fusão Cognitiva — 7 itens — ACT',
-    'Rosenberg': 'Escala de Autoestima de Rosenberg — 10 itens',
-    'PSS':       'Escala de Estresse Percebido — 10 itens (5 invertidos)',
-    'ISI':       'Índice de Severidade da Insônia — 7 itens',
-  };
-  if (help && opt) help.textContent = descs[opt.value] || '';
-}
-
-function buildApplicationLink(token, instrument, patientName) {
-  const page = instrumentPage(instrument);
-  const base = location.origin + location.pathname.replace(/painel-tcc\.html$/, '');
-  const nameParam = patientName ? '&nome=' + encodeURIComponent(patientName) : '';
-  return base + page + '.html?token=' + encodeURIComponent(token) + nameParam;
-}
-
-async function copyApplicationLink(token, instrument, patientName) {
-  if (!token) { alert('Link ainda não disponível. Gere a aplicação novamente.'); return; }
-  const link = buildApplicationLink(token, instrument, patientName);
-  await navigator.clipboard.writeText(link);
-  alert('Link copiado.');
-}
-
-function openApplicationModal(instrument) {
-  const modal = document.getElementById('applicationModal');
-  const select = document.getElementById('newInstrument');
-  if (instrument) {
-    const opt = [...select.options].find(o => o.value === instrument && !o.disabled);
-    if (opt) select.value = opt.value;
-    filterInstr('todos');
-  }
-  document.getElementById('generatedLinkBox')?.classList.remove('open');
-  document.getElementById('applicationError') && (document.getElementById('applicationError').style.display='none');
-  modal.removeAttribute('aria-hidden');
-  modal.style.display = 'flex';
-  updateInstrHelp();
-  setTimeout(() => document.getElementById('newPatientName')?.focus(), 50);
-}
-
-function closeApplicationModal() {
-  const modal = document.getElementById('applicationModal');
-  modal.setAttribute('aria-hidden','true');
-  modal.style.display = '';
-}
-
-async function createApplication() {
-  const name = document.getElementById('newPatientName').value.trim();
-  const instrument = document.getElementById('newInstrument').value;
-  const phone = document.getElementById('newPatientPhone')?.value.replace(/\D/g,'') || '';
-  if (!name) { alert('Informe o nome do paciente.'); return; }
-  const errorBox = document.getElementById('applicationError');
-  if (errorBox) { errorBox.style.display='none'; errorBox.textContent=''; }
-  try {
-    const res = await fetch(`${SB_URL}/rest/v1/rpc/create_patient_link`, {
-      method:'POST',
-      headers:{apikey:SB_KEY, Authorization:'Bearer '+SB_SESSION_TOKEN, 'Content-Type':'application/json'},
-      body:JSON.stringify({p_patient_name:name, p_patient_birth:null, p_instrumento:instrument, p_expires_at:null})
-    });
-    const data = await res.json();
-    if (!res.ok || !data?.[0]?.token) throw new Error('Falha ao gerar link');
-    const token = encodeURIComponent(data[0].token);
-    const link = buildApplicationLink(data[0].token, instrument, name);
-    document.getElementById('generatedLinkText').textContent = link;
-    const waNum = phone || '';
-    const waText = encodeURIComponent('Olá '+name+'! Segue seu questionário para responder antes da próxima sessão:\n'+link);
-    document.getElementById('generatedWhatsappLink').href = `https://wa.me/${waNum}?text=${waText}`;
-    document.getElementById('generatedLinkBox').classList.add('open');
-    await refreshPanelData();
-  } catch(err) {
-    if (errorBox) {
-      errorBox.textContent = 'Não foi possível gerar o link. Verifique a sessão e tente novamente.';
-      errorBox.style.display = 'block';
-    }
-  }
-}
-
-async function refreshPanelData() {
-  try {
-    const [links, responses] = await Promise.all([
-      supabaseSelect('patient_links?select=id,token,patient_name,instrumento,status,created_at,expires_at&order=created_at.desc'),
-      supabaseSelect('respostas_clinicas?select=id,paciente_nome,instrumento,formulario,score_total,scores,status,created_at&order=created_at.desc')
-    ]);
-    PATIENT_LINKS = links || [];
-    CLINICAL_RESPONSES = responses || [];
-    window.RESPONSES_CLINICAS = CLINICAL_RESPONSES;
-    window.PATIENT_LINKS = PATIENT_LINKS;
-    renderAuthenticatedApp();
-    setTimeout(renderInsights, 100);
-  } catch(_) {}
-}
-
-async function deleteApplication(id) {
-  if (!id) { alert('ID não encontrado.'); return; }
-  if (!confirm('Excluir esta aplicação? O link enviado ao paciente deixará de funcionar.')) return;
-  try {
-    await fetch(`${SB_URL}/rest/v1/patient_links?id=eq.${encodeURIComponent(id)}`, {
-      method:'DELETE',
-      headers:{apikey:SB_KEY, Authorization:'Bearer '+SB_SESSION_TOKEN, 'Content-Type':'application/json', Prefer:'return=minimal'}
-    });
-    await refreshPanelData();
-  } catch(_) { alert('Não foi possível excluir. Tente novamente.'); }
-}
-
-async function deletePatient(encodedName) {
-  const name = decodeURIComponent(encodedName);
-  if (!confirm(`Excluir o paciente "${name}"? Remove todos os links e respostas. Esta ação não pode ser desfeita.`)) return;
-  try {
-    await fetch(`${SB_URL}/rest/v1/patient_links?patient_name=eq.${encodeURIComponent(name)}`, {
-      method:'DELETE', headers:{apikey:SB_KEY, Authorization:'Bearer '+SB_SESSION_TOKEN, 'Content-Type':'application/json', Prefer:'return=minimal'}
-    });
-    await fetch(`${SB_URL}/rest/v1/respostas_clinicas?paciente_nome=eq.${encodeURIComponent(name)}`, {
-      method:'DELETE', headers:{apikey:SB_KEY, Authorization:'Bearer '+SB_SESSION_TOKEN, 'Content-Type':'application/json', Prefer:'return=minimal'}
-    });
-    await refreshPanelData();
-  } catch(_) { alert('Não foi possível excluir. Tente novamente.'); }
-}
-
-function openPatientDashboard(name) {
-  const decoded = decodeURIComponent(name);
-  const patient = buildPatients().find(item => item.name === decoded);
-  const inst = (patient?.latestResponse?.instrumento || patient?.latestResponse?.formulario || '').toUpperCase();
-  if (inst.includes('YSQ')) { window.location.href='painel-esquemas.html'; return; }
-  if (inst) {
-    window.location.href=`painel-instrumento.html?instrumento=${encodeURIComponent(inst)}&paciente=${encodeURIComponent(decoded)}`;
-    return;
-  }
-  showScreen('aplicacoes', document.querySelector('[onclick*=\"aplicacoes\"]'));
-}
-
-function openInstrumentDashboard(instrument, patient) {
-  if ((instrument||'').toUpperCase().includes('YSQ')) { window.location.href='painel-esquemas.html'; return; }
-  const url = patient
-    ? `painel-instrumento.html?instrumento=${encodeURIComponent(instrument)}&paciente=${encodeURIComponent(patient)}`
-    : `painel-instrumento.html?instrumento=${encodeURIComponent(instrument)}`;
-  window.location.href = url;
 }
 
 // Filter tabs interaction
