@@ -578,24 +578,34 @@ Ha sinais de atencao para as proximas sessoes? Quando considerar encaminhamento 
 Escreva de forma tecnica e direta, em paragrafos corridos por secao. Sem marcadores de lista. Sem avisos genericos de "consulte um profissional" pois esta analise ja e para a profissional.`;
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,stream:true,messages:[{role:'user',content:prompt}]})
-    });
-    const reader=response.body.getReader(), decoder=new TextDecoder();
-    let fullText='';textEl.innerHTML='';
-    while(true){
-      const {done,value}=await reader.read(); if(done) break;
-      const chunk=decoder.decode(value);
-      for(const line of chunk.split('\n').filter(l=>l.startsWith('data: '))){
-        const data=line.slice(6); if(data==='[DONE]') continue;
-        try{const p=JSON.parse(data),delta=p?.delta?.text||'';if(delta){fullText+=delta;textEl.textContent=fullText;}}catch(_){}
+    const response = await fetch(
+      'https://qpwjxacdjzzsyjbuuwsq.supabase.co/functions/v1/ai-clinical-analysis',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + (sessionStorage.getItem('sb_session_token') || SB_KEY)
+        },
+        body: JSON.stringify({
+          instrumento: d.inst,
+          score: d.latestScore,
+          max: d.cfg.max,
+          nivel: d.latestLevel.label,
+          aplicacoes: d.filtered.length,
+          variacao: d.variation,
+          historico: d.scores
+        })
       }
+    );
+    const result = await response.json();
+    textEl.innerHTML = '';
+    if (result.analysis) {
+      textEl.textContent = result.analysis;
+    } else {
+      textEl.textContent = 'Nao foi possivel gerar a analise. Tente novamente.';
     }
-    if(!fullText) textEl.textContent='Nao foi possivel gerar a analise. Tente novamente.';
   } catch(_) {
-    textEl.textContent='Erro ao conectar com a IA. Verifique sua conexao e tente novamente.';
+    textEl.textContent = 'Erro ao conectar com a IA. Verifique sua conexao e tente novamente.';
   }
   btn.disabled=false; btn.textContent='Gerar nova analise';
 }
