@@ -267,6 +267,9 @@ body {
   width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:14px;background:#fff;font:inherit;color:var(--ink);
 }
 .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+.cat-btn{border:1px solid var(--border);border-radius:99px;padding:4px 11px;font:500 11px 'Inter',sans-serif;background:var(--bg2);color:var(--ink3);cursor:pointer;transition:all .15s}
+.cat-btn:hover{border-color:var(--brown3);color:var(--brown)}
+.cat-btn.active{background:var(--brown);border-color:var(--brown);color:#fff}
 .generated-link{
   margin-top:16px;padding:14px;border-radius:16px;background:var(--bg2);border:1px solid var(--border);display:none;
 }
@@ -1319,27 +1322,51 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
           </div>
           <div class="measure-row" data-label="PHQ-9">
             <div class="measure-label">Humor (PHQ-9)</div>
-            <div class="measure-bar"><div class="progress"><div class="progress-fill evo-measure-fill" style="width:38%;background:var(--teal)"></div></div></div>
-            <div class="measure-val evo-measure-val">11</div>
-            <div class="measure-delta dn evo-measure-delta">— 7</div>
+            <div class="measure-bar"><div class="progress"><div class="progress-fill evo-measure-fill" style="width:0%;background:var(--teal)"></div></div></div>
+            <div class="measure-val evo-measure-val">—</div>
+            <div class="measure-delta evo-measure-delta" style="color:var(--ink3)">—</div>
           </div>
-          <div class="measure-row">
-            <div class="measure-label">Evitação (AAQ-II)</div>
-            <div class="measure-bar"><div class="progress"><div class="progress-fill" style="width:65%;background:var(--amber)"></div></div></div>
-            <div class="measure-val">32</div>
-            <div class="measure-delta dn">— 4</div>
+          <div class="measure-row" data-label="OASIS">
+            <div class="measure-label">Ansiedade (OASIS)</div>
+            <div class="measure-bar"><div class="progress"><div class="progress-fill evo-measure-fill" style="width:0%;background:#9A6080"></div></div></div>
+            <div class="measure-val evo-measure-val">—</div>
+            <div class="measure-delta evo-measure-delta" style="color:var(--ink3)">—</div>
           </div>
-          <div class="measure-row">
+          <div class="measure-row" data-label="AAQ-II">
+            <div class="measure-label">Flex. Psicológica (AAQ-II)</div>
+            <div class="measure-bar"><div class="progress"><div class="progress-fill evo-measure-fill" style="width:0%;background:var(--green)"></div></div></div>
+            <div class="measure-val evo-measure-val">—</div>
+            <div class="measure-delta evo-measure-delta" style="color:var(--ink3)">—</div>
+          </div>
+          <div class="measure-row" data-label="CFQ">
+            <div class="measure-label">Fusão Cognitiva (CFQ)</div>
+            <div class="measure-bar"><div class="progress"><div class="progress-fill evo-measure-fill" style="width:0%;background:#7A6AA0"></div></div></div>
+            <div class="measure-val evo-measure-val">—</div>
+            <div class="measure-delta evo-measure-delta" style="color:var(--ink3)">—</div>
+          </div>
+          <div class="measure-row" data-label="PSS">
+            <div class="measure-label">Estresse (PSS-10)</div>
+            <div class="measure-bar"><div class="progress"><div class="progress-fill evo-measure-fill" style="width:0%;background:var(--amber)"></div></div></div>
+            <div class="measure-val evo-measure-val">—</div>
+            <div class="measure-delta evo-measure-delta" style="color:var(--ink3)">—</div>
+          </div>
+          <div class="measure-row" data-label="ISI">
+            <div class="measure-label">Sono (ISI)</div>
+            <div class="measure-bar"><div class="progress"><div class="progress-fill evo-measure-fill" style="width:0%;background:#5A7A8A"></div></div></div>
+            <div class="measure-val evo-measure-val">—</div>
+            <div class="measure-delta evo-measure-delta" style="color:var(--ink3)">—</div>
+          </div>
+          <div class="measure-row" data-label="Rosenberg">
+            <div class="measure-label">Autoestima (Rosenberg)</div>
+            <div class="measure-bar"><div class="progress"><div class="progress-fill evo-measure-fill" style="width:0%;background:var(--coral)"></div></div></div>
+            <div class="measure-val evo-measure-val">—</div>
+            <div class="measure-delta evo-measure-delta" style="color:var(--ink3)">—</div>
+          </div>
+          <div class="measure-row" data-label="YSQ-S3">
             <div class="measure-label">Esquemas (YSQ médio)</div>
-            <div class="measure-bar"><div class="progress"><div class="progress-fill" style="width:72%;background:var(--coral)"></div></div></div>
-            <div class="measure-val">3.8</div>
-            <div class="measure-delta dn">— 0.6</div>
-          </div>
-          <div class="measure-row">
-            <div class="measure-label">Flex. psicológica</div>
-            <div class="measure-bar"><div class="progress"><div class="progress-fill" style="width:78%;background:var(--green)"></div></div></div>
-            <div class="measure-val">39</div>
-            <div class="measure-delta up">— 11</div>
+            <div class="measure-bar"><div class="progress"><div class="progress-fill evo-measure-fill" style="width:0%;background:var(--coral)"></div></div></div>
+            <div class="measure-val evo-measure-val">—</div>
+            <div class="measure-delta evo-measure-delta" style="color:var(--ink3)">—</div>
           </div>
         </div>
       </div>
@@ -1493,12 +1520,29 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
         <input id="newPatientName" placeholder="Ex: Maria Silva">
       </div>
       <div class="field">
-        <label for="newInstrument">Instrumento</label>
-        <select id="newInstrument">
-          <option value="YSQ-S3" data-page="formulario-esquemas">YSQ-S3 — Esquemas de Young</option>
-          <option value="GAD-7" data-page="formulario-gad7">GAD-7 — Ansiedade</option>
-          <option value="PHQ-9" data-page="formulario-phq9">PHQ-9 — Depressão</option>
+        <label>Instrumento</label>
+        <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px" id="instrCats">
+          <button type="button" class="cat-btn active" onclick="filterInstr('todos')">Todos</button>
+          <button type="button" class="cat-btn" onclick="filterInstr('ansiedade')">Ansiedade</button>
+          <button type="button" class="cat-btn" onclick="filterInstr('humor')">Humor</button>
+          <button type="button" class="cat-btn" onclick="filterInstr('act')">ACT</button>
+          <button type="button" class="cat-btn" onclick="filterInstr('autoestima')">Autoestima</button>
+          <button type="button" class="cat-btn" onclick="filterInstr('estresse')">Estresse</button>
+          <button type="button" class="cat-btn" onclick="filterInstr('sono')">Sono</button>
+          <button type="button" class="cat-btn" onclick="filterInstr('esquemas')">Esquemas</button>
+        </div>
+        <select id="newInstrument" size="4" style="border-radius:10px;width:100%;font:inherit;font-size:13px;padding:4px;border:1px solid var(--border);background:var(--bg);color:var(--ink);cursor:pointer;outline:none" onchange="updateInstrHelp()">
+          <option value="YSQ-S3" data-cat="esquemas" data-page="formulario-esquemas">YSQ-S3 — Esquemas de Young</option>
+          <option value="GAD-7" data-cat="ansiedade" data-page="formulario-gad7">GAD-7 — Ansiedade Generalizada</option>
+          <option value="OASIS" data-cat="ansiedade" data-page="formulario-oasis">OASIS — Severidade da Ansiedade</option>
+          <option value="PHQ-9" data-cat="humor" data-page="formulario-phq9">PHQ-9 — Depressão</option>
+          <option value="AAQ-II" data-cat="act" data-page="formulario-aaq2">AAQ-II — Flexibilidade Psicológica</option>
+          <option value="CFQ" data-cat="act" data-page="formulario-cfq">CFQ — Fusão Cognitiva</option>
+          <option value="Rosenberg" data-cat="autoestima" data-page="formulario-rosenberg">Rosenberg — Autoestima</option>
+          <option value="PSS" data-cat="estresse" data-page="formulario-pss">PSS-10 — Estresse Percebido</option>
+          <option value="ISI" data-cat="sono" data-page="formulario-isi">ISI — Severidade da Insônia</option>
         </select>
+        <div id="instrHelpText" style="font-size:11px;color:var(--ink3);margin-top:5px">GAD-7 — 7 itens — Ansiedade Generalizada — Domínio público</div>
         <div class="field-help">Por enquanto, o beta libera YSQ-S3, GAD-7 e PHQ-9.</div>
       </div>
     </div>
@@ -1836,6 +1880,49 @@ function closeApplicationModal() {
   const modal = document.getElementById('applicationModal');
   modal.classList.remove('open');
   modal.setAttribute('aria-hidden', 'true');
+}
+
+
+const INSTR_PAGES = {
+  'YSQ-S3':'formulario-esquemas','GAD-7':'formulario-gad7','OASIS':'formulario-oasis',
+  'PHQ-9':'formulario-phq9','AAQ-II':'formulario-aaq2','CFQ':'formulario-cfq',
+  'ROSENBERG':'formulario-rosenberg','PSS':'formulario-pss','ISI':'formulario-isi'
+};
+const INSTR_DESCS = {
+  'YSQ-S3':'75 itens — Esquemas de Young — Terapia do Esquema',
+  'GAD-7':'7 itens — Ansiedade Generalizada — Domínio público',
+  'OASIS':'5 itens — Severidade da Ansiedade — Transdiagnóstico',
+  'PHQ-9':'9 itens — Depressão — Domínio público',
+  'AAQ-II':'7 itens — Flexibilidade Psicológica — ACT',
+  'CFQ':'7 itens — Fusão Cognitiva — ACT',
+  'Rosenberg':'10 itens — Autoestima — Domínio público',
+  'PSS':'10 itens — Estresse Percebido (5 invertidos)',
+  'ISI':'7 itens — Severidade da Insônia'
+};
+function instrumentPage(instrument) {
+  const k = String(instrument||'').toUpperCase().replace(/[-\s]/g,'');
+  for (const [key,val] of Object.entries(INSTR_PAGES)) {
+    if (key.replace(/[-\s]/g,'').toUpperCase() === k) return val;
+  }
+  return 'formulario-esquemas';
+}
+function filterInstr(cat) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.cat-btn[onclick*="${cat}"]`)?.classList.add('active');
+  const sel = document.getElementById('newInstrument');
+  let first = null;
+  [...sel.options].forEach(opt => {
+    const show = cat === 'todos' || (opt.dataset.cat||'') === cat;
+    opt.hidden = !show; opt.disabled = !show;
+    if (show && !first) first = opt;
+  });
+  if (first) { sel.value = first.value; updateInstrHelp(); }
+}
+function updateInstrHelp() {
+  const sel = document.getElementById('newInstrument');
+  const opt = sel?.options[sel.selectedIndex];
+  const el = document.getElementById('instrHelpText');
+  if (el && opt) el.textContent = INSTR_DESCS[opt.value] || '';
 }
 
 async function createApplication() {
@@ -2229,7 +2316,6 @@ function renderEvolucao() {
     if (cur) select.value = cur;
   }
 
-  // Filter by period
   const cutoff = new Date();
   cutoff.setMonth(cutoff.getMonth() - EVO_PERIOD_MONTHS);
   let filtered = responses.filter(r => new Date(r.created_at) >= cutoff);
@@ -2245,23 +2331,37 @@ function renderEvolucao() {
   if (titleEl) titleEl.textContent = `Painel de evolução — ${patientLabel}`;
   if (subEl) subEl.textContent = `Measurement-based care — Última atualização: ${lastUpdate}`;
 
-  function byInst(inst) {
+  // All instruments config
+  const INSTS = [
+    { key:'GAD-7',  match:'GAD',  label:'Ansiedade — GAD-7',     sub:'Ansiedade Generalizada', max:21, color:'var(--lilac)',  measureColor:'var(--lilac)' },
+    { key:'OASIS',  match:'OASIS',label:'Ansiedade — OASIS',     sub:'Severidade da Ansiedade',max:16, color:'#9A6080',       measureColor:'#9A6080' },
+    { key:'PHQ-9',  match:'PHQ',  label:'Humor — PHQ-9',         sub:'Questionário de saúde',  max:27, color:'var(--teal)',   measureColor:'var(--teal)' },
+    { key:'AAQ-II', match:'AAQ',  label:'Flex. Psicológica — AAQ-II',sub:'Aceitação e ação',   max:49, color:'var(--green)',  measureColor:'var(--green)' },
+    { key:'CFQ',    match:'CFQ',  label:'Fusão Cognitiva — CFQ', sub:'ACT',                    max:49, color:'#7A6AA0',       measureColor:'#7A6AA0' },
+    { key:'PSS',    match:'PSS',  label:'Estresse — PSS-10',     sub:'Estresse Percebido',     max:40, color:'var(--amber)',  measureColor:'var(--amber)' },
+    { key:'ISI',    match:'ISI',  label:'Sono — ISI',            sub:'Severidade da Insônia',  max:28, color:'#5A7A8A',       measureColor:'#5A7A8A' },
+    { key:'Rosenberg',match:'ROSENBERG',label:'Autoestima — Rosenberg',sub:'Escala de Rosenberg',max:30,color:'var(--coral)', measureColor:'var(--coral)' },
+    { key:'YSQ-S3', match:'YSQ', label:'Esquemas — YSQ-S3',     sub:'Score médio geral',      max:6,  color:'var(--coral)',  measureColor:'var(--coral)' },
+  ];
+
+  function byInst(match) {
     return filtered.filter(r => {
-      const k = (r.instrumento || r.formulario || '').toUpperCase().replace(/[-\s]/g,'');
-      return k.includes(inst.replace(/[-\s]/g,''));
+      const k = (r.instrumento||r.formulario||'').toUpperCase().replace(/[-\s]/g,'');
+      return k.includes(match.replace(/[-\s]/g,''));
     }).sort((a,b) => new Date(a.created_at) - new Date(b.created_at));
   }
 
-  const gad = byInst('GAD7');
-  const phq = byInst('PHQ9');
-
-  function measureRow(rows, max, label, color) {
-    const el = document.querySelector(`.measure-row[data-label="${label}"]`);
+  // Update measure summary rows
+  INSTS.forEach(inst => {
+    const rows = byInst(inst.match);
+    const el = document.querySelector(`.measure-row[data-label="${inst.key}"]`);
     if (!el) return;
     if (!rows.length) {
       el.querySelector('.evo-measure-val').textContent = '—';
       el.querySelector('.evo-measure-delta').textContent = '—';
-      el.querySelector('.evo-measure-fill').style.width = '0%';
+      el.querySelector('.evo-measure-delta').style.color = 'var(--ink3)';
+      const fill = el.querySelector('.evo-measure-fill');
+      if (fill) fill.style.width = '0%';
       return;
     }
     const latest = Number(rows[rows.length-1].score_total ?? rows[rows.length-1].scores?.total ?? 0);
@@ -2270,70 +2370,79 @@ function renderEvolucao() {
     el.querySelector('.evo-measure-val').textContent = latest;
     el.querySelector('.evo-measure-delta').textContent = delta !== 0 ? `${delta > 0 ? '+' : ''}${delta}` : '=';
     el.querySelector('.evo-measure-delta').style.color = delta < 0 ? 'var(--green)' : delta > 0 ? 'var(--coral)' : 'var(--ink3)';
-    el.querySelector('.evo-measure-fill').style.width = Math.round(latest/max*100) + '%';
-    el.querySelector('.evo-measure-fill').style.background = color;
-  }
-
-  // Update measure rows if they exist
-  measureRow(gad, 21, 'GAD-7', 'var(--lilac)');
-  measureRow(phq, 27, 'PHQ-9', 'var(--teal)');
-
-  // Update mini charts
-  function updateChart(canvasId, rows, max, color) {
-    const canvas = document.getElementById(canvasId);
-    if (!canvas || !rows.length) return;
-    const ctx = canvas.getContext('2d');
-    const W = canvas.offsetWidth || 300, H = canvas.offsetHeight || 80;
-    canvas.width = W; canvas.height = H;
-    ctx.clearRect(0,0,W,H);
-    const scores = rows.map(r => Number(r.score_total ?? r.scores?.total ?? 0));
-    if (scores.length === 1) {
-      const x = W/2, y = H - (scores[0]/max)*H + 8;
-      ctx.beginPath(); ctx.arc(x,y,4,0,2*Math.PI);
-      ctx.fillStyle = color; ctx.fill(); return;
-    }
-    const step = W/(scores.length-1);
-    ctx.beginPath();
-    scores.forEach((s,i) => {
-      const x = i*step, y = H - (s/max)*(H-16) + 8;
-      i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
-    });
-    ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.stroke();
-    // area
-    ctx.beginPath();
-    scores.forEach((s,i) => { const x=i*step, y=H-(s/max)*(H-16)+8; i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
-    ctx.lineTo((scores.length-1)*step,H); ctx.lineTo(0,H); ctx.closePath();
-    ctx.fillStyle = color.replace(')',', 0.12)').replace('var(--','rgba(').replace('lilac','176,128,144').replace('teal','160,112,58');
-    ctx.fill();
-    const lx=(scores.length-1)*step, ly=H-(scores[scores.length-1]/max)*(H-16)+8;
-    ctx.beginPath(); ctx.arc(lx,ly,4,0,2*Math.PI); ctx.fillStyle=color; ctx.fill();
-  }
-
-  requestAnimationFrame(() => {
-    updateChart('evoChartGAD', gad, 21, 'var(--lilac)');
-    updateChart('evoChartPHQ', phq, 27, 'var(--teal)');
+    const fill = el.querySelector('.evo-measure-fill');
+    if (fill) { fill.style.width = Math.round(latest/inst.max*100) + '%'; fill.style.background = inst.measureColor; }
   });
 
-  // Update score display on cards
-  function updateCard(scoreId, deltaId, rows, max) {
-    const scoreEl = document.getElementById(scoreId);
-    const deltaEl = document.getElementById(deltaId);
-    if (!scoreEl || !rows.length) return;
+  // Render evo cards dynamically
+  const evoChartsEl = document.querySelector('.evo-charts');
+  if (!evoChartsEl) return;
+
+  evoChartsEl.innerHTML = INSTS.map(inst => {
+    const rows = byInst(inst.match);
+    if (!rows.length) {
+      return `<div class="evo-card">
+        <div class="evo-card-head">
+          <div><div class="evo-name">${inst.label}</div><div style="font-size:11px;color:var(--ink3)">${inst.sub}</div></div>
+          <div style="text-align:right"><div class="evo-score" style="color:var(--ink3)">—</div><span class="evo-delta-badge" style="background:var(--bg2);color:var(--ink3)">sem dados</span></div>
+        </div>
+        <div style="height:80px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ink3)">Nenhuma resposta no período</div>
+      </div>`;
+    }
     const latest = Number(rows[rows.length-1].score_total ?? rows[rows.length-1].scores?.total ?? 0);
     const first = Number(rows[0].score_total ?? rows[0].scores?.total ?? 0);
     const delta = latest - first;
     const pct = first > 0 ? Math.round(Math.abs(delta)/first*100) : 0;
-    scoreEl.textContent = latest;
-    if (deltaEl) {
-      deltaEl.textContent = delta !== 0 ? `${delta < 0 ? '—' : '+'} ${pct}%` : '=';
-      deltaEl.style.background = delta < 0 ? 'var(--green3)' : delta > 0 ? 'var(--coral3)' : 'var(--bg2)';
-      deltaEl.style.color = delta < 0 ? 'var(--green)' : delta > 0 ? 'var(--coral)' : 'var(--ink3)';
-    }
-  }
+    const deltaLabel = delta < 0 ? `— ${pct}%` : delta > 0 ? `+ ${pct}%` : '=';
+    const deltaBg = delta < 0 ? 'var(--green3)' : delta > 0 ? 'var(--coral3)' : 'var(--bg2)';
+    const deltaColor = delta < 0 ? 'var(--green)' : delta > 0 ? 'var(--coral)' : 'var(--ink3)';
+    const canvasId = `evoChart_${inst.match}`;
+    return `<div class="evo-card">
+      <div class="evo-card-head">
+        <div><div class="evo-name">${inst.label}</div><div style="font-size:11px;color:var(--ink3)">${inst.sub}</div></div>
+        <div style="text-align:right">
+          <div class="evo-score" style="color:${inst.color}">${latest}</div>
+          <span class="evo-delta-badge" style="background:${deltaBg};color:${deltaColor}">${deltaLabel}</span>
+        </div>
+      </div>
+      <canvas id="${canvasId}" width="300" height="80" style="width:100%;height:80px"></canvas>
+    </div>`;
+  }).join('');
 
-  updateCard('evoScoreGAD', 'evoDeltaGAD', gad, 21);
-  updateCard('evoScorePHQ', 'evoDeltaPHQ', phq, 27);
+  // Draw charts
+  requestAnimationFrame(() => {
+    INSTS.forEach(inst => {
+      const rows = byInst(inst.match);
+      if (!rows.length) return;
+      const canvas = document.getElementById(`evoChart_${inst.match}`);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const W = canvas.offsetWidth || 300, H = 80;
+      canvas.width = W; canvas.height = H;
+      ctx.clearRect(0,0,W,H);
+      const scores = rows.map(r => Number(r.score_total ?? r.scores?.total ?? 0));
+      const maxVal = inst.max;
+      if (scores.length === 1) {
+        const x = W/2, y = H - (scores[0]/maxVal)*(H-16) + 8;
+        ctx.beginPath(); ctx.arc(x,y,4,0,2*Math.PI);
+        ctx.fillStyle = inst.color.startsWith('var') ? '#B08090' : inst.color;
+        ctx.fill(); return;
+      }
+      const step = W/(scores.length-1);
+      const col = inst.color.startsWith('var') ? '#B08090' : inst.color;
+      ctx.beginPath();
+      scores.forEach((s,i) => { const x=i*step, y=H-(s/maxVal)*(H-16)+8; i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
+      ctx.strokeStyle=col; ctx.lineWidth=2; ctx.lineJoin='round'; ctx.stroke();
+      ctx.beginPath();
+      scores.forEach((s,i) => { const x=i*step, y=H-(s/maxVal)*(H-16)+8; i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
+      ctx.lineTo((scores.length-1)*step,H); ctx.lineTo(0,H); ctx.closePath();
+      ctx.fillStyle=col+'22'; ctx.fill();
+      const lx=(scores.length-1)*step, ly=H-(scores[scores.length-1]/maxVal)*(H-16)+8;
+      ctx.beginPath(); ctx.arc(lx,ly,4,0,2*Math.PI); ctx.fillStyle=col; ctx.fill();
+    });
+  });
 }
+
 
 </script>
 </body>
