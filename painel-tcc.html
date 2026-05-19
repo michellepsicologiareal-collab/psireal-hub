@@ -2033,94 +2033,75 @@ document.querySelectorAll('.btn-apply').forEach(btn => {
 function renderInsights() {
   const responses = CLINICAL_RESPONSES || [];
   const links = PATIENT_LINKS || [];
-
-  // Avatar helper
-  function av(name) {
-    const ini = (name || '?').split(' ').filter(Boolean).slice(0, 2).map(p => p[0].toUpperCase()).join('');
-    const colors = ['#3D2028,#B08090','#73856E,#98A892','#B07D3A,#C4956A','#7A4A55,#CDA7AE','#5C6B3A,#8A9B5A'];
-    const idx = name ? name.charCodeAt(0) % colors.length : 0;
-    return `<div class="avatar" style="width:20px;height:20px;font-size:8px;background:linear-gradient(135deg,${colors[idx]})">${ini}</div>`;
-  }
-
-  // Patient pills for dashboard preview
-  function previewNames(names) {
-    if (!names || !names.length) return '';
-    const shown = names.slice(0, 4);
-    const rest = names.length - shown.length;
-    return `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;align-items:center">
-      ${shown.map(n => `<span style="font-size:11px;color:var(--ink2);background:var(--bg2);border:1px solid var(--border);border-radius:99px;padding:2px 8px">${n}</span>`).join('')}
-      ${rest > 0 ? `<span style="font-size:11px;color:var(--ink3)">+${rest} outros</span>` : ''}
-    </div>`;
-  }
-
-  function screenNames(names) {
-    if (!names || !names.length) return '';
-    const shown = names.slice(0, 6);
-    const rest = names.length - shown.length;
-    return `<div class="insight-patients" style="margin-top:8px;flex-wrap:wrap;gap:4px">
-      <span style="font-size:10px;flex-shrink:0">Pacientes:</span>
-      ${shown.map(n => `<span style="font-size:11px;color:var(--ink2);background:var(--bg2);border:1px solid var(--border);border-radius:99px;padding:2px 8px">${n}</span>`).join('')}
-      ${rest > 0 ? `<span style="font-size:11px;color:var(--ink3)">+${rest} outros</span>` : ''}
-    </div>`;
-  }
+  const preview = document.getElementById('insightsPreview');
+  const screenEl = document.getElementById('insightsScreenContent');
 
   const cutoff7 = new Date(); cutoff7.setDate(cutoff7.getDate() - 7);
   const recent7 = responses.filter(r => new Date(r.created_at) >= cutoff7);
   const insights = [];
 
+  function namePills(names, accent) {
+    if (!names || !names.length) return '';
+    const shown = names.slice(0, 6);
+    const rest = names.length - shown.length;
+    return `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:10px;align-items:center">
+      ${shown.map(n => `<span style="font-size:11px;font-weight:500;color:${accent};background:rgba(255,255,255,.6);border:1px solid ${accent}33;border-radius:99px;padding:2px 9px">${n}</span>`).join('')}
+      ${rest > 0 ? `<span style="font-size:11px;color:var(--ink3)">+${rest} outros</span>` : ''}
+    </div>`;
+  }
+
   // 1. Atividade da semana
   if (recent7.length > 0) {
     const names = [...new Set(recent7.map(r => r.paciente_nome).filter(Boolean))];
-    insights.push({
-      dot: 'var(--lilac)', type: 'Atividade da semana',
-      level: 'Recente', levelBg: 'var(--lilac4)', levelColor: 'var(--lilac)',
-      text: `<strong>${recent7.length} resposta(s)</strong> recebida(s) nos últimos 7 dias.`,
-      names, source: 'Baseado nos dados do Supabase'
+    insights.push({ id:'atividade',
+      icon:'M8 2a6 6 0 100 12A6 6 0 008 2zm0 3v3l2 2',
+      iconColor:'#7A4A55', bg:'linear-gradient(135deg,#F8F2F4 0%,#F2E4D4 100%)',
+      border:'#E8D0D8', accent:'#7A4A55',
+      type:'Atividade da semana', badge:'Recente', badgeBg:'#EEE0E4', badgeColor:'#7A4A55',
+      text:`<strong>${recent7.length} resposta(s)</strong> recebida(s) nos últimos 7 dias.`,
+      names, source:'Dados do Supabase'
     });
   }
 
-  // 2. Atenção: GAD-7 moderado/grave
-  const gadSevere = responses.filter(r => {
-    const inst = (r.instrumento || r.formulario || '').toUpperCase();
-    return inst.includes('GAD') && Number(r.score_total ?? r.scores?.total ?? 0) >= 10;
-  });
+  // 2. GAD-7 moderado/grave
+  const gadSevere = responses.filter(r => (r.instrumento||r.formulario||'').toUpperCase().includes('GAD') && Number(r.score_total??r.scores?.total??0) >= 10);
   const gadNames = [...new Set(gadSevere.map(r => r.paciente_nome).filter(Boolean))];
   if (gadNames.length > 0) {
-    insights.push({
-      dot: 'var(--amber)', type: 'Atenção clínica — Ansiedade',
-      level: '— Atenção', levelBg: 'var(--amber3)', levelColor: 'var(--amber)',
-      text: `<strong>${gadNames.length} paciente(s)</strong> com GAD-7 em nível moderado ou grave (score ≥ 10).`,
-      names: gadNames, source: 'Baseado em: Spitzer et al. (2006) — Dados GAD-7'
+    insights.push({ id:'gad',
+      icon:'M8 2a6 6 0 100 12A6 6 0 008 2zm0 3v3M8 9.5v.5',
+      iconColor:'#A0703A', bg:'linear-gradient(135deg,#FDF6EE 0%,#F5E9DD 100%)',
+      border:'#DFC4A0', accent:'#A0703A',
+      type:'Atenção clínica — Ansiedade', badge:'— Atenção', badgeBg:'#F5E9DD', badgeColor:'#A0703A',
+      text:`<strong>${gadNames.length} paciente(s)</strong> com GAD-7 em nível moderado ou grave (score ≥ 10).`,
+      names: gadNames, source:'Spitzer et al. (2006) — Dados GAD-7'
     });
   }
 
-  // 3. Atenção: PHQ-9 moderado/grave
-  const phqSevere = responses.filter(r => {
-    const inst = (r.instrumento || r.formulario || '').toUpperCase();
-    return inst.includes('PHQ') && Number(r.score_total ?? r.scores?.total ?? 0) >= 10;
-  });
+  // 3. PHQ-9 moderado/grave
+  const phqSevere = responses.filter(r => (r.instrumento||r.formulario||'').toUpperCase().includes('PHQ') && Number(r.score_total??r.scores?.total??0) >= 10);
   const phqNames = [...new Set(phqSevere.map(r => r.paciente_nome).filter(Boolean))];
   if (phqNames.length > 0) {
-    insights.push({
-      dot: 'var(--coral)', type: 'Atenção clínica — Humor',
-      level: '— Atenção', levelBg: 'var(--coral3)', levelColor: 'var(--coral)',
-      text: `<strong>${phqNames.length} paciente(s)</strong> com PHQ-9 em nível moderado ou grave (score ≥ 10).`,
-      names: phqNames, source: 'Baseado em: Kroenke et al. (2001) — Dados PHQ-9'
+    insights.push({ id:'phq',
+      icon:'M4 8h8M8 4v8',
+      iconColor:'#8E4856', bg:'linear-gradient(135deg,#FDF2F4 0%,#FAE8EC 100%)',
+      border:'#DDBCC4', accent:'#8E4856',
+      type:'Atenção clínica — Humor', badge:'— Atenção', badgeBg:'#FAE8EC', badgeColor:'#8E4856',
+      text:`<strong>${phqNames.length} paciente(s)</strong> com PHQ-9 em nível moderado ou grave (score ≥ 10).`,
+      names: phqNames, source:'Kroenke et al. (2001) — Dados PHQ-9'
     });
   }
 
-  // 4. Alerta: item 9 PHQ (ideação)
-  const ideacao = responses.filter(r => {
-    const inst = (r.instrumento || r.formulario || '').toUpperCase();
-    return inst.includes('PHQ') && Number(r.scores?.item9 ?? 0) > 0;
-  });
+  // 4. Alerta item 9
+  const ideacao = responses.filter(r => (r.instrumento||r.formulario||'').toUpperCase().includes('PHQ') && Number(r.scores?.item9??0) > 0);
   const ideacaoNames = [...new Set(ideacao.map(r => r.paciente_nome).filter(Boolean))];
   if (ideacaoNames.length > 0) {
-    insights.push({
-      dot: '#8A2020', type: 'Alerta — Item 9 PHQ',
-      level: '— Crítico', levelBg: '#FAEAEA', levelColor: '#8A2020',
-      text: `<strong>${ideacaoNames.length} paciente(s)</strong> marcaram resposta diferente de "Nenhuma vez" no item 9 do PHQ-9. Avaliação prioritária indicada.`,
-      names: ideacaoNames, source: 'Protocolo de segurança clínica — avaliação imediata indicada'
+    insights.push({ id:'ideacao',
+      icon:'M8 2L8 8M8 10v.5',
+      iconColor:'#6B1F2A', bg:'linear-gradient(135deg,#FDF0F2 0%,#FAE0E4 100%)',
+      border:'#C89098', accent:'#6B1F2A',
+      type:'Alerta — Item 9 PHQ', badge:'— Crítico', badgeBg:'#F7D8DC', badgeColor:'#6B1F2A',
+      text:`<strong>${ideacaoNames.length} paciente(s)</strong> marcaram resposta diferente de "Nenhuma vez" no item 9 do PHQ-9. Avaliação prioritária indicada.`,
+      names: ideacaoNames, source:'Protocolo de segurança clínica — avaliação imediata indicada'
     });
   }
 
@@ -2129,114 +2110,99 @@ function renderInsights() {
   responses.forEach(r => {
     const name = r.paciente_nome; if (!name) return;
     if (!byPatient[name]) byPatient[name] = [];
-    byPatient[name].push({ score: Number(r.score_total ?? r.scores?.total ?? 0), date: new Date(r.created_at) });
+    byPatient[name].push({ score: Number(r.score_total??r.scores?.total??0), date: new Date(r.created_at) });
   });
-  const improving = Object.entries(byPatient).filter(([, arr]) => {
+  const improving = Object.entries(byPatient).filter(([,arr]) => {
     if (arr.length < 2) return false;
-    arr.sort((a, b) => a.date - b.date);
-    return arr[arr.length - 1].score < arr[0].score;
+    arr.sort((a,b) => a.date - b.date);
+    return arr[arr.length-1].score < arr[0].score;
   });
   if (improving.length > 0) {
-    insights.push({
-      dot: 'var(--green)', type: 'Evolução positiva',
-      level: '– Progresso', levelBg: 'var(--green3)', levelColor: 'var(--green)',
-      text: `<strong>${improving.length} paciente(s)</strong> com tendência de melhora nos scores longitudinais.`,
-      names: improving.map(([n]) => n), source: 'Baseado nos dados longitudinais do Supabase'
+    insights.push({ id:'evolucao',
+      icon:'M2 10l4-4 3 3 5-6',
+      iconColor:'#3D6B4F', bg:'linear-gradient(135deg,#F2F7F4 0%,#E8F2EC 100%)',
+      border:'#A8C8B4', accent:'#3D6B4F',
+      type:'Evolução positiva', badge:'– Progresso', badgeBg:'#DFF0E8', badgeColor:'#3D6B4F',
+      text:`<strong>${improving.length} paciente(s)</strong> com tendência de melhora nos scores longitudinais.`,
+      names: improving.map(([n]) => n), source:'Dados longitudinais do Supabase'
     });
   }
 
   // 6. Baixa adesão
   const grouped = {};
   links.forEach(l => {
-    if (!grouped[l.patient_name]) grouped[l.patient_name] = { total: 0, responded: 0 };
+    if (!grouped[l.patient_name]) grouped[l.patient_name] = { total:0, responded:0 };
     grouped[l.patient_name].total++;
     if (l.status === 'respondido') grouped[l.patient_name].responded++;
   });
-  const lowAdhere = Object.entries(grouped)
-    .filter(([, { total, responded }]) => total >= 2 && responded / total < 0.5)
-    .map(([name]) => name);
+  const lowAdhere = Object.entries(grouped).filter(([,{total,responded}]) => total >= 2 && responded/total < 0.5).map(([n]) => n);
   if (lowAdhere.length > 0) {
-    insights.push({
-      dot: 'var(--brown2)', type: 'Baixa adesão',
-      level: 'Monitorar', levelBg: '#F5EDE7', levelColor: 'var(--brown2)',
-      text: `<strong>${lowAdhere.length} paciente(s)</strong> com taxa de resposta abaixo de 50%. Considerar reforço motivacional.`,
-      names: lowAdhere, source: 'Baseado em: Whipple et al. (2003) — Lambert (2010)'
+    insights.push({ id:'adesao',
+      icon:'M2 8h12M8 2v12',
+      iconColor:'#7A5530', bg:'linear-gradient(135deg,#FBF6EE 0%,#F5E8D4 100%)',
+      border:'#C8A878', accent:'#7A5530',
+      type:'Baixa adesão', badge:'Monitorar', badgeBg:'#F0E0C8', badgeColor:'#7A5530',
+      text:`<strong>${lowAdhere.length} paciente(s)</strong> com taxa de resposta abaixo de 50%. Considerar reforço motivacional.`,
+      names: lowAdhere, source:'Whipple et al. (2003) — Lambert (2010)'
     });
   }
 
-  // 7. Aplicações pendentes
+  // 7. Pendentes
   const pending = links.filter(l => l.status === 'ativo');
   if (pending.length > 0) {
     const pendingNames = [...new Set(pending.map(l => l.patient_name).filter(Boolean))];
-    insights.push({
-      dot: 'var(--brown3)', type: 'Aplicações pendentes',
-      level: 'Aguardando', levelBg: 'var(--lilac4)', levelColor: 'var(--brown3)',
-      text: `<strong>${pending.length} link(s)</strong> enviado(s) aguardando resposta do paciente.`,
-      names: pendingNames, source: 'Dados de patient_links — Supabase'
+    insights.push({ id:'pendentes',
+      icon:'M8 2a6 6 0 100 12A6 6 0 008 2zm0 4v4M8 10v.5',
+      iconColor:'#5A4A7A', bg:'linear-gradient(135deg,#F4F2FA 0%,#EAE4F4 100%)',
+      border:'#B8A8D8', accent:'#5A4A7A',
+      type:'Aplicações pendentes', badge:'Aguardando', badgeBg:'#E4DCF4', badgeColor:'#5A4A7A',
+      text:`<strong>${pending.length} link(s)</strong> enviado(s) aguardando resposta do paciente.`,
+      names: pendingNames, source:'Dados de patient_links — Supabase'
     });
   }
 
   if (insights.length === 0) {
     const empty = '<div style="grid-column:1/-1;text-align:center;padding:40px;font-size:13px;color:var(--ink3)">Nenhuma atividade registrada. Envie instrumentos para seus pacientes para visualizar insights aqui.</div>';
-    const p = document.getElementById('insightsPreview');
-    const s = document.getElementById('insightsScreenContent');
-    if (p) p.innerHTML = empty;
-    if (s) s.innerHTML = empty;
+    if (preview) preview.innerHTML = empty;
+    if (screenEl) screenEl.innerHTML = empty;
     return;
   }
 
-  // Dashboard preview: first 2 insights as mini cards
+  // Dashboard preview card (compact)
   const previewHtml = insights.slice(0, 2).map(ins => `
-    <div style="padding:12px 14px;background:var(--bg2);border-radius:var(--radius);border-left:3px solid ${ins.dot}">
-      <div style="font-size:10px;color:${ins.dot};font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">${ins.type}</div>
-      <div style="font-size:13px;color:var(--ink);line-height:1.5">${ins.text}</div>
-      ${previewNames(ins.names)}
-    </div>`).join('');
-
-  // Full screen: all insights as insight-cards
-  const screenHtml = insights.map(ins => `
-    <div class="insight-card">
-      <div class="insight-header">
-        <div class="insight-dot" style="background:${ins.dot}"></div>
-        <span class="insight-type">${ins.type}</span>
-        <span class="insight-level" style="background:${ins.levelBg};color:${ins.levelColor}">${ins.level}</span>
+    <div style="padding:14px 16px;background:${ins.bg};border-radius:12px;border:1px solid ${ins.border};position:relative;overflow:hidden">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:26px;height:26px;border-radius:8px;background:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="${ins.iconColor}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${ins.icon}"/></svg>
+          </div>
+          <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:${ins.iconColor}">${ins.type}</span>
+        </div>
+        <span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:99px;background:${ins.badgeBg};color:${ins.badgeColor}">${ins.badge}</span>
       </div>
-      <div class="insight-text">${ins.text}</div>
-      ${screenNames(ins.names)}
-      <div class="insight-source">${ins.source}</div>
+      <div style="font-size:13px;color:var(--ink);line-height:1.5">${ins.text}</div>
+      ${namePills(ins.names, ins.accent)}
     </div>`).join('');
 
-  const p = document.getElementById('insightsPreview');
-  const s = document.getElementById('insightsScreenContent');
-  if (p) p.innerHTML = previewHtml;
-  if (s) s.innerHTML = screenHtml;
-}
+  // Full screen cards
+  const screenHtml = insights.map(ins => `
+    <div style="background:${ins.bg};border:1px solid ${ins.border};border-radius:18px;padding:20px 22px;transition:box-shadow .2s;cursor:default" onmouseenter="this.style.boxShadow='0 8px 24px rgba(0,0,0,.08)'" onmouseleave="this.style.boxShadow='none'">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:10px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.75);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.06)">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="${ins.iconColor}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${ins.icon}"/></svg>
+          </div>
+          <span style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:${ins.iconColor}">${ins.type}</span>
+        </div>
+        <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:${ins.badgeBg};color:${ins.badgeColor};white-space:nowrap;flex-shrink:0">${ins.badge}</span>
+      </div>
+      <div style="font-size:13.5px;color:var(--ink);line-height:1.6;margin-bottom:4px">${ins.text}</div>
+      ${namePills(ins.names, ins.accent)}
+      <div style="margin-top:12px;font-size:11px;color:${ins.accent}88">${ins.source}</div>
+    </div>`).join('');
 
-
-async function deletePatient(encodedName) {
-  const name = decodeURIComponent(encodedName);
-  if (!confirm(`Excluir o paciente "${name}"?\n\nIsso remove todos os links e respostas associados. Esta ação não pode ser desfeita.`)) return;
-  try {
-    await fetch(`${SB_URL}/rest/v1/patient_links?patient_name=eq.${encodeURIComponent(name)}`, {
-      method: 'DELETE',
-      headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_SESSION_TOKEN, 'Content-Type': 'application/json', Prefer: 'return=minimal' }
-    });
-    await fetch(`${SB_URL}/rest/v1/respostas_clinicas?paciente_nome=eq.${encodeURIComponent(name)}`, {
-      method: 'DELETE',
-      headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_SESSION_TOKEN, 'Content-Type': 'application/json', Prefer: 'return=minimal' }
-    });
-    // Refresh data
-    const [links, responses] = await Promise.all([
-      supabaseSelect('patient_links?select=id,token,patient_name,instrumento,status,created_at,expires_at&order=created_at.desc'),
-      supabaseSelect('respostas_clinicas?select=id,paciente_nome,instrumento,formulario,score_total,scores,status,created_at&order=created_at.desc')
-    ]);
-    PATIENT_LINKS = links || [];
-    CLINICAL_RESPONSES = responses || [];
-    renderAuthenticatedApp();
-    renderInsights();
-  } catch(err) {
-    alert('Não foi possível excluir o paciente. Tente novamente.');
-  }
+  if (preview) preview.innerHTML = previewHtml;
+  if (screenEl) screenEl.innerHTML = screenHtml;
 }
 
 
