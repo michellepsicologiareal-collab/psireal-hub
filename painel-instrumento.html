@@ -265,6 +265,31 @@ canvas.line-chart { width: 100% !important; height: 100% !important; }
   .main { margin-left: 0; }
   .grid-2-1, .grid-1-1, .stats-row { grid-template-columns: 1fr; }
 }
+
+/* AI SECTION */
+.ai-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow); margin-bottom: 20px; overflow: hidden; }
+.ai-card-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.ai-card-title { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink3); }
+.ai-badge { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; background: var(--bg3); color: var(--teal); border: 1px solid var(--amber3); padding: 3px 8px; border-radius: 4px; }
+.ai-card-body { padding: 20px; }
+.ai-warning { background: var(--amber3); border: 1px solid var(--amber2); border-radius: var(--radius); padding: 14px 16px; font-size: 12px; color: var(--ink2); line-height: 1.65; margin-bottom: 14px; }
+.ai-warning strong { color: var(--brown2); font-weight: 600; }
+.ai-warning-title { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--teal); margin-bottom: 6px; }
+.ai-disclaimer { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; font-size: 11px; color: var(--ink3); line-height: 1.6; margin-bottom: 14px; }
+.ai-consent-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; }
+.ai-consent-row input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--brown); flex-shrink: 0; margin-top: 2px; cursor: pointer; }
+.ai-consent-row label { font-size: 12px; color: var(--ink2); line-height: 1.6; cursor: pointer; }
+.ai-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: var(--radius); background: linear-gradient(135deg, var(--brown), var(--brown2)); color: #fff; font: 600 13px/1 "Inter",sans-serif; border: none; cursor: pointer; transition: all .15s; }
+.ai-btn:hover:not(:disabled) { opacity: .9; transform: translateY(-1px); }
+.ai-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+.ai-output { display: none; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 20px; }
+.ai-output-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--brown3); margin-bottom: 12px; }
+.ai-text-wrap { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; }
+.ai-text { font-size: 13.5px; color: var(--ink2); line-height: 1.75; white-space: pre-wrap; }
+.ai-cursor { display: inline-block; width: 2px; height: 14px; background: var(--brown3); margin-left: 2px; animation: blink .7s step-end infinite; vertical-align: middle; }
+@keyframes blink { 50% { opacity: 0; } }
+.ai-footer { margin-top: 12px; font-size: 11px; color: var(--ink3); display: flex; align-items: center; gap: 6px; }
+.ai-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brown3); flex-shrink: 0; }
 </style>
 </head>
 <body>
@@ -632,6 +657,12 @@ function render(responses) {
   const variation = latestScore - firstScore;
   const recos = CFG.recos[latestLevel.label] || [];
 
+  // Store for AI function scope
+  window.__latestForAI = latest;
+  window.__scoresForAI = scores;
+  window.__filteredForAI = filtered;
+  window.__latestLevelForAI = latestLevel;
+
   const scores  = filtered.map(r => Number(r.score_total ?? r.scores?.total ?? 0));
   const labels  = filtered.map(r => formatDate(r.created_at));
 
@@ -774,6 +805,51 @@ function render(responses) {
     </div>
   `;
 
+
+  // AI section injected into content after innerHTML
+  const aiSection = document.createElement('div');
+  aiSection.id = 'aiSection';
+  aiSection.style.marginTop = '20px';
+  aiSection.innerHTML = `
+    <div class="ai-card">
+      <div class="ai-card-header">
+        <div class="ai-card-title">Analise Clinica com Inteligencia Artificial</div>
+        <span class="ai-badge">Beta · Uso exclusivo da psi</span>
+      </div>
+      <div class="ai-card-body">
+        <div class="ai-warning">
+          <div class="ai-warning-title">Aviso de segurança — leia antes de usar</div>
+          <strong>Esta funcionalidade utiliza inteligência artificial (IA) generativa.</strong> A análise gerada tem caráter exclusivamente de apoio clínico e não substitui o julgamento profissional da psicóloga. Hipóteses diagnósticas e sugestões de manejo devem ser avaliadas criticamente à luz da história clínica completa do paciente. Nunca compartilhe esta análise diretamente com o paciente. O uso desta funcionalidade implica ciência de que: (1) a IA pode cometer erros; (2) as informações geradas são baseadas em dados do instrumento aplicado, sem acesso ao prontuário completo; (3) a responsabilidade clínica permanece integralmente com a profissional habilitada.
+        </div>
+        <div class="ai-disclaimer">
+          Dados enviados para análise: instrumento (${INSTRUMENTO}), score atual (${latestScore}/${CFG.max}), nível (${latestLevel.label}), número de aplicações (${filtered.length}), variação longitudinal (${variation > 0 ? '+' : ''}${variation}). Nenhum dado de identificação do paciente é enviado à IA.
+        </div>
+        <div class="ai-consent-row">
+          <input type="checkbox" id="aiConsent"/>
+          <label for="aiConsent">Compreendo que esta análise é gerada por IA, tem caráter de apoio clínico e não substitui meu julgamento profissional. Assumo a responsabilidade pelo uso clínico destas informações.</label>
+        </div>
+        <button class="ai-btn" id="aiBtn" onclick="generateAnalysis()" disabled>
+          Gerar análise clínica
+        </button>
+        <div class="ai-output" id="aiOutput">
+          <div class="ai-output-label">Análise gerada pela IA — uso exclusivo da psicóloga</div>
+          <div class="ai-text-wrap">
+            <div class="ai-text" id="aiText"></div>
+          </div>
+          <div class="ai-footer">
+            <div class="ai-dot"></div>
+            Gerado por Claude (Anthropic) · Baseado em TCC, ACT, Terapia do Esquema e DBT · Não compartilhar com o paciente
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById('mainContent').appendChild(aiSection);
+
+  document.getElementById('aiConsent').addEventListener('change', function() {
+    document.getElementById('aiBtn').disabled = !this.checked;
+  });
+
   // Draw charts after DOM is ready
   requestAnimationFrame(() => {
     const lineCanvas = document.getElementById('lineChart');
@@ -784,6 +860,101 @@ function render(responses) {
     }
     drawGauge('gaugeChart', latestScore, latestLevel.color);
   });
+}
+
+
+// ── AI ANALYSIS ──────────────────────────────────────────────────────────────
+async function generateAnalysis() {
+  const btn = document.getElementById('aiBtn');
+  const output = document.getElementById('aiOutput');
+  const textEl = document.getElementById('aiText');
+
+  btn.disabled = true;
+  btn.textContent = 'Gerando análise...';
+  output.style.display = 'block';
+  textEl.innerHTML = '<span class="ai-cursor"></span>';
+
+  const latest = window.__latestForAI;
+  const scores = window.__scoresForAI;
+  const filtered = window.__filteredForAI;
+
+  const scoreHistory = scores.map((s, i) => `Aplicação ${i+1}: ${s} pontos`).join('; ');
+  const trend = scores.length > 1
+    ? (scores[scores.length-1] - scores[0] < 0 ? 'redução' : scores[scores.length-1] - scores[0] > 0 ? 'aumento' : 'estabilidade')
+    : 'primeira aplicação';
+
+  const prompt = `Você é um assistente clínico especializado em psicologia baseada em evidências, com domínio em TCC (Terapia Cognitivo-Comportamental), ACT (Acceptance and Commitment Therapy), Terapia do Esquema e DBT (Dialectical Behavior Therapy). Esta análise é exclusiva para uso da psicóloga responsável pelo caso — nunca será compartilhada com o paciente.
+
+Dados do instrumento aplicado:
+- Instrumento: ${INSTRUMENTO} (${CFG.field})
+- Score atual: ${latest?.score_total ?? 0} de ${CFG.max} pontos
+- Nível: ${window.__latestLevelForAI?.label}
+- Número de aplicações: ${filtered?.length}
+- Histórico de scores: ${scoreHistory}
+- Tendência longitudinal: ${trend}
+
+Com base nesses dados, forneça uma análise clínica estruturada em quatro partes:
+
+1. LEITURA CLÍNICA DO SCORE
+Interprete o score atual e sua tendência no contexto clínico. O que este nível indica funcionalmente? Quais domínios de vida podem estar mais comprometidos?
+
+2. HIPÓTESES DIAGNÓSTICAS A INVESTIGAR
+Quais transtornos ou padrões clínicos merecem investigação com base neste score? Considere diagnósticos diferenciais relevantes (ex: TAG, TOC, fobia específica, TEPT, depressão com ansiedade, esquemas desadaptativos de supervigilância/inibição emocional). Seja específica e técnica.
+
+3. DIRECIONAMENTO TERAPÊUTICO
+Quais intervenções são prioritárias neste momento? Sugira estratégias de TCC, ACT, Terapia do Esquema ou DBT mais indicadas para este perfil de score. Inclua técnicas específicas quando pertinente.
+
+4. ALERTAS CLÍNICOS
+Há sinais de atenção que a psicóloga deve observar nas próximas sessões? Quando considerar encaminhamento psiquiátrico?
+
+Escreva de forma técnica, direta e sem jargão desnecessário. Não use listas com marcadores — escreva em parágrafos corridos por seção. Não inclua avisos genéricos de "consulte um profissional" pois esta análise já é para a profissional.`;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        stream: true,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let fullText = '';
+    textEl.innerHTML = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      const chunk = decoder.decode(value);
+      const lines = chunk.split('\n').filter(l => l.startsWith('data: '));
+      for (const line of lines) {
+        const data = line.slice(6);
+        if (data === '[DONE]') continue;
+        try {
+          const parsed = JSON.parse(data);
+          const delta = parsed?.delta?.text || '';
+          if (delta) {
+            fullText += delta;
+            textEl.textContent = fullText;
+          }
+        } catch (_) {}
+      }
+    }
+
+    if (!fullText) {
+      textEl.textContent = 'Não foi possível gerar a análise. Verifique sua conexão e tente novamente.';
+    }
+
+  } catch (err) {
+    textEl.textContent = 'Erro ao conectar com a IA. Verifique sua conexão e tente novamente.';
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Gerar nova análise';
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
