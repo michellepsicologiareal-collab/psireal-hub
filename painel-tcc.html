@@ -1759,10 +1759,11 @@ function renderApplicationsTable() {
       <td>${formatDateTime(link.created_at)}</td>
       <td>${link.expires_at ? formatDate(link.expires_at) : 'Sem prazo'}</td>
       <td><span class="badge ${applicationBadgeClass(link.status)}">${applicationStatusLabel(link.status)}</span></td>
-      <td>
+      <td style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
         ${link.status === 'respondido'
-          ? `<button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" onclick="openInstrumentDashboard('${escapeHtml(link.instrumento)}')">Ver resultado</button>`
+          ? `<button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" onclick="openInstrumentDashboard('${escapeHtml(link.instrumento)}','${escapeHtml(link.patient_name || '')}')">Ver resultado</button>`
           : `<button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" onclick="copyApplicationLink('${escapeHtml(link.token || '')}','${escapeHtml(link.instrumento || '')}','${escapeHtml(link.patient_name || '')}')">Copiar link</button>`}
+        <button class="btn btn-ghost" style="padding:4px 10px;font-size:11px;color:var(--coral);border-color:var(--coral)" onclick="deleteApplication('${escapeHtml(link.id || '')}')">Excluir</button>
       </td>
     </tr>
   `).join('');
@@ -1875,6 +1876,21 @@ function renderInsights() {
 
   if (preview) preview.innerHTML = html;
   if (screenEl) screenEl.innerHTML = html;
+}
+
+
+async function deleteApplication(id) {
+  if (!id) { alert('ID da aplicação não encontrado.'); return; }
+  if (!confirm('Excluir esta aplicação? O link enviado ao paciente deixará de funcionar.')) return;
+  try {
+    await fetch(`${SB_URL}/rest/v1/patient_links?id=eq.${encodeURIComponent(id)}`, {
+      method: 'DELETE',
+      headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_SESSION_TOKEN, 'Content-Type': 'application/json', Prefer: 'return=minimal' }
+    });
+    await refreshPanelData();
+  } catch(err) {
+    alert('Não foi possível excluir a aplicação. Tente novamente.');
+  }
 }
 
 async function deletePatient(encodedName) {
