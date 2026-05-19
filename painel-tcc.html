@@ -1631,7 +1631,26 @@ async function bootstrapAuthenticatedApp() {
   window.PATIENT_LINKS = PATIENT_LINKS;
   renderAuthenticatedApp();
   setTimeout(renderInsights, 200);
-  document.getElementById('lockScreen').style.display = 'none';
+  const lock = document.getElementById('lockScreen');
+  if (lock) {
+    lock.style.display = 'none';
+    lock.style.visibility = 'hidden';
+    lock.style.pointerEvents = 'none';
+    lock.remove();
+  }
+}
+
+
+function formatPlan(plan) {
+  const value = String(plan || '').trim().toLowerCase();
+  if (!value) return 'Plano ativo';
+  const plans = {
+    ativo: 'Plano ativo',
+    essencial: 'Plano Essencial',
+    premium: 'Plano Premium',
+    profissional: 'Plano Profissional'
+  };
+  return plans[value] || String(plan);
 }
 
 function renderAuthenticatedApp() {
@@ -1646,9 +1665,8 @@ function renderAuthenticatedApp() {
 function renderPsiIdentity() {
   const name = PSI_PROFILE?.nome || 'Psicóloga';
   const planRaw = PSI_PROFILE?.plano || 'ativo';
-  const plan = String(planRaw).charAt(0).toUpperCase() + String(planRaw).slice(1);
   document.getElementById('sidebarUserName').textContent = name;
-  document.getElementById('sidebarUserPlan').textContent = formatPlan(plan);
+  document.getElementById('sidebarUserPlan').textContent = formatPlan(planRaw);
   const initials = initialsFromName(name);
   const avatar = document.querySelector('.sidebar-user .user-avatar');
   if (avatar) avatar.textContent = initials;
