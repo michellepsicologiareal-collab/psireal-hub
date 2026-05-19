@@ -716,7 +716,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
 
 
 /* Beta release: only enabled instruments appear in the public clinical library */
-.inv-card:has(.btn-apply[disabled]){display:none!important}
+
 .beta-note{margin:0 0 18px;padding:14px 18px;border:1px solid #E8D8DC;border-radius:18px;background:#fff;color:#5A3A42;font-size:14px;line-height:1.5}
 
 
@@ -1004,6 +1004,72 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
             <div style="font-size:13px;color:var(--ink3);text-align:center;padding:8px 0">Carregando...</div>
           </div>
         </div>
+
+        <div class="inv-card" data-cat="ansiedade">
+          <div class="inv-card-top">
+            <span class="inv-cat" style="background:var(--teal3);color:var(--teal)">Ansiedade</span>
+            <span class="inv-time">2–3 min</span>
+          </div>
+          <div class="inv-name">OASIS — Overall Anxiety Severity and Impairment Scale</div>
+          <div class="inv-desc">Escala breve de 5 itens para rastreio transdiagnóstico da severidade e impacto da ansiedade. Sensível a mudanças ao longo do tratamento.</div>
+          <div class="inv-footer">
+            <span class="inv-items">5 itens — Likert 0–4</span>
+            <button class="btn-apply" data-instrument="OASIS">Aplicar —</button>
+          </div>
+        </div>
+
+        <div class="inv-card" data-cat="act">
+          <div class="inv-card-top">
+            <span class="inv-cat" style="background:var(--green3);color:var(--green)">ACT</span>
+            <span class="inv-time">5–8 min</span>
+          </div>
+          <div class="inv-name">CFQ — Cognitive Fusion Questionnaire</div>
+          <div class="inv-desc">Avalia o grau de fusão cognitiva — o quanto pensamentos controlam o comportamento. Instrumento central para intervenções de defusão em ACT.</div>
+          <div class="inv-footer">
+            <span class="inv-items">7 itens — Likert 1–7</span>
+            <button class="btn-apply" data-instrument="CFQ">Aplicar —</button>
+          </div>
+        </div>
+
+        <div class="inv-card" data-cat="estresse">
+          <div class="inv-card-top">
+            <span class="inv-cat" style="background:var(--amber3);color:var(--amber)">Estresse</span>
+            <span class="inv-time">5–8 min</span>
+          </div>
+          <div class="inv-name">PSS-10 — Escala de Estresse Percebido</div>
+          <div class="inv-desc">Avalia a percepção subjetiva de estresse nas últimas 4 semanas. Amplamente validada para uso clínico. 5 itens com escore invertido.</div>
+          <div class="inv-footer">
+            <span class="inv-items">10 itens — Likert 0–4</span>
+            <button class="btn-apply" data-instrument="PSS">Aplicar —</button>
+          </div>
+        </div>
+
+        <div class="inv-card" data-cat="sono">
+          <div class="inv-card-top">
+            <span class="inv-cat" style="background:#E8F2F8;color:#5A7A8A">Sono</span>
+            <span class="inv-time">3–5 min</span>
+          </div>
+          <div class="inv-name">ISI — Índice de Severidade da Insônia</div>
+          <div class="inv-desc">Avalia natureza, severidade e impacto da insônia. Instrumento de referência para rastreio clínico de distúrbios do sono.</div>
+          <div class="inv-footer">
+            <span class="inv-items">7 itens — Likert 0–4</span>
+            <button class="btn-apply" data-instrument="ISI">Aplicar —</button>
+          </div>
+        </div>
+
+        <div class="inv-card" data-cat="autoestima">
+          <div class="inv-card-top">
+            <span class="inv-cat" style="background:var(--coral3);color:var(--coral)">Autoestima</span>
+            <span class="inv-time">3–5 min</span>
+          </div>
+          <div class="inv-name">Rosenberg — Escala de Autoestima</div>
+          <div class="inv-desc">Uma das escalas de autoestima mais utilizadas no mundo. Avalia a atitude global positiva ou negativa em relação a si mesmo. 5 itens invertidos.</div>
+          <div class="inv-footer">
+            <span class="inv-items">10 itens — Likert 1–4</span>
+            <button class="btn-apply" data-instrument="Rosenberg">Aplicar —</button>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -1128,12 +1194,15 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
       </div>
     </div>
     <div class="content">
-      <div class="beta-note"><strong>Beta liberado:</strong> YSQ-S3, GAD-7 e PHQ-9. Os demais instrumentos ficam reservados para preparação/admin até validação clínica e jurídica.</div>
-      <div class="filter-tabs">
-        <div class="filter-tab active">Todos</div>
-        <div class="filter-tab">Ansiedade</div>
-        <div class="filter-tab">Depressão</div>
-        <div class="filter-tab">Terapia do Esquema</div>
+      <div class="filter-tabs" id="bibFilterTabs">
+        <div class="filter-tab active" onclick="filterBib('todos',this)">Todos</div>
+        <div class="filter-tab" onclick="filterBib('ansiedade',this)">Ansiedade</div>
+        <div class="filter-tab" onclick="filterBib('depressao',this)">Depressão</div>
+        <div class="filter-tab" onclick="filterBib('esquema',this)">Terapia do Esquema</div>
+        <div class="filter-tab" onclick="filterBib('act',this)">ACT</div>
+        <div class="filter-tab" onclick="filterBib('estresse',this)">Estresse</div>
+        <div class="filter-tab" onclick="filterBib('sono',this)">Sono</div>
+        <div class="filter-tab" onclick="filterBib('autoestima',this)">Autoestima</div>
       </div>
       <div class="inv-grid">
 
@@ -1168,11 +1237,11 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
             <span class="inv-cat" style="background:var(--teal3);color:var(--teal)">Ansiedade</span>
             <span class="inv-time">5–10 min</span>
           </div>
-          <div class="inv-name">GAD-7 — Inventário de Ansiedade de Beck</div>
-          <div class="inv-desc">Avalia a intensidade de sintomas de ansiedade geral e cognitiva. Amplamente utilizado em TCC para monitoramento de tratamento.</div>
-          <div class="inv-footer">
-            <span class="inv-items">21 itens — Likert 0–3</span>
-            <button class="btn-apply" data-instrument="GAD-7" disabled>Licenciamento</button>
+          <div class="inv-name">GAD-7 — Escala de Ansiedade Generalizada</div>
+          <div class="inv-desc">Rastreio e avaliação de severidade do TAG. Sensível a mudanças ao longo do tratamento. Domínio público (Pfizer, 2010).</div>
+          <div class="inv-footer" data-cat="ansiedade">
+            <span class="inv-items">7 itens — Likert 0–3</span>
+            <button class="btn-apply" data-instrument="GAD-7">Aplicar —</button>
           </div>
         </div>
 
@@ -1211,7 +1280,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
           <div class="inv-desc">Avalia inflexibilidade psicológica e evitação experiencial. Instrumento central para monitoramento de resultados em ACT.</div>
           <div class="inv-footer">
             <span class="inv-items">7 itens — Likert 1–7</span>
-            <button class="btn-apply" data-instrument="AAQ-II" disabled>Em preparação</button>
+            <button class="btn-apply" data-instrument="AAQ-II">Aplicar —</button>
           </div>
         </div>
 
@@ -2519,6 +2588,26 @@ async function deletePatient(encodedName) {
   } catch(_) {
     alert('Não foi possível excluir o paciente. Tente novamente.');
   }
+}
+
+
+function filterBib(cat, el) {
+  document.querySelectorAll('#bibFilterTabs .filter-tab').forEach(b => b.classList.remove('active'));
+  if (el) el.classList.add('active');
+  document.querySelectorAll('.inv-card').forEach(card => {
+    if (cat === 'todos') { card.style.display = ''; return; }
+    const cardCat = card.dataset.cat || card.querySelector('[data-cat]')?.dataset.cat || '';
+    const catText = card.querySelector('.inv-cat')?.textContent?.toLowerCase() || '';
+    const matches = cardCat === cat || catText.includes(cat) ||
+      (cat === 'ansiedade' && catText.includes('ansiedade')) ||
+      (cat === 'depressao' && (catText.includes('depressão') || catText.includes('depressao'))) ||
+      (cat === 'esquema' && catText.includes('esquema')) ||
+      (cat === 'act' && catText === 'act') ||
+      (cat === 'estresse' && catText.includes('estresse')) ||
+      (cat === 'sono' && catText.includes('sono')) ||
+      (cat === 'autoestima' && catText.includes('autoestima'));
+    card.style.display = matches ? '' : 'none';
+  });
 }
 
 </script>
