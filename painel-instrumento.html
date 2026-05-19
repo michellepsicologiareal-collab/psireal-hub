@@ -3,298 +3,181 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Painel de Instrumento | PsiReal TCC</title>
+<title>Perfil Clínico | PsiReal TCC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:        #FDFAF8;
-  --bg2:       #F8F2F4;
-  --bg3:       #F2E4D4;
-  --surface:   #FFFFFF;
-  --border:    #E8D8DC;
-  --ink:       #1E1014;
-  --ink2:      #5A3A42;
-  --ink3:      #9A7A84;
-  --brown:     #3D2028;
-  --brown2:    #7A4A55;
-  --brown3:    #B08090;
-  --lilac:     #7A4A55;
-  --lilac2:    #B08090;
-  --lilac3:    #EEE0E4;
-  --lilac4:    #F8F2F4;
-  --teal:      #A0703A;
-  --teal2:     #C8956A;
-  --teal3:     #E7ECE5;
-  --amber:     #9E765A;
-  --amber2:    #D8B08F;
-  --amber3:    #F5E9DD;
-  --green:     #73856E;
-  --green2:    #AAB8A5;
-  --green3:    #EDF2EB;
-  --sidebar-w: 220px;
-  --radius:    10px;
-  --radius-lg: 16px;
-  --shadow:    0 2px 12px rgba(90,48,64,.06), 0 1px 3px rgba(90,48,64,.04);
-  --shadow-md: 0 12px 40px rgba(90,48,64,.12), 0 4px 12px rgba(90,48,64,.06);
+:root{
+  --bg:#FDFAF8;--bg2:#F8F2F4;--bg3:#F2E4D4;
+  --surface:#FFFFFF;--border:#E8D8DC;
+  --ink:#1E1014;--ink2:#5A3A42;--ink3:#9A7A84;
+  --brown:#3D2028;--brown2:#7A4A55;--brown3:#B08090;
+  --lilac:#7A4A55;--lilac2:#B08090;--lilac3:#EEE0E4;--lilac4:#F8F2F4;
+  --teal:#A0703A;--teal2:#C8956A;--teal3:#E7ECE5;
+  --amber:#9E765A;--amber2:#D8B08F;--amber3:#F5E9DD;
+  --green:#73856E;--green2:#AAB8A5;--green3:#EDF2EB;
+  --coral:#8E4856;--coral3:#FAE8EC;
+  --sidebar-w:220px;--radius:10px;--radius-lg:16px;
+  --shadow:0 2px 12px rgba(90,48,64,.06),0 1px 3px rgba(90,48,64,.04);
+  --shadow-md:0 12px 40px rgba(90,48,64,.12),0 4px 12px rgba(90,48,64,.06);
 }
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--ink);
-  font-size: 15px;
-  line-height: 1.55;
-  min-height: 100vh;
-  display: flex;
-}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.55;min-height:100vh;display:flex}
 
 /* SIDEBAR */
-.sidebar {
-  width: var(--sidebar-w);
-  min-height: 100vh;
-  background: var(--surface);
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  top: 0; left: 0; bottom: 0;
-  z-index: 100;
-}
-.logo { padding: 24px 20px 20px; border-bottom: 1px solid var(--border); }
-.logo-mark { display: flex; align-items: center; gap: 10px; }
-.logo-icon { width: 40px; height: 40px; border-radius: 999px; background: url("logo-psicologia-real.png") center / contain no-repeat; flex: 0 0 40px; }
-.logo-text { font-size: 18px; font-weight: 600; color: var(--ink); letter-spacing: -0.3px; line-height: 1.1; }
-.logo-sub { font-size: 10px; color: var(--ink3); letter-spacing: .08em; margin-top: 2px; }
-.nav { padding: 16px 12px; flex: 1; }
-.nav-section { margin-bottom: 24px; }
-.nav-label { font-size: 9px; font-weight: 500; color: var(--ink3); text-transform: uppercase; letter-spacing: .12em; padding: 0 8px; margin-bottom: 6px; }
-.nav-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px 10px; border-radius: var(--radius);
-  cursor: pointer; transition: all .15s;
-  color: var(--ink2); font-size: 13px; font-weight: 400;
-  text-decoration: none; position: relative;
-}
-.nav-item:hover { background: var(--bg2); color: var(--ink); }
-.nav-icon { width: 18px; height: 18px; opacity: .7; flex-shrink: 0; }
-.sidebar-user {
-  padding: 16px; border-top: 1px solid var(--border);
-  display: flex; align-items: center; gap: 10px;
-}
-.user-avatar {
-  width: 32px; height: 32px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--lilac), var(--lilac2));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px; color: #fff; font-weight: 500; flex-shrink: 0;
-}
-.user-name { font-size: 12px; font-weight: 500; color: var(--ink); }
-.user-plan { font-size: 10px; color: var(--amber); font-weight: 500; letter-spacing: .04em; }
+.sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100}
+.logo{padding:24px 20px 20px;border-bottom:1px solid var(--border)}
+.logo-mark{display:flex;align-items:center;gap:10px}
+.logo-icon{width:40px;height:40px;border-radius:999px;background:url("logo-psicologia-real.png") center/contain no-repeat;flex:0 0 40px}
+.logo-text{font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.3px;line-height:1.1}
+.logo-sub{font-size:10px;color:var(--ink3);letter-spacing:.08em;margin-top:2px}
+.nav{padding:16px 12px;flex:1}
+.nav-section{margin-bottom:24px}
+.nav-label{font-size:9px;font-weight:500;color:var(--ink3);text-transform:uppercase;letter-spacing:.12em;padding:0 8px;margin-bottom:6px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius);cursor:pointer;transition:all .15s;color:var(--ink2);font-size:13px;font-weight:400;text-decoration:none}
+.nav-item:hover{background:var(--bg2);color:var(--ink)}
+.nav-icon{width:18px;height:18px;opacity:.7;flex-shrink:0}
+.sidebar-user{padding:16px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.user-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--lilac),var(--lilac2));display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;font-weight:500;flex-shrink:0}
+.user-name{font-size:12px;font-weight:500;color:var(--ink)}
+.user-plan{font-size:10px;color:var(--amber);font-weight:500;letter-spacing:.04em}
 
 /* MAIN */
-.main { margin-left: var(--sidebar-w); flex: 1; min-height: 100vh; display: flex; flex-direction: column; }
-
-/* TOPBAR */
-.topbar {
-  height: 56px; background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center;
-  padding: 0 28px; gap: 16px;
-  position: sticky; top: 0; z-index: 50;
-}
-.topbar-back {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 13px; color: var(--ink3); cursor: pointer;
-  text-decoration: none; transition: color .15s;
-  padding: 4px 8px; border-radius: var(--radius);
-  border: 1px solid var(--border);
-}
-.topbar-back:hover { color: var(--brown); background: var(--bg2); }
-.topbar-title { font-size: 18px; font-weight: 600; color: var(--ink); flex: 1; }
-.topbar-meta { font-size: 12px; color: var(--ink3); }
-.btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 7px 14px; border-radius: var(--radius);
-  font-size: 12px; font-weight: 500; cursor: pointer;
-  border: none; transition: all .15s;
-  font-family: inherit;
-}
-.btn-primary { background: linear-gradient(135deg, var(--brown), var(--brown2)); color: #fff; }
-.btn-primary:hover { opacity: .92; }
-.btn-ghost { background: transparent; color: var(--ink2); border: 1px solid var(--border); }
-.btn-ghost:hover { background: var(--bg2); }
-
-/* CONTENT */
-.content { padding: 28px; flex: 1; }
+.main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;display:flex;flex-direction:column}
+.topbar{height:56px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 28px;gap:14px;position:sticky;top:0;z-index:50}
+.topbar-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink3);cursor:pointer;text-decoration:none;transition:color .15s;padding:4px 8px;border-radius:var(--radius);border:1px solid var(--border)}
+.topbar-back:hover{color:var(--brown);background:var(--bg2)}
+.topbar-title{font-size:17px;font-weight:600;color:var(--ink);flex:1}
+.content{padding:28px;flex:1}
 
 /* BREADCRUMB */
-.breadcrumb {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 12px; color: var(--ink3);
-  margin-bottom: 20px;
-}
-.breadcrumb a { color: var(--ink3); text-decoration: none; }
-.breadcrumb a:hover { color: var(--brown); }
-.breadcrumb-sep { opacity: .4; }
-.breadcrumb-current { color: var(--ink2); font-weight: 500; }
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink3);margin-bottom:20px}
+.breadcrumb a{color:var(--ink3);text-decoration:none}
+.breadcrumb a:hover{color:var(--brown)}
+.breadcrumb-sep{opacity:.4}
+.breadcrumb-current{color:var(--ink2);font-weight:500}
 
-/* HEADER ROW */
-.page-header { margin-bottom: 24px; }
-.page-kicker { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--brown3); margin-bottom: 6px; }
-.page-title { font-size: 26px; font-weight: 700; color: var(--brown); line-height: 1.2; margin-bottom: 4px; }
-.page-sub { font-size: 13px; color: var(--ink3); }
+/* PATIENT HERO */
+.patient-hero{display:flex;align-items:center;gap:20px;margin-bottom:28px;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow)}
+.patient-avatar-lg{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--brown),var(--brown3));display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;font-weight:700;flex-shrink:0}
+.patient-info{flex:1}
+.patient-name-lg{font-size:22px;font-weight:700;color:var(--brown);margin-bottom:4px}
+.patient-meta{font-size:13px;color:var(--ink3);display:flex;gap:16px;flex-wrap:wrap}
+.patient-meta span{display:flex;align-items:center;gap:4px}
+.patient-stats{display:flex;gap:16px}
+.pstat{text-align:center;padding:12px 20px;background:var(--bg2);border-radius:var(--radius);border:1px solid var(--border)}
+.pstat-val{font-size:22px;font-weight:800;color:var(--brown);line-height:1}
+.pstat-label{font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
 
-/* STAT CARDS */
-.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px; }
-.stat-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius-lg); padding: 18px 20px;
-  position: relative; overflow: hidden;
-}
-.stat-card::after {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-}
-.stat-card.c1::after { background: linear-gradient(90deg, var(--lilac), var(--lilac2)); }
-.stat-card.c2::after { background: linear-gradient(90deg, var(--teal), var(--teal2)); }
-.stat-card.c3::after { background: linear-gradient(90deg, var(--amber), var(--amber2)); }
-.stat-label { font-size: 11px; color: var(--ink3); font-weight: 500; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
-.stat-value { font-size: 32px; font-weight: 800; color: var(--brown); line-height: 1; margin-bottom: 4px; }
-.stat-delta { font-size: 12px; color: var(--ink3); }
-.stat-delta.up { color: var(--green); }
-.stat-delta.down { color: var(--coral); }
-
-/* GRID */
-.grid-2-1 { display: grid; grid-template-columns: 1fr 380px; gap: 20px; margin-bottom: 20px; }
-.grid-1-1 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+/* TABS */
+.tabs{display:flex;gap:2px;margin-bottom:24px;background:var(--bg2);padding:4px;border-radius:var(--radius);border:1px solid var(--border);width:fit-content}
+.tab{padding:7px 16px;border-radius:7px;font-size:13px;font-weight:500;color:var(--ink3);cursor:pointer;transition:all .15s;white-space:nowrap}
+.tab.active{background:var(--surface);color:var(--brown);font-weight:600;box-shadow:var(--shadow)}
 
 /* CARDS */
-.card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius-lg); box-shadow: var(--shadow);
-}
-.card-header {
-  padding: 16px 20px; border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
-}
-.card-title { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink3); }
-.card-body { padding: 20px; }
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow);margin-bottom:16px}
+.card-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.card-title{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+.card-body{padding:20px}
+
+/* STATS ROW */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 20px;position:relative;overflow:hidden}
+.stat-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.stat-card.c1::after{background:linear-gradient(90deg,var(--lilac),var(--lilac2))}
+.stat-card.c2::after{background:linear-gradient(90deg,var(--teal),var(--teal2))}
+.stat-card.c3::after{background:linear-gradient(90deg,var(--amber),var(--amber2))}
+.stat-label{font-size:11px;color:var(--ink3);font-weight:500;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.stat-value{font-size:32px;font-weight:800;color:var(--brown);line-height:1;margin-bottom:4px}
+.stat-delta{font-size:12px;color:var(--ink3)}
+.stat-delta.up{color:var(--green)}
+.stat-delta.down{color:var(--coral)}
+
+/* GRID */
+.grid-2-1{display:grid;grid-template-columns:1fr 360px;gap:16px;margin-bottom:16px}
+.grid-1-1{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
 
 /* CHART */
-.chart-area {
-  width: 100%; height: 200px;
-  position: relative;
-}
-canvas.line-chart { width: 100% !important; height: 100% !important; }
+.chart-area{width:100%;height:200px;position:relative}
 
 /* LEVEL BADGE */
-.level-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 4px 12px; border-radius: 99px;
-  font-size: 11px; font-weight: 700; letter-spacing: .08em;
-  text-transform: uppercase;
-}
-.level-minima  { background: var(--green3);  color: var(--green); }
-.level-leve    { background: var(--amber3);  color: var(--teal); }
-.level-moderada{ background: var(--coral3);  color: var(--coral); }
-.level-grave   { background: #FAEAEC;        color: var(--brown); }
+.level-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.level-minima{background:var(--green3);color:var(--green)}
+.level-leve{background:var(--amber3);color:var(--teal)}
+.level-moderada{background:var(--coral3);color:var(--coral)}
+.level-grave{background:#FAEAEC;color:var(--brown)}
 
 /* HISTORY TABLE */
-.hist-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.hist-table th {
-  text-align: left; font-size: 10px; font-weight: 700;
-  letter-spacing: .1em; text-transform: uppercase; color: var(--ink3);
-  padding: 0 12px 10px; border-bottom: 1px solid var(--border);
-}
-.hist-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); color: var(--ink2); vertical-align: middle; }
-.hist-table tr:last-child td { border-bottom: none; }
-.hist-table tr:hover td { background: var(--bg2); }
-.score-pill {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 32px; height: 32px; border-radius: 50%;
-  font-size: 13px; font-weight: 800; color: #fff;
-}
+.hist-table{width:100%;border-collapse:collapse;font-size:13px}
+.hist-table th{text-align:left;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);padding:0 12px 10px;border-bottom:1px solid var(--border)}
+.hist-table td{padding:11px 12px;border-bottom:1px solid var(--border);color:var(--ink2);vertical-align:middle}
+.hist-table tr:last-child td{border-bottom:none}
+.hist-table tr:hover td{background:var(--bg2)}
+.score-pill{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;font-size:13px;font-weight:800;color:#fff}
 
-/* RECOS */
-.reco-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-.reco-item {
-  background: var(--bg2); border-radius: var(--radius);
-  padding: 10px 14px; font-size: 13px; color: var(--ink2);
-  line-height: 1.5; border-left: 3px solid var(--border);
-}
-
-/* FONTE */
-.fonte-box {
-  background: var(--bg); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 14px 16px;
-  font-size: 11.5px; color: var(--ink3); line-height: 1.7;
-}
-.fonte-box strong { color: var(--ink2); font-weight: 600; }
-
-/* EMPTY */
-.empty-state {
-  text-align: center; padding: 40px 20px;
-  font-size: 13px; color: var(--ink3); line-height: 1.6;
-}
-.empty-state strong { display: block; font-size: 15px; color: var(--ink2); margin-bottom: 6px; }
-
-/* LOADING */
-.loading { text-align: center; padding: 60px 20px; font-size: 13px; color: var(--ink3); }
-
-/* ABOUT BOX */
-.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.about-col { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
-.about-col-label { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--brown2); margin-bottom: 8px; }
-.about-col ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
-.about-col ul li { font-size: 12px; color: var(--ink2); line-height: 1.45; padding-left: 14px; position: relative; }
-.about-col ul li::before { content: '–'; position: absolute; left: 0; color: var(--brown3); }
+/* RECO */
+.reco-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+.reco-item{background:var(--bg2);border-radius:var(--radius);padding:10px 14px;font-size:13px;color:var(--ink2);line-height:1.5;border-left:3px solid var(--border)}
 
 /* GAUGE */
-.gauge-wrap { position: relative; height: 150px; display: flex; align-items: flex-end; justify-content: center; }
-.gauge-center { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); text-align: center; pointer-events: none; }
-.gauge-val { font-size: 32px; font-weight: 800; color: var(--brown); line-height: 1; }
-.gauge-sub { font-size: 11px; color: var(--ink3); }
-.scale-bar { display: flex; gap: 3px; margin: 8px 0 4px; }
-.scale-seg { flex: 1; height: 5px; border-radius: 99px; }
-.scale-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--ink3); }
+.gauge-wrap{position:relative;height:150px;display:flex;align-items:flex-end;justify-content:center}
+.gauge-center{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);text-align:center;pointer-events:none}
+.gauge-val{font-size:32px;font-weight:800;color:var(--brown);line-height:1}
+.gauge-sub{font-size:11px;color:var(--ink3)}
+.scale-bar{display:flex;gap:3px;margin:8px 0 4px}
+.scale-seg{flex:1;height:5px;border-radius:99px}
+.scale-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--ink3)}
 
-@media (max-width: 900px) {
-  body { flex-direction: column; }
-  .sidebar { position: relative; width: 100%; min-height: auto; flex-direction: row; flex-wrap: wrap; }
-  .main { margin-left: 0; }
-  .grid-2-1, .grid-1-1, .stats-row { grid-template-columns: 1fr; }
+/* INSTRUMENT TABS */
+.inst-tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.inst-tab{padding:6px 14px;border-radius:99px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:var(--bg2);color:var(--ink2);transition:all .15s}
+.inst-tab.active{background:var(--brown);border-color:var(--brown);color:#fff}
+.inst-tab.no-data{opacity:.5;cursor:default}
+
+/* FONTE */
+.fonte-box{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;font-size:11.5px;color:var(--ink3);line-height:1.7}
+.fonte-box strong{color:var(--ink2);font-weight:600}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:40px 20px;font-size:13px;color:var(--ink3);line-height:1.6}
+.empty-state strong{display:block;font-size:15px;color:var(--ink2);margin-bottom:6px}
+
+/* LOADING */
+.loading{text-align:center;padding:60px 20px;font-size:13px;color:var(--ink3)}
+
+/* AI */
+.ai-warning{background:var(--amber3);border:1px solid var(--amber2);border-radius:var(--radius);padding:14px 16px;font-size:12px;color:var(--ink2);line-height:1.65;margin-bottom:14px}
+.ai-warning strong{color:var(--brown2);font-weight:600}
+.ai-warning-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
+.ai-disclaimer{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;font-size:11px;color:var(--ink3);line-height:1.6;margin-bottom:14px}
+.ai-consent-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px}
+.ai-consent-row input[type=checkbox]{width:16px;height:16px;accent-color:var(--brown);flex-shrink:0;margin-top:2px;cursor:pointer}
+.ai-consent-row label{font-size:12px;color:var(--ink2);line-height:1.6;cursor:pointer}
+.ai-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--radius);background:linear-gradient(135deg,var(--brown),var(--brown2));color:#fff;font:600 13px/1 'Inter',sans-serif;border:none;cursor:pointer;transition:all .15s}
+.ai-btn:hover:not(:disabled){opacity:.9;transform:translateY(-1px)}
+.ai-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.ai-badge{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--bg3);color:var(--teal);border:1px solid var(--amber3);padding:3px 8px;border-radius:4px}
+.ai-output{display:none;margin-top:20px;border-top:1px solid var(--border);padding-top:20px}
+.ai-output-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--brown3);margin-bottom:12px}
+.ai-text-wrap{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+.ai-text{font-size:13.5px;color:var(--ink2);line-height:1.8;white-space:pre-wrap}
+.ai-cursor{display:inline-block;width:2px;height:14px;background:var(--brown3);margin-left:2px;animation:blink .7s step-end infinite;vertical-align:middle}
+@keyframes blink{50%{opacity:0}}
+.ai-footer{margin-top:12px;font-size:11px;color:var(--ink3);display:flex;align-items:center;gap:6px}
+.ai-dot{width:6px;height:6px;border-radius:50%;background:var(--brown3);flex-shrink:0}
+
+@media(max-width:900px){
+  body{flex-direction:column}
+  .sidebar{position:relative;width:100%;min-height:auto;flex-direction:row;flex-wrap:wrap}
+  .main{margin-left:0}
+  .grid-2-1,.grid-1-1,.stats-row{grid-template-columns:1fr}
+  .patient-hero{flex-direction:column;text-align:center}
+  .patient-stats{justify-content:center}
 }
-
-/* AI SECTION */
-.ai-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow); margin-bottom: 20px; overflow: hidden; }
-.ai-card-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.ai-card-title { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink3); }
-.ai-badge { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; background: var(--bg3); color: var(--teal); border: 1px solid var(--amber3); padding: 3px 8px; border-radius: 4px; }
-.ai-card-body { padding: 20px; }
-.ai-warning { background: var(--amber3); border: 1px solid var(--amber2); border-radius: var(--radius); padding: 14px 16px; font-size: 12px; color: var(--ink2); line-height: 1.65; margin-bottom: 14px; }
-.ai-warning strong { color: var(--brown2); font-weight: 600; }
-.ai-warning-title { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--teal); margin-bottom: 6px; }
-.ai-disclaimer { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; font-size: 11px; color: var(--ink3); line-height: 1.6; margin-bottom: 14px; }
-.ai-consent-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; }
-.ai-consent-row input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--brown); flex-shrink: 0; margin-top: 2px; cursor: pointer; }
-.ai-consent-row label { font-size: 12px; color: var(--ink2); line-height: 1.6; cursor: pointer; }
-.ai-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: var(--radius); background: linear-gradient(135deg, var(--brown), var(--brown2)); color: #fff; font: 600 13px/1 "Inter",sans-serif; border: none; cursor: pointer; transition: all .15s; }
-.ai-btn:hover:not(:disabled) { opacity: .9; transform: translateY(-1px); }
-.ai-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
-.ai-output { display: none; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 20px; }
-.ai-output-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--brown3); margin-bottom: 12px; }
-.ai-text-wrap { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; }
-.ai-text { font-size: 13.5px; color: var(--ink2); line-height: 1.75; white-space: pre-wrap; }
-.ai-cursor { display: inline-block; width: 2px; height: 14px; background: var(--brown3); margin-left: 2px; animation: blink .7s step-end infinite; vertical-align: middle; }
-@keyframes blink { 50% { opacity: 0; } }
-.ai-footer { margin-top: 12px; font-size: 11px; color: var(--ink3); display: flex; align-items: center; gap: 6px; }
-.ai-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brown3); flex-shrink: 0; }
 </style>
 </head>
 <body>
 
-<!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="logo">
     <div class="logo-mark">
@@ -338,7 +221,6 @@ canvas.line-chart { width: 100% !important; height: 100% !important; }
   </div>
 </aside>
 
-<!-- MAIN -->
 <div class="main">
   <div class="topbar">
     <a class="topbar-back" href="painel-tcc.html">
@@ -346,367 +228,220 @@ canvas.line-chart { width: 100% !important; height: 100% !important; }
       Painel
     </a>
     <div class="topbar-title" id="topbarTitle">Carregando...</div>
-    <div class="topbar-meta" id="topbarMeta"></div>
   </div>
-
   <div class="content" id="mainContent">
-    <div class="loading">Carregando dados clínicos...</div>
+    <div class="loading">Carregando perfil clínico...</div>
   </div>
 </div>
 
 <script>
 const SB_URL = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
 const SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
-const SB_SESSION_TOKEN = sessionStorage.getItem('sb_session_token') || '';
-
+const SB_SESSION = sessionStorage.getItem('sb_session_token') || '';
 const PARAMS = new URLSearchParams(window.location.search);
 const INSTRUMENTO = PARAMS.get('instrumento') || 'GAD-7';
 const PACIENTE = PARAMS.get('paciente') ? decodeURIComponent(PARAMS.get('paciente')) : null;
 
-// ── CONFIG PER INSTRUMENT ────────────────────────────────────────────────────
+// ── INSTRUMENT CONFIGS ───────────────────────────────────────────────────────
 const CONFIGS = {
   'GAD-7': {
-    title: 'GAD-7 — Ansiedade Generalizada',
-    kicker: 'GAD-7 · Faixa 0–21',
-    max: 21,
-    field: 'Ansiedade',
-    levels: [
-      { min:0,  max:4,  label:'Mínima',   css:'level-minima',   color:'#73856E' },
-      { min:5,  max:9,  label:'Leve',     css:'level-leve',     color:'#A0703A' },
-      { min:10, max:14, label:'Moderada', css:'level-moderada', color:'#8E4856' },
-      { min:15, max:21, label:'Grave',    css:'level-grave',    color:'#3D2028' }
+    title:'GAD-7 — Ansiedade Generalizada', field:'Ansiedade', max:21,
+    fonte:'Spitzer RL, Kroenke K, Williams JBW, Löwe B. Arch Intern Med. 2006;166(10):1092–1097. Domínio público (Pfizer Inc., 2010).',
+    levels:[
+      {min:0,max:4,label:'Mínima',css:'level-minima',color:'#73856E'},
+      {min:5,max:9,label:'Leve',css:'level-leve',color:'#A0703A'},
+      {min:10,max:14,label:'Moderada',css:'level-moderada',color:'#8E4856'},
+      {min:15,max:21,label:'Grave',css:'level-grave',color:'#3D2028'}
     ],
-    recos: {
-      'Mínima':   ['Manutenção de práticas de autocuidado e regulação emocional.','Continuidade do acompanhamento terapêutico para consolidar os ganhos.','Reaplicação periódica para monitoramento longitudinal.'],
-      'Leve':     ['Psicoeducação sobre o ciclo da ansiedade e estratégias de regulação.','Identificação de situações e pensamentos que precedem os sintomas.','Reestruturação cognitiva e ativação comportamental.','Reaplicar em 2 a 4 semanas.'],
-      'Moderada': ['Avaliação clínica aprofundada e possível encaminhamento psiquiátrico.','Protocolo estruturado de TCC para TAG: exposição e manejo de preocupações.','Registro de pensamentos e diários entre as sessões.','Discutir suporte farmacológico adjunto, se indicado.'],
-      'Grave':    ['Avaliação imediata da necessidade de suporte psiquiátrico e/ou medicação.','Plano de crise e protocolo de segurança.','Intensificação da frequência das sessões terapêuticas, se viável.','Avaliação da rede de suporte social e familiar.']
-    },
-    about: {
-      is: ['Escala validada de rastreio e monitoramento de sintomas de TAG','Apoio ao julgamento clínico da psicóloga','Recurso para acompanhar a evolução ao longo das sessões','Reconhecida globalmente: NHS, OMS, VA'],
-      not: ['Um diagnóstico psicológico ou psiquiátrico','Substituto da avaliação clínica especializada','Ferramenta de autodiagnóstico','Indicativo isolado de qualquer transtorno']
-    },
-    fonte: 'Spitzer RL, Kroenke K, Williams JBW, Löwe B. A brief measure for assessing generalized anxiety disorder: the GAD-7. <em>Arch Intern Med.</em> 2006;166(10):1092–1097. Domínio público desde 2010 (Pfizer Inc.). Disponível em: phqscreeners.com'
+    recos:{
+      'Mínima':['Manutenção de autocuidado e regulação emocional.','Continuidade do acompanhamento para consolidar ganhos.','Reaplicação periódica para monitoramento.'],
+      'Leve':['Psicoeducação sobre o ciclo da ansiedade.','Identificação de gatilhos e pensamentos precedentes.','Reestruturação cognitiva e ativação comportamental.','Reaplicar em 2 a 4 semanas.'],
+      'Moderada':['Avaliação clínica aprofundada e possível encaminhamento psiquiátrico.','Protocolo TCC para TAG: exposição e manejo de preocupações.','Registro de pensamentos e diários entre as sessões.','Discutir suporte farmacológico se indicado.'],
+      'Grave':['Avaliação imediata de suporte psiquiátrico.','Plano de crise e protocolo de segurança.','Intensificar frequência das sessões.','Avaliar rede de suporte social e familiar.']
+    }
   },
   'PHQ-9': {
-    title: 'PHQ-9 — Depressão',
-    kicker: 'PHQ-9 · Faixa 0–27',
-    max: 27,
-    field: 'Depressão',
-    levels: [
-      { min:0,  max:4,  label:'Mínima',              css:'level-minima',   color:'#73856E' },
-      { min:5,  max:9,  label:'Leve',                css:'level-leve',     color:'#A0703A' },
-      { min:10, max:14, label:'Moderada',             css:'level-moderada', color:'#8E4856' },
-      { min:15, max:19, label:'Moderadamente grave',  css:'level-moderada', color:'#7A2A3A' },
-      { min:20, max:27, label:'Grave',                css:'level-grave',    color:'#3D2028' }
+    title:'PHQ-9 — Depressão', field:'Depressão', max:27,
+    fonte:'Kroenke K, Spitzer RL, Williams JBW. J Gen Intern Med. 2001;16(9):606–613. Domínio público (Pfizer Inc., 2010).',
+    levels:[
+      {min:0,max:4,label:'Mínima',css:'level-minima',color:'#73856E'},
+      {min:5,max:9,label:'Leve',css:'level-leve',color:'#A0703A'},
+      {min:10,max:14,label:'Moderada',css:'level-moderada',color:'#8E4856'},
+      {min:15,max:19,label:'Moderadamente grave',css:'level-moderada',color:'#7A2A3A'},
+      {min:20,max:27,label:'Grave',css:'level-grave',color:'#3D2028'}
     ],
-    recos: {
-      'Mínima':             ['Monitoramento periódico.','Manutenção de atividades prazerosas e autocuidado.'],
-      'Leve':               ['Psicoeducação sobre depressão e ciclo de evitação.','Ativação comportamental estruturada.','Identificação de pensamentos disfuncionais.'],
-      'Moderada':           ['Protocolo TCC para depressão.','Avaliar encaminhamento psiquiátrico.','Reestruturação cognitiva e experimentos comportamentais.'],
-      'Moderadamente grave':['Encaminhamento psiquiátrico prioritário.','Plano de segurança preventivo.','Intensificação das sessões.'],
-      'Grave':              ['Avaliação imediata de risco.','Encaminhamento psiquiátrico urgente.','Plano de crise detalhado.','Avaliar internação se necessário.']
-    },
-    about: {
-      is: ['Escala validada de rastreio e severidade de sintomas depressivos','Apoio ao julgamento clínico da psicóloga','Sensível a mudanças ao longo do tratamento'],
-      not: ['Um diagnóstico psicológico ou psiquiátrico','Substituto da avaliação clínica especializada','Ferramenta de autodiagnóstico']
-    },
-    fonte: 'Kroenke K, Spitzer RL, Williams JBW. The PHQ-9: validity of a brief depression severity measure. <em>J Gen Intern Med.</em> 2001;16(9):606–613. Domínio público desde 2010 (Pfizer Inc.). Disponível em: phqscreeners.com'
+    recos:{
+      'Mínima':['Monitoramento periódico.','Manutenção de atividades prazerosas e autocuidado.'],
+      'Leve':['Psicoeducação sobre depressão e ciclo de evitação.','Ativação comportamental estruturada.'],
+      'Moderada':['Protocolo TCC para depressão.','Avaliar encaminhamento psiquiátrico.'],
+      'Moderadamente grave':['Encaminhamento psiquiátrico prioritário.','Plano de segurança preventivo.'],
+      'Grave':['Avaliação imediata de risco.','Encaminhamento psiquiátrico urgente.','Plano de crise detalhado.']
+    }
   }
 };
 
-const CFG = CONFIGS[INSTRUMENTO] || CONFIGS['GAD-7'];
+let CFG = CONFIGS[INSTRUMENTO] || CONFIGS['GAD-7'];
+let ALL_RESPONSES = [];
+let ACTIVE_INST = INSTRUMENTO;
 
-// ── HELPERS ──────────────────────────────────────────────────────────────────
-function levelFor(score) {
-  return CFG.levels.find(l => score >= l.min && score <= l.max) || CFG.levels[CFG.levels.length - 1];
+function levelFor(score, cfg) {
+  cfg = cfg || CFG;
+  return cfg.levels.find(l => score >= l.min && score <= l.max) || cfg.levels[cfg.levels.length-1];
 }
 
-function formatDate(val) {
-  if (!val) return '—';
-  return new Date(val).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-}
+function formatDate(v){ return v ? new Date(v).toLocaleDateString('pt-BR') : '—' }
+function formatDateTime(v){ return v ? new Date(v).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'}) : '—' }
+function initials(name){ return (name||'?').split(' ').filter(Boolean).slice(0,2).map(p=>p[0].toUpperCase()).join('') }
 
-function formatDateTime(val) {
-  if (!val) return '—';
-  return new Date(val).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
-}
-
-async function sbFetch(path) {
+async function sbFetch(path, useSession=true) {
+  const token = useSession ? SB_SESSION : SB_KEY;
   const res = await fetch(`${SB_URL}/rest/v1/${path}`, {
-    headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_SESSION_TOKEN }
+    headers:{apikey:SB_KEY, Authorization:'Bearer '+token}
   });
   return res.ok ? res.json() : [];
 }
 
-// ── CHART ────────────────────────────────────────────────────────────────────
-function drawLineChart(canvasId, labels, scores) {
+// ── CHARTS ───────────────────────────────────────────────────────────────────
+function drawLineChart(canvasId, labels, scores, cfg) {
+  cfg = cfg || CFG;
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  const W = canvas.offsetWidth || canvas.width;
-  const H = canvas.offsetHeight || canvas.height;
+  const W = canvas.offsetWidth || 500;
+  const H = canvas.offsetHeight || 200;
   canvas.width = W; canvas.height = H;
-  ctx.clearRect(0, 0, W, H);
-
+  ctx.clearRect(0,0,W,H);
   if (!scores.length) return;
+  const pad={top:16,right:16,bottom:32,left:32};
+  const w=W-pad.left-pad.right, h=H-pad.top-pad.bottom, max=cfg.max;
 
-  const pad = { top: 16, right: 16, bottom: 32, left: 32 };
-  const w = W - pad.left - pad.right;
-  const h = H - pad.top - pad.bottom;
-  const max = CFG.max;
-
-  // Grid lines + Y labels
-  [0, Math.round(max * 0.25), Math.round(max * 0.5), Math.round(max * 0.75), max].forEach(val => {
-    const y = pad.top + h - (val / max) * h;
-    ctx.beginPath();
-    ctx.moveTo(pad.left, y);
-    ctx.lineTo(pad.left + w, y);
-    ctx.strokeStyle = 'rgba(168,136,152,.15)';
-    ctx.lineWidth = 1;
-    ctx.stroke();
-    ctx.fillStyle = '#9A7A84';
-    ctx.font = '500 10px Inter,sans-serif';
-    ctx.textAlign = 'right';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(val, pad.left - 4, y);
+  [0,Math.round(max*.25),Math.round(max*.5),Math.round(max*.75),max].forEach(val=>{
+    const y=pad.top+h-(val/max)*h;
+    ctx.beginPath();ctx.moveTo(pad.left,y);ctx.lineTo(pad.left+w,y);
+    ctx.strokeStyle='rgba(168,136,152,.15)';ctx.lineWidth=1;ctx.stroke();
+    ctx.fillStyle='#9A7A84';ctx.font='500 10px Inter,sans-serif';
+    ctx.textAlign='right';ctx.textBaseline='middle';
+    ctx.fillText(val,pad.left-4,y);
   });
 
-  // Level bands (subtle)
-  CFG.levels.forEach(lv => {
-    const y1 = pad.top + h - (lv.max / max) * h;
-    const y2 = pad.top + h - (lv.min / max) * h;
-    ctx.fillStyle = lv.color + '08';
-    ctx.fillRect(pad.left, y1, w, y2 - y1);
+  cfg.levels.forEach(lv=>{
+    const y1=pad.top+h-(lv.max/max)*h, y2=pad.top+h-(lv.min/max)*h;
+    ctx.fillStyle=lv.color+'08';ctx.fillRect(pad.left,y1,w,y2-y1);
   });
 
-  // X labels
-  const step = w / Math.max(scores.length - 1, 1);
-  labels.forEach((lbl, i) => {
-    const x = pad.left + i * step;
-    ctx.fillStyle = '#9A7A84';
-    ctx.font = '500 10px Inter,sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'top';
-    ctx.fillText(lbl, x, H - pad.bottom + 6);
+  const step = w/Math.max(scores.length-1,1);
+  labels.forEach((lbl,i)=>{
+    ctx.fillStyle='#9A7A84';ctx.font='500 10px Inter,sans-serif';
+    ctx.textAlign='center';ctx.textBaseline='top';
+    ctx.fillText(lbl,pad.left+i*step,H-pad.bottom+6);
   });
 
-  if (scores.length === 1) {
-    // Single point — just a dot
-    const x = pad.left + w / 2;
-    const y = pad.top + h - (scores[0] / max) * h;
-    const lv = levelFor(scores[0]);
-    ctx.beginPath();
-    ctx.arc(x, y, 5, 0, 2 * Math.PI);
-    ctx.fillStyle = lv.color;
-    ctx.fill();
+  if (scores.length===1) {
+    const x=pad.left+w/2, y=pad.top+h-(scores[0]/max)*h, lv=levelFor(scores[0],cfg);
+    ctx.beginPath();ctx.arc(x,y,5,0,2*Math.PI);ctx.fillStyle=lv.color;ctx.fill();
     return;
   }
 
-  // Line
   ctx.beginPath();
-  scores.forEach((score, i) => {
-    const x = pad.left + i * step;
-    const y = pad.top + h - (score / max) * h;
-    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-  });
-  ctx.strokeStyle = '#B08090';
-  ctx.lineWidth = 2;
-  ctx.lineJoin = 'round';
-  ctx.stroke();
+  scores.forEach((s,i)=>{const x=pad.left+i*step,y=pad.top+h-(s/max)*h; i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});
+  ctx.strokeStyle='#B08090';ctx.lineWidth=2;ctx.lineJoin='round';ctx.stroke();
 
-  // Area fill
   ctx.beginPath();
-  scores.forEach((score, i) => {
-    const x = pad.left + i * step;
-    const y = pad.top + h - (score / max) * h;
-    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-  });
-  ctx.lineTo(pad.left + (scores.length - 1) * step, pad.top + h);
-  ctx.lineTo(pad.left, pad.top + h);
-  ctx.closePath();
-  ctx.fillStyle = 'rgba(176,128,144,.08)';
-  ctx.fill();
+  scores.forEach((s,i)=>{const x=pad.left+i*step,y=pad.top+h-(s/max)*h; i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});
+  ctx.lineTo(pad.left+(scores.length-1)*step,pad.top+h);ctx.lineTo(pad.left,pad.top+h);ctx.closePath();
+  ctx.fillStyle='rgba(176,128,144,.08)';ctx.fill();
 
-  // Dots
-  scores.forEach((score, i) => {
-    const x = pad.left + i * step;
-    const y = pad.top + h - (score / max) * h;
-    const lv = levelFor(score);
-    ctx.beginPath();
-    ctx.arc(x, y, 4, 0, 2 * Math.PI);
-    ctx.fillStyle = lv.color;
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(x, y, 4, 0, 2 * Math.PI);
-    ctx.strokeStyle = '#fff';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
+  scores.forEach((s,i)=>{
+    const x=pad.left+i*step,y=pad.top+h-(s/max)*h,lv=levelFor(s,cfg);
+    ctx.beginPath();ctx.arc(x,y,4,0,2*Math.PI);ctx.fillStyle=lv.color;ctx.fill();
+    ctx.beginPath();ctx.arc(x,y,4,0,2*Math.PI);ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.stroke();
   });
 }
 
-// ── GAUGE ────────────────────────────────────────────────────────────────────
-function drawGauge(canvasId, score, color) {
+function drawGauge(canvasId, score, color, cfg) {
+  cfg = cfg || CFG;
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  const W = canvas.width, H = canvas.height;
-  const cx = W / 2, cy = H - 14;
-  const R = Math.min(W, H * 1.8) * 0.46;
-  const r = R * 0.64;
-  const total = CFG.max, start = Math.PI;
+  const W=canvas.width, H=canvas.height, cx=W/2, cy=H-14;
+  const R=Math.min(W,H*1.8)*.46, r=R*.64, total=cfg.max, start=Math.PI;
+  ctx.clearRect(0,0,W,H);
 
-  ctx.clearRect(0, 0, W, H);
-
-  CFG.levels.forEach(lv => {
-    const sa = start + (lv.min / total) * Math.PI;
-    const ea = start + ((lv.max + 1) / total) * Math.PI;
-    ctx.beginPath();
-    ctx.arc(cx, cy, R, sa, ea);
-    ctx.arc(cx, cy, r, ea, sa, true);
-    ctx.closePath();
-    ctx.fillStyle = lv.color + '22';
-    ctx.fill();
-    ctx.strokeStyle = lv.color + '44';
-    ctx.lineWidth = 1;
-    ctx.stroke();
+  cfg.levels.forEach(lv=>{
+    const sa=start+(lv.min/total)*Math.PI, ea=start+((lv.max+1)/total)*Math.PI;
+    ctx.beginPath();ctx.arc(cx,cy,R,sa,ea);ctx.arc(cx,cy,r,ea,sa,true);ctx.closePath();
+    ctx.fillStyle=lv.color+'22';ctx.fill();ctx.strokeStyle=lv.color+'44';ctx.lineWidth=1;ctx.stroke();
   });
 
-  const na = start + (score / total) * Math.PI;
-  ctx.beginPath();
-  ctx.arc(cx, cy, R - 3, start, na);
-  ctx.arc(cx, cy, r + 3, na, start, true);
-  ctx.closePath();
-  ctx.fillStyle = color + '55';
-  ctx.fill();
+  const na=start+(score/total)*Math.PI;
+  ctx.beginPath();ctx.arc(cx,cy,R-3,start,na);ctx.arc(cx,cy,r+3,na,start,true);ctx.closePath();
+  ctx.fillStyle=color+'55';ctx.fill();
 
-  const nx = cx + (r - 5) * Math.cos(na);
-  const ny = cy + (r - 5) * Math.sin(na);
-  ctx.beginPath();
-  ctx.moveTo(cx, cy);
-  ctx.lineTo(nx, ny);
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 2.5;
-  ctx.lineCap = 'round';
-  ctx.stroke();
+  const nx=cx+(r-5)*Math.cos(na), ny=cy+(r-5)*Math.sin(na);
+  ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(nx,ny);
+  ctx.strokeStyle=color;ctx.lineWidth=2.5;ctx.lineCap='round';ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,5,0,2*Math.PI);ctx.fillStyle=color;ctx.fill();
 
-  ctx.beginPath();
-  ctx.arc(cx, cy, 5, 0, 2 * Math.PI);
-  ctx.fillStyle = color;
-  ctx.fill();
-
-  const ticks = CFG.levels.map(l => l.min).concat([CFG.max]);
-  ticks.forEach(val => {
-    const a = start + (val / total) * Math.PI;
-    ctx.fillStyle = '#9A7A84';
-    ctx.font = '500 9px Inter,sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(val, cx + (R + 13) * Math.cos(a), cy + (R + 13) * Math.sin(a));
+  cfg.levels.map(l=>l.min).concat([cfg.max]).forEach(val=>{
+    const a=start+(val/total)*Math.PI;
+    ctx.fillStyle='#9A7A84';ctx.font='500 9px Inter,sans-serif';
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(val,cx+(R+13)*Math.cos(a),cy+(R+13)*Math.sin(a));
   });
 }
 
-// ── RENDER ───────────────────────────────────────────────────────────────────
-function render(responses) {
-  // Filter by instrument (and optionally by patient)
-  let filtered = responses.filter(r => {
-    const inst = (r.instrumento || r.formulario || '').toUpperCase().replace(/\s/g,'');
-    const key  = INSTRUMENTO.toUpperCase().replace(/\s/g,'');
-    return inst === key || inst.includes(key.replace('-',''));
-  });
-  if (PACIENTE) filtered = filtered.filter(r => r.paciente_nome === PACIENTE);
-  filtered = filtered.sort((a,b) => new Date(a.created_at) - new Date(b.created_at));
+// ── RENDER INSTRUMENT TAB ────────────────────────────────────────────────────
+function renderInstrument(inst, responses) {
+  const cfg = CONFIGS[inst] || CFG;
+  const filtered = responses
+    .filter(r=>{
+      const k=(r.instrumento||r.formulario||'').toUpperCase().replace(/\s/g,'');
+      const target=inst.toUpperCase().replace(/\s/g,'');
+      return k===target||k.includes(target.replace('-',''));
+    })
+    .sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
 
-  const content = document.getElementById('mainContent');
-
-  // topbar
-  document.getElementById('topbarTitle').textContent = PACIENTE
-    ? `${CFG.field} — ${PACIENTE}`
-    : `${CFG.field} — Todas as pacientes`;
-  document.getElementById('topbarMeta').textContent = PACIENTE
-    ? `${filtered.length} aplicação(ões)` : '';
+  const container = document.getElementById('instContent');
+  if (!container) return;
 
   if (!filtered.length) {
-    content.innerHTML = `
-      <div class="breadcrumb">
-        <a href="painel-tcc.html">Dashboard</a>
-        <span class="breadcrumb-sep">/</span>
-        <span class="breadcrumb-current">${CFG.title}</span>
-      </div>
-      <div class="page-header">
-        <div class="page-kicker">${CFG.kicker}</div>
-        <div class="page-title">Dashboard de ${CFG.field}</div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <div class="empty-state">
-            <strong>Nenhuma resposta registrada</strong>
-            ${PACIENTE ? `Ainda não há respostas do ${INSTRUMENTO} para ${PACIENTE}.` : `Nenhuma resposta do ${INSTRUMENTO} recebida ainda.`}
-            <br><br>
-            <a href="painel-tcc.html" class="btn btn-primary" style="display:inline-flex;margin-top:4px">Ir para o painel</a>
-          </div>
-        </div>
-      </div>`;
+    container.innerHTML = `<div class="card"><div class="card-body"><div class="empty-state"><strong>Nenhuma resposta para ${inst}</strong>Envie um link de ${inst} para este paciente.</div></div></div>`;
     return;
   }
 
-  const latest = filtered[filtered.length - 1];
+  const latest = filtered[filtered.length-1];
   const latestScore = Number(latest.score_total ?? latest.scores?.total ?? 0);
-  const latestLevel = levelFor(latestScore);
+  const latestLevel = levelFor(latestScore, cfg);
   const firstScore = Number(filtered[0].score_total ?? filtered[0].scores?.total ?? 0);
   const variation = latestScore - firstScore;
-  const recos = CFG.recos[latestLevel.label] || [];
+  const recos = cfg.recos[latestLevel.label] || [];
+  const scores = filtered.map(r=>Number(r.score_total??r.scores?.total??0));
+  const labels = filtered.map(r=>formatDate(r.created_at));
+  const scaleSegs = cfg.levels.map(lv=>`<div class="scale-seg" style="background:${lv.color};flex:${lv.max-lv.min+1}"></div>`).join('');
+  const scaleLabels = cfg.levels.map(lv=>`<span>${lv.min} ${lv.label}</span>`).join('')+`<span>${cfg.max}</span>`;
 
-  // Store for AI function scope
-  window.__latestForAI = latest;
-  window.__scoresForAI = scores;
-  window.__filteredForAI = filtered;
-  window.__latestLevelForAI = latestLevel;
+  // Store for AI
+  window.__ai_data = { inst, cfg, latest, scores, filtered, latestScore, latestLevel, variation };
 
-  const scores  = filtered.map(r => Number(r.score_total ?? r.scores?.total ?? 0));
-  const labels  = filtered.map(r => formatDate(r.created_at));
-
-  const scaleSegs = CFG.levels.map(lv =>
-    `<div class="scale-seg" style="background:${lv.color};flex:${lv.max - lv.min + 1}"></div>`
-  ).join('');
-  const scaleLabels = CFG.levels.map(lv =>
-    `<span>${lv.min} ${lv.label}</span>`
-  ).join('') + `<span>${CFG.max}</span>`;
-
-  content.innerHTML = `
-    <div class="breadcrumb">
-      <a href="painel-tcc.html">Dashboard</a>
-      <span class="breadcrumb-sep">/</span>
-      ${PACIENTE ? `<a href="painel-tcc.html">Pacientes</a><span class="breadcrumb-sep">/</span>` : ''}
-      <span class="breadcrumb-current">${CFG.title}${PACIENTE ? ' — ' + PACIENTE : ''}</span>
-    </div>
-
-    <div class="page-header">
-      <div class="page-kicker">${CFG.kicker}</div>
-      <div class="page-title">Dashboard de ${CFG.field}${PACIENTE ? '<span style="font-weight:400;color:var(--ink3)"> — ' + PACIENTE + '</span>' : ''}</div>
-      <div class="page-sub">Acompanhamento longitudinal de sintomas via ${INSTRUMENTO}</div>
-    </div>
-
-    <!-- STATS -->
+  container.innerHTML = `
     <div class="stats-row">
       <div class="stat-card c1">
         <div class="stat-label">Ultimo score</div>
         <div class="stat-value" style="color:${latestLevel.color}">${latestScore}</div>
-        <div class="stat-delta">de ${CFG.max} pontos · ${formatDate(latest.created_at)}</div>
+        <div class="stat-delta">de ${cfg.max} pts · ${formatDate(latest.created_at)}</div>
       </div>
       <div class="stat-card c2">
-        <div class="stat-label">Aplicacoes recebidas</div>
+        <div class="stat-label">Aplicacoes</div>
         <div class="stat-value">${filtered.length}</div>
-        <div class="stat-delta">${filtered.length > 1 ? 'historico disponivel' : 'primeira aplicacao'}</div>
+        <div class="stat-delta">${filtered.length>1?'historico disponivel':'primeira aplicacao'}</div>
       </div>
       <div class="stat-card c3">
-        <div class="stat-label">Variacao desde a primeira</div>
-        <div class="stat-value ${variation < 0 ? 'up' : variation > 0 ? 'down' : ''}">${variation > 0 ? '+' : ''}${variation}</div>
-        <div class="stat-delta ${variation < 0 ? 'up' : variation > 0 ? 'down' : ''}">${variation < 0 ? 'reducao de sintomas' : variation > 0 ? 'aumento de sintomas' : 'sem variacao'}</div>
+        <div class="stat-label">Variacao</div>
+        <div class="stat-value ${variation<0?'up':variation>0?'down':''}">${variation>0?'+':''}${variation}</div>
+        <div class="stat-delta ${variation<0?'up':variation>0?'down':''}">${variation<0?'reducao':variation>0?'aumento':'estavel'}</div>
       </div>
     </div>
 
-    <!-- CHART + GAUGE -->
     <div class="grid-2-1">
       <div class="card">
         <div class="card-header">
@@ -714,22 +449,17 @@ function render(responses) {
           <span class="level-badge ${latestLevel.css}">${latestLevel.label}</span>
         </div>
         <div class="card-body">
-          <div class="chart-area">
-            <canvas id="lineChart" style="width:100%;height:200px"></canvas>
-          </div>
+          <div class="chart-area"><canvas id="lineChart" style="width:100%;height:200px"></canvas></div>
         </div>
       </div>
-
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">Score Atual</div>
-        </div>
+        <div class="card-header"><div class="card-title">Score Atual</div></div>
         <div class="card-body">
           <div class="gauge-wrap">
             <canvas id="gaugeChart" width="240" height="130"></canvas>
             <div class="gauge-center">
               <div class="gauge-val" style="color:${latestLevel.color}">${latestScore}</div>
-              <div class="gauge-sub">de ${CFG.max} pts</div>
+              <div class="gauge-sub">de ${cfg.max} pts</div>
             </div>
           </div>
           <div class="scale-bar">${scaleSegs}</div>
@@ -738,25 +468,17 @@ function render(responses) {
       </div>
     </div>
 
-    <!-- HISTORY + RECOS -->
     <div class="grid-1-1">
       <div class="card">
-        <div class="card-header"><div class="card-title">Historico Recente</div></div>
+        <div class="card-header"><div class="card-title">Historico de Respostas</div></div>
         <div class="card-body" style="padding:0">
           <table class="hist-table">
-            <thead><tr>
-              <th>Paciente</th>
-              <th>Data</th>
-              <th>Score</th>
-              <th>Nivel</th>
-            </tr></thead>
+            <thead><tr><th>Data</th><th>Score</th><th>Nivel</th></tr></thead>
             <tbody>
-              ${[...filtered].reverse().slice(0, 8).map(r => {
-                const s = Number(r.score_total ?? r.scores?.total ?? 0);
-                const lv = levelFor(s);
+              ${[...filtered].reverse().map(r=>{
+                const s=Number(r.score_total??r.scores?.total??0), lv=levelFor(s,cfg);
                 return `<tr>
-                  <td style="font-weight:500;color:var(--ink)">${r.paciente_nome || '—'}</td>
-                  <td>${formatDate(r.created_at)}</td>
+                  <td>${formatDateTime(r.created_at)}</td>
                   <td><span class="score-pill" style="background:${lv.color}">${s}</span></td>
                   <td><span class="level-badge ${lv.css}" style="font-size:10px">${lv.label}</span></td>
                 </tr>`;
@@ -765,230 +487,220 @@ function render(responses) {
           </table>
         </div>
       </div>
-
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">Orientacoes Clinicas — ${latestLevel.label}</div>
-        </div>
+        <div class="card-header"><div class="card-title">Orientacoes — ${latestLevel.label}</div></div>
         <div class="card-body">
           <ul class="reco-list">
-            ${recos.map(r => `<li class="reco-item" style="border-left-color:${latestLevel.color}">${r}</li>`).join('')}
+            ${recos.map(r=>`<li class="reco-item" style="border-left-color:${latestLevel.color}">${r}</li>`).join('')}
           </ul>
         </div>
       </div>
     </div>
 
-    <!-- ABOUT + FONTE -->
-    <div class="grid-1-1">
-      <div class="card">
-        <div class="card-header"><div class="card-title">Sobre este instrumento</div></div>
-        <div class="card-body">
-          <div class="about-grid">
-            <div class="about-col">
-              <div class="about-col-label">Este instrumento e</div>
-              <ul>${CFG.about.is.map(t => `<li>${t}</li>`).join('')}</ul>
-            </div>
-            <div class="about-col">
-              <div class="about-col-label">Este instrumento nao e</div>
-              <ul>${CFG.about.not.map(t => `<li>${t}</li>`).join('')}</ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header"><div class="card-title">Fonte e Licenca</div></div>
-        <div class="card-body">
-          <div class="fonte-box">${CFG.fonte}</div>
-        </div>
-      </div>
-    </div>
-  `;
-
-
-  // AI section injected into content after innerHTML
-  const aiSection = document.createElement('div');
-  aiSection.id = 'aiSection';
-  aiSection.style.marginTop = '20px';
-  aiSection.innerHTML = `
-    <div class="ai-card">
-      <div class="ai-card-header">
-        <div class="ai-card-title">Analise Clinica com Inteligencia Artificial</div>
+    <!-- AI ANALYSIS -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Analise Clinica com IA</div>
         <span class="ai-badge">Beta · Uso exclusivo da psi</span>
       </div>
-      <div class="ai-card-body">
+      <div class="card-body">
         <div class="ai-warning">
-          <div class="ai-warning-title">Aviso de segurança — leia antes de usar</div>
-          <strong>Esta funcionalidade utiliza inteligência artificial (IA) generativa.</strong> A análise gerada tem caráter exclusivamente de apoio clínico e não substitui o julgamento profissional da psicóloga. Hipóteses diagnósticas e sugestões de manejo devem ser avaliadas criticamente à luz da história clínica completa do paciente. Nunca compartilhe esta análise diretamente com o paciente. O uso desta funcionalidade implica ciência de que: (1) a IA pode cometer erros; (2) as informações geradas são baseadas em dados do instrumento aplicado, sem acesso ao prontuário completo; (3) a responsabilidade clínica permanece integralmente com a profissional habilitada.
+          <div class="ai-warning-title">Aviso de seguranca — leia antes de usar</div>
+          <strong>Esta funcionalidade utiliza inteligencia artificial generativa.</strong> A analise tem carater exclusivamente de apoio clinico e nao substitui o julgamento profissional da psicologa. Hipoteses diagnosticas e sugestoes de manejo devem ser avaliadas criticamente a luz da historia clinica completa. Nunca compartilhe esta analise diretamente com o paciente. A responsabilidade clinica permanece integralmente com a profissional habilitada.
         </div>
         <div class="ai-disclaimer">
-          Dados enviados para análise: instrumento (${INSTRUMENTO}), score atual (${latestScore}/${CFG.max}), nível (${latestLevel.label}), número de aplicações (${filtered.length}), variação longitudinal (${variation > 0 ? '+' : ''}${variation}). Nenhum dado de identificação do paciente é enviado à IA.
+          Dados enviados: instrumento (${inst}), score atual (${latestScore}/${cfg.max}), nivel (${latestLevel.label}), aplicacoes (${filtered.length}), variacao (${variation>0?'+':''}${variation}). Nenhum dado de identificacao do paciente e enviado a IA.
         </div>
         <div class="ai-consent-row">
-          <input type="checkbox" id="aiConsent"/>
-          <label for="aiConsent">Compreendo que esta análise é gerada por IA, tem caráter de apoio clínico e não substitui meu julgamento profissional. Assumo a responsabilidade pelo uso clínico destas informações.</label>
+          <input type="checkbox" id="aiConsent" onchange="document.getElementById('aiBtn').disabled=!this.checked"/>
+          <label for="aiConsent">Compreendo que esta analise e gerada por IA, tem carater de apoio clinico e nao substitui meu julgamento profissional. Assumo a responsabilidade pelo uso clinico destas informacoes.</label>
         </div>
-        <button class="ai-btn" id="aiBtn" onclick="generateAnalysis()" disabled>
-          Gerar análise clínica
-        </button>
+        <button class="ai-btn" id="aiBtn" onclick="generateAnalysis()" disabled>Gerar analise clinica</button>
         <div class="ai-output" id="aiOutput">
-          <div class="ai-output-label">Análise gerada pela IA — uso exclusivo da psicóloga</div>
-          <div class="ai-text-wrap">
-            <div class="ai-text" id="aiText"></div>
-          </div>
-          <div class="ai-footer">
-            <div class="ai-dot"></div>
-            Gerado por Claude (Anthropic) · Baseado em TCC, ACT, Terapia do Esquema e DBT · Não compartilhar com o paciente
-          </div>
+          <div class="ai-output-label">Analise gerada pela IA — uso exclusivo da psicologa</div>
+          <div class="ai-text-wrap"><div class="ai-text" id="aiText"></div></div>
+          <div class="ai-footer"><div class="ai-dot"></div>Gerado por Claude (Anthropic) · Baseado em TCC, ACT, Terapia do Esquema e DBT · Nao compartilhar com o paciente</div>
         </div>
       </div>
     </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">Fonte e Licenca</div></div>
+      <div class="card-body"><div class="fonte-box">${cfg.fonte}</div></div>
+    </div>
   `;
-  document.getElementById('mainContent').appendChild(aiSection);
 
-  document.getElementById('aiConsent').addEventListener('change', function() {
-    document.getElementById('aiBtn').disabled = !this.checked;
-  });
-
-  // Draw charts after DOM is ready
-  requestAnimationFrame(() => {
-    const lineCanvas = document.getElementById('lineChart');
-    if (lineCanvas) {
-      lineCanvas.width = lineCanvas.offsetWidth;
-      lineCanvas.height = lineCanvas.offsetHeight || 200;
-      drawLineChart('lineChart', labels, scores);
-    }
-    drawGauge('gaugeChart', latestScore, latestLevel.color);
+  requestAnimationFrame(()=>{
+    const lc=document.getElementById('lineChart');
+    if(lc){lc.width=lc.offsetWidth;lc.height=lc.offsetHeight||200;drawLineChart('lineChart',labels,scores,cfg)}
+    drawGauge('gaugeChart',latestScore,latestLevel.color,cfg);
   });
 }
 
-
 // ── AI ANALYSIS ──────────────────────────────────────────────────────────────
 async function generateAnalysis() {
+  const d = window.__ai_data;
+  if (!d) return;
   const btn = document.getElementById('aiBtn');
   const output = document.getElementById('aiOutput');
   const textEl = document.getElementById('aiText');
+  btn.disabled=true; btn.textContent='Gerando analise...';
+  output.style.display='block';
+  textEl.innerHTML='<span class="ai-cursor"></span>';
 
-  btn.disabled = true;
-  btn.textContent = 'Gerando análise...';
-  output.style.display = 'block';
-  textEl.innerHTML = '<span class="ai-cursor"></span>';
+  const scoreHistory = d.scores.map((s,i)=>`Aplicacao ${i+1}: ${s} pontos`).join('; ');
+  const trend = d.scores.length>1?(d.scores[d.scores.length-1]-d.scores[0]<0?'reducao':d.scores[d.scores.length-1]-d.scores[0]>0?'aumento':'estabilidade'):'primeira aplicacao';
 
-  const latest = window.__latestForAI;
-  const scores = window.__scoresForAI;
-  const filtered = window.__filteredForAI;
+  const prompt = `Voce e um assistente clinico especializado em psicologia baseada em evidencias, com dominio em TCC (Terapia Cognitivo-Comportamental), ACT (Acceptance and Commitment Therapy), Terapia do Esquema e DBT (Dialectical Behavior Therapy). Esta analise e exclusiva para uso da psicologa responsavel pelo caso.
 
-  const scoreHistory = scores.map((s, i) => `Aplicação ${i+1}: ${s} pontos`).join('; ');
-  const trend = scores.length > 1
-    ? (scores[scores.length-1] - scores[0] < 0 ? 'redução' : scores[scores.length-1] - scores[0] > 0 ? 'aumento' : 'estabilidade')
-    : 'primeira aplicação';
+Dados do instrumento:
+- Instrumento: ${d.inst} (${d.cfg.field})
+- Score atual: ${d.latestScore} de ${d.cfg.max} pontos
+- Nivel: ${d.latestLevel.label}
+- Numero de aplicacoes: ${d.filtered.length}
+- Historico: ${scoreHistory}
+- Tendencia: ${trend}
 
-  const prompt = `Você é um assistente clínico especializado em psicologia baseada em evidências, com domínio em TCC (Terapia Cognitivo-Comportamental), ACT (Acceptance and Commitment Therapy), Terapia do Esquema e DBT (Dialectical Behavior Therapy). Esta análise é exclusiva para uso da psicóloga responsável pelo caso — nunca será compartilhada com o paciente.
+Forneca uma analise clinica estruturada em quatro partes:
 
-Dados do instrumento aplicado:
-- Instrumento: ${INSTRUMENTO} (${CFG.field})
-- Score atual: ${latest?.score_total ?? 0} de ${CFG.max} pontos
-- Nível: ${window.__latestLevelForAI?.label}
-- Número de aplicações: ${filtered?.length}
-- Histórico de scores: ${scoreHistory}
-- Tendência longitudinal: ${trend}
+1. LEITURA CLINICA DO SCORE
+Interprete o score atual e sua tendencia no contexto clinico. O que este nivel indica funcionalmente? Quais dominios de vida podem estar mais comprometidos?
 
-Com base nesses dados, forneça uma análise clínica estruturada em quatro partes:
+2. HIPOTESES DIAGNOSTICAS A INVESTIGAR
+Quais transtornos ou padroes clinicos merecem investigacao com base neste score? Considere diagnosticos diferenciais relevantes (ex: TAG, TOC, fobia especifica, TEPT, depressao com ansiedade, esquemas desadaptativos). Seja especifica e tecnica.
 
-1. LEITURA CLÍNICA DO SCORE
-Interprete o score atual e sua tendência no contexto clínico. O que este nível indica funcionalmente? Quais domínios de vida podem estar mais comprometidos?
+3. DIRECIONAMENTO TERAPEUTICO
+Quais intervencoes sao prioritarias? Sugira estrategias de TCC, ACT, Terapia do Esquema ou DBT mais indicadas para este perfil. Inclua tecnicas especificas quando pertinente.
 
-2. HIPÓTESES DIAGNÓSTICAS A INVESTIGAR
-Quais transtornos ou padrões clínicos merecem investigação com base neste score? Considere diagnósticos diferenciais relevantes (ex: TAG, TOC, fobia específica, TEPT, depressão com ansiedade, esquemas desadaptativos de supervigilância/inibição emocional). Seja específica e técnica.
+4. ALERTAS CLINICOS
+Ha sinais de atencao para as proximas sessoes? Quando considerar encaminhamento psiquiatrico?
 
-3. DIRECIONAMENTO TERAPÊUTICO
-Quais intervenções são prioritárias neste momento? Sugira estratégias de TCC, ACT, Terapia do Esquema ou DBT mais indicadas para este perfil de score. Inclua técnicas específicas quando pertinente.
-
-4. ALERTAS CLÍNICOS
-Há sinais de atenção que a psicóloga deve observar nas próximas sessões? Quando considerar encaminhamento psiquiátrico?
-
-Escreva de forma técnica, direta e sem jargão desnecessário. Não use listas com marcadores — escreva em parágrafos corridos por seção. Não inclua avisos genéricos de "consulte um profissional" pois esta análise já é para a profissional.`;
+Escreva de forma tecnica e direta, em paragrafos corridos por secao. Sem marcadores de lista. Sem avisos genericos de "consulte um profissional" pois esta analise ja e para a profissional.`;
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        stream: true,
-        messages: [{ role: 'user', content: prompt }]
-      })
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,stream:true,messages:[{role:'user',content:prompt}]})
     });
-
-    const reader = response.body.getReader();
-    const decoder = new TextDecoder();
-    let fullText = '';
-    textEl.innerHTML = '';
-
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      const chunk = decoder.decode(value);
-      const lines = chunk.split('\n').filter(l => l.startsWith('data: '));
-      for (const line of lines) {
-        const data = line.slice(6);
-        if (data === '[DONE]') continue;
-        try {
-          const parsed = JSON.parse(data);
-          const delta = parsed?.delta?.text || '';
-          if (delta) {
-            fullText += delta;
-            textEl.textContent = fullText;
-          }
-        } catch (_) {}
+    const reader=response.body.getReader(), decoder=new TextDecoder();
+    let fullText='';textEl.innerHTML='';
+    while(true){
+      const {done,value}=await reader.read(); if(done) break;
+      const chunk=decoder.decode(value);
+      for(const line of chunk.split('\n').filter(l=>l.startsWith('data: '))){
+        const data=line.slice(6); if(data==='[DONE]') continue;
+        try{const p=JSON.parse(data),delta=p?.delta?.text||'';if(delta){fullText+=delta;textEl.textContent=fullText;}}catch(_){}
       }
     }
+    if(!fullText) textEl.textContent='Nao foi possivel gerar a analise. Tente novamente.';
+  } catch(_) {
+    textEl.textContent='Erro ao conectar com a IA. Verifique sua conexao e tente novamente.';
+  }
+  btn.disabled=false; btn.textContent='Gerar nova analise';
+}
 
-    if (!fullText) {
-      textEl.textContent = 'Não foi possível gerar a análise. Verifique sua conexão e tente novamente.';
-    }
+// ── MAIN RENDER ──────────────────────────────────────────────────────────────
+function render(responses, psi) {
+  const patientResponses = PACIENTE
+    ? responses.filter(r=>(r.paciente_nome||'').toLowerCase()===PACIENTE.toLowerCase())
+    : responses;
 
-  } catch (err) {
-    textEl.textContent = 'Erro ao conectar com a IA. Verifique sua conexão e tente novamente.';
+  const instruments = [...new Set(patientResponses.map(r=>r.instrumento||r.formulario||'').filter(Boolean))];
+  const totalApps = patientResponses.length;
+  const lastApp = patientResponses.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at))[0];
+
+  document.getElementById('topbarTitle').textContent = PACIENTE || 'Perfil Clínico';
+
+  const content = document.getElementById('mainContent');
+
+  if (!PACIENTE) {
+    content.innerHTML = `<div class="card"><div class="card-body"><div class="empty-state"><strong>Paciente nao identificado</strong>Acesse este painel a partir do perfil de um paciente.</div></div></div>`;
+    return;
   }
 
-  btn.disabled = false;
-  btn.textContent = 'Gerar nova análise';
+  const availableInst = Object.keys(CONFIGS).filter(k=>instruments.some(i=>i.toUpperCase().includes(k.replace('-',''))||i===k));
+
+  content.innerHTML = `
+    <div class="breadcrumb">
+      <a href="painel-tcc.html">Dashboard</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="painel-tcc.html#pacientes">Pacientes</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">${PACIENTE}</span>
+    </div>
+
+    <div class="patient-hero">
+      <div class="patient-avatar-lg">${initials(PACIENTE)}</div>
+      <div class="patient-info">
+        <div class="patient-name-lg">${PACIENTE}</div>
+        <div class="patient-meta">
+          <span>Ultima aplicacao: ${formatDate(lastApp?.created_at)}</span>
+          <span>${totalApps} resposta(s) registrada(s)</span>
+          <span>${instruments.join(', ') || 'Nenhum instrumento'}</span>
+        </div>
+      </div>
+      <div class="patient-stats">
+        <div class="pstat">
+          <div class="pstat-val">${totalApps}</div>
+          <div class="pstat-label">Respostas</div>
+        </div>
+        <div class="pstat">
+          <div class="pstat-val">${availableInst.length}</div>
+          <div class="pstat-label">Instrumentos</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="inst-tabs" id="instTabs">
+      ${Object.keys(CONFIGS).map(k=>{
+        const hasData = availableInst.includes(k);
+        return `<div class="inst-tab ${k===ACTIVE_INST?'active':''} ${!hasData?'no-data':''}"
+          onclick="${hasData?`switchInst('${k}')`:''}">
+          ${k}${!hasData?' (sem dados)':''}
+        </div>`;
+      }).join('')}
+    </div>
+
+    <div id="instContent"></div>
+  `;
+
+  // Render active instrument
+  window.__all_responses = patientResponses;
+  renderInstrument(ACTIVE_INST, patientResponses);
+}
+
+function switchInst(inst) {
+  ACTIVE_INST = inst;
+  CFG = CONFIGS[inst] || CFG;
+  document.querySelectorAll('.inst-tab').forEach(t=>{
+    t.classList.toggle('active', t.textContent.trim().startsWith(inst));
+  });
+  renderInstrument(inst, window.__all_responses || []);
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 async function init() {
-  // Auth check
-  if (!SB_SESSION_TOKEN) {
+  if (!SB_SESSION) {
     sessionStorage.setItem('sb_redirect', window.location.href);
-    window.location.href = 'painel-tcc.html';
-    return;
+    window.location.href='painel-tcc.html'; return;
   }
-
-  // Load psi identity
   try {
-    const psi = await sbFetch('psis?select=nome,plano,ativa&limit=1');
-    if (psi?.[0]) {
-      const name = psi[0].nome || 'Psicóloga';
-      document.getElementById('sidebarName').textContent = name;
-      document.getElementById('sidebarPlan').textContent = psi[0].plano || 'Plano ativo';
-      document.getElementById('sidebarAvatar').textContent =
-        name.split(' ').filter(Boolean).slice(0,2).map(p => p[0].toUpperCase()).join('');
+    const psi=await sbFetch('psis?select=nome,plano&limit=1');
+    if(psi?.[0]){
+      const name=psi[0].nome||'Psicóloga';
+      document.getElementById('sidebarName').textContent=name;
+      document.getElementById('sidebarPlan').textContent=psi[0].plano||'Plano ativo';
+      document.getElementById('sidebarAvatar').textContent=initials(name);
     }
-  } catch (_) {}
+  } catch(_){}
 
-  // Load responses
   try {
-    const responses = await sbFetch(
-      'respostas_clinicas?select=id,paciente_nome,instrumento,formulario,score_total,scores,status,created_at&order=created_at.desc'
-    );
-    render(responses || []);
-  } catch (_) {
-    document.getElementById('mainContent').innerHTML = `
-      <div class="card"><div class="card-body">
-        <div class="empty-state"><strong>Erro ao carregar dados</strong>Verifique sua conexão e recarregue a página.</div>
-      </div></div>`;
+    const responses=await sbFetch('respostas_clinicas?select=id,paciente_nome,instrumento,formulario,score_total,scores,status,created_at&order=created_at.desc');
+    ALL_RESPONSES=responses||[];
+    render(ALL_RESPONSES);
+  } catch(_){
+    document.getElementById('mainContent').innerHTML=`<div class="card"><div class="card-body"><div class="empty-state"><strong>Erro ao carregar dados</strong>Verifique sua conexao e recarregue a pagina.</div></div></div>`;
   }
 }
 

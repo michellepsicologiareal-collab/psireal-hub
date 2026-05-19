@@ -1865,7 +1865,7 @@ function renderApplicationsTable() {
       <td><span class="badge ${applicationBadgeClass(link.status)}">${applicationStatusLabel(link.status)}</span></td>
       <td>
         ${link.status === 'respondido'
-          ? `<button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" onclick="openInstrumentDashboard('${escapeHtml(link.instrumento)}')">Ver resultado</button>`
+          ? `<button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" onclick="openInstrumentDashboard('${escapeHtml(link.instrumento)}','${escapeHtml(link.patient_name || '')}')">Ver resultado</button>`
           : `<button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" onclick="copyApplicationLink('${escapeHtml(link.token || '')}','${escapeHtml(link.instrumento || '')}','${escapeHtml(link.patient_name || '')}')">Copiar link</button>`}
       </td>
     </tr>
@@ -1915,12 +1915,15 @@ function openPatientDashboard(name) {
   showScreen('aplicacoes', document.querySelector('[onclick*=\"aplicacoes\"]'));
 }
 
-function openInstrumentDashboard(instrument) {
+function openInstrumentDashboard(instrument, patient) {
   if (instrument === 'YSQ-S3') {
     window.location.href = 'painel-esquemas.html';
     return;
   }
-  window.location.href = `painel-instrumento.html?instrumento=${encodeURIComponent(instrument)}`;
+  const url = patient
+    ? `painel-instrumento.html?instrumento=${encodeURIComponent(instrument)}&paciente=${encodeURIComponent(patient)}`
+    : `painel-instrumento.html?instrumento=${encodeURIComponent(instrument)}`;
+  window.location.href = url;
 }
 
 function openApplicationModal(instrument = 'YSQ-S3') {
