@@ -528,37 +528,23 @@
   }
 
   function showResult(total, saved) {
-    const level = levelFor(total);
-    ['questions','about-box','ident-card','prog-wrap','lgpd-box','consent-row'].forEach(cls => {
-      const el = document.getElementById(cls) || document.querySelector('.' + cls);
-      if (el) el.style.display = 'none';
-    });
-    document.querySelector('.actions').style.display = 'none';
-
-    document.getElementById('resultScore').textContent = total;
-    document.getElementById('resultScore').style.color = level.color;
-    document.getElementById('resultLevel').textContent = level.label;
-    document.getElementById('resultLevel').style.color = level.color;
-    document.getElementById('resultDesc').textContent = level.desc;
-    document.getElementById('gaugeVal').textContent = total;
-    document.getElementById('gaugeVal').style.color = level.color;
-    document.getElementById('resultBadge').style.color = level.color;
-
-    const recoList = document.getElementById('recoList');
-    recoList.innerHTML = '';
-    level.recos.forEach(text => {
-      const li = document.createElement('li');
-      li.className = 'reco-item';
-      li.style.borderLeftColor = level.color;
-      li.textContent = text;
-      recoList.appendChild(li);
-    });
-
-    document.getElementById('noticeOk').style.display = saved ? 'block' : 'none';
-    document.getElementById('noticeErr').style.display = saved ? 'none' : 'block';
-    document.getElementById('result').style.display = 'block';
-
-    setTimeout(() => drawGauge(total, level.color), 80);
+    // Hide entire form — only show confirmation to patient
+    document.querySelector('.hero').style.display = 'none';
+    document.getElementById('mainWrap').innerHTML = `
+      <div style="max-width:480px;margin:80px auto;text-align:center;padding:0 24px">
+        <div style="width:56px;height:56px;border-radius:50%;background:var(--lilac4);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--brown3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--brown3);margin-bottom:10px">Concluído</div>
+        <div style="font-size:22px;font-weight:700;color:var(--brown);margin-bottom:12px;line-height:1.2">Respostas registradas</div>
+        <p style="font-size:14px;color:var(--ink2);line-height:1.7;margin-bottom:24px">
+          Obrigada por responder. Suas respostas foram recebidas com sucesso e serão analisadas pela sua psicóloga, que irá conversar com você sobre os resultados nas próximas sessões.
+        </p>
+        ${!saved ? `<p style="font-size:12px;color:var(--ink3);line-height:1.6">Se tiver dúvidas, entre em contato com sua psicóloga.</p>` : ''}
+        <div style="background:var(--lilac4);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;font-size:11.5px;color:var(--ink3);line-height:1.65;margin-top:24px;text-align:left">
+          <strong style="color:var(--ink2);font-weight:600">Privacidade:</strong> Seus dados foram tratados de forma segura e sigilosa, conforme a Lei n. 13.709/2018 (LGPD). O resultado é de acesso exclusivo da sua psicóloga.
+        </div>
+      </div>`;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
