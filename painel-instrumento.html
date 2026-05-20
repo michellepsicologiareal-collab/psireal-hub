@@ -237,7 +237,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
 <script>
 const SB_URL = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
 const SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
-const SB_SESSION = sessionStorage.getItem('sb_session_token') || '';
+let SB_SESSION = sessionStorage.getItem('sb_session_token') || '';
 const PARAMS = new URLSearchParams(window.location.search);
 const INSTRUMENTO = PARAMS.get('instrumento') || 'GAD-7';
 const PACIENTE = PARAMS.get('paciente') ? decodeURIComponent(PARAMS.get('paciente')) : null;
@@ -293,11 +293,53 @@ function formatDate(v){ return v ? new Date(v).toLocaleDateString('pt-BR') : '�
 function formatDateTime(v){ return v ? new Date(v).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'}) : '—' }
 function initials(name){ return (name||'?').split(' ').filter(Boolean).slice(0,2).map(p=>p[0].toUpperCase()).join('') }
 
+function redirectToLogin(message = 'Sua sessão expirou. Entre novamente para continuar.') {
+  sessionStorage.removeItem('sb_session_token');
+  sessionStorage.setItem('sb_redirect', window.location.href);
+  alert(message);
+  window.location.href = 'painel-tcc.html';
+}
+
+async function refreshSessionToken() {
+  const refreshToken = sessionStorage.getItem('sb_refresh_token');
+  if (!refreshToken) return '';
+  const res = await fetch(`${SB_URL}/auth/v1/token?grant_type=refresh_token`, {
+    method: 'POST',
+    headers: { apikey: SB_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ refresh_token: refreshToken })
+  });
+  if (!res.ok) return '';
+  const data = await res.json();
+  if (!data.access_token) return '';
+  SB_SESSION = data.access_token;
+  sessionStorage.setItem('sb_session_token', data.access_token);
+  if (data.refresh_token) sessionStorage.setItem('sb_refresh_token', data.refresh_token);
+  return data.access_token;
+}
+
+async function fetchWithTimeout(url, options = {}, timeout = 45000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeout);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 async function sbFetch(path, useSession=true) {
   const token = useSession ? SB_SESSION : SB_KEY;
   const res = await fetch(`${SB_URL}/rest/v1/${path}`, {
     headers:{apikey:SB_KEY, Authorization:'Bearer '+token}
   });
+  if (res.status === 401 && useSession) {
+    const refreshed = await refreshSessionToken();
+    if (!refreshed) redirectToLogin();
+    const retry = await fetch(`${SB_URL}/rest/v1/${path}`, {
+      headers:{apikey:SB_KEY, Authorization:'Bearer '+refreshed}
+    });
+    return retry.ok ? retry.json() : [];
+  }
   return res.ok ? res.json() : [];
 }
 
@@ -578,30 +620,55 @@ Ha sinais de atencao para as proximas sessoes? Quando considerar encaminhamento 
 Escreva de forma tecnica e direta, em paragrafos corridos por secao. Sem marcadores de lista. Sem avisos genericos de "consulte um profissional" pois esta analise ja e para a profissional.`;
 
   try {
-    const response = await fetch(
+    const payload = {
+      instrumento: d.inst,
+      score: d.latestScore,
+      max: d.cfg.max,
+      nivel: d.latestLevel.label,
+      aplicacoes: d.filtered.length,
+      variacao: d.variation,
+      historico: d.scores,
+      prompt
+    };
+
+    let token = sessionStorage.getItem('sb_session_token') || SB_SESSION;
+    if (!token) throw new Error('expired-session');
+
+    let response = await fetchWithTimeout(
       'https://qpwjxacdjzzsyjbuuwsq.supabase.co/functions/v1/smooth-responder',
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + (sessionStorage.getItem('sb_session_token') || SB_KEY)
+          'Authorization': 'Bearer ' + token
         },
-        body: JSON.stringify({
-          instrumento: d.inst,
-          score: d.latestScore,
-          max: d.cfg.max,
-          nivel: d.latestLevel.label,
-          aplicacoes: d.filtered.length,
-          variacao: d.variation,
-          historico: d.scores
-        })
+        body: JSON.stringify(payload)
       }
     );
+
+    if (response.status === 401 || response.status === 403) {
+      token = await refreshSessionToken();
+      if (!token) throw new Error('expired-session');
+      response = await fetchWithTimeout(
+        'https://qpwjxacdjzzsyjbuuwsq.supabase.co/functions/v1/smooth-responder',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+          body: JSON.stringify(payload)
+        }
+      );
+    }
+
+    if (!response.ok) throw new Error('ai-request-failed');
     const result = await response.json();
     textEl.innerHTML = '';
-    if (result.analysis) {
+    const analysis = result.analysis || result.text || result.content || result.message || '';
+    if (analysis) {
       // Render markdown-like formatting
-      const html = result.analysis
+      const html = analysis
         .replace(/^## (.+)$/gm, '<div style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--brown2);margin:18px 0 8px">$1</div>')
         .replace(/^# (.+)$/gm, '<div style="font-size:14px;font-weight:700;color:var(--brown);margin:0 0 12px">$1</div>')
         .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
@@ -613,8 +680,14 @@ Escreva de forma tecnica e direta, em paragrafos corridos por secao. Sem marcado
     } else {
       textEl.textContent = 'Nao foi possivel gerar a analise. Tente novamente.';
     }
-  } catch(_) {
-    textEl.textContent = 'Erro ao conectar com a IA. Verifique sua conexao e tente novamente.';
+  } catch(error) {
+    if (error.message === 'expired-session') {
+      textEl.innerHTML = 'Seu login expirou. Volte ao painel, entre novamente e gere a análise outra vez.<br><br><button class="ai-btn" onclick="redirectToLogin()">Voltar para login</button>';
+    } else if (error.name === 'AbortError') {
+      textEl.textContent = 'A IA demorou demais para responder. Tente novamente em alguns segundos.';
+    } else {
+      textEl.textContent = 'Erro ao conectar com a IA. Verifique sua conexao e tente novamente.';
+    }
   }
   btn.disabled=false; btn.textContent='Gerar nova analise';
 }
@@ -701,8 +774,11 @@ function switchInst(inst) {
 // ── INIT ─────────────────────────────────────────────────────────────────────
 async function init() {
   if (!SB_SESSION) {
-    sessionStorage.setItem('sb_redirect', window.location.href);
-    window.location.href='painel-tcc.html'; return;
+    const refreshed = await refreshSessionToken();
+    if (!refreshed) {
+      sessionStorage.setItem('sb_redirect', window.location.href);
+      window.location.href='painel-tcc.html'; return;
+    }
   }
   try {
     const psi=await sbFetch('psis?select=nome,plano&limit=1');
