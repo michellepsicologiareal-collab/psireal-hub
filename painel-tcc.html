@@ -280,6 +280,15 @@ body {
 }
 .generated-link.open{display:block}
 .generated-link code{display:block;word-break:break-all;font-size:12px;color:var(--ink2);margin-bottom:10px}
+.toast{
+  position:fixed;right:22px;bottom:22px;z-index:500;
+  min-width:240px;max-width:min(360px,calc(100vw - 32px));
+  padding:13px 16px;border-radius:16px;background:#3D2028;color:#fff;
+  box-shadow:0 18px 40px rgba(61,32,40,.22);font-size:14px;font-weight:700;
+  opacity:0;transform:translateY(14px);pointer-events:none;transition:.2s ease;
+}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.error{background:#8A3030}
 
 /*  TABLE  */
 .table { width: 100%; border-collapse: collapse; }
@@ -726,6 +735,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
 </style>
 </head>
 <body>
+<div class="toast" id="toast"></div>
 
 <!-- SIDEBAR -->
 <aside class="sidebar">
@@ -1633,6 +1643,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
 <script>
 const SB_URL = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
 const SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
+window.PSIREAL_BUILD = 'status-rpc-2026-05-20';
 let SB_SESSION_TOKEN = sessionStorage.getItem('sb_session_token') || '';
 let PSI_PROFILE = null;
 let PATIENT_LINKS = [];
@@ -1855,6 +1866,7 @@ function renderPatientsTable() {
       <td><span style="font-size:11px;color:var(--ink3)">${patient.totalResponses > 1 ? 'Histórico ativo' : 'Primeira aplicação'}</span></td>
       <td onclick="event.stopPropagation()">
         <select class="status-select status-${(patient.clinicalStatus||'ativo').toLowerCase().replace(' ','')}"
+          data-current-status="${patient.clinicalStatus||'ativo'}"
           onchange="updatePatientStatus('${escapeHtml(patient.name)}', this.value, this)">
           <option value="ativo"     ${(patient.clinicalStatus||'ativo')==='ativo'?'selected':''}>Ativo</option>
           <option value="pendente"  ${patient.clinicalStatus==='pendente'?'selected':''}>Pendente</option>
@@ -1903,11 +1915,16 @@ function buildPatients() {
     const key = link.patient_name || 'Paciente sem nome';
     if (!responseMap.has(key)) responseMap.set(key, []);
   });
+  (window.PACIENTES_DB || []).forEach(patient => {
+    const key = patient.nome || 'Paciente sem nome';
+    if (!responseMap.has(key)) responseMap.set(key, []);
+  });
 
   return [...responseMap.entries()].map(([name, responses]) => {
     const ownLinks = PATIENT_LINKS.filter(link => link.patient_name === name);
     const answered = ownLinks.filter(link => link.status === 'respondido').length;
     const adherence = ownLinks.length ? Math.round((answered / ownLinks.length) * 100) : 100;
+    const record = (window.PACIENTES_DB || []).find(p => p.nome === name);
     return {
       name,
       responses,
@@ -1915,7 +1932,8 @@ function buildPatients() {
       totalResponses: responses.length,
       instruments: [...new Set(responses.map(instrumentName).filter(Boolean))],
       pendingCount: ownLinks.filter(link => link.status === 'ativo').length,
-      adherence
+      adherence,
+      clinicalStatus: record?.status || 'ativo'
     };
   });
 }
@@ -2059,15 +2077,7 @@ async function createApplication() {
     document.getElementById('generatedLinkText').textContent = link;
     document.getElementById('generatedWhatsappLink').href = buildWhatsappUrl(whatsapp, name, link);
     document.getElementById('generatedLinkBox').classList.add('open');
-    // Upsert patient into pacientes table
-    const existing = (window.PACIENTES_DB || []).find(p => p.nome === name);
-    if (!existing) {
-      await fetch(`${SB_URL}/rest/v1/pacientes`, {
-        method: 'POST',
-        headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_SESSION_TOKEN, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
-        body: JSON.stringify({ nome: name, status: 'pendente', psi_user_id: null })
-      });
-    }
+    await callRpc('upsert_patient_status', { p_patient_name: name, p_status: 'ativo' });
     await refreshPanelData();
   } catch (error) {
     if (errorBox) {
@@ -2114,6 +2124,27 @@ async function copyApplicationLink(token, instrument, patientName = '') {
 async function copyGeneratedLink() {
   const link = document.getElementById('generatedLinkText').textContent;
   await navigator.clipboard.writeText(link);
+}
+
+async function callRpc(functionName, payload) {
+  const res = await fetch(`${SB_URL}/rest/v1/rpc/${functionName}`, {
+    method: 'POST',
+    headers: {
+      apikey: SB_KEY,
+      Authorization: 'Bearer ' + SB_SESSION_TOKEN,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  });
+  if (res.status === 401 || res.status === 403) {
+    throw new Error('Sua sessão expirou. Entre novamente no painel.');
+  }
+  if (!res.ok) {
+    let detail = '';
+    try { detail = (await res.json()).message || ''; } catch(_) {}
+    throw new Error(detail || 'Não foi possível concluir a ação no Supabase.');
+  }
+  try { return await res.json(); } catch(_) { return null; }
 }
 
 async function refreshPanelData() {
@@ -2565,52 +2596,40 @@ function renderEvolucao() {
 
 
 async function updatePatientStatus(name, newStatus, selectEl) {
-  selectEl.className = `status-select status-${newStatus}`;
+  const previous = selectEl?.dataset?.currentStatus || 'ativo';
+  if (selectEl) {
+    selectEl.disabled = true;
+    selectEl.className = `status-select status-${newStatus}`;
+  }
   try {
-    const existing = (window.PACIENTES_DB || []).find(p => p.nome === name);
-    if (existing) {
-      await fetch(`${SB_URL}/rest/v1/pacientes?id=eq.${existing.id}`, {
-        method: 'PATCH',
-        headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_SESSION_TOKEN, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
-        body: JSON.stringify({ status: newStatus })
-      });
-    } else {
-      await fetch(`${SB_URL}/rest/v1/pacientes`, {
-        method: 'POST',
-        headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_SESSION_TOKEN, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
-        body: JSON.stringify({ nome: name, status: newStatus })
-      });
-    }
-    if (window.PACIENTES_DB) {
-      const idx = window.PACIENTES_DB.findIndex(p => p.nome === name);
-      if (idx >= 0) window.PACIENTES_DB[idx].status = newStatus;
-      else window.PACIENTES_DB.push({ nome: name, status: newStatus });
-    }
+    await callRpc('upsert_patient_status', { p_patient_name: name, p_status: newStatus });
+    const idx = (window.PACIENTES_DB || []).findIndex(p => p.nome === name);
+    if (idx >= 0) window.PACIENTES_DB[idx].status = newStatus;
+    else window.PACIENTES_DB.push({ nome: name, status: newStatus });
+    if (selectEl) selectEl.dataset.currentStatus = newStatus;
     renderPatientsTable();
-  } catch(_) {
-    alert('Não foi possível atualizar o status. Tente novamente.');
+  } catch(error) {
+    if (selectEl) {
+      selectEl.value = previous;
+      selectEl.className = `status-select status-${previous}`;
+    }
+    alert(error.message || 'Não foi possível atualizar o status. Tente novamente.');
+  } finally {
+    if (selectEl) selectEl.disabled = false;
   }
 }
 
 async function deletePatient(encodedName) {
   const name = decodeURIComponent(encodedName);
-  if (!confirm(`Excluir o paciente "${name}"?\n\nIsso remove todos os links e respostas associados. Esta ação não pode ser desfeita.`)) return;
+  if (!confirm(`Excluir o paciente "${name}"?\n\nIsso remove links e respostas desse paciente apenas da sua conta. Esta ação não pode ser desfeita.`)) return;
   try {
-    await fetch(`${SB_URL}/rest/v1/patient_links?patient_name=eq.${encodeURIComponent(name)}`, {
-      method: 'DELETE',
-      headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_SESSION_TOKEN, 'Content-Type': 'application/json', Prefer: 'return=minimal' }
-    });
-    await fetch(`${SB_URL}/rest/v1/respostas_clinicas?paciente_nome=eq.${encodeURIComponent(name)}`, {
-      method: 'DELETE',
-      headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_SESSION_TOKEN, 'Content-Type': 'application/json', Prefer: 'return=minimal' }
-    });
-    await fetch(`${SB_URL}/rest/v1/pacientes?nome=eq.${encodeURIComponent(name)}`, {
-      method: 'DELETE',
-      headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_SESSION_TOKEN, 'Content-Type': 'application/json', Prefer: 'return=minimal' }
-    });
+    await callRpc('delete_patient_data', { p_patient_name: name });
+    PATIENT_LINKS = PATIENT_LINKS.filter(link => link.patient_name !== name);
+    CLINICAL_RESPONSES = CLINICAL_RESPONSES.filter(response => response.paciente_nome !== name);
+    window.PACIENTES_DB = (window.PACIENTES_DB || []).filter(patient => patient.nome !== name);
     await refreshPanelData();
-  } catch(_) {
-    alert('Não foi possível excluir o paciente. Tente novamente.');
+  } catch(error) {
+    alert(error.message || 'Não foi possível excluir o paciente. Tente novamente.');
   }
 }
 
