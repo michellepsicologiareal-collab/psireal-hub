@@ -159,13 +159,15 @@
   }
 
   function build(){
-    document.getElementById('questions').innerHTML=ITEMS.map((item,idx)=>`
-      <article class="question-card" id="qcard${idx}">
+    document.getElementById('questions').innerHTML=ITEMS.map((item,idx)=>{
+      const opts = item.opts || GLOBAL_OPTS || [];
+      return `<article class="question-card" id="qcard${idx}">
         <div class="q-head"><div class="q-num">${idx+1}</div><div class="q-text">${item.q}</div></div>
-        <div class="options">${item.opts.map((opt,oi)=>`
+        <div class="options">${opts.map((opt,oi)=>`
           <label class="option"><input type="radio" name="q${idx+1}" value="${oi}" onchange="answer(${idx+1},${oi})"/><span>${opt}</span></label>`).join('')}
         </div>
-      </article>`).join('');
+      </article>`;
+    }).join('');
   }
 
   function answer(n,v){
