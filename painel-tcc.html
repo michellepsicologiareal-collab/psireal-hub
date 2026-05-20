@@ -732,10 +732,242 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
 /* Patient registration modal clarity */
 .field-help{font-size:12px;color:#9A7A84;margin-top:7px;line-height:1.45}.modal-error{display:none;margin:14px 0 0;padding:12px 14px;border:1px solid #E9C5C0;background:#FFF6F4;color:#8A4738;border-radius:14px;font-size:13px;line-height:1.45}.modal-card{max-width:480px!important}.generated-link{border-radius:16px!important;background:#F8F2F4!important;border:1px solid #E8D8DC!important}.generated-link code{word-break:break-all!important;white-space:normal!important;line-height:1.45!important}
 
+/* Mobile app shell */
+.mobile-topbar,
+.mobile-backdrop{display:none}
+.mobile-topbar{
+  height:64px;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:0 16px;
+  background:#fff;
+  border-bottom:1px solid #E9DDD9;
+  position:sticky;
+  top:0;
+  z-index:300;
+}
+.mobile-menu-btn{
+  width:42px;
+  height:42px;
+  border:1px solid #E8D8DC;
+  border-radius:14px;
+  background:#fff;
+  color:#3D2028;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+.mobile-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+  font-weight:800;
+  color:#2F2023;
+}
+.mobile-title .logo-icon{
+  width:32px!important;
+  height:32px!important;
+  flex-basis:32px!important;
+}
+.mobile-title span{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+@media (max-width:760px){
+  body{
+    display:block!important;
+    overflow-x:hidden!important;
+    background:#FBFAF9!important;
+  }
+  .mobile-topbar{display:flex}
+  .mobile-backdrop{
+    position:fixed;
+    inset:0;
+    z-index:330;
+    background:rgba(30,16,20,.36);
+  }
+  body.mobile-menu-open .mobile-backdrop{display:block}
+  .sidebar{
+    position:fixed!important;
+    inset:0 auto 0 0!important;
+    width:min(84vw,320px)!important;
+    min-height:100dvh!important;
+    height:100dvh!important;
+    overflow-y:auto!important;
+    z-index:350!important;
+    transform:translateX(-104%)!important;
+    transition:transform .22s ease!important;
+    border-right:1px solid #E9DDD9!important;
+    box-shadow:18px 0 40px rgba(61,32,40,.18)!important;
+  }
+  body.mobile-menu-open .sidebar{transform:translateX(0)!important}
+  .logo{padding:20px 18px!important}
+  .nav{padding:20px 14px 96px!important}
+  .nav-item{min-height:48px!important;font-size:15px!important}
+  .sidebar-user{
+    position:sticky!important;
+    bottom:0!important;
+    background:#fff!important;
+  }
+  .main{
+    margin-left:0!important;
+    width:100%!important;
+    min-height:calc(100dvh - 64px)!important;
+  }
+  .topbar{
+    position:relative!important;
+    top:auto!important;
+    height:auto!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:16px!important;
+    display:block!important;
+    border-bottom:1px solid #E9DDD9!important;
+    background:#FBFAF9!important;
+  }
+  .topbar-title{font-size:22px!important}
+  .topbar-sub{display:block!important;margin-top:4px!important}
+  .topbar-actions{
+    margin-top:14px!important;
+    display:flex!important;
+    gap:10px!important;
+    overflow-x:auto!important;
+    padding-bottom:4px!important;
+  }
+  .topbar-actions .btn{white-space:nowrap!important}
+  .content{
+    padding:14px 12px 36px!important;
+    max-width:none!important;
+    width:100%!important;
+  }
+  .dashboard-hero{
+    padding:22px 18px!important;
+    margin:0 0 18px!important;
+    border-radius:20px!important;
+  }
+  .hero-kicker{font-size:11px!important}
+  .hero-date{font-size:14px!important}
+  .hero-title{font-size:30px!important}
+  .hero-sub{font-size:16px!important}
+  .stats-grid,
+  .grid-2,
+  .grid-3,
+  .grid-2-1,
+  .inv-grid{
+    grid-template-columns:1fr!important;
+    gap:14px!important;
+  }
+  .stat-card{
+    min-height:132px!important;
+    padding:20px!important;
+  }
+  .stat-label{margin-top:36px!important}
+  .stat-value{font-size:34px!important}
+  .card,.inv-card,.table-wrap,.evo-card,.insight-card{
+    border-radius:20px!important;
+  }
+  .card-header{
+    height:auto!important;
+    min-height:56px!important;
+    padding:14px 16px!important;
+    align-items:flex-start!important;
+    gap:10px!important;
+  }
+  .filter-tabs{
+    display:flex!important;
+    overflow-x:auto!important;
+    gap:8px!important;
+    padding:0 2px 8px!important;
+    scrollbar-width:none!important;
+  }
+  .filter-tabs::-webkit-scrollbar{display:none}
+  .filter-tab{white-space:nowrap!important}
+  .table{
+    display:block!important;
+    width:100%!important;
+  }
+  .table thead{display:none!important}
+  .table tbody,
+  .table tr,
+  .table td{
+    display:block!important;
+    width:100%!important;
+  }
+  .table tr{
+    margin:0 0 12px!important;
+    padding:14px!important;
+    border:1px solid #E9DDD9!important;
+    border-radius:18px!important;
+    background:#fff!important;
+    box-shadow:0 8px 20px rgba(61,32,40,.04)!important;
+  }
+  .table td{
+    border:0!important;
+    padding:6px 0!important;
+    background:transparent!important;
+  }
+  .table td:not(:first-child)::before{
+    content:attr(data-label);
+    display:block;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:#9A7A84;
+    font-weight:800;
+    margin-bottom:2px;
+  }
+  .table .empty-row{
+    padding:18px!important;
+    text-align:left!important;
+  }
+  .modal-backdrop{
+    align-items:flex-end!important;
+    padding:10px!important;
+  }
+  .modal-card{
+    width:100%!important;
+    max-width:none!important;
+    max-height:calc(100dvh - 20px)!important;
+    overflow:auto!important;
+    border-radius:24px!important;
+    padding:20px!important;
+  }
+  .modal-actions{
+    flex-direction:column-reverse!important;
+  }
+  .modal-actions .btn{
+    width:100%!important;
+    justify-content:center!important;
+  }
+  .generated-link code{font-size:12px!important}
+  .toast{
+    left:12px!important;
+    right:12px!important;
+    bottom:12px!important;
+    max-width:none!important;
+  }
+}
 </style>
 </head>
 <body>
 <div class="toast" id="toast"></div>
+<div class="mobile-topbar">
+  <button class="mobile-menu-btn" type="button" onclick="toggleMobileMenu()" aria-label="Abrir menu">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <div class="mobile-title">
+    <div class="logo-icon" aria-hidden="true"></div>
+    <span>PsiReal TCC</span>
+  </div>
+  <button class="mobile-menu-btn" type="button" onclick="showScreen('dashboard', document.querySelector('[onclick*=dashboard]'))" aria-label="Ir para o painel">
+    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 10v10h14V10"/></svg>
+  </button>
+</div>
+<div class="mobile-backdrop" onclick="closeMobileMenu()"></div>
 
 <!-- SIDEBAR -->
 <aside class="sidebar">
@@ -1846,7 +2078,7 @@ function renderPatientsTable() {
 
   body.innerHTML = patients.map(patient => `
     <tr onclick="openPatientDashboard('${encodeURIComponent(patient.name)}')" style="cursor:pointer">
-      <td>
+      <td data-label="Paciente">
         <div style="display:flex;align-items:center;gap:10px">
           <div class="avatar" style="background:linear-gradient(135deg,#3D2028,#B08090)">${initialsFromName(patient.name)}</div>
           <div>
@@ -1855,16 +2087,16 @@ function renderPatientsTable() {
           </div>
         </div>
       </td>
-      <td>${formatDateTime(patient.latestResponse?.created_at)}<br><span style="font-size:11px;color:var(--ink3)">${escapeHtml(instrumentName(patient.latestResponse))}</span></td>
-      <td>${patient.instruments.map(inst => `<span class="badge badge-lilac">${escapeHtml(inst)}</span>`).join(' ')}</td>
-      <td>
+      <td data-label="Última aplicação">${formatDateTime(patient.latestResponse?.created_at)}<br><span style="font-size:11px;color:var(--ink3)">${escapeHtml(instrumentName(patient.latestResponse))}</span></td>
+      <td data-label="Instrumentos">${patient.instruments.map(inst => `<span class="badge badge-lilac">${escapeHtml(inst)}</span>`).join(' ')}</td>
+      <td data-label="Adesão">
         <div style="display:flex;align-items:center;gap:8px">
           <div class="progress" style="width:64px"><div class="progress-fill" style="width:${patient.adherence}%;background:var(--teal)"></div></div>
           <span style="font-size:11px;font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--ink)">${patient.adherence}%</span>
         </div>
       </td>
-      <td><span style="font-size:11px;color:var(--ink3)">${patient.totalResponses > 1 ? 'Histórico ativo' : 'Primeira aplicação'}</span></td>
-      <td onclick="event.stopPropagation()">
+      <td data-label="Tendência"><span style="font-size:11px;color:var(--ink3)">${patient.totalResponses > 1 ? 'Histórico ativo' : 'Primeira aplicação'}</span></td>
+      <td data-label="Status" onclick="event.stopPropagation()">
         <select class="status-select status-${(patient.clinicalStatus||'ativo').toLowerCase().replace(' ','')}"
           data-current-status="${patient.clinicalStatus||'ativo'}"
           onchange="updatePatientStatus('${escapeHtml(patient.name)}', this.value, this)">
@@ -1874,7 +2106,7 @@ function renderPatientsTable() {
           <option value="inativo"   ${patient.clinicalStatus==='inativo'?'selected':''}>Inativo</option>
         </select>
       </td>
-      <td style="display:flex;gap:6px;align-items:center">
+      <td data-label="Ações" style="display:flex;gap:6px;align-items:center">
         <button class="btn btn-ghost" style="padding:5px 10px;font-size:11px" onclick="event.stopPropagation();openPatientDashboard('${encodeURIComponent(patient.name)}')">Ver</button>
         <button class="btn btn-ghost" style="padding:5px 10px;font-size:11px;color:#8A3030;border-color:#E0C0C0" onclick="event.stopPropagation();deletePatient('${encodeURIComponent(patient.name)}')">Excluir</button>
       </td>
@@ -1890,12 +2122,12 @@ function renderApplicationsTable() {
   }
   body.innerHTML = PATIENT_LINKS.map(link => `
     <tr>
-      <td class="name">${escapeHtml(link.patient_name)}</td>
-      <td><span class="badge badge-lilac">${escapeHtml(link.instrumento)}</span></td>
-      <td>${formatDateTime(link.created_at)}</td>
-      <td>${link.expires_at ? formatDate(link.expires_at) : 'Sem prazo'}</td>
-      <td><span class="badge ${applicationBadgeClass(link.status)}">${applicationStatusLabel(link.status)}</span></td>
-      <td>
+      <td data-label="Paciente" class="name">${escapeHtml(link.patient_name)}</td>
+      <td data-label="Instrumento"><span class="badge badge-lilac">${escapeHtml(link.instrumento)}</span></td>
+      <td data-label="Criado em">${formatDateTime(link.created_at)}</td>
+      <td data-label="Prazo">${link.expires_at ? formatDate(link.expires_at) : 'Sem prazo'}</td>
+      <td data-label="Status"><span class="badge ${applicationBadgeClass(link.status)}">${applicationStatusLabel(link.status)}</span></td>
+      <td data-label="Ação">
         ${link.status === 'respondido'
           ? `<button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" onclick="openInstrumentDashboard('${escapeHtml(link.instrumento)}')">Ver resultado</button>`
           : `<button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" onclick="copyApplicationLink('${escapeHtml(link.token || '')}','${escapeHtml(link.instrumento || '')}','${escapeHtml(link.patient_name || '')}')">Copiar link</button>`}
@@ -2221,6 +2453,24 @@ function setHtml(id, value) {
   if (el) el.innerHTML = value;
 }
 
+function showToast(message, type = 'success') {
+  const toast = document.getElementById('toast');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.classList.toggle('error', type === 'error');
+  toast.classList.add('show');
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
+}
+
+function toggleMobileMenu() {
+  document.body.classList.toggle('mobile-menu-open');
+}
+
+function closeMobileMenu() {
+  document.body.classList.remove('mobile-menu-open');
+}
+
 function escapeHtml(value = '') {
   return String(value).replace(/[&<>"']/g, char => ({
     '&': '&amp;',
@@ -2232,10 +2482,14 @@ function escapeHtml(value = '') {
 }
 
 function showScreen(id, el) {
+  closeMobileMenu();
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('screen-' + id).classList.add('active');
   if (el) el.classList.add('active');
+  if (window.matchMedia('(max-width: 760px)').matches) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
   if (id === 'insights') renderInsights();
   if (id === 'evolucao') renderEvolucao();
 
@@ -2608,12 +2862,13 @@ async function updatePatientStatus(name, newStatus, selectEl) {
     else window.PACIENTES_DB.push({ nome: name, status: newStatus });
     if (selectEl) selectEl.dataset.currentStatus = newStatus;
     renderPatientsTable();
+    showToast('Status atualizado.');
   } catch(error) {
     if (selectEl) {
       selectEl.value = previous;
       selectEl.className = `status-select status-${previous}`;
     }
-    alert(error.message || 'Não foi possível atualizar o status. Tente novamente.');
+    showToast(error.message || 'Não foi possível atualizar o status. Tente novamente.', 'error');
   } finally {
     if (selectEl) selectEl.disabled = false;
   }
@@ -2628,8 +2883,9 @@ async function deletePatient(encodedName) {
     CLINICAL_RESPONSES = CLINICAL_RESPONSES.filter(response => response.paciente_nome !== name);
     window.PACIENTES_DB = (window.PACIENTES_DB || []).filter(patient => patient.nome !== name);
     await refreshPanelData();
+    showToast('Paciente excluído.');
   } catch(error) {
-    alert(error.message || 'Não foi possível excluir o paciente. Tente novamente.');
+    showToast(error.message || 'Não foi possível excluir o paciente. Tente novamente.', 'error');
   }
 }
 
