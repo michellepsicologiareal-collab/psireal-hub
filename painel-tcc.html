@@ -3,50 +3,98 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PsiReal TCC — Plataforma Clínica</title>
+<title>PsiReal Clínica — Plataforma clínica</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:        #FDFAF8;
-  --bg2:       #F8F2F4;
-  --bg3:       #F2E4D4;
-  --surface:   #FFFFFF;
-  --border:    #E8D8DC;
-  --border2:   #E8D8DC;
-  --ink:       #1E1014;
-  --ink2:      #5A3A42;
-  --ink3:      #9A7A84;
-  --brown:     #3D2028;
-  --brown2:    #7A4A55;
-  --brown3:    #B08090;
-  --lilac:     #7A4A55;
-  --lilac2:    #B08090;
-  --lilac3:    #EEE0E4;
-  --lilac4:    #F8F2F4;
-  --teal:      #A0703A;
-  --teal2:     #C8956A;
-  --teal3:     #E7ECE5;
-  --amber:     #9E765A;
-  --amber2:    #D8B08F;
-  --amber3:    #F5E9DD;
-  --coral:     #8E4856;
-  --coral2:    #C99AA6;
-  --coral3:    #F4E6EA;
-  --green:     #73856E;
-  --green2:    #AAB8A5;
-  --green3:    #EDF2EB;
-  --sidebar-w: 220px;
-  --radius:    10px;
-  --radius-lg: 16px;
-  --shadow:    0 2px 12px rgba(90,48,64,.06), 0 1px 3px rgba(90,48,64,.04);
-  --shadow-md: 0 12px 40px rgba(90,48,64,.12), 0 4px 12px rgba(90,48,64,.06);
+  /* — Fundos — */
+  --bg:            #ffffff;
+  --bg-surface:    #f7f4ff;
+  --bg-sidebar:    #faf8ff;
+  --bg-thumb-1:    #f0ebff;
+  --bg-thumb-2:    #ede8fc;
+  --bg-thumb-3:    #eae5fa;
+  --bg2:           #f7f4ff;
+  --bg3:           #ede8fc;
+  --surface:       #ffffff;
+
+  /* — Bordas — */
+  --border:        #ede9f8;
+  --border2:       #e4dff5;
+
+  /* — Violeta primário — */
+  --primary:         #6d4fc2;
+  --primary-dark:    #3d2b8a;
+  --primary-hover:   #5c3db0;
+  --primary-subtle:  rgba(109,79,194,0.08);
+  --primary-border:  rgba(109,79,194,0.20);
+
+  /* aliases usados no layout existente */
+  --lilac:     #6d4fc2;
+  --lilac2:    #5c3db0;
+  --lilac3:    #e4dff5;
+  --lilac4:    #f7f4ff;
+  --brown:     #3d2b8a;
+  --brown2:    #6d4fc2;
+  --brown3:    #8070a8;
+
+  /* — Violeta texto — */
+  --ink:       #1a1030;
+  --ink2:      #6a5880;
+  --ink3:      #8070a8;
+  --ink4:      #a090c8;
+  --nav-link:  #8878b0;
+
+  /* — Dourado acento — */
+  --gold:           #c9a84c;
+  --gold-dark:      #7a5e1a;
+  --gold-light:     #e8c97a;
+  --gold-bg:        rgba(201,168,76,0.10);
+  --gold-border:    rgba(201,168,76,0.35);
+
+  /* aliases amber */
+  --amber:   #c9a84c;
+  --amber2:  #e8c97a;
+  --amber3:  rgba(201,168,76,0.10);
+
+  /* — Semânticas — */
+  --urgency:       #854f0b;
+  --urgency-bg:    #fdf8f0;
+  --urgency-text:  #633806;
+  --success:       #3b6d11;
+  --success-bg:    #eaf3de;
+
+  /* aliases existentes */
+  --coral:   #854f0b;
+  --coral2:  #c9a84c;
+  --coral3:  #fdf8f0;
+  --teal:    #3b6d11;
+  --teal2:   #5a9e1a;
+  --teal3:   #eaf3de;
+  --green:   #3b6d11;
+  --green2:  #5a9e1a;
+  --green3:  #eaf3de;
+
+  /* — Forma — */
+  --sidebar-w:  220px;
+  --radius:     10px;
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --radius-xl:  14px;
+  --radius-pill: 40px;
+  --gold-line:  3px linear-gradient(90deg, #c9a84c, #e8c97a, #c9a84c);
+
+  /* — Sombras — */
+  --shadow:    0 2px 12px rgba(109,79,194,.06), 0 1px 3px rgba(109,79,194,.04);
+  --shadow-md: 0 12px 40px rgba(61,43,138,.10), 0 4px 12px rgba(109,79,194,.06);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-family:'Instrument Sans',system-ui,-apple-system,sans-serif;
   background: var(--bg);
   color: var(--ink);
   font-size: 15px;
@@ -69,26 +117,25 @@ body {
 }
 
 .logo {
-  padding: 24px 20px 20px;
+  padding: 20px 20px 18px;
   border-bottom: 1px solid var(--border);
 }
 .logo-mark {
   display: flex; align-items: center; gap: 10px;
 }
 .logo-icon {
-  width: 40px; height: 40px; border-radius: 999px;
+  width: 32px; height: 32px; border-radius: 8px;
   background: url("logo-psicologia-real.png") center / contain no-repeat;
-  flex: 0 0 40px;
+  flex: 0 0 32px;
 }
 .logo-text {
-  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  font-size: 18px; font-weight: 600; color: var(--ink);
-  letter-spacing: -0.3px; line-height: 1.1;
+  font-family:'Syne',system-ui,sans-serif;
+  font-size: 16px; font-weight: 700; color: var(--ink);
+  letter-spacing: -0.3px; line-height: 1;
+  white-space: nowrap;
 }
 .logo-sub {
-  font-size: 10px; color: var(--ink3); font-weight: 400;
-  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; letter-spacing: .08em;
-  margin-top: 2px;
+  display: none;
 }
 
 .nav { padding: 16px 12px; flex: 1; }
@@ -135,7 +182,7 @@ body {
   font-size: 12px; color: #fff; font-weight: 500; flex-shrink: 0;
 }
 .user-name { font-size: 12px; font-weight: 500; color: var(--ink); }
-.user-plan { font-size: 10px; color: var(--amber); font-weight: 500; font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; letter-spacing: .04em; }
+.user-plan { font-size: 10px; color: var(--amber); font-weight: 500; font-family:'Instrument Sans',system-ui,-apple-system,sans-serif; letter-spacing: .04em; }
 
 /*  MAIN  */
 .main {
@@ -152,7 +199,7 @@ body {
   position: sticky; top: 0; z-index: 50;
 }
 .topbar-title {
-  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-family:'Instrument Sans',system-ui,-apple-system,sans-serif;
   font-size: 20px; font-weight: 500; color: var(--ink); flex: 1;
 }
 .topbar-sub { font-size: 13px; color: var(--ink3); }
@@ -161,7 +208,7 @@ body {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 7px 14px; border-radius: var(--radius);
   font-size: 12px; font-weight: 500; cursor: pointer;
-  border: none; transition: all .15s; font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  border: none; transition: all .15s; font-family:'Instrument Sans',system-ui,-apple-system,sans-serif;
 }
 .btn-primary {
   background: linear-gradient(135deg, var(--brown) 0%, var(--brown2) 50%, var(--brown3) 100%); color: #fff;
@@ -198,7 +245,7 @@ body {
 .stat-card.teal::after  { background: linear-gradient(90deg, var(--teal), var(--teal2)); }
 .stat-card.amber::after { background: linear-gradient(90deg, var(--amber), var(--amber2)); }
 .stat-label { font-size: 11px; color: var(--ink3); font-weight: 500; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 10px; }
-.stat-value { font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 36px; font-weight: 400; color: var(--ink); line-height: 1; margin-bottom: 6px; }
+.stat-value { font-family:'Instrument Sans',system-ui,-apple-system,sans-serif; font-size: 36px; font-weight: 400; color: var(--ink); line-height: 1; margin-bottom: 6px; }
 .stat-delta { font-size: 11px; color: var(--teal); font-weight: 500; }
 .stat-delta.down { color: var(--coral); }
 .stat-icon {
@@ -221,7 +268,7 @@ body {
   display: flex; align-items: center; justify-content: space-between;
 }
 .card-title {
-  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-family:'Instrument Sans',system-ui,-apple-system,sans-serif;
   font-size: 15px; font-weight: 600; color: var(--ink);
 }
 .card-action { font-size: 11px; color: var(--lilac); cursor: pointer; font-weight: 500; }
@@ -238,39 +285,139 @@ body {
 }
 .modal-backdrop{
   position:fixed; inset:0; z-index:200;
-  background:rgba(30,16,20,.38);
+  background:rgba(26,16,48,.45);
+  backdrop-filter:blur(4px);
   display:none; align-items:center; justify-content:center;
   padding:20px;
 }
 .modal-backdrop.open{display:flex}
 .modal-card{
-  width:min(460px,100%);
+  width:min(500px,100%);
   background:#fff;
   border:1px solid var(--border);
-  border-radius:22px;
-  box-shadow:var(--shadow-md);
-  padding:24px;
+  border-radius:24px;
+  box-shadow:0 32px 80px rgba(61,43,138,.18), 0 8px 24px rgba(61,43,138,.10);
+  padding:0;
+  overflow:hidden;
 }
 .modal-head{
   display:flex; align-items:flex-start; justify-content:space-between;
-  gap:16px; margin-bottom:18px;
+  gap:16px;
+  padding:24px 24px 20px;
+  border-bottom:1px solid var(--border);
 }
-.modal-title{font-size:20px;font-weight:700}
+.modal-head-left{ display:flex; align-items:center; gap:14px; }
+.modal-icon{
+  width:44px; height:44px; border-radius:14px;
+  background:var(--primary-subtle);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+  color:var(--primary);
+}
+.modal-title{
+  font-family:'Syne',sans-serif;
+  font-size:18px; font-weight:700; color:var(--ink);
+  line-height:1.2;
+}
+.modal-subtitle{
+  font-size:13px; color:var(--ink3); margin-top:3px; line-height:1.4;
+}
 .modal-close{
-  border:0;background:transparent;color:var(--ink3);cursor:pointer;font-size:22px;line-height:1;
+  width:32px; height:32px; border-radius:10px;
+  border:1px solid var(--border); background:#fff;
+  color:var(--ink3); cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; transition:.15s;
 }
-.modal-grid{display:grid;gap:14px}
+.modal-close:hover{ background:var(--bg-surface); color:var(--ink); }
+.modal-body{ padding:20px 24px; }
+.modal-grid{display:grid;gap:16px}
 .field label{
-  display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:6px;
+  display:block;font-size:11px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.08em;
+  color:var(--ink3);margin-bottom:7px;
+  font-family:'Syne',sans-serif;
 }
-.field input,.field select{
-  width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:14px;background:#fff;font:inherit;color:var(--ink);
+.field input{
+  width:100%;padding:12px 16px;
+  border:1.5px solid var(--border);
+  border-radius:12px;background:#fff;
+  font:inherit;color:var(--ink);
+  font-size:15px;
+  transition:border-color .15s, box-shadow .15s;
+  outline:none;
 }
-.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
-.cat-btn{border:1px solid var(--border);border-radius:99px;padding:4px 11px;font:500 11px 'Inter',sans-serif;background:var(--bg2);color:var(--ink3);cursor:pointer;transition:all .15s}
+.field input:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px var(--primary-subtle);
+}
+.field-help{font-size:12px;color:var(--ink3);margin-top:6px;line-height:1.4}
+
+/* Filtros de categoria */
+.cat-chips{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px; }
+.cat-btn{
+  border:1.5px solid var(--border);
+  border-radius:40px;
+  padding:5px 13px;
+  font:500 12px 'Instrument Sans',sans-serif;
+  background:#fff; color:var(--ink3);
+  cursor:pointer; transition:all .15s;
+  white-space:nowrap;
+}
+.cat-btn:hover{ border-color:var(--primary-border); color:var(--primary); }
+.cat-btn.active{
+  background:var(--primary); border-color:var(--primary);
+  color:#fff; font-weight:600;
+}
+
+/* Lista de instrumentos — substitui select nativo */
+.instr-list{
+  border:1.5px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+  max-height:180px;
+  overflow-y:auto;
+  scrollbar-width:thin;
+  scrollbar-color:var(--border2) transparent;
+}
+.instr-option{
+  display:flex; align-items:center; gap:12px;
+  padding:11px 14px;
+  cursor:pointer;
+  border-bottom:1px solid var(--border);
+  transition:background .12s;
+  font-size:14px; color:var(--ink);
+}
+.instr-option:last-child{ border-bottom:0; }
+.instr-option:hover{ background:var(--bg-surface); }
+.instr-option.selected{
+  background:var(--primary-subtle);
+  color:var(--primary-dark);
+  font-weight:600;
+}
+.instr-option.hidden{ display:none; }
+.instr-dot{
+  width:8px; height:8px; border-radius:50%;
+  background:var(--border2); flex-shrink:0;
+  transition:background .12s;
+}
+.instr-option.selected .instr-dot{ background:var(--primary); }
+.instr-help{
+  font-size:12px; color:var(--ink3); margin-top:6px;
+  padding:8px 12px; background:var(--bg-surface);
+  border-radius:8px; line-height:1.45;
+  border:1px solid var(--border);
+}
+
+.modal-actions{
+  display:flex; gap:10px; justify-content:flex-end;
+  padding:16px 24px 24px;
+  border-top:1px solid var(--border);
+}
+.cat-btn{border:1px solid var(--border);border-radius:99px;padding:4px 11px;font:500 11px 'Instrument Sans',sans-serif;background:var(--bg2);color:var(--ink3);cursor:pointer;transition:all .15s}
 .cat-btn:hover{border-color:var(--brown3);color:var(--brown)}
 .cat-btn.active{background:var(--brown);border-color:var(--brown);color:#fff}
-.status-select{font:500 11px 'Inter',sans-serif;border-radius:99px;padding:3px 8px;border:1px solid;cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%239A7A84' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 6px center;padding-right:20px}
+.status-select{font:500 11px 'Instrument Sans',sans-serif;border-radius:99px;padding:3px 8px;border:1px solid;cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%238070a8' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 6px center;padding-right:20px}
 .status-ativo    {background:var(--green3);color:var(--green);border-color:var(--green2)}
 .status-pendente {background:var(--amber3);color:var(--amber);border-color:var(--amber2)}
 .status-pausa    {background:var(--lilac4);color:var(--brown3);border-color:var(--lilac3)}
@@ -283,7 +430,7 @@ body {
 .toast{
   position:fixed;right:22px;bottom:22px;z-index:500;
   min-width:240px;max-width:min(360px,calc(100vw - 32px));
-  padding:13px 16px;border-radius:16px;background:#3D2028;color:#fff;
+  padding:13px 16px;border-radius:16px;background:var(--primary-dark);color:#fff;
   box-shadow:0 18px 40px rgba(61,32,40,.22);font-size:14px;font-weight:700;
   opacity:0;transform:translateY(14px);pointer-events:none;transition:.2s ease;
 }
@@ -358,14 +505,14 @@ body {
   font-size: 9px; font-weight: 500; text-transform: uppercase;
   letter-spacing: .1em; padding: 3px 8px; border-radius: 99px;
 }
-.inv-time { font-size: 10px; color: var(--ink3); font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; letter-spacing: .03em; }
+.inv-time { font-size: 10px; color: var(--ink3); font-family:'Instrument Sans',system-ui,-apple-system,sans-serif; letter-spacing: .03em; }
 .inv-name {
-  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-family:'Instrument Sans',system-ui,-apple-system,sans-serif;
   font-size: 17px; font-weight: 500; color: var(--ink); line-height: 1.2;
 }
 .inv-desc { font-size: 12px; color: var(--ink3); line-height: 1.5; flex: 1; }
 .inv-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
-.inv-items { font-size: 10px; color: var(--ink3); font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; letter-spacing: .03em; }
+.inv-items { font-size: 10px; color: var(--ink3); font-family:'Instrument Sans',system-ui,-apple-system,sans-serif; letter-spacing: .03em; }
 .btn-apply {
   font-size: 11px; font-weight: 500; color: var(--brown);
   background: #F5EDE7; border: none; padding: 5px 12px;
@@ -417,7 +564,7 @@ body {
   padding: 2px 8px; border-radius: 99px;
 }
 .insight-text {
-  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-family:'Instrument Sans',system-ui,-apple-system,sans-serif;
   font-size: 14px; font-weight: 400; color: var(--ink);
   line-height: 1.75; font-style: normal;
 }
@@ -439,13 +586,13 @@ body {
   border-radius: var(--radius-lg); padding: 20px;
 }
 .evo-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-.evo-name { font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 16px; font-weight: 500; }
-.evo-score { font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 28px; font-weight: 300; }
+.evo-name { font-family:'Instrument Sans',system-ui,-apple-system,sans-serif; font-size: 16px; font-weight: 500; }
+.evo-score { font-family:'Instrument Sans',system-ui,-apple-system,sans-serif; font-size: 28px; font-weight: 300; }
 .evo-delta-badge { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 99px; }
 
 /*  SECTION HEADERS  */
 .section-title {
-  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-family:'Instrument Sans',system-ui,-apple-system,sans-serif;
   font-size: 22px; font-weight: 500; color: var(--ink);
   margin-bottom: 4px;
 }
@@ -465,7 +612,7 @@ body {
 }
 .act-text { font-size: 12px; color: var(--ink2); line-height: 1.5; }
 .act-text strong { color: var(--ink); font-weight: 500; }
-.act-time { font-size: 11px; color: var(--ink3); margin-top: 2px; font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; letter-spacing: .03em; }
+.act-time { font-size: 11px; color: var(--ink3); margin-top: 2px; font-family:'Instrument Sans',system-ui,-apple-system,sans-serif; letter-spacing: .03em; }
 
 /*  PENDING ITEMS  */
 .pending-item {
@@ -476,7 +623,7 @@ body {
 .pending-av { flex-shrink: 0; }
 .pending-name { font-size: 13px; font-weight: 500; color: var(--ink); }
 .pending-instr { font-size: 11px; color: var(--ink3); margin-top: 1px; }
-.pending-due { font-size: 11px; color: var(--amber); font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; letter-spacing: .03em; margin-left: auto; }
+.pending-due { font-size: 11px; color: var(--amber); font-family:'Instrument Sans',system-ui,-apple-system,sans-serif; letter-spacing: .03em; margin-left: auto; }
 .pending-send {
   font-size: 11px; padding: 4px 10px; border-radius: var(--radius);
   background: var(--lilac4); color: var(--lilac); border: none;
@@ -491,7 +638,7 @@ body {
 .measure-row:last-child { border-bottom: none; }
 .measure-label { font-size: 12px; color: var(--ink2); width: 140px; flex-shrink: 0; }
 .measure-bar { flex: 1; }
-.measure-val { font-size: 13px; font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color: var(--ink); width: 32px; text-align: right; }
+.measure-val { font-size: 13px; font-family:'Instrument Sans',system-ui,-apple-system,sans-serif; color: var(--ink); width: 32px; text-align: right; }
 .measure-delta { font-size: 11px; width: 36px; text-align: right; }
 .measure-delta.up { color: var(--teal); }
 .measure-delta.dn { color: var(--coral); }
@@ -517,7 +664,7 @@ body {
   border-radius:999px;background:url("logo-psicologia-real.png") center/contain no-repeat;
 }
 .lock-title{
-  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-family:'Instrument Sans',system-ui,-apple-system,sans-serif;
   font-size:28px;
   margin-bottom:6px;
 }
@@ -554,25 +701,16 @@ body {
   margin-top:12px;
 }
 
-/* SYSTEM REDESIGN: branco, limpo, editorial-sans */
+/* SYSTEM REDESIGN: paleta PsiReal Clínica */
 :root{
-  --bg:#FDFAF8;
-  --bg2:#F8F2F4;
-  --bg3:#F2E4D4;
-  --surface:#FFFFFF;
-  --border:#E8D8DC;
-  --border2:#E8D8DC;
-  --ink:#1E1014;
-  --ink2:#5A3A42;
-  --ink3:#9A7A84;
-  --radius:16px;
-  --radius-lg:22px;
-  --shadow:0 1px 2px rgba(36,24,29,.03),0 10px 24px rgba(61,32,40,.04);
-  --shadow-md:0 18px 44px rgba(61,32,40,.10);
+  --radius:10px;
+  --radius-lg:16px;
+  --shadow:0 1px 2px rgba(109,79,194,.03),0 10px 24px rgba(61,43,138,.04);
+  --shadow-md:0 18px 44px rgba(61,43,138,.10);
 }
 body{
   background:#fff;
-  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-family:'Instrument Sans',system-ui,-apple-system,sans-serif;
 }
 .sidebar{
   background:#fff;
@@ -585,7 +723,7 @@ body{
 .inv-name,
 .evo-name,
 .evo-score{
-  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-family:'Instrument Sans',system-ui,-apple-system,sans-serif;
   letter-spacing:-.02em;
 }
 .logo-text{
@@ -670,8 +808,22 @@ body{
 .table th{
   font-size:11px;
 }
+@media (max-width: 1280px){
+  .stats-grid{ grid-template-columns: repeat(2,1fr) }
+  .grid-3    { grid-template-columns: 1fr 1fr }
+  .evo-charts{ grid-template-columns: 1fr 1fr }
+}
 @media (max-width: 1100px){
-  .stats-grid,.grid-3,.grid-2,.grid-2-1,.evo-charts{grid-template-columns:1fr}
+  .grid-2-1  { grid-template-columns: 1fr 1fr }
+  .inv-grid  { grid-template-columns: repeat(2,1fr) }
+}
+@media (max-width: 900px){
+  .stats-grid,
+  .grid-2,
+  .grid-3,
+  .grid-2-1,
+  .evo-charts,
+  .inv-grid  { grid-template-columns: 1fr }
 }
 @media (max-width: 860px){
   body{display:block}
@@ -680,7 +832,7 @@ body{
     width:auto;
     min-height:auto;
   }
-  .main{margin-left:0}
+  .main{margin-left:0 !important}
   .topbar{
     height:auto;
     min-height:72px;
@@ -696,41 +848,305 @@ body{
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
 
-/* App typography: clean SaaS, HumanTrack-like readability */
+/* ── ANDROID / MOBILE CHROME ── */
+* {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+input, select, textarea {
+  font-size: 16px !important; /* evita zoom automático no Android */
+}
+@media (max-width:760px){
+  /* esconde topbar desktop no mobile */
+  .topbar{ display:none !important }
+
+  /* stat cards mais compactos */
+  .stat-card{
+    min-height:auto !important;
+    padding:16px !important;
+    display:flex !important;
+    flex-direction:row !important;
+    align-items:center !important;
+    gap:14px !important;
+  }
+  .stat-card::after{ display:none !important } /* remove borda colorida lateral no mobile */
+  .stat-icon{
+    order:-1 !important;
+    width:40px !important;
+    height:40px !important;
+    flex-shrink:0 !important;
+    opacity:.5 !important;
+  }
+  .stat-label{
+    font-size:10px !important;
+    margin-top:0 !important;
+    letter-spacing:.06em !important;
+    white-space:nowrap !important;
+  }
+  .stat-value{ font-size:28px !important }
+  .stat-note{ font-size:12px !important }
+
+  /* hero mais compacto */
+  .hero-title{ font-size:26px !important }
+  .hero-sub{ font-size:14px !important }
+  .dashboard-hero{ padding:18px !important }
+
+  /* botões — área de toque mínima 48px */
+  .btn{
+    min-height:48px !important;
+    padding:0 16px !important;
+    font-size:14px !important;
+  }
+  .nav-item{ min-height:52px !important }
+
+  /* conteúdo sem overflow lateral */
+  .content{ padding:12px 12px 80px !important }
+
+  /* cards com sombra suave */
+  .card,.stat-card,.inv-card,.evo-card{
+    box-shadow:0 2px 12px rgba(109,79,194,.06) !important;
+  }
+
+  /* modal sobe como sheet nativo */
+  .modal-card{
+    border-radius:24px 24px 0 0 !important;
+    padding:24px 20px !important;
+  }
+}
+
+/* Tipografia global */
 html,body,button,input,select,textarea,a,div,span,p,h1,h2,h3,h4,h5,h6{
-  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif !important;
+  font-family:'Instrument Sans',system-ui,-apple-system,sans-serif !important;
   letter-spacing:0 !important;
 }
+/* Títulos com Syne */
+.logo-text,.topbar-title,.section-title,.card-title,.page-title,
+.metric-value,.sidebar-title,.stat-value,.inv-name,.evo-name,.evo-score,
+/* Canal de suporte */
+.support-channel{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 16px;border-radius:14px;
+  border:1.5px solid var(--border);
+  text-decoration:none;color:var(--ink);
+  transition:border-color .15s, background .15s;
+  cursor:pointer;
+}
+.support-channel:hover{
+  border-color:var(--primary-border);
+  background:var(--primary-subtle);
+}
+.support-channel-icon{
+  width:44px;height:44px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.support-channel-info{
+  flex:1;display:flex;flex-direction:column;gap:2px;
+}
+.support-channel-info strong{font-size:14px;font-weight:600;font-family:'Syne',sans-serif}
+.support-channel-info span{font-size:12px;color:var(--ink3)}
+
+/* — Tipografia: Syne para títulos, labels, botões, métricas — */
+.lock-title,.hero-title,
+.card-title,.page-title,.section-title,.sidebar-title,
+.stat-value,.metric-value,
+.nav-label,
+.btn,.btn-primary,.btn-ghost,.btn-outline,
+h1,h2,h3,h4 {
+  font-family:'Syne',system-ui,-apple-system,sans-serif !important;
+  letter-spacing:-.01em !important;
+}
 .card-title,.page-title,.metric-value,.sidebar-title,.section-title{font-weight:700 !important;line-height:1.2 !important}
+.stat-value{font-family:'Syne',system-ui,sans-serif !important}
+/* — Instrument Sans para corpo, inputs, nav, datas — */
+body,input,select,textarea,
+.nav-item,.nav-link,
+.table td,.table th,
+.inv-time,.inv-items,
+.evo-date,.evo-score,
+p,span:not(.badge):not(.chip) {
+  font-family:'Instrument Sans',system-ui,-apple-system,sans-serif !important;
+}
 
+/* Base */
+body{background:var(--bg) !important;color:var(--ink) !important}
 
-/* Premium clinical dashboard direction */
-body{background:#FBFAF9 !important;color:#2F2023 !important}
-.sidebar{width:260px !important;background:#fff !important;border-right:1px solid #E9DDD9 !important;box-shadow:none !important}
-.logo-wrap{height:102px !important;border-bottom:1px solid #E9DDD9 !important;padding:24px 20px !important}
-.logo-mark{width:34px !important;height:34px !important;border-radius:10px !important;background:url('logo-psicologia-real.png') center/contain no-repeat !important;box-shadow:none !important}
-.logo-text{font-size:23px !important;font-weight:800 !important;color:#2F2023 !important}
-.nav{padding:28px 20px !important;overflow:auto !important}
-.nav-label{font-size:12px !important;font-weight:800 !important;letter-spacing:.08em !important;color:#C3A4A8 !important;margin:0 0 18px 6px !important}
-.nav-section{margin-bottom:30px !important}
-.nav-item{min-height:50px !important;border-radius:16px !important;padding:0 18px !important;font-size:16px !important;font-weight:650 !important;color:#806A67 !important;gap:14px !important}
-.nav-item:hover{background:#F8F2F1 !important;color:#3D2028 !important}
-.nav-item.active{background:#F4E9E7 !important;color:#8E4B56 !important;box-shadow:none !important}
-.nav-icon{width:19px !important;height:19px !important;opacity:.92 !important;stroke-width:1.8 !important}.nav-badge{background:#8E4B56 !important;color:#fff !important;font-size:12px !important;min-width:24px !important;height:24px !important;display:inline-flex !important;align-items:center !important;justify-content:center !important}
-.sidebar-user{border-top:1px solid #E9DDD9 !important;padding:20px !important}.user-avatar{background:#9B5A66 !important;color:#fff !important}.user-name{font-size:16px !important;font-weight:700 !important}.user-plan{font-size:14px !important;color:#A0703A !important}
-.main{background:#FBFAF9 !important}.topbar{height:78px !important;background:#FBFAF9 !important;border-bottom:0 !important;padding:0 0 !important;max-width:1330px !important;margin:0 auto !important}.topbar-title{font-size:22px !important;font-weight:800 !important}.topbar-sub{font-size:15px !important;color:#9A7A84 !important}.topbar-actions{gap:12px !important}.btn{border-radius:16px !important;padding:10px 16px !important;font-size:14px !important;font-weight:700 !important}.btn-primary{background:linear-gradient(135deg,#3D2028,#9B5A66) !important;color:#fff !important;box-shadow:0 12px 22px rgba(61,32,40,.14) !important}.btn-ghost{background:#fff !important;border:1px solid #E8D8DC !important;color:#3D2028 !important}
-.content{max-width:1330px !important;margin:0 auto !important;padding:26px 0 48px !important}.dashboard-hero{background:#fff;border:1px solid #E9DDD9;border-radius:20px;padding:38px 40px 42px;margin:0 0 38px;box-shadow:0 14px 30px rgba(61,32,40,.06);position:relative;overflow:hidden}.dashboard-hero:before{content:'';position:absolute;left:0;right:0;top:0;height:5px;background:linear-gradient(90deg,#8E4B56,#CDA7AE,#F2E4D4)}.hero-kicker{font-size:13px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#9B5A66;margin-bottom:12px}.hero-date{font-size:16px;color:#8B7470;margin-bottom:18px}.hero-title{font-size:44px;line-height:1.1;font-weight:800;color:#2F2023;margin:0 0 14px}.hero-sub{font-size:20px;line-height:1.5;color:#8B7470;max-width:800px;margin:0}.stats-grid{grid-template-columns:repeat(4,minmax(0,1fr)) !important;gap:20px !important;margin-bottom:40px !important}.stat-card{min-height:200px !important;border:1px solid #E9DDD9 !important;border-radius:18px !important;background:#fff !important;padding:28px 30px !important;box-shadow:0 12px 26px rgba(61,32,40,.04) !important}.stat-card::after{display:none !important}.stat-card:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(61,32,40,.08) !important}.stat-icon{top:30px !important;right:30px !important;width:18px !important;height:18px !important;opacity:.45 !important;color:#8E4B56 !important}.stat-label{font-size:14px !important;font-weight:700 !important;letter-spacing:.03em !important;color:#8B7470 !important;margin-top:58px !important;margin-bottom:12px !important}.stat-value{font-size:42px !important;font-weight:800 !important;color:#2F2023 !important}.stat-delta{font-size:15px !important;color:#7A4A55 !important;font-weight:500 !important}.card,.inv-card,.evo-card,.insight-card,.table-wrap{border:1px solid #E9DDD9 !important;border-radius:18px !important;background:#fff !important;box-shadow:0 12px 26px rgba(61,32,40,.04) !important}.card-header{min-height:58px !important;padding:0 22px !important;border-bottom:1px solid #E9DDD9 !important}.card-title{font-size:16px !important;font-weight:800 !important;color:#2F2023 !important}.card-action{font-size:14px !important;color:#7A4A55 !important;font-weight:650 !important}.grid-2-1,.grid-2{gap:22px !important}.filter-tabs{gap:8px !important}.filter-tab{border-radius:999px !important;background:#fff !important;border:1px solid #E8D8DC !important;color:#5A3A42 !important;font-weight:650 !important}.filter-tab.active{background:#3D2028 !important;color:#fff !important;border-color:#3D2028 !important}
-@media (max-width:1180px){.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important}.content,.topbar{padding-left:22px !important;padding-right:22px !important}.dashboard-hero{margin-top:10px}.hero-title{font-size:36px}}
-@media (max-width:760px){.sidebar{width:100% !important}.content{padding:18px 14px 38px !important}.topbar{padding:12px 14px !important}.dashboard-hero{padding:28px 22px;margin-bottom:24px}.hero-title{font-size:32px}.hero-sub{font-size:17px}.stats-grid{grid-template-columns:1fr !important}.stat-card{min-height:170px !important}.stat-label{margin-top:42px !important}.grid-2-1,.grid-2{grid-template-columns:1fr !important}}
+/* Sidebar */
+.sidebar{width:260px !important;background:var(--bg-sidebar) !important;border-right:1px solid var(--border) !important;box-shadow:none !important}
+.main{margin-left:260px !important;background:var(--bg-surface) !important}
+.logo-wrap{height:auto !important;border-bottom:1px solid var(--border) !important;padding:20px 20px 18px !important}
+.logo-mark{gap:10px !important}
+.logo-icon,.logo-mark{width:32px !important;height:32px !important;flex-basis:32px !important;border-radius:8px !important;background:url('logo-psicologia-real.png') center/contain no-repeat !important;box-shadow:none !important}
+.logo-text{font-family:'Syne',sans-serif !important;font-size:16px !important;font-weight:700 !important;color:var(--ink) !important;white-space:nowrap !important}
+.logo-sub{display:none !important}
+.nav{padding:20px 16px !important;overflow:auto !important}
+.nav-label{font-size:11px !important;font-weight:600 !important;letter-spacing:.1em !important;color:var(--ink4) !important;margin:0 0 10px 6px !important}
+.nav-section{margin-bottom:20px !important}
+.nav-item{min-height:44px !important;border-radius:14px !important;padding:0 14px !important;font-size:14px !important;font-weight:500 !important;color:var(--nav-link) !important;gap:10px !important}
+.nav-item:hover{background:var(--primary-subtle) !important;color:var(--ink) !important}
+.nav-item.active{background:var(--primary-subtle) !important;color:var(--primary-dark) !important;box-shadow:none !important}
+.nav-badge{background:var(--primary) !important;color:#fff !important;font-size:11px !important;min-width:22px !important;height:22px !important;display:inline-flex !important;align-items:center !important;justify-content:center !important}
+.sidebar-user{border-top:1px solid var(--border) !important;padding:18px !important}
+.user-avatar{background:linear-gradient(135deg,var(--primary),var(--primary-hover)) !important;color:#fff !important}
+.user-name{font-size:14px !important;font-weight:600 !important;color:var(--ink) !important}
+.user-plan{font-size:12px !important;color:var(--gold) !important;font-weight:500 !important}
 
+/* Topbar */
+.topbar{height:72px !important;background:var(--bg) !important;border-bottom:1px solid var(--border) !important;padding:0 28px !important}
+.topbar-title{font-size:20px !important;font-weight:700 !important;color:var(--ink) !important}
+.topbar-sub{font-size:13px !important;color:var(--ink3) !important}
+.topbar-actions{gap:10px !important}
 
-/* Beta release: only enabled instruments appear in the public clinical library */
+/* Botões */
+.btn{border-radius:12px !important;padding:9px 16px !important;font-size:13px !important;font-weight:600 !important}
+.btn-primary{background:var(--primary) !important;color:#fff !important;box-shadow:0 8px 20px rgba(109,79,194,.20) !important}
+.btn-primary:hover{background:var(--primary-hover) !important;opacity:1 !important}
+.btn-ghost{background:var(--bg) !important;border:1px solid var(--border2) !important;color:var(--ink2) !important}
+.btn-ghost:hover{background:var(--bg-surface) !important}
 
-.beta-note{margin:0 0 18px;padding:14px 18px;border:1px solid #E8D8DC;border-radius:18px;background:#fff;color:#5A3A42;font-size:14px;line-height:1.5}
+/* Conteúdo */
+.content{padding:28px 32px 48px !important}
 
+/* Dashboard hero */
+.dashboard-hero{background:var(--bg) !important;border:1px solid var(--border) !important;border-radius:16px !important;padding:36px 40px 40px !important;margin:0 0 32px !important;box-shadow:var(--shadow) !important;position:relative;overflow:hidden}
+.dashboard-hero:before{content:'';position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#c9a84c,#e8c97a,#c9a84c) !important}
+.hero-kicker{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);margin-bottom:10px}
+.hero-date{font-size:14px;color:var(--ink3);margin-bottom:16px}
+.hero-title{font-family:'Syne',sans-serif !important;font-size:40px;line-height:1.1;font-weight:700;color:var(--ink);margin:0 0 12px}
+.hero-sub{font-size:17px;line-height:1.55;color:var(--ink2);max-width:760px;margin:0}
 
-/* Patient registration modal clarity */
-.field-help{font-size:12px;color:#9A7A84;margin-top:7px;line-height:1.45}.modal-error{display:none;margin:14px 0 0;padding:12px 14px;border:1px solid #E9C5C0;background:#FFF6F4;color:#8A4738;border-radius:14px;font-size:13px;line-height:1.45}.modal-card{max-width:480px!important}.generated-link{border-radius:16px!important;background:#F8F2F4!important;border:1px solid #E8D8DC!important}.generated-link code{word-break:break-all!important;white-space:normal!important;line-height:1.45!important}
+/* Stat cards */
+.stats-grid{grid-template-columns:repeat(4,minmax(0,1fr)) !important;gap:16px !important;margin-bottom:32px !important}
+.stat-card{min-height:180px !important;border:1px solid var(--border) !important;border-radius:16px !important;background:var(--bg) !important;padding:24px !important;box-shadow:var(--shadow) !important}
+.stat-card::after{height:3px !important}
+.stat-card.lilac::after{background:linear-gradient(90deg,var(--primary),var(--primary-hover)) !important}
+.stat-card.brown::after{background:linear-gradient(90deg,var(--primary-dark),var(--primary)) !important}
+.stat-card.teal::after{background:linear-gradient(90deg,var(--gold),var(--gold-light)) !important}
+.stat-card.amber::after{background:linear-gradient(90deg,var(--gold-dark),var(--gold)) !important}
+.stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md) !important}
+.stat-icon{top:24px !important;right:24px !important;width:18px !important;height:18px !important;opacity:.35 !important;color:var(--primary) !important}
+.stat-label{font-size:11px !important;font-weight:500 !important;letter-spacing:.08em !important;color:var(--ink3) !important;margin-top:52px !important;margin-bottom:10px !important}
+.stat-value{font-size:38px !important;font-weight:700 !important;color:var(--ink) !important}
+.stat-delta{font-size:12px !important;color:var(--success) !important;font-weight:500 !important}
+.stat-delta.down{color:var(--urgency) !important}
+
+/* Cards */
+.card,.inv-card,.evo-card,.insight-card,.table-wrap{border:1px solid var(--border) !important;border-radius:16px !important;background:var(--bg) !important;box-shadow:var(--shadow) !important}
+.card-header{min-height:54px !important;padding:0 20px !important;border-bottom:1px solid var(--border) !important}
+.card-title{font-size:15px !important;font-weight:700 !important;color:var(--ink) !important}
+.card-action{font-size:12px !important;color:var(--primary) !important;font-weight:500 !important}
+.card-body{padding:20px !important}
+
+/* Grid */
+.grid-2-1,.grid-2{gap:20px !important}
+
+/* Filtros */
+.filter-tabs{gap:6px !important}
+.filter-tab{border-radius:40px !important;background:var(--bg) !important;border:1px solid var(--border2) !important;color:var(--ink2) !important;font-weight:500 !important}
+.filter-tab.active{background:var(--primary) !important;color:#fff !important;border-color:var(--primary) !important}
+.filter-tab:hover:not(.active){background:var(--primary-subtle) !important}
+
+/* Tabela */
+.table th{font-size:10px !important;color:var(--ink3) !important;background:var(--bg-surface) !important;border-bottom:1px solid var(--border) !important}
+.table td{font-size:13px !important;color:var(--ink2) !important;border-bottom:1px solid var(--border) !important}
+.table .name{color:var(--ink) !important;font-weight:500 !important}
+.table tr:hover td{background:var(--primary-subtle) !important}
+
+/* Badges / status */
+.badge-active,.status-ativo{background:var(--success-bg) !important;color:var(--success) !important;border-color:var(--success) !important}
+.badge-pending,.status-pendente{background:var(--gold-bg) !important;color:var(--gold-dark) !important;border-color:var(--gold-border) !important}
+.badge-paused,.status-pausa{background:var(--bg-thumb-1) !important;color:var(--primary-dark) !important;border-color:var(--primary-border) !important}
+.badge-inactive,.status-inativo{background:var(--bg-surface) !important;color:var(--ink3) !important}
+.badge-high{background:var(--urgency-bg) !important;color:var(--urgency) !important}
+.badge-lilac{background:var(--primary-subtle) !important;color:var(--primary-dark) !important}
+
+/* Botão Aplicar inventário */
+.btn-apply{color:var(--primary) !important;background:var(--primary-subtle) !important;border:none !important}
+.btn-apply:hover{background:var(--primary) !important;color:#fff !important}
+
+/* Pending send */
+.pending-send{background:var(--primary-subtle) !important;color:var(--primary) !important;border:none !important}
+.pending-due{color:var(--gold) !important}
+
+/* Score / humor */
+.evo-delta-badge{background:var(--primary-subtle);color:var(--primary-dark)}
+.measure-delta.up{color:var(--success) !important}
+.measure-delta.dn{color:var(--urgency) !important}
+
+/* Insight */
+.insight-text{font-size:14px !important;line-height:1.7 !important;color:var(--ink) !important}
+
+/* Modal */
+.modal-backdrop{background:rgba(26,16,48,.40) !important}
+.modal-card{border-radius:16px !important;border:1px solid var(--border) !important;box-shadow:var(--shadow-md) !important}
+.modal-title{font-family:'Syne',sans-serif !important;color:var(--ink) !important}
+
+/* Toast */
+.toast{background:var(--primary-dark) !important;border-radius:14px !important}
+.toast.error{background:var(--urgency) !important}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px}
+
+/* Login */
+#lockScreen{background:linear-gradient(135deg,rgba(61,43,138,.96),rgba(109,79,194,.88)) !important}
+.lock-card{border-radius:16px !important;border:1px solid var(--border) !important}
+.lock-title{font-family:'Syne',sans-serif !important;color:var(--ink) !important;font-size:26px !important;font-weight:700 !important}
+.lock-btn{background:var(--primary) !important;border-radius:10px !important}
+.lock-btn:hover{background:var(--primary-hover) !important}
+.lock-input{border-radius:10px !important;border:1px solid var(--border2) !important;background:var(--bg-surface) !important}
+
+/* Campos */
+.field input,.field select{border-radius:10px !important;border:1px solid var(--border2) !important}
+.field input:focus,.field select:focus{outline:none !important;border-color:var(--primary) !important;box-shadow:0 0 0 3px var(--primary-subtle) !important}
+
+/* Beta note */
+.beta-note{border:1px solid var(--border);border-radius:14px;background:var(--bg-surface);color:var(--ink2);font-size:13px;line-height:1.5;padding:12px 16px;margin:0 0 16px}
+
+/* Modal patient */
+.field-help{font-size:12px;color:var(--ink3);margin-top:6px;line-height:1.45}
+.modal-error{display:none;margin:12px 0 0;padding:12px 14px;border:1px solid var(--gold-border);background:var(--urgency-bg);color:var(--urgency-text);border-radius:12px;font-size:13px;line-height:1.45}
+.generated-link{border-radius:14px !important;background:var(--bg-surface) !important;border:1px solid var(--border) !important}
+.generated-link code{word-break:break-all !important;white-space:normal !important;line-height:1.45 !important;color:var(--ink2) !important}
+
+/* Linha dourada decorativa reutilizável */
+.gold-line{height:3px;background:linear-gradient(90deg,#c9a84c,#e8c97a,#c9a84c);border-radius:99px}
+
+/* Account */
+.sidebar-user{display:block!important}
+.account-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.account-actions{display:grid;gap:8px}
+.account-btn{
+  width:100%;min-height:38px;border:1px solid var(--border);border-radius:14px;background:var(--bg);color:var(--ink2);
+  display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 11px;
+
+  font-size:13px;font-weight:750;text-decoration:none;cursor:pointer;transition:.15s ease;
+}
+.account-btn:hover{background:var(--bg-surface);color:var(--ink);border-color:var(--border2)}
+.account-btn.primary{background:var(--primary-dark);color:#fff;border-color:var(--primary-dark)}
+.account-btn.warn{color:#8A3030}
+.settings-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:20px}
+.settings-panel{background:var(--bg);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.settings-panel-head{padding:18px 20px;border-bottom:1px solid var(--border)}
+.settings-panel-title{font-size:18px;font-weight:700;color:var(--ink)}
+.settings-panel-sub{font-size:13px;color:var(--ink3);margin-top:4px;line-height:1.45}
+.settings-panel-body{padding:20px;display:grid;gap:14px}
+.settings-row{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:1px solid #F0E6E8}
+.settings-row:last-child{border-bottom:0}
+.settings-label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);font-weight:850}
+.settings-value{font-size:15px;color:var(--ink);font-weight:700;text-align:right}
+.settings-note{font-size:13px;color:var(--ink2);line-height:1.55}
+.settings-actions{display:flex;flex-wrap:wrap;gap:10px}
+.settings-actions .btn{justify-content:center}
+@media (max-width:760px){
+  .settings-grid{grid-template-columns:1fr!important}
+  .settings-row{display:block}
+  .settings-value{text-align:left;margin-top:4px}
+  .settings-actions{display:grid}
+  .settings-actions .btn{width:100%}
+}
 
 /* Mobile app shell */
 .mobile-topbar,
@@ -742,7 +1158,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
   gap:12px;
   padding:0 16px;
   background:#fff;
-  border-bottom:1px solid #E9DDD9;
+  border-bottom:1px solid var(--border);
   position:sticky;
   top:0;
   z-index:300;
@@ -750,10 +1166,10 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
 .mobile-menu-btn{
   width:42px;
   height:42px;
-  border:1px solid #E8D8DC;
+  border:1px solid var(--border);
   border-radius:14px;
   background:#fff;
-  color:#3D2028;
+  color:var(--ink);
   display:inline-flex;
   align-items:center;
   justify-content:center;
@@ -765,7 +1181,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
   gap:10px;
   min-width:0;
   font-weight:800;
-  color:#2F2023;
+  color:var(--ink);
 }
 .mobile-title .logo-icon{
   width:32px!important;
@@ -781,7 +1197,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
   body{
     display:block!important;
     overflow-x:hidden!important;
-    background:#FBFAF9!important;
+    background:var(--bg-surface)!important;
   }
   .mobile-topbar{display:flex}
   .mobile-backdrop{
@@ -801,7 +1217,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
     z-index:350!important;
     transform:translateX(-104%)!important;
     transition:transform .22s ease!important;
-    border-right:1px solid #E9DDD9!important;
+    border-right:1px solid var(--border)!important;
     box-shadow:18px 0 40px rgba(61,32,40,.18)!important;
   }
   body.mobile-menu-open .sidebar{transform:translateX(0)!important}
@@ -826,8 +1242,8 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
     margin:0!important;
     padding:16px!important;
     display:block!important;
-    border-bottom:1px solid #E9DDD9!important;
-    background:#FBFAF9!important;
+    border-bottom:1px solid var(--border)!important;
+    background:var(--bg-surface)!important;
   }
   .topbar-title{font-size:22px!important}
   .topbar-sub{display:block!important;margin-top:4px!important}
@@ -900,7 +1316,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
   .table tr{
     margin:0 0 12px!important;
     padding:14px!important;
-    border:1px solid #E9DDD9!important;
+    border:1px solid var(--border)!important;
     border-radius:18px!important;
     background:#fff!important;
     box-shadow:0 8px 20px rgba(61,32,40,.04)!important;
@@ -916,7 +1332,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
     font-size:10px;
     text-transform:uppercase;
     letter-spacing:.08em;
-    color:#9A7A84;
+    color:var(--ink3);
     font-weight:800;
     margin-bottom:2px;
   }
@@ -952,6 +1368,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
   }
 }
 </style>
+  <link rel="stylesheet" href="visual-modern.css">
 </head>
 <body>
 <div class="toast" id="toast"></div>
@@ -961,7 +1378,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
   </button>
   <div class="mobile-title">
     <div class="logo-icon" aria-hidden="true"></div>
-    <span>PsiReal TCC</span>
+    <span>PsiReal Clínica</span>
   </div>
   <button class="mobile-menu-btn" type="button" onclick="showScreen('dashboard', document.querySelector('[onclick*=dashboard]'))" aria-label="Ir para o painel">
     <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 10v10h14V10"/></svg>
@@ -975,8 +1392,8 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
     <div class="logo-mark">
       <div class="logo-icon" aria-hidden="true"></div>
       <div>
-        <div class="logo-text">PsiReal TCC</div>
-        <div class="logo-sub">Plataforma Clínica</div>
+        <div class="logo-text">PsiReal Clínica</div>
+        <div class="logo-sub">Plataforma clínica</div>
       </div>
     </div>
   </div>
@@ -1005,7 +1422,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
       <div class="nav-label">Clínico</div>
       <div class="nav-item" onclick="showScreen('biblioteca', this)">
         <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2h8l3 3v11a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1z"/><path d="M12 2v4h3M6 9h6M6 12h4"/></svg>
-        Biblioteca TCC
+        Biblioteca Clínica
       </div>
       <div class="nav-item" onclick="showScreen('aplicacoes', this)">
         <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2h6z"/><circle cx="9" cy="13" r="1"/><path d="M7 6h4M7 9h2"/></svg>
@@ -1014,11 +1431,11 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
       </div>
       <div class="nav-item" onclick="showScreen('evolucao', this)">
         <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="2,13 6,8 9,10 13,5 16,7"/><line x1="2" y1="16" x2="16" y2="16"/></svg>
-        Evolução Clínica
+        Evolução Emocional
       </div>
       <div class="nav-item" onclick="showScreen('insights', this)">
         <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="9" r="7"/><path d="M9 5v4l2 2"/></svg>
-        Insights Clínicos
+        Insights Terapêuticos
       </div>
       <a class="nav-item" href="painel-perfil-clinico.html">
         <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 14c3-7 9-7 12 0"/><path d="M5 9c1.5-4 6.5-4 8 0"/><circle cx="9" cy="6" r="2"/><path d="M4 14h10"/></svg>
@@ -1026,13 +1443,20 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
       </a>
     </div>
 
+    <div class="nav-section" id="adminNavSection" style="display:none">
+      <div class="nav-label">Admin</div>
+      <div class="nav-item" onclick="showScreen('admin', this); loadAdminPsis();">
+        <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 2L3 5v4c0 3.5 2.5 6.7 6 7.5 3.5-.8 6-4 6-7.5V5L9 2z"/></svg>
+        Admin
+      </div>
+    </div>
     <div class="nav-section">
       <div class="nav-label">Sistema</div>
       <div class="nav-item" onclick="showScreen('protocolos', this)">
         <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="14" height="12" rx="2"/><path d="M6 7h6M6 10h4"/></svg>
         Protocolos
       </div>
-      <div class="nav-item">
+      <div class="nav-item" onclick="showScreen('configuracoes', this)">
         <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="9" r="2.5"/><path d="M9 2v1.5M9 14.5V16M2 9h1.5M14.5 9H16M4.2 4.2l1 1M12.8 12.8l1 1M12.8 4.2l-1 1M4.2 12.8l1 1"/></svg>
         Configurações
       </div>
@@ -1040,10 +1464,18 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
   </nav>
 
   <div class="sidebar-user">
-    <div class="user-avatar">MD</div>
-    <div>
-      <div class="user-name" id="sidebarUserName">Psicóloga</div>
-      <div class="user-plan" id="sidebarUserPlan">Plano ativo</div>
+    <div class="account-head">
+      <div class="user-avatar">MD</div>
+      <div>
+        <div class="user-name" id="sidebarUserName">Psicóloga</div>
+        <div class="user-plan" id="sidebarUserPlan">Plano ativo</div>
+      </div>
+    </div>
+    <div class="account-actions">
+      <button class="account-btn primary" type="button" onclick="renewPlan()">Renovar plano <span>→</span></button>
+      <button class="account-btn" type="button" onclick="openSupport()">Suporte <span>→</span></button>
+      <button class="account-btn" type="button" onclick="openReferral()">Indique e ganhe <span>→</span></button>
+      <button class="account-btn warn" type="button" onclick="logout()">Sair <span>↗</span></button>
     </div>
   </div>
 </aside>
@@ -1052,7 +1484,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
 <div id="lockScreen">
   <div class="lock-card">
     <div class="lock-logo"></div>
-    <div class="lock-title">Entrar no PsiReal TCC</div>
+    <div class="lock-title">Entrar no PsiReal Clínica</div>
     <div class="lock-sub">Acesso restrito para psicólogas assinantes.</div>
     <input id="lockEmail" class="lock-input" type="email" placeholder="E-mail">
     <input id="lockPassword" class="lock-input" type="password" placeholder="Senha">
@@ -1069,7 +1501,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
       <div>
         <div class="topbar-title">Dashboard</div>
       </div>
-      <span class="topbar-sub">Segunda, 17 de maio de 2026</span>
+      <span class="topbar-sub" id="topbarDate"></span>
       <div class="topbar-actions">
         <button class="btn btn-ghost">
           <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M12 12l3 3"/></svg>
@@ -1082,8 +1514,8 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
 
       <section class="dashboard-hero">
         <div class="hero-kicker">Psi Real</div>
-        <div class="hero-date">Terça-feira, 19 de maio de 2026</div>
-        <h1 class="hero-title">Bom dia, Michelle.</h1>
+        <div class="hero-date" id="heroDate"></div>
+        <h1 class="hero-title" id="heroGreeting">Olá, Michelle.</h1>
         <p class="hero-sub">Acompanhe aplicações, pacientes e respostas clínicas em um painel organizado para a prática real.</p>
       </section>
       <div class="stats-grid">
@@ -1117,7 +1549,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
         <!-- Evolução semanal -->
         <div class="card">
           <div class="card-header">
-            <span class="card-title">Evolução clínica — semana</span>
+            <span class="card-title">Evolução emocional — semana</span>
             <div style="display:flex;gap:12px;align-items:center">
               <span style="font-size:11px;color:var(--ink3)">
                 <span style="display:inline-block;width:8px;height:2px;background:var(--lilac);border-radius:1px;margin-right:4px;vertical-align:middle"></span>Ansiedade
@@ -1132,12 +1564,12 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
             <svg width="100%" height="140" viewBox="0 0 520 140" preserveAspectRatio="none">
               <defs>
                 <linearGradient id="ga" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#7A4A55" stop-opacity=".16"/>
-                  <stop offset="100%" stop-color="#7A4A55" stop-opacity="0"/>
+                  <stop offset="0%" stop-color="var(--primary)" stop-opacity=".16"/>
+                  <stop offset="100%" stop-color="var(--primary)" stop-opacity="0"/>
                 </linearGradient>
                 <linearGradient id="gt" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#73856E" stop-opacity=".12"/>
-                  <stop offset="100%" stop-color="#73856E" stop-opacity="0"/>
+                  <stop offset="0%" stop-color="#6d4fc2" stop-opacity=".12"/>
+                  <stop offset="100%" stop-color="#6d4fc2" stop-opacity="0"/>
                 </linearGradient>
               </defs>
               <!-- Grid lines -->
@@ -1147,13 +1579,13 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
               <line x1="0" y1="112" x2="520" y2="112" stroke="#E4DDD3" stroke-width=".5"/>
               <!-- Anxiety area -->
               <path d="M0 90 C60 85, 100 70, 160 72 C220 74, 260 60, 320 55 C380 50, 420 45, 520 40 L520 140 L0 140 Z" fill="url(#ga)"/>
-              <path d="M0 90 C60 85, 100 70, 160 72 C220 74, 260 60, 320 55 C380 50, 420 45, 520 40" stroke="#7A4A55" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M0 90 C60 85, 100 70, 160 72 C220 74, 260 60, 320 55 C380 50, 420 45, 520 40" stroke="#6d4fc2" stroke-width="2" fill="none" stroke-linecap="round"/>
               <!-- Mood area -->
               <path d="M0 100 C80 95, 120 88, 180 82 C240 76, 280 70, 340 65 C400 60, 440 58, 520 52 L520 140 L0 140 Z" fill="url(#gt)"/>
-              <path d="M0 100 C80 95, 120 88, 180 82 C240 76, 280 70, 340 65 C400 60, 440 58, 520 52" stroke="#73856E" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M0 100 C80 95, 120 88, 180 82 C240 76, 280 70, 340 65 C400 60, 440 58, 520 52" stroke="#6d4fc2" stroke-width="2" fill="none" stroke-linecap="round"/>
               <!-- Dots -->
-              <circle cx="520" cy="40" r="4" fill="#7A4A55"/>
-              <circle cx="520" cy="52" r="4" fill="#73856E"/>
+              <circle cx="520" cy="40" r="4" fill="var(--primary)"/>
+              <circle cx="520" cy="52" r="4" fill="#6d4fc2"/>
               <!-- X labels -->
               <text x="0"   y="136" font-size="9" fill="#9D8A84" font-family="Plus Jakarta Sans">Seg</text>
               <text x="86"  y="136" font-size="9" fill="#9D8A84" font-family="Plus Jakarta Sans">Ter</text>
@@ -1174,13 +1606,13 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
           </div>
           <div class="card-body" id="dashboardPendingList" style="padding:0 20px">
             <div class="pending-item">
-              <div class="pending-av"><div class="avatar" style="background:linear-gradient(135deg,#3D2028,#B08090)">MC</div></div>
+              <div class="pending-av"><div class="avatar" style="background:linear-gradient(135deg,var(--primary-dark),var(--primary))">MC</div></div>
               <div><div class="pending-name">Maria Clara</div><div class="pending-instr">GAD-7 — Ansiedade</div></div>
               <div class="pending-due">há 2 dias</div>
               <button class="pending-send">Reenviar</button>
             </div>
             <div class="pending-item">
-              <div class="pending-av"><div class="avatar" style="background:linear-gradient(135deg,#73856E,#98A892)">JP</div></div>
+              <div class="pending-av"><div class="avatar" style="background:linear-gradient(135deg,#6d4fc2,#8070a8)">JP</div></div>
               <div><div class="pending-name">João Pedro</div><div class="pending-instr">PHQ-9 — Depressão</div></div>
               <div class="pending-due">há 1 dia</div>
               <button class="pending-send">Reenviar</button>
@@ -1347,13 +1779,13 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
           </thead>
           <tbody id="patientsTableBody">
             <tr>
-              <td><div style="display:flex;align-items:center;gap:10px"><div class="avatar" style="background:linear-gradient(135deg,#3D2028,#B08090)">MC</div><div><div class="name">Maria Clara</div><div style="font-size:11px;color:var(--ink3)">Ansiedade generalizada</div></div></div></td>
+              <td><div style="display:flex;align-items:center;gap:10px"><div class="avatar" style="background:linear-gradient(135deg,var(--primary-dark),var(--primary))">MC</div><div><div class="name">Maria Clara</div><div style="font-size:11px;color:var(--ink3)">Ansiedade generalizada</div></div></div></td>
               <td>Hoje, 14h22<br><span style="font-size:11px;color:var(--ink3)">YSQ-S3</span></td>
               <td><span class="badge badge-lilac">YSQ</span> <span class="badge badge-teal">GAD-7</span></td>
               <td>
                 <div style="display:flex;align-items:center;gap:8px">
                   <div class="progress" style="width:64px"><div class="progress-fill" style="width:92%;background:var(--teal)"></div></div>
-                  <span style="font-size:11px;font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--ink)">92%</span>
+                  <span style="font-size:11px;font-family:'Instrument Sans',system-ui,-apple-system,sans-serif;color:var(--ink)">92%</span>
                 </div>
               </td>
               <td>
@@ -1365,13 +1797,13 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
               <td><button class="btn btn-ghost" style="padding:5px 10px;font-size:11px">Ver</button></td>
             </tr>
             <tr>
-              <td><div style="display:flex;align-items:center;gap:10px"><div class="avatar" style="background:linear-gradient(135deg,#73856E,#98A892)">JP</div><div><div class="name">João Pedro</div><div style="font-size:11px;color:var(--ink3)">TAG + depressão leve</div></div></div></td>
+              <td><div style="display:flex;align-items:center;gap:10px"><div class="avatar" style="background:linear-gradient(135deg,#6d4fc2,#8070a8)">JP</div><div><div class="name">João Pedro</div><div style="font-size:11px;color:var(--ink3)">TAG + depressão leve</div></div></div></td>
               <td>Ontem<br><span style="font-size:11px;color:var(--ink3)">GAD-7</span></td>
               <td><span class="badge badge-teal">GAD-7</span> <span class="badge" style="background:var(--bg3);color:var(--ink3)">PHQ</span></td>
               <td>
                 <div style="display:flex;align-items:center;gap:8px">
                   <div class="progress" style="width:64px"><div class="progress-fill" style="width:75%;background:var(--amber)"></div></div>
-                  <span style="font-size:11px;font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--ink)">75%</span>
+                  <span style="font-size:11px;font-family:'Instrument Sans',system-ui,-apple-system,sans-serif;color:var(--ink)">75%</span>
                 </div>
               </td>
               <td>
@@ -1383,13 +1815,13 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
               <td><button class="btn btn-ghost" style="padding:5px 10px;font-size:11px">Ver</button></td>
             </tr>
             <tr>
-              <td><div style="display:flex;align-items:center;gap:10px"><div class="avatar" style="background:linear-gradient(135deg,#3D2028,#7A4A55)">AS</div><div><div class="name">Ana Sofia</div><div style="font-size:11px;color:var(--ink3)">Transtorno de púnico</div></div></div></td>
+              <td><div style="display:flex;align-items:center;gap:10px"><div class="avatar" style="background:linear-gradient(135deg,var(--primary-dark),var(--primary))">AS</div><div><div class="name">Ana Sofia</div><div style="font-size:11px;color:var(--ink3)">Transtorno de púnico</div></div></div></td>
               <td>H— 3 dias<br><span style="font-size:11px;color:var(--ink3)">GAD-7</span></td>
               <td><span class="badge badge-teal">GAD</span> <span class="badge badge-teal">GAD-7</span></td>
               <td>
                 <div style="display:flex;align-items:center;gap:8px">
                   <div class="progress" style="width:64px"><div class="progress-fill" style="width:100%;background:var(--teal)"></div></div>
-                  <span style="font-size:11px;font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--ink)">100%</span>
+                  <span style="font-size:11px;font-family:'Instrument Sans',system-ui,-apple-system,sans-serif;color:var(--ink)">100%</span>
                 </div>
               </td>
               <td>
@@ -1407,7 +1839,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
               <td>
                 <div style="display:flex;align-items:center;gap:8px">
                   <div class="progress" style="width:64px"><div class="progress-fill" style="width:60%;background:var(--coral)"></div></div>
-                  <span style="font-size:11px;font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--ink)">60%</span>
+                  <span style="font-size:11px;font-family:'Instrument Sans',system-ui,-apple-system,sans-serif;color:var(--ink)">60%</span>
                 </div>
               </td>
               <td>
@@ -1424,10 +1856,10 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
     </div>
   </div>
 
-  <!-- PPPPPPPPPPPPPPP BIBLIOTECA TCC PPPPPPPPPPPPPPP -->
+  <!-- PPPPPPPPPPPPPPP BIBLIOTECA CLINICA PPPPPPPPPPPPPPP -->
   <div id="screen-biblioteca" class="screen">
     <div class="topbar">
-      <div><div class="topbar-title">Biblioteca TCC</div></div>
+      <div><div class="topbar-title">Biblioteca Clínica</div></div>
       <div class="topbar-actions">
         <button class="btn btn-ghost">
           <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M12 12l3 3"/></svg>
@@ -1598,7 +2030,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
   <!-- EVOLUCAO CLINICA -->
   <div id="screen-evolucao" class="screen">
     <div class="topbar">
-      <div><div class="topbar-title">Evolução Clínica</div></div>
+      <div><div class="topbar-title">Evolução Emocional</div></div>
       <div class="topbar-actions" style="display:flex;align-items:center;gap:12px">
         <select id="evoPatientSelect" onchange="renderEvolucao()" style="font:inherit;font-size:13px;padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--ink);cursor:pointer;outline:none;min-width:160px">
           <option value="">Todos os pacientes</option>
@@ -1748,7 +2180,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
   <!-- PPPPPPPPPPPPPPP INSIGHTS PPPPPPPPPPPPPPP -->
   <div id="screen-insights" class="screen">
     <div class="topbar">
-      <div><div class="topbar-title">Insights Clínicos</div></div>
+      <div><div class="topbar-title">Insights Terapêuticos</div></div>
       <div class="topbar-actions">
         <span style="font-size:11px;color:var(--ink3)">Gerado em 17/05/2026 — baseado em Young (2003), Beck (1985)</span>
       </div>
@@ -1778,7 +2210,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
             <div style="width:40px;height:40px;border-radius:10px;background:var(--teal3);display:flex;align-items:center;justify-content:center;margin-bottom:14px">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--teal)" stroke-width="1.5"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2z"/><path d="M10 6v4l2 2"/></svg>
             </div>
-            <div style="font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:17px;font-weight:500;margin-bottom:6px">Ansiedade Generalizada</div>
+            <div style="font-family:'Instrument Sans',system-ui,-apple-system,sans-serif;font-size:17px;font-weight:500;margin-bottom:6px">Ansiedade Generalizada</div>
             <div style="font-size:12px;color:var(--ink3);margin-bottom:14px;line-height:1.5">GAD-7 — GAD-7 — AAQ-II — YSQ (domínio supervigilância)</div>
             <div style="display:flex;gap:6px">
               <span class="badge badge-teal">4 instrumentos</span>
@@ -1791,7 +2223,7 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
             <div style="width:40px;height:40px;border-radius:10px;background:var(--lilac4);display:flex;align-items:center;justify-content:center;margin-bottom:14px">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--lilac)" stroke-width="1.5"><path d="M4 4h12v12H4zM8 8h4M8 12h2"/></svg>
             </div>
-            <div style="font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:17px;font-weight:500;margin-bottom:6px">Terapia do Esquema</div>
+            <div style="font-family:'Instrument Sans',system-ui,-apple-system,sans-serif;font-size:17px;font-weight:500;margin-bottom:6px">Terapia do Esquema</div>
             <div style="font-size:12px;color:var(--ink3);margin-bottom:14px;line-height:1.5">YSQ-S3 — SMI 1.1 — Cruzamento automático</div>
             <div style="display:flex;gap:6px">
               <span class="badge badge-lilac">2 instrumentos</span>
@@ -1809,52 +2241,397 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
     </div>
   </div>
 
+  <!-- ADMIN -->
+  <div id="screen-admin" class="screen">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">Admin</div>
+        <span class="topbar-sub">Gestão de psicólogas e assinaturas</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-primary" onclick="openAdminAddModal()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+          Nova psicóloga
+        </button>
+      </div>
+    </div>
+    <div class="content">
+      <!-- Stats -->
+      <div class="stats-grid" style="margin-bottom:20px">
+        <div class="stat-card lilac">
+          <div class="stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="stat-label">Total psis</div>
+          <div class="stat-value" id="adminStatTotal">—</div>
+          <div class="stat-note">cadastradas</div>
+        </div>
+        <div class="stat-card teal">
+          <div class="stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+          <div class="stat-label">Ativas</div>
+          <div class="stat-value" id="adminStatAtivas">—</div>
+          <div class="stat-note">com acesso</div>
+        </div>
+        <div class="stat-card amber">
+          <div class="stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="stat-label">Trial</div>
+          <div class="stat-value" id="adminStatTrial">—</div>
+          <div class="stat-note">período grátis</div>
+        </div>
+        <div class="stat-card coral">
+          <div class="stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></div>
+          <div class="stat-label">Inativas</div>
+          <div class="stat-value" id="adminStatInativas">—</div>
+          <div class="stat-note">sem acesso</div>
+        </div>
+      </div>
+
+      <!-- Filtros -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center">
+        <button class="cat-btn active" onclick="adminFilterPsis('todas', this)">Todas</button>
+        <button class="cat-btn" onclick="adminFilterPsis('ativa', this)">Ativas</button>
+        <button class="cat-btn" onclick="adminFilterPsis('trial', this)">Trial</button>
+        <button class="cat-btn" onclick="adminFilterPsis('inativa', this)">Inativas</button>
+        <input id="adminSearchInput" placeholder="Buscar nome ou e-mail..." oninput="adminRenderTable()"
+          style="flex:1;max-width:260px;padding:7px 14px;border:1.5px solid var(--border);border-radius:10px;background:#fff;font:inherit;outline:none;font-size:13px">
+      </div>
+
+      <!-- Tabela -->
+      <div class="card table-wrap">
+        <table class="table" style="width:100%">
+          <thead>
+            <tr>
+              <th>Psicóloga</th>
+              <th>Plano</th>
+              <th>Status</th>
+              <th>Trial até</th>
+              <th>Cadastro</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="adminPsiTableBody">
+            <tr><td colspan="6" class="empty">Carregando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Nova Psi (Admin) -->
+  <div class="modal-backdrop" id="adminAddModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div class="modal-head-left">
+          <div class="modal-icon" style="background:var(--primary-subtle);color:var(--primary)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+          </div>
+          <div>
+            <div class="modal-title">Nova psicóloga</div>
+            <div class="modal-subtitle">Cria conta e perfil no sistema</div>
+          </div>
+        </div>
+        <button class="modal-close" onclick="closeModal('adminAddModal')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-grid">
+          <div class="field"><label>Nome completo</label><input id="adminNewNome" placeholder="Dra. Ana Silva"></div>
+          <div class="field"><label>E-mail</label><input id="adminNewEmail" type="email" placeholder="ana@email.com"></div>
+          <div class="field"><label>Senha inicial</label><input id="adminNewSenha" type="password" placeholder="mínimo 8 caracteres"></div>
+          <div class="field"><label>WhatsApp</label><input id="adminNewWhatsapp" placeholder="5511999999999"></div>
+          <div class="field">
+            <label>Plano</label>
+            <select id="adminNewPlano" style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;background:#fff;font:inherit;outline:none">
+              <option value="trial">Trial 30 dias</option>
+              <option value="mensal">Mensal</option>
+              <option value="anual">Anual</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-error" id="adminAddError" style="display:none"></div>
+        <div id="adminAddSuccess" style="display:none;margin-top:10px;padding:10px 14px;background:var(--green3);border-radius:8px;color:var(--green);font-size:13px"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal('adminAddModal')">Cancelar</button>
+        <button class="btn btn-primary" onclick="adminCreatePsi()">Criar conta</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Editar Psi (Admin) -->
+  <div class="modal-backdrop" id="adminEditModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div class="modal-head-left">
+          <div class="modal-icon" style="background:var(--primary-subtle);color:var(--primary)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </div>
+          <div>
+            <div class="modal-title">Editar psicóloga</div>
+            <div class="modal-subtitle" id="adminEditSubtitle"></div>
+          </div>
+        </div>
+        <button class="modal-close" onclick="closeModal('adminEditModal')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="adminEditUserId">
+        <div class="modal-grid">
+          <div class="field"><label>Nome</label><input id="adminEditNome"></div>
+          <div class="field"><label>WhatsApp</label><input id="adminEditWhatsapp"></div>
+          <div class="field">
+            <label>Plano</label>
+            <select id="adminEditPlano" style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;background:#fff;font:inherit;outline:none">
+              <option value="trial">Trial</option>
+              <option value="mensal">Mensal</option>
+              <option value="anual">Anual</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Status</label>
+            <select id="adminEditAtiva" style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;background:#fff;font:inherit;outline:none">
+              <option value="true">Ativa</option>
+              <option value="false">Inativa</option>
+            </select>
+          </div>
+          <div class="field"><label>Trial até</label><input id="adminEditTrialAte" type="date"></div>
+        </div>
+        <div class="modal-error" id="adminEditError" style="display:none"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal('adminEditModal')">Cancelar</button>
+        <button class="btn btn-primary" onclick="adminSavePsi()">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PPPPPPPPPPPPPPP CONFIGURACOES PPPPPPPPPPPPPPP -->
+  <div id="screen-configuracoes" class="screen">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">Configurações</div>
+        <div class="topbar-sub">Conta, plano, suporte e segurança de acesso</div>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-ghost" onclick="openSupport()">Suporte</button>
+        <button class="btn btn-primary" onclick="renewPlan()">Renovar plano</button>
+      </div>
+    </div>
+    <div class="content">
+      <div class="settings-grid">
+        <section class="settings-panel">
+          <div class="settings-panel-head">
+            <div class="settings-panel-title">Minha conta</div>
+            <div class="settings-panel-sub">Dados de acesso e assinatura da psicóloga logada.</div>
+          </div>
+          <div class="settings-panel-body">
+            <div class="settings-row">
+              <div>
+                <div class="settings-label">Nome</div>
+                <div class="settings-note">Nome exibido dentro do painel.</div>
+              </div>
+              <div class="settings-value" id="settingsName">Psicóloga</div>
+            </div>
+            <div class="settings-row">
+              <div>
+                <div class="settings-label">Plano</div>
+                <div class="settings-note">O acesso depende da assinatura ativa e do cadastro no Supabase.</div>
+              </div>
+              <div class="settings-value" id="settingsPlan">Plano ativo</div>
+            </div>
+            <div class="settings-row">
+              <div>
+                <div class="settings-label">Status</div>
+                <div class="settings-note">Se a conta estiver inativa, o painel bloqueia o acesso.</div>
+              </div>
+              <div class="settings-value" id="settingsStatus">Ativa</div>
+            </div>
+            <div class="settings-actions">
+              <button class="btn btn-primary" onclick="renewPlan()">Renovar plano</button>
+              <button class="btn btn-ghost" onclick="openReferral()">Indique e ganhe</button>
+              <button class="btn btn-ghost" onclick="logout()">Sair da conta</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="settings-panel">
+          <div class="settings-panel-head">
+            <div class="settings-panel-title">Fluxo comercial</div>
+            <div class="settings-panel-sub">Como a psicóloga entra no produto após comprar.</div>
+          </div>
+          <div class="settings-panel-body">
+            <div class="settings-note">
+              1. A psicóloga assina pela Kiwify.<br>
+              2. Ela deixa o telefone/WhatsApp no formulário de ativação.<br>
+              3. Você cria ou libera o usuário no Supabase Auth.<br>
+              4. Ela acessa este painel com e-mail e senha.
+            </div>
+            <div class="settings-actions">
+              <button class="btn btn-primary" onclick="renewPlan()">Abrir Kiwify</button>
+              <button class="btn btn-ghost" onclick="openSupport()">Falar com suporte</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="settings-panel">
+          <div class="settings-panel-head">
+            <div class="settings-panel-title">Segurança</div>
+            <div class="settings-panel-sub">Cada psicóloga acessa somente seus pacientes, links e respostas.</div>
+          </div>
+          <div class="settings-panel-body">
+            <div class="settings-row">
+              <div>
+                <div class="settings-label">Sessão</div>
+                <div class="settings-note">O botão sair encerra a sessão local e remove os tokens do navegador.</div>
+              </div>
+              <div class="settings-value">Supabase Auth</div>
+            </div>
+            <div class="settings-row">
+              <div>
+                <div class="settings-label">Isolamento</div>
+                <div class="settings-note">As consultas usam o token da psicóloga logada. O bloqueio real deve permanecer no RLS.</div>
+              </div>
+              <div class="settings-value">Por conta</div>
+            </div>
+            <button class="btn btn-ghost" onclick="logout()">Encerrar login</button>
+          </div>
+        </section>
+
+        <section class="settings-panel">
+          <div class="settings-panel-head">
+            <div class="settings-panel-title">Preferências</div>
+            <div class="settings-panel-sub">Itens previstos para a versão vendável.</div>
+          </div>
+          <div class="settings-panel-body">
+            <div class="settings-note">
+              Próximos ajustes: logo da clínica, mensagem padrão do WhatsApp, dados de cobrança, troca de senha, limite de pacientes por plano e preferências de notificação.
+            </div>
+          </div>
+        </section>
+
+        <section class="settings-panel" style="grid-column:1/-1">
+          <div class="settings-panel-head">
+            <div class="settings-panel-title">Direitos de uso e responsabilidade clínica</div>
+            <div class="settings-panel-sub">Orientação para uso ético dos instrumentos, materiais e análises da plataforma.</div>
+          </div>
+          <div class="settings-panel-body">
+            <div class="settings-note">
+              Os instrumentos, materiais e recursos disponibilizados pela PsiReal têm finalidade informativa, educacional, clínica e científica. A PsiReal não reivindica autoria sobre instrumentos desenvolvidos por terceiros. Quando aplicável, fontes, autores e referências são indicados junto ao material correspondente.
+            </div>
+            <div class="settings-note">
+              Os textos de orientação, organização clínica, descrições, interpretações, modelos de uso e conteúdos editoriais produzidos pela PsiReal constituem material autoral próprio e não devem ser reproduzidos, redistribuídos ou comercializados sem autorização.
+            </div>
+            <div class="settings-note">
+              A utilização dos instrumentos e materiais não substitui o julgamento clínico da psicóloga responsável, nem configura diagnóstico automático. A interpretação deve considerar história clínica, contexto, entrevista, vínculo terapêutico e critérios éticos da profissão.
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
 </main>
+
+<!-- MODAL SUPORTE -->
+<div class="modal-backdrop" id="supportModal" aria-hidden="true">
+  <div class="modal-card" style="max-width:400px">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".5" fill="currentColor"/></svg>
+        </div>
+        <div>
+          <div class="modal-title">Falar com suporte</div>
+          <div class="modal-subtitle">Escolha como prefere entrar em contato.</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeSupportModal()" aria-label="Fechar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div style="display:grid;gap:12px">
+        <a class="support-channel" href="https://wa.me/5511947388423?text=Ol%C3%A1%2C%20Michelle.%20Preciso%20de%20suporte%20no%20PsiReal%20Cl%C3%ADnica." target="_blank" rel="noopener" onclick="closeSupportModal()">
+          <div class="support-channel-icon" style="background:rgba(37,211,102,.12);color:#128C7E">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.112.549 4.1 1.51 5.833L.057 23.5l5.805-1.524A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.794 9.794 0 0 1-4.964-1.348l-.356-.211-3.644.956.973-3.553-.232-.365A9.818 9.818 0 1 1 12 21.818z"/></svg>
+          </div>
+          <div class="support-channel-info">
+            <strong>WhatsApp</strong>
+            <span>Resposta rápida em horário comercial</span>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--ink3);flex-shrink:0"><path d="M9 18l6-6-6-6"/></svg>
+        </a>
+        <a class="support-channel" href="mailto:contato@michelledonegaterapia.com.br?subject=Suporte%20PsiReal%20Cl%C3%ADnica" onclick="closeSupportModal()">
+          <div class="support-channel-icon" style="background:var(--primary-subtle);color:var(--primary)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m2 7 10 7 10-7"/></svg>
+          </div>
+          <div class="support-channel-info">
+            <strong>E-mail</strong>
+            <span>contato@michelledonegaterapia.com.br</span>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--ink3);flex-shrink:0"><path d="M9 18l6-6-6-6"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeSupportModal()">Fechar</button>
+    </div>
+  </div>
+</div>
 
 <div class="modal-backdrop" id="applicationModal" aria-hidden="true">
   <div class="modal-card">
     <div class="modal-head">
-      <div>
-        <div class="modal-title">Cadastrar paciente</div>
-        <div style="font-size:13px;color:var(--ink3);margin-top:4px;line-height:1.45">Cadastre o paciente e escolha o primeiro instrumento. O sistema gera um link seguro para enviar pelo WhatsApp.</div>
-      </div>
-      <button class="modal-close" onclick="closeApplicationModal()" aria-label="Fechar"></button>
-    </div>
-    <div class="modal-grid">
-      <div class="field">
-        <label for="newPatientName">Nome do paciente</label>
-        <input id="newPatientName" placeholder="Ex: Maria Silva">
-      </div>
-      <div class="field">
-        <label for="newPatientWhatsapp">WhatsApp do paciente</label>
-        <input id="newPatientWhatsapp" inputmode="tel" placeholder="Ex: (11) 99999-9999">
-        <div class="field-help">Opcional. Se preencher, o botão abre a conversa direto no WhatsApp da pessoa.</div>
-      </div>
-      <div class="field">
-        <label>Instrumento</label>
-        <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px" id="instrCats">
-          <button type="button" class="cat-btn active" onclick="filterInstr('todos')">Todos</button>
-          <button type="button" class="cat-btn" onclick="filterInstr('ansiedade')">Ansiedade</button>
-          <button type="button" class="cat-btn" onclick="filterInstr('humor')">Humor</button>
-          <button type="button" class="cat-btn" onclick="filterInstr('act')">ACT</button>
-          <button type="button" class="cat-btn" onclick="filterInstr('autoestima')">Autoestima</button>
-          <button type="button" class="cat-btn" onclick="filterInstr('estresse')">Estresse</button>
-          <button type="button" class="cat-btn" onclick="filterInstr('sono')">Sono</button>
-          <button type="button" class="cat-btn" onclick="filterInstr('esquemas')">Esquemas</button>
+      <div class="modal-head-left">
+        <div class="modal-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
         </div>
-        <select id="newInstrument" size="4" style="border-radius:10px;width:100%;font:inherit;font-size:13px;padding:4px;border:1px solid var(--border);background:var(--bg);color:var(--ink);cursor:pointer;outline:none" onchange="updateInstrHelp()">
-          <option value="YSQ-S3" data-cat="esquemas" data-page="formulario-esquemas">YSQ-S3 — Esquemas de Young</option>
-          <option value="GAD-7" data-cat="ansiedade" data-page="formulario-gad7">GAD-7 — Ansiedade Generalizada</option>
-          <option value="OASIS" data-cat="ansiedade" data-page="formulario-oasis">OASIS — Severidade da Ansiedade</option>
-          <option value="PHQ-9" data-cat="humor" data-page="formulario-phq9">PHQ-9 — Depressão</option>
-          <option value="AAQ-II" data-cat="act" data-page="formulario-aaq2">AAQ-II — Flexibilidade Psicológica</option>
-          <option value="CFQ" data-cat="act" data-page="formulario-cfq">CFQ — Fusão Cognitiva</option>
-          <option value="Rosenberg" data-cat="autoestima" data-page="formulario-rosenberg">Rosenberg — Autoestima</option>
-          <option value="PSS" data-cat="estresse" data-page="formulario-pss">PSS-10 — Estresse Percebido</option>
-          <option value="ISI" data-cat="sono" data-page="formulario-isi">ISI — Severidade da Insônia</option>
-        </select>
-        <div id="instrHelpText" style="font-size:11px;color:var(--ink3);margin-top:5px">GAD-7 — 7 itens — Ansiedade Generalizada — Domínio público</div>
-        <div class="field-help">Por enquanto, o beta libera YSQ-S3, GAD-7 e PHQ-9.</div>
+        <div>
+          <div class="modal-title">Cadastrar paciente</div>
+          <div class="modal-subtitle">Gere um link de instrumento para enviar pelo WhatsApp.</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeApplicationModal()" aria-label="Fechar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-grid">
+        <div class="field">
+          <label for="newPatientName">Nome do paciente</label>
+          <input id="newPatientName" placeholder="Ex: Maria Silva" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="newPatientWhatsapp">WhatsApp <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--ink4)">(opcional)</span></label>
+          <input id="newPatientWhatsapp" inputmode="tel" placeholder="(11) 99999-9999">
+          <div class="field-help">Se preencher, o botão abre o WhatsApp direto com o link.</div>
+        </div>
+        <div class="field">
+          <label>Instrumento</label>
+          <div class="cat-chips" id="instrCats">
+            <button type="button" class="cat-btn active" onclick="filterInstr('todos')">Todos</button>
+            <button type="button" class="cat-btn" onclick="filterInstr('ansiedade')">Ansiedade</button>
+            <button type="button" class="cat-btn" onclick="filterInstr('humor')">Humor</button>
+            <button type="button" class="cat-btn" onclick="filterInstr('act')">ACT</button>
+            <button type="button" class="cat-btn" onclick="filterInstr('autoestima')">Autoestima</button>
+            <button type="button" class="cat-btn" onclick="filterInstr('estresse')">Estresse</button>
+            <button type="button" class="cat-btn" onclick="filterInstr('sono')">Sono</button>
+            <button type="button" class="cat-btn" onclick="filterInstr('esquemas')">Esquemas</button>
+          </div>
+          <div class="instr-list" id="instrList">
+            <div class="instr-option" data-value="YSQ-S3" data-cat="esquemas" data-page="formulario-esquemas" onclick="selectInstr(this)"><span class="instr-dot"></span>YSQ-S3 — Esquemas de Young</div>
+            <div class="instr-option selected" data-value="GAD-7" data-cat="ansiedade" data-page="formulario-gad7" onclick="selectInstr(this)"><span class="instr-dot"></span>GAD-7 — Ansiedade Generalizada</div>
+            <div class="instr-option" data-value="OASIS" data-cat="ansiedade" data-page="formulario-oasis" onclick="selectInstr(this)"><span class="instr-dot"></span>OASIS — Severidade da Ansiedade</div>
+            <div class="instr-option" data-value="PHQ-9" data-cat="humor" data-page="formulario-phq9" onclick="selectInstr(this)"><span class="instr-dot"></span>PHQ-9 — Depressão</div>
+            <div class="instr-option" data-value="AAQ-II" data-cat="act" data-page="formulario-aaq2" onclick="selectInstr(this)"><span class="instr-dot"></span>AAQ-II — Flexibilidade Psicológica</div>
+            <div class="instr-option" data-value="CFQ" data-cat="act" data-page="formulario-cfq" onclick="selectInstr(this)"><span class="instr-dot"></span>CFQ — Fusão Cognitiva</div>
+            <div class="instr-option" data-value="Rosenberg" data-cat="autoestima" data-page="formulario-rosenberg" onclick="selectInstr(this)"><span class="instr-dot"></span>Rosenberg — Autoestima</div>
+            <div class="instr-option" data-value="PSS" data-cat="estresse" data-page="formulario-pss" onclick="selectInstr(this)"><span class="instr-dot"></span>PSS-10 — Estresse Percebido</div>
+            <div class="instr-option" data-value="ISI" data-cat="sono" data-page="formulario-isi" onclick="selectInstr(this)"><span class="instr-dot"></span>ISI — Severidade da Insônia</div>
+          </div>
+          <div id="instrHelpText" class="instr-help">GAD-7 — 7 itens — Ansiedade Generalizada — Domínio público</div>
+          <div class="field-help">Beta: YSQ-S3, GAD-7 e PHQ-9 disponíveis.</div>
+        </div>
       </div>
     </div>
     <div class="modal-error" id="applicationError"></div>
@@ -1875,6 +2652,42 @@ body{background:#FBFAF9 !important;color:#2F2023 !important}
 <script>
 const SB_URL = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
 const SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
+
+// ── DATA E SAUDAÇÃO DINÂMICA ──────────────────────────────────
+(function setLiveDates() {
+  const now = new Date();
+  const ptBR = { locale: 'pt-BR' };
+
+  // Topbar: "Sexta, 23 de maio de 2026"
+  const topbarFmt = now.toLocaleDateString('pt-BR', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+  });
+  // Capitaliza primeira letra
+  const topbarStr = topbarFmt.charAt(0).toUpperCase() + topbarFmt.slice(1);
+
+  // Hero date: "Sexta-feira, 23 de maio de 2026"
+  const heroFmt = now.toLocaleDateString('pt-BR', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+  });
+  const heroStr = heroFmt.charAt(0).toUpperCase() + heroFmt.slice(1);
+
+  // Saudação por hora
+  const h = now.getHours();
+  const greeting = h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const topbarEl = document.getElementById('topbarDate');
+    const heroDateEl = document.getElementById('heroDate');
+    const heroGreetEl = document.getElementById('heroGreeting');
+    if (topbarEl) topbarEl.textContent = topbarStr;
+    if (heroDateEl) heroDateEl.textContent = heroStr;
+    // pega o nome do usuário logado se disponível, senão usa Michelle
+    const userName = window._psiUserName || 'Michelle';
+    if (heroGreetEl) heroGreetEl.textContent = `${greeting}, ${userName}.`;
+  });
+})();
+const SUPPORT_WHATSAPP = '5511947388423';
+const KIWIFY_PLAN_URL = 'https://pay.kiwify.com.br/psireal-clinica';
 window.PSIREAL_BUILD = 'status-rpc-2026-05-20';
 let SB_SESSION_TOKEN = sessionStorage.getItem('sb_session_token') || '';
 let PSI_PROFILE = null;
@@ -1934,6 +2747,56 @@ document.getElementById('lockPassword').addEventListener('keydown', e => {
 });
 restoreAuth();
 
+function openExternal(url) {
+  window.open(url, '_blank', 'noopener');
+}
+
+const SUPPORT_EMAIL = 'contato@michelledonegaterapia.com.br';
+
+function openSupport() {
+  const modal = document.getElementById('supportModal');
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+}
+function closeSupportModal() {
+  const modal = document.getElementById('supportModal');
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+}
+
+function openReferral() {
+  const message = encodeURIComponent('Olá, Michelle. Quero indicar uma psicóloga para o PsiReal Clínica e entender como funciona o indique e ganhe.');
+  openExternal(`https://wa.me/${SUPPORT_WHATSAPP}?text=${message}`);
+}
+
+function renewPlan() {
+  openExternal(KIWIFY_PLAN_URL);
+}
+
+async function logout() {
+  try {
+    if (SB_SESSION_TOKEN) {
+      await fetch(`${SB_URL}/auth/v1/logout`, {
+        method: 'POST',
+        headers: {
+          apikey: SB_KEY,
+          Authorization: 'Bearer ' + SB_SESSION_TOKEN
+        }
+      });
+    }
+  } catch (_) {}
+  SB_SESSION_TOKEN = '';
+  PSI_PROFILE = null;
+  PATIENT_LINKS = [];
+  CLINICAL_RESPONSES = [];
+  window.PACIENTES_DB = [];
+  sessionStorage.removeItem('sb_session_token');
+  sessionStorage.removeItem('sb_refresh_token');
+  document.getElementById('lockPassword').value = '';
+  document.getElementById('lockScreen').style.display = 'grid';
+  showToast('Login encerrado.');
+}
+
 async function supabaseSelect(path) {
   const res = await fetch(`${SB_URL}/rest/v1/${path}`, {
     headers: {
@@ -1946,17 +2809,29 @@ async function supabaseSelect(path) {
 }
 
 async function bootstrapAuthenticatedApp() {
-  const [profiles, links, responses, pacientes] = await Promise.all([
+  const [profiles, links, responses, pacientes, adminCheck] = await Promise.all([
     supabaseSelect('psis?select=nome,plano,ativa'),
     supabaseSelect('patient_links?select=id,token,patient_name,instrumento,status,created_at,expires_at&order=created_at.desc'),
     supabaseSelect('respostas_clinicas?select=id,paciente_nome,instrumento,formulario,score_total,scores,status,created_at&order=created_at.desc'),
-    supabaseSelect('pacientes?select=id,nome,status&order=created_at.desc').catch(() => [])
+    supabaseSelect('pacientes?select=id,nome,status&order=created_at.desc').catch(() => []),
+    supabaseSelect('admin_users?select=user_id&limit=1').catch(() => [])
   ]);
   window.PACIENTES_DB = pacientes || [];
 
+  // Verifica se é admin
+  window.PSI_IS_ADMIN = adminCheck && adminCheck.length > 0;
+  if (window.PSI_IS_ADMIN) {
+    document.getElementById('adminNavSection').style.display = 'block';
+  }
+
   PSI_PROFILE = profiles[0];
   if (!PSI_PROFILE || !PSI_PROFILE.ativa) {
-    throw new Error('Conta inativa ou não cadastrada');
+    // Admin sem perfil de psi ainda consegue entrar
+    if (window.PSI_IS_ADMIN) {
+      PSI_PROFILE = { nome: 'Admin', plano: 'admin', ativa: true };
+    } else {
+      throw new Error('Conta inativa ou não cadastrada');
+    }
   }
 
   PATIENT_LINKS = links || [];
@@ -1968,6 +2843,7 @@ async function bootstrapAuthenticatedApp() {
 
 function renderAuthenticatedApp() {
   renderPsiIdentity();
+  renderSettings();
   renderDashboardStats();
   renderDashboardPending();
   renderDashboardActivity();
@@ -1983,6 +2859,22 @@ function renderPsiIdentity() {
   const initials = initialsFromName(name);
   const avatar = document.querySelector('.sidebar-user .user-avatar');
   if (avatar) avatar.textContent = initials;
+
+  // Atualiza saudação com nome real e hora atual
+  const firstName = name.split(' ')[0];
+  window._psiUserName = firstName;
+  const h = new Date().getHours();
+  const greeting = h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
+  const heroGreetEl = document.getElementById('heroGreeting');
+  if (heroGreetEl) heroGreetEl.textContent = `${greeting}, ${firstName}.`;
+}
+
+function renderSettings() {
+  const name = PSI_PROFILE?.nome || 'Psicóloga';
+  const plan = formatPlan(PSI_PROFILE?.plano || 'Plano ativo');
+  setText('settingsName', name);
+  setText('settingsPlan', plan);
+  setText('settingsStatus', PSI_PROFILE?.ativa ? 'Ativa' : 'Inativa');
 }
 
 function renderDashboardStats() {
@@ -2014,7 +2906,7 @@ function renderDashboardPending() {
   }
   root.innerHTML = pending.map(link => `
     <div class="pending-item">
-      <div class="pending-av"><div class="avatar" style="background:linear-gradient(135deg,#3D2028,#B08090)">${initialsFromName(link.patient_name)}</div></div>
+      <div class="pending-av"><div class="avatar" style="background:linear-gradient(135deg,var(--primary-dark),var(--primary))">${initialsFromName(link.patient_name)}</div></div>
       <div>
         <div class="pending-name">${escapeHtml(link.patient_name)}</div>
         <div class="pending-instr">${escapeHtml(link.instrumento)}</div>
@@ -2080,7 +2972,7 @@ function renderPatientsTable() {
     <tr onclick="openPatientDashboard('${encodeURIComponent(patient.name)}')" style="cursor:pointer">
       <td data-label="Paciente">
         <div style="display:flex;align-items:center;gap:10px">
-          <div class="avatar" style="background:linear-gradient(135deg,#3D2028,#B08090)">${initialsFromName(patient.name)}</div>
+          <div class="avatar" style="background:linear-gradient(135deg,var(--primary-dark),var(--primary))">${initialsFromName(patient.name)}</div>
           <div>
             <div class="name">${escapeHtml(patient.name)}</div>
             <div style="font-size:11px;color:var(--ink3)">${patient.totalResponses} resposta(s)</div>
@@ -2092,7 +2984,7 @@ function renderPatientsTable() {
       <td data-label="Adesão">
         <div style="display:flex;align-items:center;gap:8px">
           <div class="progress" style="width:64px"><div class="progress-fill" style="width:${patient.adherence}%;background:var(--teal)"></div></div>
-          <span style="font-size:11px;font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--ink)">${patient.adherence}%</span>
+          <span style="font-size:11px;font-family:'Instrument Sans',system-ui,-apple-system,sans-serif;color:var(--ink)">${patient.adherence}%</span>
         </div>
       </td>
       <td data-label="Tendência"><span style="font-size:11px;color:var(--ink3)">${patient.totalResponses > 1 ? 'Histórico ativo' : 'Primeira aplicação'}</span></td>
@@ -2195,32 +3087,28 @@ function openInstrumentDashboard(instrument) {
 
 function openApplicationModal(instrument = 'GAD-7') {
   const modal = document.getElementById('applicationModal');
-  const select = document.getElementById('newInstrument');
 
-  // Reset all options visibility
-  [...select.options].forEach(o => { o.hidden = false; o.disabled = o.dataset.disabled === 'true'; });
+  // Reset visual list — show all, deselect all
+  document.querySelectorAll('.instr-option').forEach(el => {
+    el.classList.remove('selected','hidden');
+  });
+  // Select the right instrument
+  const target = document.querySelector(`.instr-option[data-value="${instrument}"]`)
+               || document.querySelector('.instr-option[data-value="GAD-7"]');
+  if (target) target.classList.add('selected');
 
-  // Select the instrument
-  const opt = [...select.options].find(o => o.value === instrument && !o.disabled);
-  if (opt) {
-    select.value = opt.value;
-  } else {
-    select.value = 'GAD-7';
-  }
-
-  // Update category filter buttons
+  // Reset category chips
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   const allBtn = document.querySelector('.cat-btn[onclick*="todos"]');
   if (allBtn) allBtn.classList.add('active');
 
-  // Update help text
-  if (typeof updateInstrHelp === 'function') updateInstrHelp();
-
+  updateInstrHelp();
   document.getElementById('generatedLinkBox')?.classList.remove('open');
   const errorBox = document.getElementById('applicationError');
   if (errorBox) { errorBox.style.display = 'none'; errorBox.textContent = ''; }
   const whatsappInput = document.getElementById('newPatientWhatsapp');
   if (whatsappInput) whatsappInput.value = '';
+  document.getElementById('newPatientName').value = '';
   modal.classList.add('open');
   modal.setAttribute('aria-hidden', 'false');
   setTimeout(() => document.getElementById('newPatientName')?.focus(), 50);
@@ -2259,27 +3147,38 @@ function instrumentPage(instrument) {
 function filterInstr(cat) {
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   document.querySelector(`.cat-btn[onclick*="${cat}"]`)?.classList.add('active');
-  const sel = document.getElementById('newInstrument');
   let first = null;
-  [...sel.options].forEach(opt => {
-    const show = cat === 'todos' || (opt.dataset.cat||'') === cat;
-    opt.hidden = !show; opt.disabled = !show;
-    if (show && !first) first = opt;
+  document.querySelectorAll('.instr-option').forEach(el => {
+    const show = cat === 'todos' || el.dataset.cat === cat;
+    el.classList.toggle('hidden', !show);
+    if (show && !first) first = el;
   });
-  if (first) { sel.value = first.value; updateInstrHelp(); }
+  // se a opção selecionada ficou oculta, seleciona a primeira visível
+  const selected = document.querySelector('.instr-option.selected');
+  if (selected && selected.classList.contains('hidden') && first) {
+    selected.classList.remove('selected');
+    first.classList.add('selected');
+  } else if (!selected && first) {
+    first.classList.add('selected');
+  }
+  updateInstrHelp();
+}
+function selectInstr(el) {
+  document.querySelectorAll('.instr-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  updateInstrHelp();
 }
 function updateInstrHelp() {
-  const sel = document.getElementById('newInstrument');
-  const opt = sel?.options[sel.selectedIndex];
+  const selected = document.querySelector('.instr-option.selected');
   const el = document.getElementById('instrHelpText');
-  if (el && opt) el.textContent = INSTR_DESCS[opt.value] || '';
+  if (el && selected) el.textContent = INSTR_DESCS[selected.dataset.value] || '';
 }
 
 async function createApplication() {
   const name = document.getElementById('newPatientName').value.trim();
   const whatsapp = document.getElementById('newPatientWhatsapp')?.value.trim() || '';
-  const select = document.getElementById('newInstrument');
-  const instrument = select.value;
+  const selected = document.querySelector('.instr-option.selected');
+  const instrument = selected?.dataset.value || 'GAD-7';
   const page = instrumentPage(instrument);
   if (!name) {
     alert('Informe o nome do paciente.');
@@ -2496,11 +3395,12 @@ function showScreen(id, el) {
   const titles = {
     dashboard: 'Dashboard',
     pacientes: 'Pacientes',
-    biblioteca: 'Biblioteca TCC',
+    biblioteca: 'Biblioteca Clínica',
     aplicacoes: 'Aplicações',
-    evolucao: 'Evolução Clínica',
-    insights: 'Insights Clínicos',
-    protocolos: 'Protocolos'
+    evolucao: 'Evolução Emocional',
+    insights: 'Insights Terapêuticos',
+    protocolos: 'Protocolos',
+    configuracoes: 'Configurações'
   };
   document.querySelector('.topbar-title') &&
     (document.querySelector('#screen-' + id + ' .topbar-title') || document.querySelector('.topbar-title'));
@@ -2546,9 +3446,9 @@ function renderInsights() {
     const names = [...new Set(recent7.map(r => r.paciente_nome).filter(Boolean))];
     insights.push({ id:'atividade',
       icon:'M8 2a6 6 0 100 12A6 6 0 008 2zm0 3v3l2 2',
-      iconColor:'#7A4A55', bg:'linear-gradient(135deg,#F8F2F4 0%,#F2E4D4 100%)',
-      border:'#E8D0D8', accent:'#7A4A55',
-      type:'Atividade da semana', badge:'Recente', badgeBg:'#EEE0E4', badgeColor:'#7A4A55',
+      iconColor:'#6d4fc2', bg:'linear-gradient(135deg,#f7f4ff 0%,#ede8fc 100%)',
+      border:'#ede9f8', accent:'#6d4fc2',
+      type:'Atividade da semana', badge:'Recente', badgeBg:'#f0ebff', badgeColor:'#3d2b8a',
       text:`<strong>${recent7.length} resposta(s)</strong> recebida(s) nos últimos 7 dias.`,
       names, source:'Dados do Supabase'
     });
@@ -2560,9 +3460,9 @@ function renderInsights() {
   if (gadNames.length > 0) {
     insights.push({ id:'gad',
       icon:'M8 2a6 6 0 100 12A6 6 0 008 2zm0 3v3M8 9.5v.5',
-      iconColor:'#A0703A', bg:'linear-gradient(135deg,#FDF6EE 0%,#F5E9DD 100%)',
-      border:'#DFC4A0', accent:'#A0703A',
-      type:'Atenção clínica — Ansiedade', badge:'— Atenção', badgeBg:'#F5E9DD', badgeColor:'#A0703A',
+      iconColor:'#c9a84c', bg:'linear-gradient(135deg,#fdf8f0 0%,rgba(201,168,76,0.10) 100%)',
+      border:'#c9a84c', accent:'#c9a84c',
+      type:'Atenção clínica — Ansiedade', badge:'— Atenção', badgeBg:'#fdf8f0', badgeColor:'#854f0b',
       text:`<strong>${gadNames.length} paciente(s)</strong> com GAD-7 em nível moderado ou grave (score 0 10).`,
       names: gadNames, source:'Spitzer et al. (2006) — Dados GAD-7'
     });
@@ -2574,9 +3474,9 @@ function renderInsights() {
   if (phqNames.length > 0) {
     insights.push({ id:'phq',
       icon:'M4 8h8M8 4v8',
-      iconColor:'#8E4856', bg:'linear-gradient(135deg,#FDF2F4 0%,#FAE8EC 100%)',
-      border:'#DDBCC4', accent:'#8E4856',
-      type:'Atenção clínica — Humor', badge:'— Atenção', badgeBg:'#FAE8EC', badgeColor:'#8E4856',
+      iconColor:'#854f0b', bg:'linear-gradient(135deg,#fdf8f0 0%,rgba(133,79,11,0.08) 100%)',
+      border:'rgba(201,168,76,0.35)', accent:'#854f0b',
+      type:'Atenção clínica — Humor', badge:'— Atenção', badgeBg:'#fdf8f0', badgeColor:'#854f0b',
       text:`<strong>${phqNames.length} paciente(s)</strong> com PHQ-9 em nível moderado ou grave (score 0 10).`,
       names: phqNames, source:'Kroenke et al. (2001) — Dados PHQ-9'
     });
@@ -2829,11 +3729,11 @@ function renderEvolucao() {
       if (scores.length === 1) {
         const x = W/2, y = H - (scores[0]/maxVal)*(H-16) + 8;
         ctx.beginPath(); ctx.arc(x,y,4,0,2*Math.PI);
-        ctx.fillStyle = inst.color.startsWith('var') ? '#B08090' : inst.color;
+        ctx.fillStyle = inst.color.startsWith('var') ? '#8070a8' : inst.color;
         ctx.fill(); return;
       }
       const step = W/(scores.length-1);
-      const col = inst.color.startsWith('var') ? '#B08090' : inst.color;
+      const col = inst.color.startsWith('var') ? '#8070a8' : inst.color;
       ctx.beginPath();
       scores.forEach((s,i) => { const x=i*step, y=H-(s/maxVal)*(H-16)+8; i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
       ctx.strokeStyle=col; ctx.lineWidth=2; ctx.lineJoin='round'; ctx.stroke();
@@ -2908,6 +3808,185 @@ function filterBib(cat, el) {
     card.style.display = matches ? '' : 'none';
   });
 }
+
+// ── MODAL HELPERS ─────────────────────────────────────────────
+function openModal(id) {
+  const m = document.getElementById(id);
+  if (!m) return;
+  m.classList.add('open');
+  m.setAttribute('aria-hidden', 'false');
+}
+function closeModal(id) {
+  const m = document.getElementById(id);
+  if (!m) return;
+  m.classList.remove('open');
+  m.setAttribute('aria-hidden', 'true');
+}
+
+// ── ADMIN ─────────────────────────────────────────────────────
+let ADMIN_PSIS = [];
+let ADMIN_FILTER = 'todas';
+
+async function loadAdminPsis() {
+  try {
+    const [psis, links] = await Promise.all([
+      supabaseSelect('psis?select=*&order=criado_em.desc'),
+      supabaseSelect('patient_links?select=psi_user_id')
+    ]);
+    const countMap = {};
+    (links||[]).forEach(l => { countMap[l.psi_user_id] = (countMap[l.psi_user_id]||0)+1; });
+    ADMIN_PSIS = (psis||[]).map(p => ({...p, pacientes: countMap[p.user_id]||0}));
+    adminUpdateStats();
+    adminRenderTable();
+  } catch(e) { showToast('Erro ao carregar psis: '+e.message, true); }
+}
+
+function adminUpdateStats() {
+  const ativas = ADMIN_PSIS.filter(p => p.ativa && p.plano !== 'trial').length;
+  const trial  = ADMIN_PSIS.filter(p => p.plano === 'trial' && p.ativa).length;
+  const inativas = ADMIN_PSIS.filter(p => !p.ativa).length;
+  const setText = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+  setText('adminStatTotal', ADMIN_PSIS.length);
+  setText('adminStatAtivas', ativas);
+  setText('adminStatTrial', trial);
+  setText('adminStatInativas', inativas);
+}
+
+function adminFilterPsis(f, btn) {
+  ADMIN_FILTER = f;
+  document.querySelectorAll('#screen-admin .cat-btn').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  adminRenderTable();
+}
+
+function adminRenderTable() {
+  const q = (document.getElementById('adminSearchInput')?.value||'').toLowerCase();
+  let list = ADMIN_PSIS;
+  if (ADMIN_FILTER==='ativa') list = list.filter(p => p.ativa && p.plano!=='trial');
+  else if (ADMIN_FILTER==='trial') list = list.filter(p => p.plano==='trial' && p.ativa);
+  else if (ADMIN_FILTER==='inativa') list = list.filter(p => !p.ativa);
+  if (q) list = list.filter(p => (p.nome||'').toLowerCase().includes(q)||(p.email||'').toLowerCase().includes(q));
+
+  const tbody = document.getElementById('adminPsiTableBody');
+  if (!list.length) {
+    tbody.innerHTML = `<tr><td colspan="6" class="empty">Nenhuma psicóloga encontrada</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = list.map(p => {
+    const statusEl = !p.ativa
+      ? `<span class="badge badge-inactive">Inativa</span>`
+      : p.plano==='trial'
+        ? `<span class="badge" style="background:var(--amber3);color:var(--amber)">Trial</span>`
+        : `<span class="badge badge-active">Ativa</span>`;
+    const trial = p.trial_ate ? new Date(p.trial_ate).toLocaleDateString('pt-BR') : '—';
+    const criado = p.criado_em ? new Date(p.criado_em).toLocaleDateString('pt-BR') : '—';
+    const initials = (p.nome||'?').trim().split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+
+    return `<tr>
+      <td><div style="display:flex;align-items:center;gap:10px">
+        <div class="avatar" style="width:34px;height:34px;font-size:12px">${escapeHtml(initials)}</div>
+        <div><div style="font-weight:600;font-size:14px">${escapeHtml(p.nome||'—')}</div>
+        <div style="font-size:12px;color:var(--ink3)">${escapeHtml(p.email||'—')}</div></div>
+      </div></td>
+      <td><span style="font-size:12px;background:var(--primary-subtle);color:var(--primary);padding:2px 8px;border-radius:6px">${escapeHtml(p.plano||'—')}</span></td>
+      <td>${statusEl}</td>
+      <td style="font-size:12px;color:var(--ink3)">${trial}</td>
+      <td style="font-size:12px;color:var(--ink3)">${criado}</td>
+      <td><div style="display:flex;gap:6px">
+        <button class="btn btn-ghost btn-sm" onclick='adminOpenEdit(${JSON.stringify(p).replace(/'/g,"&#39;")})'>Editar</button>
+        <button class="btn btn-ghost btn-sm" onclick="adminToggleAtiva('${p.user_id}',${p.ativa})">${p.ativa?'Desativar':'Ativar'}</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function openAdminAddModal() {
+  ['adminNewNome','adminNewEmail','adminNewSenha','adminNewWhatsapp'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('adminNewPlano').value='trial';
+  document.getElementById('adminAddError').style.display='none';
+  document.getElementById('adminAddSuccess').style.display='none';
+  openModal('adminAddModal');
+}
+
+async function adminCreatePsi() {
+  const nome = document.getElementById('adminNewNome').value.trim();
+  const email = document.getElementById('adminNewEmail').value.trim();
+  const password = document.getElementById('adminNewSenha').value.trim();
+  const whatsapp = document.getElementById('adminNewWhatsapp').value.trim();
+  const plano = document.getElementById('adminNewPlano').value;
+  const errEl = document.getElementById('adminAddError');
+  const succEl = document.getElementById('adminAddSuccess');
+  errEl.style.display='none'; succEl.style.display='none';
+
+  if (!nome||!email||!password) { errEl.textContent='Preencha nome, e-mail e senha.'; errEl.style.display='block'; return; }
+  if (password.length<8) { errEl.textContent='Senha deve ter ao menos 8 caracteres.'; errEl.style.display='block'; return; }
+
+  try {
+    const psiId = email.split('@')[0].replace(/[^a-z0-9]/gi,'').toLowerCase();
+    const res = await fetch(`${SB_URL}/functions/v1/create-psi-user`, {
+      method:'POST',
+      headers:{ Authorization:`Bearer ${SB_SESSION_TOKEN}`, 'Content-Type':'application/json' },
+      body: JSON.stringify({nome, email, password, psi_id:psiId, whatsapp, plano})
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error||'Erro ao criar conta');
+    succEl.textContent = `Conta criada com sucesso! E-mail: ${email}`;
+    succEl.style.display='block';
+    await loadAdminPsis();
+    setTimeout(()=>closeModal('adminAddModal'), 2000);
+  } catch(e) { errEl.textContent=e.message; errEl.style.display='block'; }
+}
+
+function adminOpenEdit(p) {
+  document.getElementById('adminEditUserId').value = p.user_id||'';
+  document.getElementById('adminEditNome').value = p.nome||'';
+  document.getElementById('adminEditWhatsapp').value = p.whatsapp||'';
+  document.getElementById('adminEditPlano').value = p.plano||'mensal';
+  document.getElementById('adminEditAtiva').value = String(p.ativa!==false);
+  document.getElementById('adminEditTrialAte').value = p.trial_ate ? p.trial_ate.split('T')[0] : '';
+  document.getElementById('adminEditSubtitle').textContent = p.email||'';
+  document.getElementById('adminEditError').style.display='none';
+  openModal('adminEditModal');
+}
+
+async function adminSavePsi() {
+  const userId = document.getElementById('adminEditUserId').value;
+  const nome = document.getElementById('adminEditNome').value.trim();
+  const whatsapp = document.getElementById('adminEditWhatsapp').value.trim();
+  const plano = document.getElementById('adminEditPlano').value;
+  const trialAte = document.getElementById('adminEditTrialAte').value||null;
+  const ativa = document.getElementById('adminEditAtiva').value==='true';
+  const errEl = document.getElementById('adminEditError');
+  try {
+    const res = await fetch(`${SB_URL}/rest/v1/psis?user_id=eq.${userId}`, {
+      method:'PATCH',
+      headers:{ apikey:SB_KEY, Authorization:`Bearer ${SB_SESSION_TOKEN}`,
+        'Content-Type':'application/json', Prefer:'return=minimal' },
+      body: JSON.stringify({nome, whatsapp, plano, trial_ate:trialAte, ativa})
+    });
+    if (!res.ok) throw new Error(await res.text());
+    closeModal('adminEditModal');
+    showToast('Salvo com sucesso!');
+    await loadAdminPsis();
+  } catch(e) { errEl.textContent=e.message; errEl.style.display='block'; }
+}
+
+async function adminToggleAtiva(userId, atual) {
+  try {
+    const res = await fetch(`${SB_URL}/rest/v1/psis?user_id=eq.${userId}`, {
+      method:'PATCH',
+      headers:{ apikey:SB_KEY, Authorization:`Bearer ${SB_SESSION_TOKEN}`,
+        'Content-Type':'application/json', Prefer:'return=minimal' },
+      body: JSON.stringify({ativa: !atual})
+    });
+    if (!res.ok) throw new Error(await res.text());
+    showToast(!atual ? 'Psicóloga ativada!' : 'Psicóloga desativada.');
+    await loadAdminPsis();
+  } catch(e) { showToast('Erro: '+e.message, true); }
+}
+
+// Carrega dados admin quando entra na tela admin — chamado pelo onclick do nav
 
 </script>
 </body>
