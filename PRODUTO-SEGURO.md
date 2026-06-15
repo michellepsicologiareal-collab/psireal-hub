@@ -1,4 +1,4 @@
-# Psi Real - versao vendavel e segura
+﻿# Psi Real - versao vendavel e segura
 
 ## Decisao principal
 

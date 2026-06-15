@@ -292,7 +292,7 @@ body {
 }
 .modal-backdrop.open{display:flex}
 .modal-card{
-  width:min(500px,100%);
+  width:min(620px,100%);
   background:#fff;
   border:1px solid var(--border);
   border-radius:24px;
@@ -423,10 +423,27 @@ body {
 .status-pausa    {background:var(--lilac4);color:var(--brown3);border-color:var(--lilac3)}
 .status-inativo  {background:var(--bg2);color:var(--ink3);border-color:var(--border)}
 .generated-link{
-  margin-top:16px;padding:14px;border-radius:16px;background:var(--bg2);border:1px solid var(--border);display:none;
+  margin-top:0; padding:20px 24px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-surface);
+  display:none;
 }
 .generated-link.open{display:block}
-.generated-link code{display:block;word-break:break-all;font-size:12px;color:var(--ink2);margin-bottom:10px}
+.generated-link-label{
+  font-size:11px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--ink3);
+  font-family:'Syne',sans-serif;margin-bottom:10px;
+}
+.generated-link code{
+  display:block;word-break:break-all;
+  font-size:13px;color:var(--primary);
+  background:rgba(109,79,194,.06);
+  border:1px solid var(--border);
+  border-radius:10px;padding:12px 14px;
+  margin-bottom:14px;line-height:1.5;
+  font-family:'Instrument Sans',monospace;
+}
+.generated-link-actions{display:flex;gap:10px;flex-wrap:wrap}
 .toast{
   position:fixed;right:22px;bottom:22px;z-index:500;
   min-width:240px;max-width:min(360px,calc(100vw - 32px));
@@ -466,7 +483,8 @@ body {
 .badge-paused  { background: var(--bg3);     color: var(--ink3); }
 .badge-high    { background: var(--coral3);  color: var(--coral); }
 .badge-lilac   { background: var(--lilac4);  color: var(--lilac); }
-.badge-teal    { background: var(--teal3);   color: var(--teal); }
+.badge-teal    { background: var(--primary-subtle); color: var(--primary); }
+.badge-primary { background: var(--primary-subtle); color: var(--primary); }
 .badge-brown   { background: #F5EDE7;        color: var(--brown2); }
 
 /*  MINI CHART BARS  */
@@ -1681,7 +1699,7 @@ body{background:var(--bg) !important;color:var(--ink) !important}
 
         <div class="inv-card" data-cat="ansiedade">
           <div class="inv-card-top">
-            <span class="inv-cat" style="background:var(--teal3);color:var(--teal)">Ansiedade</span>
+            <span class="inv-cat" style="background:var(--primary-subtle);color:var(--primary)">Ansiedade</span>
             <span class="inv-time">2-3 min</span>
           </div>
           <div class="inv-name">OASIS — Overall Anxiety Severity and Impairment Scale</div>
@@ -1694,7 +1712,7 @@ body{background:var(--bg) !important;color:var(--ink) !important}
 
         <div class="inv-card" data-cat="act">
           <div class="inv-card-top">
-            <span class="inv-cat" style="background:var(--green3);color:var(--green)">ACT</span>
+            <span class="inv-cat" style="background:rgba(59,109,17,.10);color:var(--green)">ACT</span>
             <span class="inv-time">5-8 min</span>
           </div>
           <div class="inv-name">CFQ — Cognitive Fusion Questionnaire</div>
@@ -1707,7 +1725,7 @@ body{background:var(--bg) !important;color:var(--ink) !important}
 
         <div class="inv-card" data-cat="estresse">
           <div class="inv-card-top">
-            <span class="inv-cat" style="background:var(--amber3);color:var(--amber)">Estresse</span>
+            <span class="inv-cat" style="background:rgba(133,79,11,.10);color:var(--urgency)">Estresse</span>
             <span class="inv-time">5-8 min</span>
           </div>
           <div class="inv-name">PSS-10 — Escala de Estresse Percebido</div>
@@ -1733,7 +1751,7 @@ body{background:var(--bg) !important;color:var(--ink) !important}
 
         <div class="inv-card" data-cat="autoestima">
           <div class="inv-card-top">
-            <span class="inv-cat" style="background:var(--coral3);color:var(--coral)">Autoestima</span>
+            <span class="inv-cat" style="background:rgba(109,79,194,.08);color:var(--ink2)">Autoestima</span>
             <span class="inv-time">3–5 min</span>
           </div>
           <div class="inv-name">Rosenberg — Escala de Autoestima</div>
@@ -1781,7 +1799,7 @@ body{background:var(--bg) !important;color:var(--ink) !important}
             <tr>
               <td><div style="display:flex;align-items:center;gap:10px"><div class="avatar" style="background:linear-gradient(135deg,var(--primary-dark),var(--primary))">MC</div><div><div class="name">Maria Clara</div><div style="font-size:11px;color:var(--ink3)">Ansiedade generalizada</div></div></div></td>
               <td>Hoje, 14h22<br><span style="font-size:11px;color:var(--ink3)">YSQ-S3</span></td>
-              <td><span class="badge badge-lilac">YSQ</span> <span class="badge badge-teal">GAD-7</span></td>
+              <td><span class="badge badge-lilac">YSQ</span> <span class="badge badge-primary">GAD-7</span></td>
               <td>
                 <div style="display:flex;align-items:center;gap:8px">
                   <div class="progress" style="width:64px"><div class="progress-fill" style="width:92%;background:var(--teal)"></div></div>
@@ -1799,7 +1817,7 @@ body{background:var(--bg) !important;color:var(--ink) !important}
             <tr>
               <td><div style="display:flex;align-items:center;gap:10px"><div class="avatar" style="background:linear-gradient(135deg,#6d4fc2,#8070a8)">JP</div><div><div class="name">João Pedro</div><div style="font-size:11px;color:var(--ink3)">TAG + depressão leve</div></div></div></td>
               <td>Ontem<br><span style="font-size:11px;color:var(--ink3)">GAD-7</span></td>
-              <td><span class="badge badge-teal">GAD-7</span> <span class="badge" style="background:var(--bg3);color:var(--ink3)">PHQ</span></td>
+              <td><span class="badge badge-primary">GAD-7</span> <span class="badge" style="background:var(--bg3);color:var(--ink3)">PHQ</span></td>
               <td>
                 <div style="display:flex;align-items:center;gap:8px">
                   <div class="progress" style="width:64px"><div class="progress-fill" style="width:75%;background:var(--amber)"></div></div>
@@ -1817,7 +1835,7 @@ body{background:var(--bg) !important;color:var(--ink) !important}
             <tr>
               <td><div style="display:flex;align-items:center;gap:10px"><div class="avatar" style="background:linear-gradient(135deg,var(--primary-dark),var(--primary))">AS</div><div><div class="name">Ana Sofia</div><div style="font-size:11px;color:var(--ink3)">Transtorno de púnico</div></div></div></td>
               <td>H— 3 dias<br><span style="font-size:11px;color:var(--ink3)">GAD-7</span></td>
-              <td><span class="badge badge-teal">GAD</span> <span class="badge badge-teal">GAD-7</span></td>
+              <td><span class="badge badge-primary">GAD</span> <span class="badge badge-primary">GAD-7</span></td>
               <td>
                 <div style="display:flex;align-items:center;gap:8px">
                   <div class="progress" style="width:64px"><div class="progress-fill" style="width:100%;background:var(--teal)"></div></div>
@@ -1908,7 +1926,7 @@ body{background:var(--bg) !important;color:var(--ink) !important}
 
         <div class="inv-card">
           <div class="inv-card-top">
-            <span class="inv-cat" style="background:var(--teal3);color:var(--teal)">Ansiedade</span>
+            <span class="inv-cat" style="background:var(--primary-subtle);color:var(--primary)">Ansiedade</span>
             <span class="inv-time">5–10 min</span>
           </div>
           <div class="inv-name">GAD-7 — Escala de Ansiedade Generalizada</div>
@@ -1935,7 +1953,7 @@ body{background:var(--bg) !important;color:var(--ink) !important}
 
         <div class="inv-card">
           <div class="inv-card-top">
-            <span class="inv-cat" style="background:var(--green3);color:var(--green)">ACT</span>
+            <span class="inv-cat" style="background:rgba(59,109,17,.10);color:var(--green)">ACT</span>
             <span class="inv-time">5-8 min</span>
           </div>
           <div class="inv-name">AAQ-II — Questionário de Aceitação e Ação</div>
@@ -1948,7 +1966,7 @@ body{background:var(--bg) !important;color:var(--ink) !important}
 
         <div class="inv-card">
           <div class="inv-card-top">
-            <span class="inv-cat" style="background:var(--green3);color:var(--green)">ACT</span>
+            <span class="inv-cat" style="background:rgba(59,109,17,.10);color:var(--green)">ACT</span>
             <span class="inv-time">8-12 min</span>
           </div>
           <div class="inv-name">Roda da Vida ACT - Valores e acao comprometida</div>
@@ -2001,6 +2019,85 @@ body{background:var(--bg) !important;color:var(--ink) !important}
     </div>
   </div>
 
+  <!-- PPPPPPPPPPPPPPP PERFIL PACIENTE PPPPPPPPPPPPPPP -->
+  <div id="screen-perfil-paciente" class="screen">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="btn btn-ghost" onclick="showScreen('pacientes', document.querySelector('[onclick*=\'pacientes\']'))" style="padding:6px 14px;font-size:12px">← Pacientes</button>
+        <div class="topbar-title" id="perfilPacienteNome">Perfil</div>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-primary" onclick="openApplicationModalForPatient()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          Nova aplicação
+        </button>
+      </div>
+    </div>
+    <div class="content">
+
+      <!-- Header paciente -->
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-body" style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+          <div id="perfilAvatar" style="width:56px;height:56px;font-size:20px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-hover));color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;flex-shrink:0">?</div>
+          <div style="flex:1">
+            <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--ink)" id="perfilNomeCompleto">—</div>
+            <div style="font-size:13px;color:var(--ink3);margin-top:4px" id="perfilResumo">Aguardando primeira aplicação</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid" style="margin-bottom:20px">
+        <div class="stat-card"><div class="stat-label">Aplicações</div><div class="stat-value" id="perfilTotalApl">0</div><div class="stat-note">total enviadas</div></div>
+        <div class="stat-card"><div class="stat-label">Respondidas</div><div class="stat-value" id="perfilResp">0</div><div class="stat-note">com resultado</div></div>
+        <div class="stat-card"><div class="stat-label">Pendentes</div><div class="stat-value" id="perfilPend">0</div><div class="stat-note">aguardando</div></div>
+        <div class="stat-card"><div class="stat-label">Último score</div><div class="stat-value" id="perfilScore">—</div><div class="stat-note" id="perfilScoreInstr">—</div></div>
+      </div>
+
+      <div class="grid-2-1" style="gap:20px">
+        <!-- Aplicar instrumento -->
+        <div class="card">
+          <div class="card-header"><div class="card-title">Aplicar instrumento</div></div>
+          <div class="card-body">
+            <div class="cat-chips" style="margin-bottom:12px">
+              <button type="button" class="cat-btn active" onclick="perfilFilterInstr('todos',this)">Todos</button>
+              <button type="button" class="cat-btn" onclick="perfilFilterInstr('ansiedade',this)">Ansiedade</button>
+              <button type="button" class="cat-btn" onclick="perfilFilterInstr('humor',this)">Humor</button>
+              <button type="button" class="cat-btn" onclick="perfilFilterInstr('act',this)">ACT</button>
+              <button type="button" class="cat-btn" onclick="perfilFilterInstr('esquemas',this)">Esquemas</button>
+            </div>
+            <div class="instr-list" id="perfilInstrList">
+              <div class="instr-option selected" data-value="GAD-7" data-cat="ansiedade" onclick="perfilSelectInstr(this)"><span class="instr-dot"></span>GAD-7 — Ansiedade Generalizada</div>
+              <div class="instr-option" data-value="OASIS" data-cat="ansiedade" onclick="perfilSelectInstr(this)"><span class="instr-dot"></span>OASIS — Severidade da Ansiedade</div>
+              <div class="instr-option" data-value="PHQ-9" data-cat="humor" onclick="perfilSelectInstr(this)"><span class="instr-dot"></span>PHQ-9 — Depressão</div>
+              <div class="instr-option" data-value="AAQ-II" data-cat="act" onclick="perfilSelectInstr(this)"><span class="instr-dot"></span>AAQ-II — Flexibilidade Psicológica</div>
+              <div class="instr-option" data-value="CFQ" data-cat="act" onclick="perfilSelectInstr(this)"><span class="instr-dot"></span>CFQ — Fusão Cognitiva</div>
+              <div class="instr-option" data-value="YSQ-S3" data-cat="esquemas" onclick="perfilSelectInstr(this)"><span class="instr-dot"></span>YSQ-S3 — Esquemas de Young</div>
+            </div>
+            <div style="margin-top:16px">
+              <button class="btn btn-primary" onclick="perfilGerarLink()" style="width:100%">Gerar link e enviar</button>
+            </div>
+            <div id="perfilLinkBox" style="display:none;margin-top:14px;padding:14px;background:var(--bg-surface);border-radius:12px;border:1px solid var(--border)">
+              <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:8px;font-family:'Syne',sans-serif">Link gerado ✓</div>
+              <code id="perfilLinkTexto" style="display:block;word-break:break-all;font-size:13px;color:var(--primary);margin-bottom:12px;line-height:1.5"></code>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button class="btn btn-ghost btn-sm" onclick="perfilCopiarLink()">Copiar</button>
+                <a class="btn btn-primary btn-sm" id="perfilWhatsappLink" target="_blank" rel="noopener">WhatsApp</a>
+              </div>
+            </div>
+            <div id="perfilLinkErro" style="display:none;margin-top:10px;padding:10px 14px;background:var(--urgency-bg);border-radius:8px;color:var(--urgency-text);font-size:13px"></div>
+          </div>
+        </div>
+
+        <!-- Histórico -->
+        <div class="card">
+          <div class="card-header"><div class="card-title">Histórico de aplicações</div></div>
+          <div id="perfilHistorico" style="padding:16px;font-size:13px;color:var(--ink3);text-align:center">Nenhuma aplicação ainda.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- PPPPPPPPPPPPPPP APLICA!"ES PPPPPPPPPPPPPPP -->
   <div id="screen-aplicacoes" class="screen">
     <div class="topbar">
@@ -2017,8 +2114,8 @@ body{background:var(--bg) !important;color:var(--ink) !important}
           </thead>
           <tbody id="applicationsTableBody">
             <tr><td class="name">Maria Clara</td><td><span class="badge badge-lilac">YSQ-S3</span></td><td>17/05 14h00</td><td>20/05</td><td><span class="badge badge-active">Respondido</span></td><td><button class="btn btn-ghost" style="padding:4px 10px;font-size:11px">Ver resultado</button></td></tr>
-            <tr><td class="name">João Pedro</td><td><span class="badge badge-teal">GAD-7</span></td><td>16/05 09h30</td><td>18/05</td><td><span class="badge badge-pending">Aguardando</span></td><td><button class="btn btn-ghost" style="padding:4px 10px;font-size:11px">Reenviar</button></td></tr>
-            <tr><td class="name">Ana Sofia</td><td><span class="badge badge-teal">GAD-7</span></td><td>14/05 10h15</td><td>17/05</td><td><span class="badge badge-active">Respondido</span></td><td><button class="btn btn-ghost" style="padding:4px 10px;font-size:11px">Ver resultado</button></td></tr>
+            <tr><td class="name">João Pedro</td><td><span class="badge badge-primary">GAD-7</span></td><td>16/05 09h30</td><td>18/05</td><td><span class="badge badge-pending">Aguardando</span></td><td><button class="btn btn-ghost" style="padding:4px 10px;font-size:11px">Reenviar</button></td></tr>
+            <tr><td class="name">Ana Sofia</td><td><span class="badge badge-primary">GAD-7</span></td><td>14/05 10h15</td><td>17/05</td><td><span class="badge badge-active">Respondido</span></td><td><button class="btn btn-ghost" style="padding:4px 10px;font-size:11px">Ver resultado</button></td></tr>
             <tr><td class="name">Renata Silva</td><td><span class="badge badge-lilac">YSQ-S3</span></td><td>17/05 15h00</td><td>20/05</td><td><span class="badge badge-pending">Não aberto</span></td><td><button class="btn btn-ghost" style="padding:4px 10px;font-size:11px">Reenviar</button></td></tr>
             <tr><td class="name">Carlos Ferreira</td><td><span class="badge badge-brown">SMI</span></td><td>10/05 11h00</td><td>14/05</td><td><span class="badge badge-high">Vencido</span></td><td><button class="btn btn-ghost" style="padding:4px 10px;font-size:11px">Reenviar</button></td></tr>
           </tbody>
@@ -2213,7 +2310,7 @@ body{background:var(--bg) !important;color:var(--ink) !important}
             <div style="font-family:'Instrument Sans',system-ui,-apple-system,sans-serif;font-size:17px;font-weight:500;margin-bottom:6px">Ansiedade Generalizada</div>
             <div style="font-size:12px;color:var(--ink3);margin-bottom:14px;line-height:1.5">GAD-7 — GAD-7 — AAQ-II — YSQ (domínio supervigilância)</div>
             <div style="display:flex;gap:6px">
-              <span class="badge badge-teal">4 instrumentos</span>
+              <span class="badge badge-primary">4 instrumentos</span>
               <span class="badge" style="background:var(--bg3);color:var(--ink3)">8 semanas</span>
             </div>
           </div>
@@ -2640,10 +2737,12 @@ body{background:var(--bg) !important;color:var(--ink) !important}
       <button class="btn btn-primary" onclick="createApplication()">Cadastrar e gerar link</button>
     </div>
     <div class="generated-link" id="generatedLinkBox">
+      <div class="generated-link-label">Link gerado ✓</div>
       <code id="generatedLinkText"></code>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <div class="generated-link-actions">
         <button class="btn btn-ghost" onclick="copyGeneratedLink()">Copiar link</button>
         <a class="btn btn-primary" id="generatedWhatsappLink" target="_blank" rel="noopener">Enviar no WhatsApp</a>
+        <button class="btn btn-ghost" onclick="closeApplicationModal()">Fechar</button>
       </div>
     </div>
   </div>
@@ -2809,24 +2908,29 @@ async function supabaseSelect(path) {
 }
 
 async function bootstrapAuthenticatedApp() {
-  const [profiles, links, responses, pacientes, adminCheck] = await Promise.all([
+  const [profiles, links, responses, pacientes] = await Promise.all([
     supabaseSelect('psis?select=nome,plano,ativa'),
     supabaseSelect('patient_links?select=id,token,patient_name,instrumento,status,created_at,expires_at&order=created_at.desc'),
     supabaseSelect('respostas_clinicas?select=id,paciente_nome,instrumento,formulario,score_total,scores,status,created_at&order=created_at.desc'),
-    supabaseSelect('pacientes?select=id,nome,status&order=created_at.desc').catch(() => []),
-    supabaseSelect('admin_users?select=user_id&limit=1').catch(() => [])
+    supabaseSelect('pacientes?select=id,nome,status&order=created_at.desc').catch(() => [])
   ]);
   window.PACIENTES_DB = pacientes || [];
 
   // Verifica se é admin
-  window.PSI_IS_ADMIN = adminCheck && adminCheck.length > 0;
+  let adminCheck = [];
+  try {
+    adminCheck = await supabaseSelect('admin_users?select=user_id&limit=1');
+  } catch(e) { adminCheck = []; }
+  
+  window.PSI_IS_ADMIN = Array.isArray(adminCheck) && adminCheck.length > 0 
+    && adminCheck[0].user_id !== undefined;
+    
   if (window.PSI_IS_ADMIN) {
     document.getElementById('adminNavSection').style.display = 'block';
   }
 
   PSI_PROFILE = profiles[0];
   if (!PSI_PROFILE || !PSI_PROFILE.ativa) {
-    // Admin sem perfil de psi ainda consegue entrar
     if (window.PSI_IS_ADMIN) {
       PSI_PROFILE = { nome: 'Admin', plano: 'admin', ativa: true };
     } else {
@@ -3021,7 +3125,7 @@ function renderApplicationsTable() {
       <td data-label="Status"><span class="badge ${applicationBadgeClass(link.status)}">${applicationStatusLabel(link.status)}</span></td>
       <td data-label="Ação">
         ${link.status === 'respondido'
-          ? `<button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" onclick="openInstrumentDashboard('${escapeHtml(link.instrumento)}')">Ver resultado</button>`
+          ? `<button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" onclick="openInstrumentDashboard('${escapeHtml(link.instrumento)}','${escapeHtml(link.patient_name || '')}')">Ver resultado</button>`
           : `<button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" onclick="copyApplicationLink('${escapeHtml(link.token || '')}','${escapeHtml(link.instrumento || '')}','${escapeHtml(link.patient_name || '')}')">Copiar link</button>`}
       </td>
     </tr>
@@ -3067,22 +3171,26 @@ function openPatientDashboard(name) {
   const patient = buildPatients().find(item => item.name === decoded);
   const latestInstrument = instrumentName(patient?.latestResponse);
   if (latestInstrument === 'YSQ-S3') {
-    window.location.href = 'painel-esquemas.html';
+    window.location.href = `painel-esquemas.html?paciente=${encodeURIComponent(decoded)}`;
     return;
   }
   if (latestInstrument) {
     window.location.href = `painel-instrumento.html?instrumento=${encodeURIComponent(latestInstrument)}&paciente=${encodeURIComponent(decoded)}`;
     return;
   }
-  showScreen('aplicacoes', document.querySelector('[onclick*=\"aplicacoes\"]'));
+  // Sem respostas — abre modal de nova aplicação para esse paciente
+  openApplicationModal('GAD-7');
+  const nameInput = document.getElementById('newPatientName');
+  if (nameInput) nameInput.value = decoded;
+  showToast(`${decoded} ainda não respondeu nenhum instrumento. Envie o primeiro link!`);
 }
 
-function openInstrumentDashboard(instrument) {
+function openInstrumentDashboard(instrument, paciente) {
   if (instrument === 'YSQ-S3') {
-    window.location.href = 'painel-esquemas.html';
+    window.location.href = `painel-esquemas.html${paciente ? '?paciente='+encodeURIComponent(paciente) : ''}`;
     return;
   }
-  window.location.href = `painel-instrumento.html?instrumento=${encodeURIComponent(instrument)}`;
+  window.location.href = `painel-instrumento.html?instrumento=${encodeURIComponent(instrument)}${paciente ? '&paciente='+encodeURIComponent(paciente) : ''}`;
 }
 
 function openApplicationModal(instrument = 'GAD-7') {
@@ -3175,6 +3283,8 @@ function updateInstrHelp() {
 }
 
 async function createApplication() {
+  const btn = document.querySelector('#applicationModal .btn-primary');
+  if (btn) { btn.disabled = true; btn.textContent = 'Gerando...'; }
   const name = document.getElementById('newPatientName').value.trim();
   const whatsapp = document.getElementById('newPatientWhatsapp')?.value.trim() || '';
   const selected = document.querySelector('.instr-option.selected');
@@ -3196,14 +3306,12 @@ async function createApplication() {
       },
       body: JSON.stringify({
         p_patient_name: name,
-        p_patient_birth: null,
-        p_instrumento: instrument,
-        p_expires_at: null
+        p_instrumento: instrument
       })
     });
     const data = await res.json();
-    if (!res.ok || !data?.[0]?.token) throw new Error('Falha ao gerar link');
-    const token = encodeURIComponent(data[0].token);
+    if (!res.ok || (!data?.token && !data?.[0]?.token)) throw new Error('Falha ao gerar link');
+    const token = encodeURIComponent(data?.token || data?.[0]?.token);
     const link = `${location.origin}${location.pathname.replace(/painel-tcc\.html$/, '')}${page}.html?token=${token}&nome=${encodeURIComponent(name)}`;
     document.getElementById('generatedLinkText').textContent = link;
     document.getElementById('generatedWhatsappLink').href = buildWhatsappUrl(whatsapp, name, link);
@@ -3211,11 +3319,11 @@ async function createApplication() {
     await callRpc('upsert_patient_status', { p_patient_name: name, p_status: 'ativo' });
     await refreshPanelData();
   } catch (error) {
+    if (btn) { btn.disabled = false; btn.textContent = 'Cadastrar e gerar link'; }
+    const errorBox = document.getElementById('applicationError');
     if (errorBox) {
-      errorBox.textContent = 'Não foi possível cadastrar e gerar o link. Verifique se a psi está cadastrada/ativa no Supabase e se a função create_patient_link foi criada.';
+      errorBox.textContent = 'Não foi possível gerar o link. Tente novamente.';
       errorBox.style.display = 'block';
-    } else {
-      alert('Não foi possível gerar o link. Verifique se a sessão está ativa e tente novamente.');
     }
   }
 }
@@ -3238,7 +3346,7 @@ function normalizeWhatsappNumber(value = '') {
 }
 
 function buildWhatsappUrl(phone, patientName, link) {
-  const text = `Ol ${patientName}! Segue seu questionrio para responder antes da prxima sesso:\n${link}`;
+  const text = `Olá, ${patientName}! Segue seu questionário para responder antes da próxima sessão:\n${link}`;
   const number = normalizeWhatsappNumber(phone);
   return number
     ? `https://wa.me/${number}?text=${encodeURIComponent(text)}`
@@ -3809,6 +3917,154 @@ function filterBib(cat, el) {
   });
 }
 
+// ── PERFIL DO PACIENTE ────────────────────────────────────────
+let PERFIL_PACIENTE_NOME = '';
+let PERFIL_PACIENTE_WHATSAPP = '';
+
+function openPatientDashboard(name) {
+  const decoded = decodeURIComponent(name);
+  const patient = buildPatients().find(item => item.name === decoded);
+  const latestInstrument = instrumentName(patient?.latestResponse);
+
+  // Se tem respostas e instrumento conhecido, vai direto para resultado
+  if (latestInstrument === 'YSQ-S3') {
+    window.location.href = `painel-esquemas.html?paciente=${encodeURIComponent(decoded)}`;
+    return;
+  }
+  if (latestInstrument) {
+    window.location.href = `painel-instrumento.html?instrumento=${encodeURIComponent(latestInstrument)}&paciente=${encodeURIComponent(decoded)}`;
+    return;
+  }
+
+  // Sem respostas ou sem instrumento — abre perfil interno
+  openPerfilPaciente(decoded, patient);
+}
+
+function openPerfilPaciente(nome, patient) {
+  PERFIL_PACIENTE_NOME = nome;
+
+  // Atualiza header
+  document.getElementById('perfilPacienteNome').textContent = nome;
+  document.getElementById('perfilNomeCompleto').textContent = nome;
+  const initials = nome.trim().split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+  document.getElementById('perfilAvatar').textContent = initials;
+
+  // Stats
+  const links = PATIENT_LINKS.filter(l => (l.patient_name||'').toLowerCase() === nome.toLowerCase());
+  const respondidas = links.filter(l => l.status === 'respondido').length;
+  const pendentes = links.filter(l => l.status !== 'respondido').length;
+  const ultimaResp = patient?.latestResponse;
+
+  document.getElementById('perfilTotalApl').textContent = links.length;
+  document.getElementById('perfilResp').textContent = respondidas;
+  document.getElementById('perfilPend').textContent = pendentes;
+  document.getElementById('perfilScore').textContent = ultimaResp?.score_total ?? '—';
+  document.getElementById('perfilScoreInstr').textContent = ultimaResp ? instrumentName(ultimaResp) : '—';
+
+  const resumo = links.length === 0
+    ? 'Aguardando primeira aplicação'
+    : `${respondidas} resposta(s) · ${pendentes} pendente(s)`;
+  document.getElementById('perfilResumo').textContent = resumo;
+
+  // Histórico
+  const hist = document.getElementById('perfilHistorico');
+  if (links.length === 0) {
+    hist.innerHTML = '<div style="padding:20px;text-align:center;color:var(--ink3)">Nenhuma aplicação ainda.</div>';
+  } else {
+    hist.innerHTML = links.map(l => `
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);font-size:13px">
+        <div>
+          <span style="font-weight:600">${escapeHtml(l.instrumento||'—')}</span>
+          <span style="color:var(--ink3);margin-left:8px">${formatDateTime(l.created_at)}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="badge ${applicationBadgeClass(l.status)}">${applicationStatusLabel(l.status)}</span>
+          ${l.status === 'respondido'
+            ? `<button class="btn btn-ghost btn-sm" onclick="openInstrumentDashboard('${escapeHtml(l.instrumento)}','${escapeHtml(nome)}')">Ver</button>`
+            : `<button class="btn btn-ghost btn-sm" onclick="copyApplicationLink('${escapeHtml(l.token||'')}','${escapeHtml(l.instrumento||'')}','${escapeHtml(nome)}')">Copiar</button>`
+          }
+        </div>
+      </div>`).join('');
+  }
+
+  // Reset link gerado
+  document.getElementById('perfilLinkBox').style.display = 'none';
+  document.getElementById('perfilLinkErro').style.display = 'none';
+
+  showScreen('perfil-paciente', null);
+}
+
+function openApplicationModalForPatient() {
+  openApplicationModal('GAD-7');
+  const nameInput = document.getElementById('newPatientName');
+  if (nameInput) nameInput.value = PERFIL_PACIENTE_NOME;
+}
+
+function perfilFilterInstr(cat, btn) {
+  document.querySelectorAll('#screen-perfil-paciente .cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#perfilInstrList .instr-option').forEach(el => {
+    el.classList.toggle('hidden', cat !== 'todos' && el.dataset.cat !== cat);
+  });
+  const selected = document.querySelector('#perfilInstrList .instr-option.selected');
+  if (selected && selected.classList.contains('hidden')) {
+    selected.classList.remove('selected');
+    const first = document.querySelector('#perfilInstrList .instr-option:not(.hidden)');
+    if (first) first.classList.add('selected');
+  }
+}
+
+function perfilSelectInstr(el) {
+  document.querySelectorAll('#perfilInstrList .instr-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+async function perfilGerarLink() {
+  const selected = document.querySelector('#perfilInstrList .instr-option.selected');
+  const instrument = selected?.dataset.value || 'GAD-7';
+  const errEl = document.getElementById('perfilLinkErro');
+  const boxEl = document.getElementById('perfilLinkBox');
+  errEl.style.display = 'none';
+  boxEl.style.display = 'none';
+
+  try {
+    const res = await fetch(`${SB_URL}/rest/v1/rpc/create_patient_link`, {
+      method: 'POST',
+      headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_SESSION_TOKEN}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ p_patient_name: PERFIL_PACIENTE_NOME, p_instrumento: instrument })
+    });
+    const data = await res.json();
+    if (!res.ok || (!data?.token && !data?.[0]?.token)) throw new Error('Falha ao gerar link');
+    const token = encodeURIComponent(data?.token || data?.[0]?.token);
+    const page = instrumentPage(instrument);
+    const link = `${location.origin}${location.pathname.replace(/painel-tcc\.html$/, '')}${page}.html?token=${token}&nome=${encodeURIComponent(PERFIL_PACIENTE_NOME)}`;
+
+    document.getElementById('perfilLinkTexto').textContent = link;
+    const wa = buildWhatsappUrl(PERFIL_PACIENTE_WHATSAPP, PERFIL_PACIENTE_NOME, link);
+    document.getElementById('perfilWhatsappLink').href = wa;
+    boxEl.style.display = 'block';
+    showToast('Link gerado!');
+
+    // Recarrega dados
+    await refreshPatientLinks();
+    openPerfilPaciente(PERFIL_PACIENTE_NOME, buildPatients().find(p => p.name === PERFIL_PACIENTE_NOME));
+  } catch(e) {
+    errEl.textContent = 'Não foi possível gerar o link. Tente novamente.';
+    errEl.style.display = 'block';
+  }
+}
+
+function perfilCopiarLink() {
+  const txt = document.getElementById('perfilLinkTexto').textContent;
+  navigator.clipboard.writeText(txt).then(() => showToast('Link copiado!'));
+}
+
+async function refreshPatientLinks() {
+  try {
+    PATIENT_LINKS = await supabaseSelect('patient_links?select=id,token,patient_name,instrumento,status,created_at,expires_at&order=created_at.desc');
+  } catch(e) {}
+}
+
 // ── MODAL HELPERS ─────────────────────────────────────────────
 function openModal(id) {
   const m = document.getElementById(id);
@@ -3991,4 +4247,3 @@ async function adminToggleAtiva(userId, atual) {
 </script>
 </body>
 </html>
-

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -7,6 +7,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aliança Terapêutica em TCC | Biblioteca Psi Real</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -202,15 +207,197 @@
   </style>
 
   <!-- PWA -->
-  <link rel="manifest" href="/psireal-hub/biblioteca-tcc/manifest.json" />
+  <link rel="manifest" href="../../manifest.json" />
   <meta name="theme-color" content="#8B4A52" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Psi Real" />
-  <link rel="apple-touch-icon" href="/psireal-hub/biblioteca-tcc/icons/icon-192.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="/psireal-hub/biblioteca-tcc/icons/icon-192.png" />
-  <link rel="icon" type="image/png" sizes="512x512" href="/psireal-hub/biblioteca-tcc/icons/icon-512.png" />
+  <link rel="apple-touch-icon" href="../../icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="../../icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="../../icons/icon-512.png" />
+
+<style id="psireal-layout-refresh">
+  :root{
+    --ps-bg:#FAF8F5;
+    --ps-surface:#FFFFFF;
+    --ps-ink:#171321;
+    --ps-muted:#686174;
+    --ps-soft:#A090C8;
+    --ps-border:#E8E2EC;
+    --ps-violet:#5B3DF5;
+    --ps-violet-dark:#2C1A69;
+    --ps-violet-soft:#EEE9FF;
+    --ps-shadow:0 18px 48px rgba(23,19,33,.08);
+    --ps-radius:22px;
+  }
+
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ps-bg)!important;
+    color:var(--ps-ink)!important;
+    font-family:'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif!important;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,h4,
+  .hero-title,.section-title,.material-title,.review-title,
+  .nav-logo-text,.card-title{
+    font-family:'Manrope', system-ui, sans-serif!important;
+    letter-spacing:-.045em!important;
+    color:var(--ps-ink)!important;
+  }
+
+  p,li,.subtitle,.description,.lead{
+    color:var(--ps-muted)!important;
+  }
+
+  nav,header,.topbar,.navbar{
+    background:rgba(250,248,245,.9)!important;
+    border-bottom:1px solid var(--ps-border)!important;
+    backdrop-filter:blur(18px)!important;
+  }
+
+  .nav-logo img,
+  .nav-real-logo{
+    width:42px!important;
+    height:42px!important;
+    border-radius:50%!important;
+    object-fit:contain!important;
+  }
+
+  .nav-logo-icon{
+    display:none!important;
+  }
+
+  .nav-logo{
+    gap:12px!important;
+  }
+
+  a{
+    color:inherit;
+  }
+
+  a:hover{
+    color:var(--ps-violet)!important;
+  }
+
+  .btn,
+  .button,
+  .cta,
+  .primary,
+  .btn-primary,
+  .hero-cta,
+  button,
+  a[class*="btn"]{
+    border-radius:14px!important;
+    font-weight:800!important;
+  }
+
+  .btn-primary,
+  .primary,
+  .cta,
+  .hero-cta,
+  button.primary,
+  a.primary,
+  a.btn-primary{
+    background:var(--ps-violet)!important;
+    color:#fff!important;
+    border-color:var(--ps-violet)!important;
+    box-shadow:0 16px 34px rgba(91,61,245,.18)!important;
+  }
+
+  .btn-primary:hover,
+  .primary:hover,
+  .cta:hover,
+  .hero-cta:hover,
+  a.primary:hover,
+  a.btn-primary:hover{
+    background:#4B30DA!important;
+    color:#fff!important;
+    transform:translateY(-1px);
+  }
+
+  .btn-secondary,
+  .secondary,
+  a.secondary{
+    background:#fff!important;
+    color:var(--ps-ink)!important;
+    border:1px solid var(--ps-border)!important;
+  }
+
+  .pill,.badge,.tag,.category,.label{
+    background:var(--ps-violet-soft)!important;
+    color:var(--ps-violet-dark)!important;
+    border:1px solid var(--ps-border)!important;
+    border-radius:999px!important;
+    font-weight:800!important;
+    letter-spacing:.06em!important;
+  }
+
+  .card,
+  .material-card,
+  .resource-card,
+  .review-card,
+  article,
+  .content-card,
+  .panel{
+    background:#fff!important;
+    border:1px solid var(--ps-border)!important;
+    border-radius:var(--ps-radius)!important;
+    box-shadow:0 8px 26px rgba(23,19,33,.045)!important;
+  }
+
+  .card:hover,
+  .material-card:hover,
+  .resource-card:hover,
+  .review-card:hover{
+    box-shadow:var(--ps-shadow)!important;
+    border-color:#D8D0E5!important;
+  }
+
+  .material-card .card-visual,
+  .card-visual,
+  .visual,
+  .gradient-card,
+  .cover{
+    background:linear-gradient(135deg,#171321 0%,#5B3DF5 100%)!important;
+  }
+
+  .toc,
+  .sidebar,
+  aside{
+    background:transparent!important;
+  }
+
+  .toc a.active,
+  .toc .active,
+  .sidebar .active,
+  .nav-links .active,
+  .active{
+    background:var(--ps-violet-soft)!important;
+    color:var(--ps-violet-dark)!important;
+    border-radius:12px!important;
+  }
+
+  hr,.divider{
+    border-color:var(--ps-border)!important;
+  }
+
+  #install-prompt,
+  .install-prompt,
+  .pwa-install,
+  .pwa-prompt,
+  .install-banner,
+  .app-install-banner,
+  [data-install-prompt]{
+    display:none!important;
+    visibility:hidden!important;
+    opacity:0!important;
+    pointer-events:none!important;
+  }
+</style>
+
 </head>
 <body>
 
@@ -224,12 +411,12 @@
     <div style="font-size:11px;color:#8A7370;">Acesse offline, como um app</div>
   </div>
   <button onclick="installPWA()" style="background:#8B4A52;color:#fff;border:none;border-radius:7px;padding:7px 14px;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:inherit;">Instalar</button>
-  <button onclick="dismissInstallBanner()" style="background:none;border:none;color:#C4A8A4;cursor:pointer;padding:4px;line-height:1;" aria-label="Fechar">✕</button>
+  <button onclick="dismissInstallBanner()" style="background:none;border:none;color:#C4A8A4;cursor:pointer;padding:4px;line-height:1;" aria-label="Fechar">âœ•</button>
 </div>
 
 <nav>
-  <a class="nav-back" href="/psireal-hub/biblioteca-tcc/index.html">
-    <span class="nav-back-arrow">←</span> Biblioteca Psi Real
+  <a class="nav-back" href="../../index.html">
+    <span class="nav-back-arrow">â†</span> Biblioteca Psi Real
   </a>
   <span class="nav-title">Aliança Terapêutica · Safran &amp; Segal</span>
 </nav>
@@ -253,7 +440,7 @@
 
   <main class="content">
     <div class="doc-header">
-      <div class="breadcrumb"><a href="/psireal-hub/biblioteca-tcc/index.html">Biblioteca Psi Real</a> / TCC / Aliança Terapêutica</div>
+      <div class="breadcrumb"><a href="../../index.html">Biblioteca Psi Real</a> / TCC / Aliança Terapêutica</div>
       <div class="doc-tags">
         <span class="doc-tag tag-tcc">TCC</span>
         <span class="doc-tag tag-alianca">Aliança Terapêutica</span>
@@ -334,7 +521,7 @@
       <h3 class="sub-title">Características da TCC que afetam a aliança</h3>
       <ul class="steps">
         <li><div class="step-dot">→</div><div><strong>Postura ativa e diretiva do terapeuta:</strong> pode ser vivenciada pelo paciente como controle, imposição ou desconsideração de sua experiência subjetiva.</div></li>
-        <li><div class="step-dot">→</div><div><strong>Ênfase em técnicas estruturadas:</strong> pode gerar a sensação de que o terapeuta está mais focado no protocolo do que na pessoa.</div></li>
+        <li><div class="step-dot">→</div><div><strong>ÃŠnfase em técnicas estruturadas:</strong> pode gerar a sensação de que o terapeuta está mais focado no protocolo do que na pessoa.</div></li>
         <li><div class="step-dot">→</div><div><strong>Trabalho de casa e tarefas:</strong> dificuldades de adesão frequentemente sinalizam rupturas de tarefa ainda não nomeadas.</div></li>
         <li><div class="step-dot">→</div><div><strong>Foco no presente e nos problemas:</strong> pode fazer o paciente sentir que sua história e seus afetos não têm espaço na terapia.</div></li>
         <li><div class="step-dot">→</div><div><strong>Duração mais breve:</strong> pressão de tempo pode intensificar a necessidade de aliança sólida desde o início.</div></li>
@@ -472,7 +659,7 @@
         <li>
           <div class="step-dot">5</div>
           <div>
-            <strong>Conectar com padrões interpessoais mais amplos.</strong> Quando a relação está restabelecida, o terapeuta pode explorar se o padrão ativado na terapia se repete em outras relações do paciente — integrando o processo relacional à formulação.
+            <strong>Conectar com padrões interpessoais mais amplos.</strong> Quando a relação está restabelecida, o terapeuta pode explorar se o padrão ativado na terapia se repete em outras relações do paciente — integrando o processo relacional Ã  formulação.
           </div>
         </li>
         <li>
@@ -487,7 +674,7 @@
         <p><strong>Por que a reparação produz mudança?</strong> Para Safran e Segal, o processo de nomear, explorar e reparar a ruptura oferece ao paciente uma <em>experiência relacional corretiva</em> — evidência concreta de que relações podem ser seguras mesmo quando há conflito, e de que o outro pode reconhecer seu impacto sem destruir o vínculo.</p>
       </div>
 
-      <h3 class="sub-title">O que NÃO fazer durante uma ruptura</h3>
+      <h3 class="sub-title">O que NÃƒO fazer durante uma ruptura</h3>
       <div class="hl-row"><strong>Evitar o tema:</strong> volcar imediatamente para as técnicas quando a ruptura é nomeada — sinal de que o terapeuta também está evitando.</div>
       <div class="hl-row"><strong>Defender-se:</strong> justificar a própria intervenção antes de validar a experiência do paciente. A defesa fecha o espaço exploratório.</div>
       <div class="hl-row"><strong>Capitular:</strong> mudar de abordagem inteiramente para agradar o paciente sem explorar o que está por trás da demanda. Reforça o ciclo disfuncional.</div>
@@ -524,7 +711,7 @@
         <p><strong>Exemplo:</strong> Se o terapeuta sente crescente ansiedade e urgência para "resolver" a sessão rapidamente, pode ser que o paciente esteja comunicando desespero de um modo que ativa no terapeuta a necessidade de agir — e que seria mais útil nomear e explorar do que responder tecnicamente.</p>
       </div>
 
-      <h3 class="sub-title">Tolerância à ambiguidade e ao conflito</h3>
+      <h3 class="sub-title">Tolerância Ã  ambiguidade e ao conflito</h3>
       <p class="body">Trabalhar com rupturas exige que o terapeuta consiga permanecer no desconforto relacional sem recuar ou escalar. Isso é uma habilidade que pode ser desenvolvida em supervisão e em terapia pessoal.</p>
     </div>
 
@@ -537,7 +724,7 @@
       <h3 class="sub-title">Principais instrumentos</h3>
       <div class="hl-row"><strong>WAI — Working Alliance Inventory (Horvath &amp; Greenberg, 1989):</strong> 36 itens (versão longa) ou 12 itens (versão curta). Avalia vínculo, objetivos e tarefas. Amplamente utilizado em pesquisa e na prática clínica. Versão validada no Brasil disponível.</div>
       <div class="hl-row"><strong>WAI-SR — Short Revised:</strong> 12 itens, formato Likert de 7 pontos. Prático para uso sessão a sessão. Disponível em português.</div>
-      <div class="hl-row"><strong>CALPAS — California Psychotherapy Alliance Scales:</strong> Avalia aliança de paciente, de terapeuta e observador. Útil em contextos de supervisão e pesquisa.</div>
+      <div class="hl-row"><strong>CALPAS — California Psychotherapy Alliance Scales:</strong> Avalia aliança de paciente, de terapeuta e observador. Ãštil em contextos de supervisão e pesquisa.</div>
       <div class="hl-row"><strong>SRS — Session Rating Scale (Duncan et al., 2003):</strong> 4 itens visuais análogos. Aplicado nos últimos minutos da sessão. Projetado para uso rotineiro e feedback imediato ao terapeuta.</div>
 
       <h3 class="sub-title">Como usar na prática clínica</h3>
@@ -589,14 +776,14 @@
   // Service Worker
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/psireal-hub/biblioteca-tcc/sw.js')
+      navigator.serviceWorker.register('../../sw.js')
         .catch(err => console.warn('SW registration failed:', err));
     });
   }
 
   // Install prompt (A2HS banner)
   let deferredPrompt = null;
-  window.addEventListener('beforeinstallprompt', (e) => {
+  window.addEventListener('beforeinstallprompt_disabled', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     const banner = document.getElementById('pwa-install-banner');

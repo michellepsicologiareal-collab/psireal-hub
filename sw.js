@@ -1,13 +1,13 @@
-const CACHE = 'psireal-v3-20260519';
+﻿const CACHE = 'psireal-v3-20260519';
 const ASSETS = [
-  '/psireal-hub/',
-  '/psireal-hub/index.html',
-  '/psireal-hub/terapia.html',
-  '/psireal-hub/supervisao.html',
-  '/psireal-hub/corporativo.html',
-  '/psireal-hub/admin-contatos.html',
-  '/psireal-hub/formulario-esquemas.html',
-  '/psireal-hub/manifest.json'
+  '/',
+  '/index.html',
+  '/terapia.html',
+  '/supervisao.html',
+  '/corporativo.html',
+  '/admin-contatos.html',
+  '/formulario-esquemas.html',
+  '/manifest.json'
 ];
 
 self.addEventListener('install', e => {

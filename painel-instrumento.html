@@ -3,34 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Perfil Clínico | PsiReal TCC</title>
+<title>Perfil Clínico | PsiReal Clínica</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#FDFAF8;--bg2:#F8F2F4;--bg3:#F2E4D4;
-  --surface:#FFFFFF;--border:#E8D8DC;
-  --ink:#1E1014;--ink2:#5A3A42;--ink3:#9A7A84;
-  --brown:#3D2028;--brown2:#7A4A55;--brown3:#B08090;
-  --lilac:#7A4A55;--lilac2:#B08090;--lilac3:#EEE0E4;--lilac4:#F8F2F4;
-  --teal:#A0703A;--teal2:#C8956A;--teal3:#E7ECE5;
-  --amber:#9E765A;--amber2:#D8B08F;--amber3:#F5E9DD;
-  --green:#73856E;--green2:#AAB8A5;--green3:#EDF2EB;
-  --coral:#8E4856;--coral3:#FAE8EC;
+  --bg:#faf8ff;--bg2:#f7f4ff;--bg3:#f0ebff;
+  --surface:#FFFFFF;--border:#ede9f8;
+  --ink:#1a1030;--ink2:#6a5880;--ink3:#8070a8;
+  --brown:#3d2b8a;--brown2:#6d4fc2;--brown3:#8070a8;
+  --lilac:#6d4fc2;--lilac2:#8070a8;--lilac3:rgba(109,79,194,0.08);--lilac4:#f7f4ff;
+  --teal:#c9a84c;--teal2:#e8c97a;--teal3:#E7ECE5;
+  --amber:#c9a84c;--amber2:#e8c97a;--amber3:rgba(201,168,76,0.10);
+  --green:#6d4fc2;--green2:#8b6fd4;--green3:#eaf3de;
+  --coral:#854f0b;--coral3:#FAE8EC;
   --sidebar-w:220px;--radius:10px;--radius-lg:16px;
-  --shadow:0 2px 12px rgba(90,48,64,.06),0 1px 3px rgba(90,48,64,.04);
-  --shadow-md:0 12px 40px rgba(90,48,64,.12),0 4px 12px rgba(90,48,64,.06);
+  --shadow:0 2px 12px rgba(61,43,138,.06),0 1px 3px rgba(61,43,138,.04);
+  --shadow-md:0 12px 40px rgba(61,43,138,.12),0 4px 12px rgba(61,43,138,.06);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.55;min-height:100vh;display:flex}
+body{font-family:'Instrument Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.55;min-height:100vh;display:flex}
 
 /* SIDEBAR */
 .sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100}
 .logo{padding:24px 20px 20px;border-bottom:1px solid var(--border)}
 .logo-mark{display:flex;align-items:center;gap:10px}
-.logo-icon{width:40px;height:40px;border-radius:999px;background:url("logo-psicologia-real.png") center/contain no-repeat;flex:0 0 40px}
-.logo-text{font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.3px;line-height:1.1}
-.logo-sub{font-size:10px;color:var(--ink3);letter-spacing:.08em;margin-top:2px}
+.logo-icon{width:32px;height:32px;border-radius:8px;background:url("logo-psicologia-real.png") center/contain no-repeat;flex:0 0 32px}
+.logo-text{font-size:16px;font-weight:700;color:var(--ink);letter-spacing:-.3px;line-height:1;font-family:'Syne',sans-serif;white-space:nowrap}
+.logo-sub{display:none}
 .nav{padding:16px 12px;flex:1}
 .nav-section{margin-bottom:24px}
 .nav-label{font-size:9px;font-weight:500;color:var(--ink3);text-transform:uppercase;letter-spacing:.12em;padding:0 8px;margin-bottom:6px}
@@ -175,6 +175,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
   .patient-stats{justify-content:center}
 }
 </style>
+  <link rel="stylesheet" href="visual-modern.css">
 </head>
 <body>
 
@@ -183,8 +184,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
     <div class="logo-mark">
       <div class="logo-icon"></div>
       <div>
-        <div class="logo-text">PsiReal TCC</div>
-        <div class="logo-sub">Plataforma Clínica</div>
+        <div class="logo-text">PsiReal Clínica</div>
       </div>
     </div>
   </div>
@@ -195,20 +195,39 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
         <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="6" height="6" rx="1.5"/><rect x="10" y="2" width="6" height="6" rx="1.5"/><rect x="2" y="10" width="6" height="6" rx="1.5"/><rect x="10" y="10" width="6" height="6" rx="1.5"/></svg>
         Dashboard
       </a>
-      <a class="nav-item" href="painel-tcc.html#pacientes">
+      <a class="nav-item" href="painel-tcc.html">
         <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="6" r="3"/><path d="M3 15c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
         Pacientes
       </a>
     </div>
     <div class="nav-section">
       <div class="nav-label">Clínico</div>
-      <a class="nav-item" href="painel-tcc.html#biblioteca">
+      <a class="nav-item" href="painel-tcc.html">
         <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2h8l3 3v11a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1z"/><path d="M12 2v4h3M6 9h6M6 12h4"/></svg>
-        Biblioteca TCC
+        Biblioteca Clínica
       </a>
-      <a class="nav-item" href="painel-tcc.html#aplicacoes">
+      <a class="nav-item" href="painel-tcc.html">
         <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2h6z"/><circle cx="9" cy="13" r="1"/><path d="M7 6h4M7 9h2"/></svg>
         Aplicações
+      </a>
+      <a class="nav-item" href="painel-tcc.html">
+        <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="2 12 6 8 10 11 16 5"/></svg>
+        Evolução Emocional
+      </a>
+      <a class="nav-item" href="painel-tcc.html">
+        <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="9" r="7"/><path d="M9 5v4l3 2"/></svg>
+        Insights Terapêuticos
+      </a>
+      <a class="nav-item" href="painel-perfil-clinico.html">
+        <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 14c3-7 9-7 12 0"/><path d="M5 9c1.5-4 6.5-4 8 0"/><circle cx="9" cy="6" r="2"/></svg>
+        Mapa de Ativação
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Sistema</div>
+      <a class="nav-item" href="painel-tcc.html">
+        <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="14" height="12" rx="2"/><path d="M6 7h6M6 10h4"/></svg>
+        Protocolos
       </a>
     </div>
   </nav>
@@ -237,7 +256,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
 <script>
 const SB_URL = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
 const SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
-let SB_SESSION = sessionStorage.getItem('sb_session_token') || '';
+let SB_SESSION_TOKEN = sessionStorage.getItem('sb_session_token') || '';
 const PARAMS = new URLSearchParams(window.location.search);
 const INSTRUMENTO = PARAMS.get('instrumento') || 'GAD-7';
 const PACIENTE = PARAMS.get('paciente') ? decodeURIComponent(PARAMS.get('paciente')) : null;
@@ -248,34 +267,83 @@ const CONFIGS = {
     title:'GAD-7 — Ansiedade Generalizada', field:'Ansiedade', max:21,
     fonte:'Spitzer RL, Kroenke K, Williams JBW, Löwe B. Arch Intern Med. 2006;166(10):1092–1097. Domínio público (Pfizer Inc., 2010).',
     levels:[
-      {min:0,max:4,label:'Mínima',css:'level-minima',color:'#73856E'},
-      {min:5,max:9,label:'Leve',css:'level-leve',color:'#A0703A'},
-      {min:10,max:14,label:'Moderada',css:'level-moderada',color:'#8E4856'},
-      {min:15,max:21,label:'Grave',css:'level-grave',color:'#3D2028'}
+      {min:0,max:4,label:'Mínima',css:'level-minima',color:'#6d4fc2'},
+      {min:5,max:9,label:'Leve',css:'level-leve',color:'#c9a84c'},
+      {min:10,max:14,label:'Moderada',css:'level-moderada',color:'#854f0b'},
+      {min:15,max:21,label:'Grave',css:'level-grave',color:'#3d2b8a'}
     ],
     recos:{
-      'Mínima':['Manutenção de autocuidado e regulação emocional.','Continuidade do acompanhamento para consolidar ganhos.','Reaplicação periódica para monitoramento.'],
-      'Leve':['Psicoeducação sobre o ciclo da ansiedade.','Identificação de gatilhos e pensamentos precedentes.','Reestruturação cognitiva e ativação comportamental.','Reaplicar em 2 a 4 semanas.'],
-      'Moderada':['Avaliação clínica aprofundada e possível encaminhamento psiquiátrico.','Protocolo TCC para TAG: exposição e manejo de preocupações.','Registro de pensamentos e diários entre as sessões.','Discutir suporte farmacológico se indicado.'],
-      'Grave':['Avaliação imediata de suporte psiquiátrico.','Plano de crise e protocolo de segurança.','Intensificar frequência das sessões.','Avaliar rede de suporte social e familiar.']
+      'Mínima':[
+        'Manter monitoramento clínico conforme contexto do paciente.',
+        'Investigar fatores estressores recentes e estratégias atuais de enfrentamento.',
+        'Reforçar psicoeducação sobre ansiedade e regulação emocional.',
+        'Realizar acompanhamento longitudinal para observar possível evolução sintomática.'
+      ],
+      'Leve':[
+        'Explorar possíveis gatilhos associados às preocupações e sintomas ansiosos.',
+        'Investigar padrões iniciais de evitação e hipervigilância.',
+        'Utilizar estratégias básicas de psicoeducação e monitoramento emocional.',
+        'Considerar intervenções cognitivas e comportamentais de baixa complexidade.',
+        'Realizar acompanhamento longitudinal dos sintomas.'
+      ],
+      'Moderada':[
+        'Investigar possível impacto dos sintomas ansiosos na rotina e funcionalidade.',
+        'Explorar padrões de preocupação, evitação e comportamentos de segurança.',
+        'Utilizar estratégias iniciais de psicoeducação e monitoramento emocional.',
+        'Considerar intervenções cognitivas e comportamentais para manejo da ansiedade.',
+        'Realizar acompanhamento longitudinal para avaliação da evolução clínica.'
+      ],
+      'Grave':[
+        'Realizar investigação clínica da intensidade e frequência dos sintomas ansiosos.',
+        'Avaliar possível impacto funcional em áreas importantes da vida cotidiana.',
+        'Investigar presença de evitação significativa e sofrimento emocional intenso.',
+        'Utilizar estratégias estruturadas de manejo cognitivo-comportamental.',
+        'Monitorar evolução clínica e considerar suporte multiprofissional conforme necessidade.'
+      ]
     }
   },
   'PHQ-9': {
     title:'PHQ-9 — Depressão', field:'Depressão', max:27,
     fonte:'Kroenke K, Spitzer RL, Williams JBW. J Gen Intern Med. 2001;16(9):606–613. Domínio público (Pfizer Inc., 2010).',
     levels:[
-      {min:0,max:4,label:'Mínima',css:'level-minima',color:'#73856E'},
-      {min:5,max:9,label:'Leve',css:'level-leve',color:'#A0703A'},
-      {min:10,max:14,label:'Moderada',css:'level-moderada',color:'#8E4856'},
+      {min:0,max:4,label:'Mínima',css:'level-minima',color:'#6d4fc2'},
+      {min:5,max:9,label:'Leve',css:'level-leve',color:'#c9a84c'},
+      {min:10,max:14,label:'Moderada',css:'level-moderada',color:'#854f0b'},
       {min:15,max:19,label:'Moderadamente grave',css:'level-moderada',color:'#7A2A3A'},
-      {min:20,max:27,label:'Grave',css:'level-grave',color:'#3D2028'}
+      {min:20,max:27,label:'Grave',css:'level-grave',color:'#3d2b8a'}
     ],
     recos:{
-      'Mínima':['Monitoramento periódico.','Manutenção de atividades prazerosas e autocuidado.'],
-      'Leve':['Psicoeducação sobre depressão e ciclo de evitação.','Ativação comportamental estruturada.'],
-      'Moderada':['Protocolo TCC para depressão.','Avaliar encaminhamento psiquiátrico.'],
-      'Moderadamente grave':['Encaminhamento psiquiátrico prioritário.','Plano de segurança preventivo.'],
-      'Grave':['Avaliação imediata de risco.','Encaminhamento psiquiátrico urgente.','Plano de crise detalhado.']
+      'Mínima':[
+        'Manter monitoramento clínico conforme contexto do paciente.',
+        'Investigar fatores estressores recentes e estratégias de enfrentamento.',
+        'Reforçar psicoeducação sobre humor e regulação emocional.',
+        'Acompanhamento longitudinal para observar possível evolução.'
+      ],
+      'Leve':[
+        'Explorar possíveis gatilhos associados ao humor rebaixado.',
+        'Investigar padrões iniciais de retraimento e evitação comportamental.',
+        'Utilizar psicoeducação e ativação comportamental de baixa complexidade.',
+        'Realizar acompanhamento longitudinal dos sintomas.'
+      ],
+      'Moderada':[
+        'Investigar possível impacto no funcionamento diário e relações sociais.',
+        'Explorar padrões de evitação, pensamentos negativos e comportamentos de manutenção.',
+        'Considerar intervenções cognitivas e ativação comportamental estruturada.',
+        'Avaliar necessidade de suporte complementar conforme evolução clínica.',
+        'Acompanhamento longitudinal para avaliação da trajetória dos sintomas.'
+      ],
+      'Moderadamente grave':[
+        'Investigar intensidade do sofrimento e impacto funcional.',
+        'Avaliar necessidade de suporte multiprofissional conforme evolução.',
+        'Utilizar intervenções estruturadas de TCC e ativação comportamental.',
+        'Monitorar de forma contínua e próxima.'
+      ],
+      'Grave':[
+        'Investigar intensidade do sofrimento psíquico e impacto funcional.',
+        'Avaliar necessidade de suporte multiprofissional conforme evolução clínica.',
+        'Utilizar intervenções estruturadas de manejo cognitivo-comportamental.',
+        'Monitorar evolução de forma contínua e próxima.'
+      ]
     }
   }
 };
@@ -311,7 +379,7 @@ async function refreshSessionToken() {
   if (!res.ok) return '';
   const data = await res.json();
   if (!data.access_token) return '';
-  SB_SESSION = data.access_token;
+  SB_SESSION_TOKEN = data.access_token;
   sessionStorage.setItem('sb_session_token', data.access_token);
   if (data.refresh_token) sessionStorage.setItem('sb_refresh_token', data.refresh_token);
   return data.access_token;
@@ -328,7 +396,7 @@ async function fetchWithTimeout(url, options = {}, timeout = 45000) {
 }
 
 async function sbFetch(path, useSession=true) {
-  const token = useSession ? SB_SESSION : SB_KEY;
+  const token = useSession ? SB_SESSION_TOKEN : SB_KEY;
   const res = await fetch(`${SB_URL}/rest/v1/${path}`, {
     headers:{apikey:SB_KEY, Authorization:'Bearer '+token}
   });
@@ -361,7 +429,7 @@ function drawLineChart(canvasId, labels, scores, cfg) {
     const y=pad.top+h-(val/max)*h;
     ctx.beginPath();ctx.moveTo(pad.left,y);ctx.lineTo(pad.left+w,y);
     ctx.strokeStyle='rgba(168,136,152,.15)';ctx.lineWidth=1;ctx.stroke();
-    ctx.fillStyle='#9A7A84';ctx.font='500 10px Inter,sans-serif';
+    ctx.fillStyle='#8070a8';ctx.font='500 10px Inter,sans-serif';
     ctx.textAlign='right';ctx.textBaseline='middle';
     ctx.fillText(val,pad.left-4,y);
   });
@@ -373,7 +441,7 @@ function drawLineChart(canvasId, labels, scores, cfg) {
 
   const step = w/Math.max(scores.length-1,1);
   labels.forEach((lbl,i)=>{
-    ctx.fillStyle='#9A7A84';ctx.font='500 10px Inter,sans-serif';
+    ctx.fillStyle='#8070a8';ctx.font='500 10px Inter,sans-serif';
     ctx.textAlign='center';ctx.textBaseline='top';
     ctx.fillText(lbl,pad.left+i*step,H-pad.bottom+6);
   });
@@ -386,7 +454,7 @@ function drawLineChart(canvasId, labels, scores, cfg) {
 
   ctx.beginPath();
   scores.forEach((s,i)=>{const x=pad.left+i*step,y=pad.top+h-(s/max)*h; i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});
-  ctx.strokeStyle='#B08090';ctx.lineWidth=2;ctx.lineJoin='round';ctx.stroke();
+  ctx.strokeStyle='#8070a8';ctx.lineWidth=2;ctx.lineJoin='round';ctx.stroke();
 
   ctx.beginPath();
   scores.forEach((s,i)=>{const x=pad.left+i*step,y=pad.top+h-(s/max)*h; i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});
@@ -426,7 +494,7 @@ function drawGauge(canvasId, score, color, cfg) {
 
   cfg.levels.map(l=>l.min).concat([cfg.max]).forEach(val=>{
     const a=start+(val/total)*Math.PI;
-    ctx.fillStyle='#9A7A84';ctx.font='500 9px Inter,sans-serif';
+    ctx.fillStyle='#8070a8';ctx.font='500 9px Inter,sans-serif';
     ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.fillText(val,cx+(R+13)*Math.cos(a),cy+(R+13)*Math.sin(a));
   });
@@ -487,7 +555,7 @@ function renderInstrument(inst, responses) {
     <div class="grid-2-1">
       <div class="card">
         <div class="card-header">
-          <div class="card-title">Evolucao Longitudinal</div>
+          <div class="card-title">Acompanhamento Longitudinal</div>
           <span class="level-badge ${latestLevel.css}">${latestLevel.label}</span>
         </div>
         <div class="card-body">
@@ -530,7 +598,7 @@ function renderInstrument(inst, responses) {
         </div>
       </div>
       <div class="card">
-        <div class="card-header"><div class="card-title">Orientacoes — ${latestLevel.label}</div></div>
+        <div class="card-header"><div class="card-title">Sugestoes Clinicas Iniciais</div></div>
         <div class="card-body">
           <ul class="reco-list">
             ${recos.map(r=>`<li class="reco-item" style="border-left-color:${latestLevel.color}">${r}</li>`).join('')}
@@ -542,13 +610,13 @@ function renderInstrument(inst, responses) {
     <!-- AI ANALYSIS -->
     <div class="card">
       <div class="card-header">
-        <div class="card-title">Analise Clinica com IA</div>
+        <div class="card-title">Apoio a Formulacao Clinica</div>
         <span class="ai-badge">Beta · Uso exclusivo da psi</span>
       </div>
       <div class="card-body">
         <div class="ai-warning">
           <div class="ai-warning-title">Aviso de seguranca — leia antes de usar</div>
-          <strong>Esta funcionalidade utiliza inteligencia artificial generativa.</strong> A analise tem carater exclusivamente de apoio clinico e nao substitui o julgamento profissional da psicologa. Hipoteses diagnosticas e sugestoes de manejo devem ser avaliadas criticamente a luz da historia clinica completa. Nunca compartilhe esta analise diretamente com o paciente. A responsabilidade clinica permanece integralmente com a profissional habilitada.
+          Esta funcionalidade utiliza inteligencia artificial como apoio ao raciocinio clinico. As analises possuem carater auxiliar, nao substituem julgamento profissional e nao devem ser interpretadas como diagnostico, laudo psicologico ou definicao terapeutica. A interpretacao clinica permanece sob responsabilidade da profissional habilitada.
         </div>
         <div class="ai-disclaimer">
           Dados enviados: instrumento (${inst}), score atual (${latestScore}/${cfg.max}), nivel (${latestLevel.label}), aplicacoes (${filtered.length}), variacao (${variation>0?'+':''}${variation}). Nenhum dado de identificacao do paciente e enviado a IA.
@@ -563,6 +631,26 @@ function renderInstrument(inst, responses) {
           <div class="ai-text-wrap"><div class="ai-text" id="aiText"></div></div>
           <div class="ai-footer"><div class="ai-dot"></div>Gerado por Claude (Anthropic) · Baseado em TCC, ACT, Terapia do Esquema e DBT · Nao compartilhar com o paciente</div>
         </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">Alerta Clinico</div></div>
+      <div class="card-body">
+        <div class="fonte-box" style="border-left:3px solid ${latestLevel.color};background:rgba(109,79,194,.04)">
+          ${latestLevel.label === 'Mínima' ? 'Monitorar persistência dos sintomas ao longo do acompanhamento clínico.' :
+            latestLevel.label === 'Leve' ? 'Monitorar persistência dos sintomas ao longo do acompanhamento clínico.' :
+            latestLevel.label === 'Moderada' ? 'Investigar possível impacto funcional, comportamentos de segurança e padrões de evitação associados.' :
+            latestLevel.label === 'Moderadamente grave' ? 'Avaliar intensidade do sofrimento, impacto funcional e necessidade de suporte multiprofissional conforme evolução clínica.' :
+            'Avaliar intensidade do sofrimento psíquico, impacto funcional e necessidade de suporte multiprofissional conforme evolução clínica.'
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border:1px solid var(--border);background:rgba(109,79,194,.03)">
+      <div class="card-body" style="font-size:12px;color:var(--ink3);line-height:1.6">
+        Este instrumento possui finalidade de rastreio clínico e deve ser interpretado em conjunto com entrevista clínica, avaliação funcional e contexto de vida do paciente. Os resultados não confirmam diagnóstico isoladamente.
       </div>
     </div>
 
@@ -591,33 +679,97 @@ async function generateAnalysis() {
   textEl.innerHTML='<span class="ai-cursor"></span>';
 
   const scoreHistory = d.scores.map((s,i)=>`Aplicacao ${i+1}: ${s} pontos`).join('; ');
-  const trend = d.scores.length>1?(d.scores[d.scores.length-1]-d.scores[0]<0?'reducao':d.scores[d.scores.length-1]-d.scores[0]>0?'aumento':'estabilidade'):'primeira aplicacao';
+  const nAplicacoes = d.filtered.length;
+  const delta = nAplicacoes > 1
+    ? d.scores[d.scores.length-1] - d.scores[d.scores.length-2]
+    : null;
+  const deltaStr = delta !== null
+    ? (delta > 0 ? `+${delta}` : `${delta}`)
+    : null;
 
-  const prompt = `Voce e um assistente clinico especializado em psicologia baseada em evidencias, com dominio em TCC (Terapia Cognitivo-Comportamental), ACT (Acceptance and Commitment Therapy), Terapia do Esquema e DBT (Dialectical Behavior Therapy). Esta analise e exclusiva para uso da psicologa responsavel pelo caso.
+  // Prompt de análise de score atual (sempre presente)
+  const primeiraAplicacao = nAplicacoes === 1
+    ? 'Por se tratar da primeira aplicacao, ainda nao ha dados suficientes para analise longitudinal da evolucao sintomatica.'
+    : '';
 
-Dados do instrumento:
-- Instrumento: ${d.inst} (${d.cfg.field})
-- Score atual: ${d.latestScore} de ${d.cfg.max} pontos
+  const promptScore = `Voce e um assistente de apoio a formulacao clinica baseado em evidencias para psicologos clinicos.
+
+Sua funcao e auxiliar o raciocinio clinico de forma prudente, objetiva, funcional, etica e baseada em TCC, ACT e Terapia do Esquema.
+
+IMPORTANTE:
+- Nao realizar diagnostico.
+- Nao transformar score em transtorno confirmado.
+- Nao inferir sintomas nao informados.
+- Nao produzir texto com tom de laudo psicologico.
+- Nao utilizar linguagem excessivamente academica ou dramatizada.
+- Nao extrapolar alem dos dados disponiveis.
+- Escalas psicometricas sao instrumentos de rastreio e NAO confirmam diagnostico isoladamente.
+
+UTILIZE: "os resultados podem sugerir", "recomenda-se investigar", "avaliar possivel impacto", "considerar hipotese", "os dados indicam", "explorar padroes associados".
+EVITE: "o paciente apresenta", "ha comprometimento funcional", "ha provavel transtorno", "o quadro e consistente com", "o dominio esta prejudicado".
+NUNCA confirme TAG, TOC, TEPT, depressao, prejuizo funcional ou assuma sintomas especificos sem dados clinicos adicionais.
+
+CONTEXTO DO INSTRUMENTO:
+${d.inst === 'GAD-7' ? `O instrumento atual é um rastreio de sintomas ansiosos. A análise deve focar: intensidade sintomática, preocupações, hiperativação ansiosa, impacto funcional possível, necessidade de investigação complementar. O instrumento não confirma diagnóstico isoladamente.` :
+  d.inst === 'PHQ-9' ? `O instrumento atual é um rastreio de sintomas depressivos. A interpretação deve focar: humor, energia, motivação, funcionamento emocional, necessidade de investigação complementar. Evite inferências diagnósticas fechadas.` :
+  d.inst === 'OASIS' ? `O instrumento atual avalia frequência, intensidade, evitação e impacto funcional da ansiedade. A análise deve focar: padrões de evitação, impacto no funcionamento, intensidade da ansiedade. O instrumento não confirma diagnóstico isoladamente.` :
+  d.inst === 'AAQ-II' ? `O instrumento atual avalia flexibilidade psicológica e evitação experiencial dentro do modelo ACT. A interpretação deve focar: rigidez psicológica, fusão cognitiva, evitação experiencial, dificuldade de contato com valores. Evite interpretações patologizantes.` :
+  d.inst === 'YSQ-S3' ? `O instrumento atual avalia modos esquemáticos inspirados na Terapia do Esquema. A interpretação deve focar: estados emocionais, estratégias de enfrentamento, padrões adaptativos e desadaptativos, funcionamento emocional atual. Evite: diagnóstico estrutural, inferências profundas sobre personalidade, interpretações biográficas sem dados adicionais.` :
+  `O instrumento atual é um rastreio clínico. A análise deve ser prudente e baseada nos dados disponíveis.`
+}
+
+DADOS DO INSTRUMENTO:
+- Instrumento: ${d.inst}
+- Score: ${d.latestScore} de ${d.cfg.max} pontos
 - Nivel: ${d.latestLevel.label}
-- Numero de aplicacoes: ${d.filtered.length}
-- Historico: ${scoreHistory}
-- Tendencia: ${trend}
+- Aplicacoes: ${nAplicacoes}
+${primeiraAplicacao ? '- Observacao: ' + primeiraAplicacao : ''}
 
-Forneca uma analise clinica estruturada em quatro partes:
+ESTRUTURA OBRIGATORIA — responda exatamente nesta ordem:
 
-1. LEITURA CLINICA DO SCORE
-Interprete o score atual e sua tendencia no contexto clinico. O que este nivel indica funcionalmente? Quais dominios de vida podem estar mais comprometidos?
+## 1. LEITURA CLINICA DO SCORE
+Leitura objetiva e prudente do resultado. Diga o que o score indica no instrumento e o que os resultados podem sugerir clinicamente, sem transformar em diagnostico. Se for primeira aplicacao, mencione que nao ha dados longitudinais ainda. NAO invente sintomas, impacto ocupacional, sono ou evitacao sem dados explicitos.
 
-2. HIPOTESES DIAGNOSTICAS A INVESTIGAR
-Quais transtornos ou padroes clinicos merecem investigacao com base neste score? Considere diagnosticos diferenciais relevantes (ex: TAG, TOC, fobia especifica, TEPT, depressao com ansiedade, esquemas desadaptativos). Seja especifica e tecnica.
+## 2. ASPECTOS CLINICOS A INVESTIGAR
+Liste hipoteses investigativas prudentes. Deixe claro que sao aspectos a investigar, nao fatos estabelecidos. Priorize: impacto funcional, frequencia dos sintomas, duracao, padroes de preocupacao, evitacao, comportamentos de seguranca, qualidade do sono, estressores atuais, funcionamento interpessoal. Evite listas DSM excessivas e linguagem patologizante.
 
-3. DIRECIONAMENTO TERAPEUTICO
-Quais intervencoes sao prioritarias? Sugira estrategias de TCC, ACT, Terapia do Esquema ou DBT mais indicadas para este perfil. Inclua tecnicas especificas quando pertinente.
+## 3. SUGESTOES CLINICAS INICIAIS
+Sugestoes curtas, praticas e baseadas em evidencias. Priorize: psicoeducacao, monitoramento emocional, identificacao de pensamentos automaticos, manejo de preocupacao, reducao de evitacao, estrategias cognitivas e comportamentais iniciais. Evite protocolos complexos e indicacao psiquiatrica automatica.
 
-4. ALERTAS CLINICOS
-Ha sinais de atencao para as proximas sessoes? Quando considerar encaminhamento psiquiatrico?
+## 4. ALERTAS CLINICOS
+Apenas alertas prudentes e necessarios. Exemplos: "monitorar evolucao dos sintomas", "avaliar possivel impacto funcional". Nunca alarmar sem justificativa clinica.
 
-Escreva de forma tecnica e direta, em paragrafos corridos por secao. Sem marcadores de lista. Sem avisos genericos de "consulte um profissional" pois esta analise ja e para a profissional.`;
+A resposta deve ser clara, objetiva, clinica, funcional e rapida de ler. Sem textos longos. Sem excesso de profundidade inferencial. Sem romantizacao psicopatologica. O objetivo e apoiar o raciocinio clinico, nao substituir avaliacao profissional.`;
+
+  // Prompt longitudinal (apenas com 2+ aplicações)
+  const promptLongitudinal = nAplicacoes < 2
+    ? null
+    : `Voce e um assistente de apoio a formulacao clinica. Gere uma analise de evolucao longitudinal prudente e objetiva, baseada exclusivamente nos dados de aplicacoes anteriores e atuais do instrumento.
+
+REGRAS:
+- Nao gerar diagnostico. Nao inferir sintomas nao informados. Nao concluir eficacia terapeutica isoladamente.
+- Nao usar linguagem alarmista.
+- Utilizar: "melhora clinica provavel", "estabilidade relativa", "agravamento provavel", "oscilacao sintomatica".
+- Evitar: "remissao", "recaida", "recuperacao", "piora grave" sem contexto adicional.
+- Sempre informar variacao numerica (delta).
+- Focar em: intensidade sintomatica, tendencia temporal, necessidade de monitoramento.
+
+DADOS:
+- Instrumento: ${d.inst}
+- Score atual: ${d.latestScore} de ${d.cfg.max} (${d.latestLevel.label})
+- Historico completo: ${scoreHistory}
+- Variacao ultima aplicacao: Δ ${deltaStr} pontos
+
+Estruture assim:
+
+## ACOMPANHAMENTO LONGITUDINAL
+Descreva a tendencia observada entre as aplicacoes de forma objetiva e prudente. Informe o delta. Classifique a tendencia (melhora clinica provavel / estabilidade relativa / agravamento provavel / oscilacao sintomatica). Recomende monitoramento conforme indicado.
+
+Linguagem tecnica, objetiva e prudente. Sem tom de laudo. Sem dramatizacao.`;
+
+  const prompt = promptLongitudinal
+    ? promptScore + '\n\n' + promptLongitudinal
+    : promptScore;
 
   try {
     const payload = {
@@ -631,10 +783,10 @@ Escreva de forma tecnica e direta, em paragrafos corridos por secao. Sem marcado
       prompt
     };
 
-    let token = sessionStorage.getItem('sb_session_token') || SB_SESSION;
+    let token = sessionStorage.getItem('sb_session_token') || SB_SESSION_TOKEN;
     if (!token) throw new Error('expired-session');
 
-    let response = await fetchWithTimeout(
+    const response = await fetchWithTimeout(
       'https://qpwjxacdjzzsyjbuuwsq.supabase.co/functions/v1/smooth-responder',
       {
         method: 'POST',
@@ -646,26 +798,10 @@ Escreva de forma tecnica e direta, em paragrafos corridos por secao. Sem marcado
       }
     );
 
-    if (response.status === 401 || response.status === 403) {
-      token = await refreshSessionToken();
-      if (!token) throw new Error('expired-session');
-      response = await fetchWithTimeout(
-        'https://qpwjxacdjzzsyjbuuwsq.supabase.co/functions/v1/smooth-responder',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-          },
-          body: JSON.stringify(payload)
-        }
-      );
-    }
-
     if (!response.ok) throw new Error('ai-request-failed');
     const result = await response.json();
     textEl.innerHTML = '';
-    const analysis = result.analysis || result.text || result.content || result.message || '';
+    const analysis = result.analysis || result.text || result.content || '';
     if (analysis) {
       // Render markdown-like formatting
       const html = analysis
@@ -773,7 +909,7 @@ function switchInst(inst) {
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 async function init() {
-  if (!SB_SESSION) {
+  if (!SB_SESSION_TOKEN) {
     const refreshed = await refreshSessionToken();
     if (!refreshed) {
       sessionStorage.setItem('sb_redirect', window.location.href);

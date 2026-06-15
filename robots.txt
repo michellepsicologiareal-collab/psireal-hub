@@ -1,6 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /admin-contatos.html
-Disallow: /formulario-esquemas.html
 
-Sitemap: https://michellepsicologiareal-collab.github.io/psireal-hub/sitemap.xml
+Sitemap: https://psireal.com.br/sitemap.xml

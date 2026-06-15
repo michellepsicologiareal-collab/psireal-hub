@@ -2,7 +2,7 @@
   "name": "Biblioteca Psi Real",
   "short_name": "Psi Real",
   "description": "Recursos clínicos em TCC para psicólogos e supervisores",
-  "start_url": "/psireal-hub/biblioteca-tcc/",
+  "start_url": "/biblioteca-tcc/",
   "display": "standalone",
   "background_color": "#FAF6F7",
   "theme_color": "#8B3A4A",

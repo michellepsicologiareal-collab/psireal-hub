@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -7,6 +7,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Exposição e Prevenção de Rituais — Foa & Kozak | Biblioteca Psi Real</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -269,15 +274,197 @@
   </style>
 
   <!-- PWA -->
-  <link rel="manifest" href="/psireal-hub/biblioteca-tcc/manifest.json" />
+  <link rel="manifest" href="../../manifest.json" />
   <meta name="theme-color" content="#8B4A52" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Psi Real" />
-  <link rel="apple-touch-icon" href="/psireal-hub/biblioteca-tcc/icons/icon-192.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="/psireal-hub/biblioteca-tcc/icons/icon-192.png" />
-  <link rel="icon" type="image/png" sizes="512x512" href="/psireal-hub/biblioteca-tcc/icons/icon-512.png" />
+  <link rel="apple-touch-icon" href="../../icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="../../icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="../../icons/icon-512.png" />
+
+<style id="psireal-layout-refresh">
+  :root{
+    --ps-bg:#FAF8F5;
+    --ps-surface:#FFFFFF;
+    --ps-ink:#171321;
+    --ps-muted:#686174;
+    --ps-soft:#A090C8;
+    --ps-border:#E8E2EC;
+    --ps-violet:#5B3DF5;
+    --ps-violet-dark:#2C1A69;
+    --ps-violet-soft:#EEE9FF;
+    --ps-shadow:0 18px 48px rgba(23,19,33,.08);
+    --ps-radius:22px;
+  }
+
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ps-bg)!important;
+    color:var(--ps-ink)!important;
+    font-family:'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif!important;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,h4,
+  .hero-title,.section-title,.material-title,.review-title,
+  .nav-logo-text,.card-title{
+    font-family:'Manrope', system-ui, sans-serif!important;
+    letter-spacing:-.045em!important;
+    color:var(--ps-ink)!important;
+  }
+
+  p,li,.subtitle,.description,.lead{
+    color:var(--ps-muted)!important;
+  }
+
+  nav,header,.topbar,.navbar{
+    background:rgba(250,248,245,.9)!important;
+    border-bottom:1px solid var(--ps-border)!important;
+    backdrop-filter:blur(18px)!important;
+  }
+
+  .nav-logo img,
+  .nav-real-logo{
+    width:42px!important;
+    height:42px!important;
+    border-radius:50%!important;
+    object-fit:contain!important;
+  }
+
+  .nav-logo-icon{
+    display:none!important;
+  }
+
+  .nav-logo{
+    gap:12px!important;
+  }
+
+  a{
+    color:inherit;
+  }
+
+  a:hover{
+    color:var(--ps-violet)!important;
+  }
+
+  .btn,
+  .button,
+  .cta,
+  .primary,
+  .btn-primary,
+  .hero-cta,
+  button,
+  a[class*="btn"]{
+    border-radius:14px!important;
+    font-weight:800!important;
+  }
+
+  .btn-primary,
+  .primary,
+  .cta,
+  .hero-cta,
+  button.primary,
+  a.primary,
+  a.btn-primary{
+    background:var(--ps-violet)!important;
+    color:#fff!important;
+    border-color:var(--ps-violet)!important;
+    box-shadow:0 16px 34px rgba(91,61,245,.18)!important;
+  }
+
+  .btn-primary:hover,
+  .primary:hover,
+  .cta:hover,
+  .hero-cta:hover,
+  a.primary:hover,
+  a.btn-primary:hover{
+    background:#4B30DA!important;
+    color:#fff!important;
+    transform:translateY(-1px);
+  }
+
+  .btn-secondary,
+  .secondary,
+  a.secondary{
+    background:#fff!important;
+    color:var(--ps-ink)!important;
+    border:1px solid var(--ps-border)!important;
+  }
+
+  .pill,.badge,.tag,.category,.label{
+    background:var(--ps-violet-soft)!important;
+    color:var(--ps-violet-dark)!important;
+    border:1px solid var(--ps-border)!important;
+    border-radius:999px!important;
+    font-weight:800!important;
+    letter-spacing:.06em!important;
+  }
+
+  .card,
+  .material-card,
+  .resource-card,
+  .review-card,
+  article,
+  .content-card,
+  .panel{
+    background:#fff!important;
+    border:1px solid var(--ps-border)!important;
+    border-radius:var(--ps-radius)!important;
+    box-shadow:0 8px 26px rgba(23,19,33,.045)!important;
+  }
+
+  .card:hover,
+  .material-card:hover,
+  .resource-card:hover,
+  .review-card:hover{
+    box-shadow:var(--ps-shadow)!important;
+    border-color:#D8D0E5!important;
+  }
+
+  .material-card .card-visual,
+  .card-visual,
+  .visual,
+  .gradient-card,
+  .cover{
+    background:linear-gradient(135deg,#171321 0%,#5B3DF5 100%)!important;
+  }
+
+  .toc,
+  .sidebar,
+  aside{
+    background:transparent!important;
+  }
+
+  .toc a.active,
+  .toc .active,
+  .sidebar .active,
+  .nav-links .active,
+  .active{
+    background:var(--ps-violet-soft)!important;
+    color:var(--ps-violet-dark)!important;
+    border-radius:12px!important;
+  }
+
+  hr,.divider{
+    border-color:var(--ps-border)!important;
+  }
+
+  #install-prompt,
+  .install-prompt,
+  .pwa-install,
+  .pwa-prompt,
+  .install-banner,
+  .app-install-banner,
+  [data-install-prompt]{
+    display:none!important;
+    visibility:hidden!important;
+    opacity:0!important;
+    pointer-events:none!important;
+  }
+</style>
+
 </head>
 <body>
 <!-- PWA Install Banner -->
@@ -290,12 +477,12 @@
     <div style="font-size:11px;color:#8A7370;">Acesse offline, como um app</div>
   </div>
   <button onclick="installPWA()" style="background:#8B4A52;color:#fff;border:none;border-radius:7px;padding:7px 14px;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:inherit;">Instalar</button>
-  <button onclick="dismissInstallBanner()" style="background:none;border:none;color:#C4A8A4;cursor:pointer;padding:4px;line-height:1;" aria-label="Fechar">✕</button>
+  <button onclick="dismissInstallBanner()" style="background:none;border:none;color:#C4A8A4;cursor:pointer;padding:4px;line-height:1;" aria-label="Fechar">âœ•</button>
 </div>
 
 <nav>
-  <a class="nav-back" href="/psireal-hub/biblioteca-tcc/index.html">
-    <span class="nav-back-arrow">←</span> Biblioteca Psi Real
+  <a class="nav-back" href="../../index.html">
+    <span class="nav-back-arrow">â†</span> Biblioteca Psi Real
   </a>
   <span class="nav-title">EPR · Foa & Kozak</span>
 </nav>
@@ -320,7 +507,7 @@
   <main class="content">
 
     <div class="doc-header">
-      <div class="breadcrumb"><a href="/psireal-hub/biblioteca-tcc/index.html">Biblioteca Psi Real</a> / TCC / Exposição e Prevenção de Rituais</div>
+      <div class="breadcrumb"><a href="../../index.html">Biblioteca Psi Real</a> / TCC / Exposição e Prevenção de Rituais</div>
       <div class="doc-tags">
         <span class="doc-tag tag-tcc">TCC</span>
         <span class="doc-tag tag-epr">TOC</span>
@@ -542,12 +729,12 @@
         <li class="ladder-rung">
           <span class="suds-badge s90">90</span>
           <span class="ladder-text">Tocar em corrimão de hospital público e não lavar as mãos por 2 horas</span>
-          <span class="ladder-ritual">Ritual: lavar mãos 20×</span>
+          <span class="ladder-ritual">Ritual: lavar mãos 20Ã—</span>
         </li>
         <li class="ladder-rung">
           <span class="suds-badge s80">80</span>
           <span class="ladder-text">Apertar a mão de alguém que parece doente e não lavar por 1 hora</span>
-          <span class="ladder-ritual">Ritual: lavar mãos 10×</span>
+          <span class="ladder-ritual">Ritual: lavar mãos 10Ã—</span>
         </li>
         <li class="ladder-rung">
           <span class="suds-badge s70">70</span>
@@ -557,7 +744,7 @@
         <li class="ladder-rung">
           <span class="suds-badge s60">60</span>
           <span class="ladder-text">Usar banheiro público e tocar na maçaneta sem usar papel</span>
-          <span class="ladder-ritual">Ritual: lavar 5×, verificar sabão</span>
+          <span class="ladder-ritual">Ritual: lavar 5Ã—, verificar sabão</span>
         </li>
         <li class="ladder-rung">
           <span class="suds-badge s50">50</span>
@@ -567,7 +754,7 @@
         <li class="ladder-rung">
           <span class="suds-badge s40">40</span>
           <span class="ladder-text">Pegar dinheiro (cédulas) e guardar sem lavar as mãos antes de comer</span>
-          <span class="ladder-ritual">Ritual: lavar 3× antes de qualquer refeição</span>
+          <span class="ladder-ritual">Ritual: lavar 3Ã— antes de qualquer refeição</span>
         </li>
         <li class="ladder-rung">
           <span class="suds-badge s30">30</span>
@@ -602,7 +789,7 @@
         <li><div class="step-dot">2</div><div><strong>Registrar SUDS antes:</strong> Pedir ao paciente que avalie a ansiedade antes do contato com o estímulo. Serve de linha de base para comparação.</div></li>
         <li><div class="step-dot">3</div><div><strong>Iniciar o contato com o estímulo:</strong> Exposição ao vivo sempre que possível — em imaginação apenas quando a situação real não pode ser reproduzida na sessão. A exposição ao vivo é mais eficaz.</div></li>
         <li><div class="step-dot">4</div><div><strong>Monitorar SUDS durante a exposição:</strong> Pedir ao paciente que avalie sua ansiedade a cada 5–10 minutos. Registrar os valores — a curva de habituação é dado clínico e pedagógico.</div></li>
-        <li><div class="step-dot">5</div><div><strong>Manter a exposição até habituação:</strong> Continuar até a ansiedade reduzir pelo menos 50% do pico, ou até atingir SUDS ≤ 30. Nunca encerrar a exposição no pico — isso reforça a evitação.</div></li>
+        <li><div class="step-dot">5</div><div><strong>Manter a exposição até habituação:</strong> Continuar até a ansiedade reduzir pelo menos 50% do pico, ou até atingir SUDS â‰¤ 30. Nunca encerrar a exposição no pico — isso reforça a evitação.</div></li>
         <li><div class="step-dot">6</div><div><strong>Prevenir o ritual:</strong> Durante e após a exposição, o ritual é completamente impedido. Ver seção 07 para estratégias de manejo da PR.</div></li>
         <li><div class="step-dot">7</div><div><strong>Processar após a exposição:</strong> "O que aconteceu? O que você esperava que fosse acontecer? O que de fato aconteceu?" — a violação da expectativa é explorada verbalmente.</div></li>
         <li><div class="step-dot">8</div><div><strong>Prescrever exposição como tarefa:</strong> A mesma exposição realizada na sessão deve ser repetida em casa pelo menos uma vez por dia, até o próximo encontro.</div></li>
@@ -658,7 +845,7 @@
         </div>
         <div class="ritual-cell">
           <div class="ritual-cell-label label-fazer">Alternativa funcional</div>
-          Tolerar a incerteza sem resolução. Dizer a si mesmo: "Talvez seja verdade, talvez não seja. Vou conviver com a dúvida." — a tolerância à incerteza é a habilidade central.
+          Tolerar a incerteza sem resolução. Dizer a si mesmo: "Talvez seja verdade, talvez não seja. Vou conviver com a dúvida." — a tolerância Ã  incerteza é a habilidade central.
         </div>
       </div>
 
@@ -696,7 +883,7 @@
             <td>TOC</td>
             <td>Situações e pensamentos obsessivos que disparam rituais</td>
             <td>Abstenção completa de compulsões abertas e encobertas</td>
-            <td>Incluir rituais mentais e reasseguramento; exposição à incerteza é central</td>
+            <td>Incluir rituais mentais e reasseguramento; exposição Ã  incerteza é central</td>
           </tr>
           <tr>
             <td>Fobia específica</td>
@@ -714,7 +901,7 @@
             <td>Transtorno de pânico com agorafobia</td>
             <td>Situações agorafóbicas + sensações físicas internas (exposição interoceptiva)</td>
             <td>Não escapar, não usar objetos de segurança (celular, água, companhia)</td>
-            <td>Exposição interoceptiva (hiperventilação, girar em cadeira) expõe às sensações temidas diretamente</td>
+            <td>Exposição interoceptiva (hiperventilação, girar em cadeira) expõe Ã s sensações temidas diretamente</td>
           </tr>
           <tr>
             <td>TEPT</td>
@@ -726,7 +913,7 @@
             <td>TAG</td>
             <td>Incerteza e preocupações catastrofizadas</td>
             <td>Não realizar comportamentos de controle e reasseguramento</td>
-            <td>Exposição à incerteza e à possibilidade do pior cenário (imaginal); exposição ao comportamento adiado por preocupação</td>
+            <td>Exposição Ã  incerteza e Ã  possibilidade do pior cenário (imaginal); exposição ao comportamento adiado por preocupação</td>
           </tr>
         </tbody>
       </table>
@@ -740,12 +927,12 @@
       <div class="hl-row"><strong>Abandono no pico de ansiedade:</strong> O paciente encerra a exposição quando a ansiedade está no pico — o pior momento possível. Reforça a evitação. Planejar a duração mínima da exposição com antecedência e combinar como lidar com o impulso de escapar.</div>
       <div class="hl-row"><strong>Rituais encobertos durante a exposição:</strong> O paciente se expõe ao estímulo mas neutraliza mentalmente ao mesmo tempo — a exposição não produz aprendizado. Identificar os rituais mentais na avaliação e incluí-los explicitamente na prevenção de rituais.</div>
       <div class="hl-row"><strong>Família como facilitadora do TOC:</strong> Familiares que realizam rituais pelo paciente, fornecem reasseguramento ou modificam a rotina para acomodar as compulsões. Sessões de psicoeducação familiar e orientação sobre como deixar de participar do ciclo são essenciais.</div>
-      <div class="hl-row"><strong>Insight pobre:</strong> Pacientes com baixo insight acreditam fortemente que o perigo é real e a compulsão é necessária. EPR ainda é indicada, mas exige mais psicoeducação, progressão mais lenta e atenção à aliança.</div>
+      <div class="hl-row"><strong>Insight pobre:</strong> Pacientes com baixo insight acreditam fortemente que o perigo é real e a compulsão é necessária. EPR ainda é indicada, mas exige mais psicoeducação, progressão mais lenta e atenção Ã  aliança.</div>
       <div class="hl-row"><strong>Comorbidade com depressão grave:</strong> Depressão intensa reduz a motivação e prejudica o aprendizado durante a exposição. Considerar tratamento da depressão em paralelo (farmacológico ou ativação comportamental) antes ou junto com a EPR.</div>
       <div class="hl-row"><strong>Progresso estagnado:</strong> Quando o paciente não avança na hierarquia após várias semanas. Revisar a hierarquia, verificar rituais não identificados, explorar comportamentos de segurança ocultos, avaliar se as tarefas de casa estão sendo realizadas.</div>
 
       <div class="callout callout-blue">
-        <p><strong>Sobre recaídas:</strong> Recaídas são parte esperada do processo — não indicam falha do tratamento. Ao encerrar a EPR, dedicar sessões à prevenção de recaídas: identificar situações de risco, criar plano de resposta a futuros aumentos de sintoma e normalizar flutuações ao longo do tempo.</p>
+        <p><strong>Sobre recaídas:</strong> Recaídas são parte esperada do processo — não indicam falha do tratamento. Ao encerrar a EPR, dedicar sessões Ã  prevenção de recaídas: identificar situações de risco, criar plano de resposta a futuros aumentos de sintoma e normalizar flutuações ao longo do tempo.</p>
       </div>
     </div>
 
@@ -784,14 +971,14 @@
   // Service Worker
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/psireal-hub/biblioteca-tcc/sw.js')
+      navigator.serviceWorker.register('../../sw.js')
         .catch(err => console.warn('SW registration failed:', err));
     });
   }
 
   // Install prompt (A2HS banner)
   let deferredPrompt = null;
-  window.addEventListener('beforeinstallprompt', (e) => {
+  window.addEventListener('beforeinstallprompt_disabled', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     const banner = document.getElementById('pwa-install-banner');

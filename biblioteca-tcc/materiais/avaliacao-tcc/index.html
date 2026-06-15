@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -7,6 +7,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Avaliação Cognitivo-Comportamental — Judith Beck | Biblioteca Psi Real</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -241,15 +246,197 @@
   </style>
 
   <!-- PWA -->
-  <link rel="manifest" href="/psireal-hub/biblioteca-tcc/manifest.json" />
+  <link rel="manifest" href="../../manifest.json" />
   <meta name="theme-color" content="#8B4A52" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Psi Real" />
-  <link rel="apple-touch-icon" href="/psireal-hub/biblioteca-tcc/icons/icon-192.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="/psireal-hub/biblioteca-tcc/icons/icon-192.png" />
-  <link rel="icon" type="image/png" sizes="512x512" href="/psireal-hub/biblioteca-tcc/icons/icon-512.png" />
+  <link rel="apple-touch-icon" href="../../icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="../../icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="../../icons/icon-512.png" />
+
+<style id="psireal-layout-refresh">
+  :root{
+    --ps-bg:#FAF8F5;
+    --ps-surface:#FFFFFF;
+    --ps-ink:#171321;
+    --ps-muted:#686174;
+    --ps-soft:#A090C8;
+    --ps-border:#E8E2EC;
+    --ps-violet:#5B3DF5;
+    --ps-violet-dark:#2C1A69;
+    --ps-violet-soft:#EEE9FF;
+    --ps-shadow:0 18px 48px rgba(23,19,33,.08);
+    --ps-radius:22px;
+  }
+
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ps-bg)!important;
+    color:var(--ps-ink)!important;
+    font-family:'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif!important;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,h4,
+  .hero-title,.section-title,.material-title,.review-title,
+  .nav-logo-text,.card-title{
+    font-family:'Manrope', system-ui, sans-serif!important;
+    letter-spacing:-.045em!important;
+    color:var(--ps-ink)!important;
+  }
+
+  p,li,.subtitle,.description,.lead{
+    color:var(--ps-muted)!important;
+  }
+
+  nav,header,.topbar,.navbar{
+    background:rgba(250,248,245,.9)!important;
+    border-bottom:1px solid var(--ps-border)!important;
+    backdrop-filter:blur(18px)!important;
+  }
+
+  .nav-logo img,
+  .nav-real-logo{
+    width:42px!important;
+    height:42px!important;
+    border-radius:50%!important;
+    object-fit:contain!important;
+  }
+
+  .nav-logo-icon{
+    display:none!important;
+  }
+
+  .nav-logo{
+    gap:12px!important;
+  }
+
+  a{
+    color:inherit;
+  }
+
+  a:hover{
+    color:var(--ps-violet)!important;
+  }
+
+  .btn,
+  .button,
+  .cta,
+  .primary,
+  .btn-primary,
+  .hero-cta,
+  button,
+  a[class*="btn"]{
+    border-radius:14px!important;
+    font-weight:800!important;
+  }
+
+  .btn-primary,
+  .primary,
+  .cta,
+  .hero-cta,
+  button.primary,
+  a.primary,
+  a.btn-primary{
+    background:var(--ps-violet)!important;
+    color:#fff!important;
+    border-color:var(--ps-violet)!important;
+    box-shadow:0 16px 34px rgba(91,61,245,.18)!important;
+  }
+
+  .btn-primary:hover,
+  .primary:hover,
+  .cta:hover,
+  .hero-cta:hover,
+  a.primary:hover,
+  a.btn-primary:hover{
+    background:#4B30DA!important;
+    color:#fff!important;
+    transform:translateY(-1px);
+  }
+
+  .btn-secondary,
+  .secondary,
+  a.secondary{
+    background:#fff!important;
+    color:var(--ps-ink)!important;
+    border:1px solid var(--ps-border)!important;
+  }
+
+  .pill,.badge,.tag,.category,.label{
+    background:var(--ps-violet-soft)!important;
+    color:var(--ps-violet-dark)!important;
+    border:1px solid var(--ps-border)!important;
+    border-radius:999px!important;
+    font-weight:800!important;
+    letter-spacing:.06em!important;
+  }
+
+  .card,
+  .material-card,
+  .resource-card,
+  .review-card,
+  article,
+  .content-card,
+  .panel{
+    background:#fff!important;
+    border:1px solid var(--ps-border)!important;
+    border-radius:var(--ps-radius)!important;
+    box-shadow:0 8px 26px rgba(23,19,33,.045)!important;
+  }
+
+  .card:hover,
+  .material-card:hover,
+  .resource-card:hover,
+  .review-card:hover{
+    box-shadow:var(--ps-shadow)!important;
+    border-color:#D8D0E5!important;
+  }
+
+  .material-card .card-visual,
+  .card-visual,
+  .visual,
+  .gradient-card,
+  .cover{
+    background:linear-gradient(135deg,#171321 0%,#5B3DF5 100%)!important;
+  }
+
+  .toc,
+  .sidebar,
+  aside{
+    background:transparent!important;
+  }
+
+  .toc a.active,
+  .toc .active,
+  .sidebar .active,
+  .nav-links .active,
+  .active{
+    background:var(--ps-violet-soft)!important;
+    color:var(--ps-violet-dark)!important;
+    border-radius:12px!important;
+  }
+
+  hr,.divider{
+    border-color:var(--ps-border)!important;
+  }
+
+  #install-prompt,
+  .install-prompt,
+  .pwa-install,
+  .pwa-prompt,
+  .install-banner,
+  .app-install-banner,
+  [data-install-prompt]{
+    display:none!important;
+    visibility:hidden!important;
+    opacity:0!important;
+    pointer-events:none!important;
+  }
+</style>
+
 </head>
 <body>
 <!-- PWA Install Banner -->
@@ -262,12 +449,12 @@
     <div style="font-size:11px;color:#8A7370;">Acesse offline, como um app</div>
   </div>
   <button onclick="installPWA()" style="background:#8B4A52;color:#fff;border:none;border-radius:7px;padding:7px 14px;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:inherit;">Instalar</button>
-  <button onclick="dismissInstallBanner()" style="background:none;border:none;color:#C4A8A4;cursor:pointer;padding:4px;line-height:1;" aria-label="Fechar">✕</button>
+  <button onclick="dismissInstallBanner()" style="background:none;border:none;color:#C4A8A4;cursor:pointer;padding:4px;line-height:1;" aria-label="Fechar">âœ•</button>
 </div>
 
 <nav>
-  <a class="nav-back" href="/psireal-hub/biblioteca-tcc/index.html">
-    <span class="nav-back-arrow">←</span> Biblioteca Psi Real
+  <a class="nav-back" href="../../index.html">
+    <span class="nav-back-arrow">â†</span> Biblioteca Psi Real
   </a>
   <span class="nav-title">Avaliação Inicial · Beck</span>
 </nav>
@@ -291,14 +478,14 @@
 
   <main class="content">
     <div class="doc-header">
-      <div class="breadcrumb"><a href="/psireal-hub/biblioteca-tcc/index.html">Biblioteca Psi Real</a> / TCC / Avaliação Inicial</div>
+      <div class="breadcrumb"><a href="../../index.html">Biblioteca Psi Real</a> / TCC / Avaliação Inicial</div>
       <div class="doc-tags">
         <span class="doc-tag tag-tcc">TCC</span>
         <span class="doc-tag tag-aval">Avaliação</span>
         <span class="doc-tag tag-anamnese">Anamnese</span>
       </div>
       <h1 class="doc-title">Avaliação<br>Cognitivo-Comportamental</h1>
-      <p class="doc-intro">Estrutura da avaliação inicial em TCC segundo Judith Beck: anamnese, inventários, hierarquia de medos e formulação da queixa principal — da primeira sessão à hipótese clínica.</p>
+      <p class="doc-intro">Estrutura da avaliação inicial em TCC segundo Judith Beck: anamnese, inventários, hierarquia de medos e formulação da queixa principal — da primeira sessão Ã  hipótese clínica.</p>
       <div class="doc-meta">
         <div class="doc-meta-item"><strong>Referência:</strong> Beck, 2021 (3ª ed.)</div>
         <div class="doc-meta-item"><strong>Área:</strong> TCC / Avaliação Clínica</div>
@@ -465,7 +652,7 @@
       </div>
 
       <div class="callout callout-warm">
-        <p><strong>Atenção na supervisão:</strong> Terapeutas em formação frequentemente conduzem a anamnese como entrevista jornalística — coletam fatos sem explorar o <em>significado</em> que o paciente atribui às experiências. O dado relevante em TCC é sempre a interpretação, não apenas o evento.</p>
+        <p><strong>Atenção na supervisão:</strong> Terapeutas em formação frequentemente conduzem a anamnese como entrevista jornalística — coletam fatos sem explorar o <em>significado</em> que o paciente atribui Ã s experiências. O dado relevante em TCC é sempre a interpretação, não apenas o evento.</p>
       </div>
     </div>
 
@@ -481,30 +668,30 @@
             <div class="cog-node-label">Experiências de vida</div>
             <div class="cog-node-text">Infância, relações, traumas, mensagens recebidas</div>
           </div>
-          <div class="cog-arrow">↓</div>
+          <div class="cog-arrow">â†“</div>
           <div class="cog-node">
             <div class="cog-node-label">Crenças nucleares</div>
             <div class="cog-node-text">Crenças absolutas sobre si, os outros e o mundo<br><em style="font-size:12px;opacity:0.8">"Sou incompetente" · "Não sou amável" · "O mundo é perigoso"</em></div>
           </div>
-          <div class="cog-arrow">↓</div>
+          <div class="cog-arrow">â†“</div>
           <div class="cog-node">
             <div class="cog-node-label">Crenças intermediárias</div>
             <div class="cog-node-text">Regras, atitudes e pressupostos condicionais<br><em style="font-size:12px;opacity:0.8">"Se eu não for perfeito, serei rejeitado"</em></div>
           </div>
-          <div class="cog-arrow">↓</div>
+          <div class="cog-arrow">â†“</div>
           <div class="cog-node cog-node-neutral">
             <div class="cog-node-label">Situação gatilho</div>
             <div class="cog-node-text">Evento ou estímulo que ativa as crenças</div>
           </div>
-          <div class="cog-arrow">↓</div>
+          <div class="cog-arrow">â†“</div>
           <div class="cog-node">
             <div class="cog-node-label">Pensamento automático</div>
             <div class="cog-node-text">Conteúdo cognitivo rápido, espontâneo, plausível<br><em style="font-size:12px;opacity:0.8">"Eu vou errar de novo" · "Ela não gosta de mim"</em></div>
           </div>
-          <div class="cog-arrow">↓</div>
+          <div class="cog-arrow">â†“</div>
           <div class="cog-node cog-node-neutral" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;max-width:420px;background:transparent;border:none;padding:0">
             <div style="background:var(--rose-light);border:1px solid var(--rose-border);border-radius:var(--radius-sm);padding:0.6rem 0.8rem;text-align:center">
-              <div style="font-size:10px;color:var(--rose);font-weight:500;margin-bottom:3px">EMOÇÃO</div>
+              <div style="font-size:10px;color:var(--rose);font-weight:500;margin-bottom:3px">EMOÇÃƒO</div>
               <div style="font-size:12px;color:var(--ink-muted)">Ansiedade · Tristeza · Raiva</div>
             </div>
             <div style="background:var(--rose-light);border:1px solid var(--rose-border);border-radius:var(--radius-sm);padding:0.6rem 0.8rem;text-align:center">
@@ -512,7 +699,7 @@
               <div style="font-size:12px;color:var(--ink-muted)">Evitação · Isolamento · Compulsão</div>
             </div>
             <div style="background:var(--rose-light);border:1px solid var(--rose-border);border-radius:var(--radius-sm);padding:0.6rem 0.8rem;text-align:center">
-              <div style="font-size:10px;color:var(--rose);font-weight:500;margin-bottom:3px">RESPOSTA FÍSICA</div>
+              <div style="font-size:10px;color:var(--rose);font-weight:500;margin-bottom:3px">RESPOSTA FÃSICA</div>
               <div style="font-size:12px;color:var(--ink-muted)">Tensão · Taquicardia · Fadiga</div>
             </div>
           </div>
@@ -522,7 +709,7 @@
       <h3 class="sub-title">Os três níveis de cognição</h3>
       <div class="hl-row"><strong>Pensamentos automáticos:</strong> Cognitivos superficiais, situacionais e acessíveis. Primeiro alvo na avaliação e na intervenção inicial. Ex: "Vou parecer idiota nessa reunião."</div>
       <div class="hl-row"><strong>Crenças intermediárias:</strong> Regras, atitudes e pressupostos. Mais estáveis que os pensamentos automáticos. Ex: "Devo ser competente em tudo que faço para ter valor."</div>
-      <div class="hl-row"><strong>Crenças nucleares:</strong> O nível mais profundo e mais resistente à mudança. Formuladas na infância, globais e absolutas. Ex: "Sou um fracasso." "Sou diferente dos outros."</div>
+      <div class="hl-row"><strong>Crenças nucleares:</strong> O nível mais profundo e mais resistente Ã  mudança. Formuladas na infância, globais e absolutas. Ex: "Sou um fracasso." "Sou diferente dos outros."</div>
 
       <div class="callout callout-green">
         <p><strong>Regra clínica:</strong> Na avaliação inicial, o terapeuta começa identificando os pensamentos automáticos. As crenças intermediárias e nucleares emergem ao longo das sessões — não devem ser prematuramente impostas ao paciente.</p>
@@ -583,7 +770,7 @@
       <div class="comp-grid">
         <div class="comp-card">
           <div class="comp-name">SPIN / LSAS</div>
-          <div class="comp-desc">Social Phobia Inventory / Liebowitz Social Anxiety Scale — ansiedade social. Úteis em triagem de TAS.</div>
+          <div class="comp-desc">Social Phobia Inventory / Liebowitz Social Anxiety Scale — ansiedade social. Ãšteis em triagem de TAS.</div>
         </div>
         <div class="comp-card">
           <div class="comp-name">PCL-5</div>
@@ -595,7 +782,7 @@
         </div>
         <div class="comp-card">
           <div class="comp-name">PHQ-9 / GAD-7</div>
-          <div class="comp-desc">Escalas de rastreamento rápido de depressão e ansiedade generalizada. Úteis em contextos de saúde pública.</div>
+          <div class="comp-desc">Escalas de rastreamento rápido de depressão e ansiedade generalizada. Ãšteis em contextos de saúde pública.</div>
         </div>
         <div class="comp-card">
           <div class="comp-name">YSQ (Young Schema)</div>
@@ -662,7 +849,7 @@
         <li class="fear-rung">
           <span class="fear-rung-level lvl-3">30</span>
           <span class="fear-rung-label">Fazer pergunta ao professor durante aula com poucos alunos</span>
-          <span class="fear-rung-note">Às vezes evita</span>
+          <span class="fear-rung-note">Ã€s vezes evita</span>
         </li>
         <li class="fear-rung">
           <span class="fear-rung-level lvl-2">20</span>
@@ -698,11 +885,11 @@
         <div class="question-item">Propor uma hipótese: "Tenho uma ideia do que pode estar acontecendo — gostaria de compartilhar e ouvir sua opinião"</div>
         <div class="question-item">Explicar o ciclo de forma simples: situação → pensamento → emoção → comportamento de evitação → manutenção do problema</div>
         <div class="question-item">Verificar ativamente se faz sentido para o paciente: "Isso ressoa com o que você vive? Há algo que não se encaixa?"</div>
-        <div class="question-item">Conectar à lógica do tratamento: "Se for assim, o que podemos trabalhar é…"</div>
+        <div class="question-item">Conectar Ã  lógica do tratamento: "Se for assim, o que podemos trabalhar éâ€¦"</div>
       </div>
 
       <div class="callout callout-green">
-        <p><strong>Princípio colaborativo:</strong> A formulação não é diagnóstico imposto — é hipótese construída <em>com</em> o paciente. Se o paciente discorda ou amplia, a formulação melhora. A resistência à formulação é dado clínico valioso, não obstáculo.</p>
+        <p><strong>Princípio colaborativo:</strong> A formulação não é diagnóstico imposto — é hipótese construída <em>com</em> o paciente. Se o paciente discorda ou amplia, a formulação melhora. A resistência Ã  formulação é dado clínico valioso, não obstáculo.</p>
       </div>
     </div>
 
@@ -710,7 +897,7 @@
     <div class="doc-section" id="s9">
       <div class="sec-eyebrow">Seção 09</div>
       <h2 class="sec-title">Problemas frequentes na avaliação inicial</h2>
-      <div class="hl-row"><strong>Anamnese sem foco teórico:</strong> Coletar fatos biográficos sem explorar o significado atribuído às experiências. A anamnese em TCC é orientada pela busca de crenças, não de fatos.</div>
+      <div class="hl-row"><strong>Anamnese sem foco teórico:</strong> Coletar fatos biográficos sem explorar o significado atribuído Ã s experiências. A anamnese em TCC é orientada pela busca de crenças, não de fatos.</div>
       <div class="hl-row"><strong>Formulação prematura:</strong> Nomear crenças nucleares na primeira ou segunda sessão sem dados suficientes. A crença nuclear é hipótese de trabalho, não diagnóstico precoce.</div>
       <div class="hl-row"><strong>Inventários como formalidade:</strong> Administrar e arquivar sem explorar os resultados clinicamente. Escores altos em itens específicos devem gerar perguntas de acompanhamento.</div>
       <div class="hl-row"><strong>Negligenciar a avaliação de risco:</strong> Não perguntar diretamente sobre ideação suicida por desconforto do terapeuta. Beck é direta: perguntar não aumenta o risco — não perguntar sim.</div>
@@ -756,14 +943,14 @@
   // Service Worker
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/psireal-hub/biblioteca-tcc/sw.js')
+      navigator.serviceWorker.register('../../sw.js')
         .catch(err => console.warn('SW registration failed:', err));
     });
   }
 
   // Install prompt (A2HS banner)
   let deferredPrompt = null;
-  window.addEventListener('beforeinstallprompt', (e) => {
+  window.addEventListener('beforeinstallprompt_disabled', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     const banner = document.getElementById('pwa-install-banner');

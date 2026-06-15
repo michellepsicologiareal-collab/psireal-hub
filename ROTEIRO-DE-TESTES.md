@@ -1,4 +1,4 @@
-# Roteiro de testes - PsiReal TCC
+﻿# Roteiro de testes - PsiReal Clínica
 
 Use este roteiro depois de publicar os arquivos e depois de qualquer mudanca no Supabase.
 
@@ -121,11 +121,11 @@ Use este roteiro depois de publicar os arquivos e depois de qualquer mudanca no 
 
 - [ ] No desktop, conferir sidebar lateral do site publico
 - [ ] No mobile, conferir menu lateral sem setas estranhas
-- [ ] Abrir `PsiReal TCC` e confirmar que ha `Voltar ao site`
-- [ ] Abrir `Biblioteca TCC` e confirmar:
+- [ ] Abrir `PsiReal Clínica` e confirmar que ha `Voltar ao site`
+- [ ] Abrir `Biblioteca PsiReal` e confirmar:
   - [ ] entrada a partir do site
   - [ ] retorno ao site
-  - [ ] ida para `PsiReal TCC`
+  - [ ] ida para `PsiReal Clínica`
 - [ ] Confirmar que nenhum card ou texto corta no celular
 - [ ] Testar pelo menos:
   - [ ] iPhone pequeno

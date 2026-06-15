@@ -4,17 +4,23 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>Questionário de Esquemas YSQ-S3 — Psi Real</title>
+  <meta name="description" content="Instrumento clínico de avaliação de esquemas emocionais precoces baseado no YSQ-S3 de Jeffrey Young. Uso profissional supervisionado.">
+  <meta property="og:title" content="Questionário de Esquemas YSQ-S3 — Psi Real">
+  <meta property="og:description" content="Instrumento clínico de avaliação de esquemas emocionais precoces baseado no YSQ-S3 de Jeffrey Young. Uso profissional supervisionado.">
+  <meta property="og:image" content="https://psireal.com.br/icon-512.png">
+  <meta property="og:url" content="https://psireal.com.br/formulario-esquemas.html">
+  <meta property="og:site_name" content="Psi Real">
   <!-- SEO -->
   <meta name="description" content="Instrumento clínico de avaliação de esquemas emocionais precoces baseado no YSQ-S3 de Jeffrey Young. Uso profissional supervisionado." />
   <meta name="keywords" content="YSQ esquemas Young, terapia do esquema avaliação, questionário esquemas emocionais" />
   <meta name="author" content="Michelle Donegá dos Santos" />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://michellepsicologiareal-collab.github.io/psireal-hub/formulario-esquemas.html" />
+  <link rel="canonical" href="https://psireal.com.br/formulario-esquemas.html" />
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Questionário de Esquemas YSQ-S3 — Psi Real" />
   <meta property="og:description" content="Instrumento clínico de avaliação de esquemas emocionais precoces baseado no YSQ-S3 de Jeffrey Young. Uso profissional supervisionado." />
-  <meta property="og:url" content="https://michellepsicologiareal-collab.github.io/psireal-hub/formulario-esquemas.html" />
+  <meta property="og:url" content="https://psireal.com.br/formulario-esquemas.html" />
   <meta property="og:site_name" content="Psicologia Real" />
   <meta property="og:locale" content="pt_BR" />
   <!-- Twitter Card -->
@@ -22,14 +28,14 @@
   <meta name="twitter:title" content="Questionário de Esquemas YSQ-S3 — Psi Real" />
   <meta name="twitter:description" content="Instrumento clínico de avaliação de esquemas emocionais precoces baseado no YSQ-S3 de Jeffrey Young. Uso profissional supervisionado." />
   <!-- PWA -->
-  <link rel="manifest" href="/psireal-hub/manifest.json" />
+  <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#3D2235" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Psi Real" />
-  <link rel="apple-touch-icon" href="/psireal-hub/icon-192.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="/psireal-hub/icon-192.png" />
+  <link rel="apple-touch-icon" href="/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Cormorant+Garamond:ital@1&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
@@ -257,6 +263,7 @@
 
 </style>
 <link rel="stylesheet" href="brand-refresh.css?v=20260518-4" />
+  <link rel="stylesheet" href="visual-modern.css">
 </head>
 <body>
 
@@ -595,7 +602,7 @@ buildForm();
   // PWA Service Worker
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/psireal-hub/sw.js')
+      navigator.serviceWorker.register('/sw.js')
         .then(r => console.log('SW registered'))
         .catch(e => console.log('SW error', e));
     });
