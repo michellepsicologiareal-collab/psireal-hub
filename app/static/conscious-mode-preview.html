@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>FinPilot — Prévia do Modo Consciente</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f7f5fb; }
+    .demo-layout { min-height: 100vh; display: grid; grid-template-columns: 240px 1fr; }
+    .demo-sidebar { padding: 22px 8px; background: #151924; color: #f7f4ff; }
+    .demo-brand { margin: 0 14px 22px; font: 800 22px/1.1 Inter, system-ui, sans-serif; letter-spacing: -.03em; }
+    .demo-nav { margin: 7px 12px; padding: 11px; border-radius: 10px; color: #bfc5d3; font: 600 14px/1.2 Inter, system-ui, sans-serif; }
+    .demo-main { min-width: 0; padding: 28px; }
+    @media (prefers-color-scheme: dark) { body { background: #0f1219; } }
+    @media (max-width: 760px) {
+      .demo-layout { display: block; } .demo-sidebar { padding: 14px 8px; }
+      .demo-brand { display: inline-block; margin-bottom: 8px; }
+      .demo-nav { display: none; } .demo-main { padding: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-layout">
+    <aside class="demo-sidebar" data-finpilot-sidebar>
+      <h1 class="demo-brand">⛵ FinPilot</h1>
+      <div class="demo-nav">Visão geral</div>
+      <div class="demo-nav">Diário</div>
+      <div class="demo-nav">Metas</div>
+    </aside>
+    <main class="demo-main"><section data-finpilot-conscious></section></main>
+  </div>
+  <script>
+    window.FinPilotConsciousDemoData = {
+      options: {
+        emotions: [
+          {value:"tranquilo",label:"Tranquilo"},{value:"feliz",label:"Feliz"},
+          {value:"ansioso",label:"Ansioso"},{value:"estressado",label:"Estressado"},
+          {value:"triste",label:"Triste"},{value:"entediado",label:"Entediado"},
+          {value:"cansado",label:"Cansado"},{value:"pressionado",label:"Pressionado"},
+          {value:"outro",label:"Outro"},{value:"prefiro_nao_informar",label:"Prefiro não informar"}
+        ],
+        decision_types: [
+          {value:"planejada",label:"Compra planejada"},{value:"necessaria",label:"Necessidade do momento"},
+          {value:"impulso",label:"Decisão por impulso"},{value:"compensacao",label:"Busca de conforto ou recompensa"},
+          {value:"influencia_social",label:"Influência social"},{value:"outro",label:"Outro motivo"}
+        ],
+        actions: [
+          {value:"pausa_30_min",titulo:"Pausa de 30 minutos"},{value:"esperar_24h",titulo:"Lista de 24 horas"},
+          {value:"definir_teto",titulo:"Teto para a categoria"},{value:"alternativa_baixo_custo",titulo:"Alternativa de baixo custo"},
+          {value:"conversar_com_alguem",titulo:"Decisão compartilhada"},{value:"nenhuma",titulo:"Somente observar"}
+        ],
+        privacy:"Responder é opcional. Seus textos ficam no banco do FinPilot e não são enviados à IA."
+      },
+      prompts: [
+        {
+          id:"fora_do_padrao-1", trigger:"fora_do_padrao",
+          explanation:"Esse valor ficou 2,4× acima da média recente de Lazer.",
+          transaction:{id:1,date:"2026-07-28",description:"Passeio do fim de semana",value:340,category_name:"Lazer"}
+        },
+        {
+          id:"orcamento_em_risco-2", trigger:"orcamento_em_risco",
+          explanation:"Alimentação já utilizou 92% do limite definido para o mês.",
+          transaction:{id:2,date:"2026-07-29",description:"Mercado",value:95.56,category_name:"Alimentação"}
+        }
+      ],
+      week: {
+        notice:"O Modo Consciente oferece educação e reflexão sobre hábitos financeiros. Não realiza diagnóstico.",
+        reflections:3, expenses:12, coverage_percentage:25, reflected_total:515.56,
+        dominant_emotion:{value:"estressado",label:"Estressado"},
+        patterns:[
+          {
+            id:"estressado-lazer", emotion:"estressado", emotion_label:"Estressado", category:"Lazer",
+            occurrences:2, total:420,
+            question:"Você percebe alguma relação entre momentos mais exigentes e gastos com lazer?",
+            action:"Anote uma forma mais barata de atender à mesma necessidade."
+          }
+        ],
+        next_step:{
+          code:"pausa_30_min",titulo:"Pausa de 30 minutos",
+          descricao:"Antes de uma compra parecida, espere 30 minutos e confira se ela continua fazendo sentido."
+        }
+      }
+    };
+  </script>
+  <script src="conscious-mode.js"></script>
+</body>
+</html>

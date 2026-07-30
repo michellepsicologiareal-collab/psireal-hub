@@ -1,0 +1,871 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#171b27">
+  <meta name="description" content="FinPilot — clareza para cuidar do seu dinheiro.">
+  <title>FinPilot · Meu dinheiro</title>
+  <link rel="stylesheet" href="/static/app.css">
+  <script>
+    document.documentElement.dataset.theme =
+      localStorage.getItem("finpilot-theme") ||
+      (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  </script>
+  <script defer src="/static/pluggy-connect-button.js"></script>
+  <script defer src="/static/app.js"></script>
+  <script defer src="/static/conscious-mode.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Menu principal">
+      <a class="brand brand--journal" href="#diario" aria-label="FinPilot Diário Financeiro">
+        <span class="brand-mark" aria-hidden="true">⛵</span>
+        <span><strong>FinPilot</strong><small>DIÁRIO<br>FINANCEIRO</small></span>
+      </a>
+
+      <nav class="side-nav">
+        <button class="nav-item is-active" type="button" data-page-link="overview">
+          <span class="nav-icon" aria-hidden="true">▤</span><span>Diário</span>
+        </button>
+        <button class="nav-item" type="button" data-page-link="categories">
+          <span class="nav-icon" aria-hidden="true">◈</span><span>Categorias</span>
+        </button>
+        <button class="nav-item" type="button" data-page-link="calendar">
+          <span class="nav-icon" aria-hidden="true">▦</span><span>Calendário</span>
+        </button>
+        <button class="nav-item" type="button" data-page-link="goals">
+          <span class="nav-icon" aria-hidden="true">◎</span><span>Metas</span>
+        </button>
+        <button class="nav-item" type="button" data-page-link="budgets">
+          <span class="nav-icon" aria-hidden="true">⌑</span><span>Planejamento</span>
+        </button>
+        <button class="nav-item" type="button" data-page-link="cards">
+          <span class="nav-icon" aria-hidden="true">▰</span><span>Contas e patrimônio</span>
+        </button>
+        <button class="nav-item" type="button" data-page-link="reminders">
+          <span class="nav-icon" aria-hidden="true">♧</span><span>Lembretes</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-grow"></div>
+      <button class="conscious-side-card" type="button" data-page-link="conscious">
+        <span aria-hidden="true">✣</span>
+        <strong>Modo consciente</strong>
+        <small>Observe antes de uma compra por impulso.</small>
+      </button>
+      <div class="bank-connect" data-bank-connect></div>
+      <button class="nav-item nav-item--utility" type="button" data-theme-toggle>
+        <span class="nav-icon" aria-hidden="true" data-theme-icon>☾</span>
+        <span data-theme-label>Modo escuro</span>
+      </button>
+      <button class="nav-item nav-item--utility" type="button" data-logout>
+        <span class="nav-icon" aria-hidden="true">↪</span><span>Sair</span>
+      </button>
+
+      <div class="profile">
+        <span class="avatar" data-avatar>M</span>
+        <span class="profile-copy">
+          <strong data-user-name>Minha conta</strong>
+          <small>Plano pessoal</small>
+        </span>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div>
+          <button class="mobile-menu-button" type="button" data-menu-toggle aria-label="Abrir menu">☰</button>
+          <p class="mobile-brand"><span aria-hidden="true">⛵</span> FinPilot</p>
+          <p class="breadcrumb" data-breadcrumb>Seu painel financeiro</p>
+        </div>
+        <div class="topbar-actions">
+          <label class="month-control">
+            <span class="sr-only">Mês exibido</span>
+            <input type="month" data-month>
+          </label>
+          <button class="icon-button" type="button" data-theme-toggle aria-label="Alternar modo claro e escuro">
+            <span aria-hidden="true" data-theme-icon>☾</span>
+          </button>
+          <button class="primary-button top-new-button" type="button" data-new-transaction>
+            <span aria-hidden="true">＋</span> Novo lançamento
+          </button>
+        </div>
+      </header>
+
+      <main class="main-content" tabindex="-1">
+        <section class="page is-active" data-page="overview" aria-labelledby="overview-title">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">DIÁRIO FINANCEIRO</p>
+              <h1 id="overview-title">Entenda para onde seu dinheiro foi.</h1>
+              <p>Entradas, gastos, metas e planos reunidos em uma visão simples.</p>
+            </div>
+            <button class="primary-button heading-action" type="button" data-new-transaction>
+              <span aria-hidden="true">＋</span> Novo lançamento
+            </button>
+          </div>
+
+          <div class="period-toolbar" aria-label="Período do diário">
+            <div class="period-tabs">
+              <button type="button" data-period="day">Dia</button>
+              <button type="button" data-period="week">Semana</button>
+              <button class="is-active" type="button" data-period="month">Mês</button>
+            </div>
+            <div class="period-navigation">
+              <button class="icon-button" type="button" data-period-prev aria-label="Período anterior">‹</button>
+              <strong data-period-label>Este mês</strong>
+              <button class="icon-button" type="button" data-period-next aria-label="Próximo período">›</button>
+            </div>
+            <button class="secondary-button period-today" type="button" data-period-today>Hoje</button>
+          </div>
+
+          <div class="summary-grid">
+            <article class="summary-card summary-card--expense">
+              <div class="summary-label"><span class="summary-dot"></span>Total gasto</div>
+              <strong data-summary-expense>R$ 0,00</strong>
+              <small data-summary-expense-variation>0 lançamentos no período</small>
+            </article>
+            <article class="summary-card summary-card--income">
+              <div class="summary-label"><span class="summary-dot"></span>Entradas</div>
+              <strong data-summary-income>R$ 0,00</strong>
+              <small data-summary-income-variation>Valores recebidos</small>
+            </article>
+            <article class="summary-card summary-card--balance">
+              <div class="summary-label"><span class="summary-dot"></span>Saldo do período</div>
+              <strong data-summary-balance>R$ 0,00</strong>
+              <small data-summary-saving>Entradas menos despesas</small>
+            </article>
+            <article class="summary-card summary-card--category">
+              <div class="summary-label"><span class="summary-dot"></span>Maior categoria</div>
+              <strong class="summary-category" data-summary-category>—</strong>
+              <small data-summary-category-value>Sem gastos ainda</small>
+            </article>
+          </div>
+
+          <div class="money-flow-grid">
+            <section class="panel flow-panel flow-panel--income">
+              <div class="flow-heading">
+                <span class="flow-icon" aria-hidden="true">↙</span>
+                <div><p class="panel-kicker">DE ONDE VEIO</p><h2>Recebi</h2></div>
+                <strong data-flow-income-total>R$ 0,00</strong>
+              </div>
+              <div class="flow-list" data-income-flow></div>
+            </section>
+            <section class="panel flow-panel flow-panel--expense">
+              <div class="flow-heading">
+                <span class="flow-icon" aria-hidden="true">↗</span>
+                <div><p class="panel-kicker">PARA ONDE FOI</p><h2>Gastei</h2></div>
+                <strong data-flow-expense-total>R$ 0,00</strong>
+              </div>
+              <div class="flow-list" data-expense-flow></div>
+              <button class="planned-strip" type="button" data-go-page="budgets">
+                ◉ Planejado, ainda não gasto: <strong data-planned-remaining>R$ 0,00</strong>
+              </button>
+            </section>
+            <section class="panel flow-panel flow-panel--wealth">
+              <div class="flow-heading">
+                <span class="flow-icon" aria-hidden="true">⚿</span>
+                <div><p class="panel-kicker">ONDE ESTÁ</p><h2>Guardado</h2></div>
+                <strong data-flow-wealth-total>R$ 0,00</strong>
+              </div>
+              <div class="flow-list" data-wealth-flow></div>
+              <button class="text-button" type="button" data-go-page="cards">Ver contas e patrimônio →</button>
+            </section>
+          </div>
+
+          <div class="diary-visual-grid">
+            <section class="panel financial-calendar-panel">
+              <div class="panel-heading">
+                <div><p class="panel-kicker">CALENDÁRIO FINANCEIRO</p><h2>Seu mês, dia por dia</h2></div>
+                <strong data-calendar-expense-total>R$ 0,00</strong>
+              </div>
+              <div class="financial-calendar" data-overview-calendar></div>
+            </section>
+            <section class="panel donut-panel">
+              <div class="panel-heading">
+                <div><p class="panel-kicker">CATEGORIAS</p><h2>Onde pesou mais</h2></div>
+              </div>
+              <div class="donut-wrap">
+                <div class="category-donut" data-category-donut>
+                  <div><span>Total</span><strong data-donut-total>R$ 0,00</strong></div>
+                </div>
+              </div>
+              <div class="donut-legend" data-donut-legend></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="page" data-page="diary" aria-labelledby="diary-title">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">SEU DINHEIRO NO DIA A DIA</p>
+              <h1 id="diary-title">Diário financeiro</h1>
+              <p>Registre, encontre e corrija cada movimentação.</p>
+            </div>
+            <button class="primary-button" type="button" data-new-transaction>
+              <span aria-hidden="true">＋</span> Novo lançamento
+            </button>
+          </div>
+
+          <div class="filter-bar">
+            <label class="search-field">
+              <span aria-hidden="true">⌕</span>
+              <input type="search" placeholder="Buscar descrição…" data-transaction-search>
+            </label>
+            <label>
+              <span class="sr-only">Filtrar por tipo</span>
+              <select data-transaction-type-filter>
+                <option value="">Entradas e despesas</option>
+                <option value="despesa">Somente despesas</option>
+                <option value="receita">Somente entradas</option>
+              </select>
+            </label>
+            <span class="filter-total" data-diary-count>0 lançamentos</span>
+            <button class="secondary-button filter-category-button" type="button" data-go-page="categories">◈ Categorias</button>
+          </div>
+          <section class="panel diary-panel">
+            <div class="transaction-list transaction-list--full" data-all-transactions></div>
+          </section>
+        </section>
+
+        <section class="page" data-page="cards" aria-labelledby="cards-title">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">ONDE ESTÁ SEU DINHEIRO</p>
+              <h1 id="cards-title">Contas e patrimônio</h1>
+              <p>Organize bancos, cartões e investimentos. Você também pode importar a fatura do cartão.</p>
+            </div>
+            <button class="primary-button" type="button" data-new-account>
+              <span aria-hidden="true">＋</span> Nova conta
+            </button>
+          </div>
+
+          <div class="account-summary-grid" data-account-summary></div>
+          <div class="segmented-control planning-tabs" role="tablist" aria-label="Tipos de patrimônio">
+            <button class="is-active" type="button" data-account-tab="all">Todas</button>
+            <button type="button" data-account-tab="bank">▣ Bancos</button>
+            <button type="button" data-account-tab="credit_card">▰ Cartões</button>
+            <button type="button" data-account-tab="investment">↗ Investimentos</button>
+          </div>
+          <section class="panel account-panel">
+            <div class="panel-heading">
+              <div><p class="panel-kicker">SUAS CONTAS</p><h2>Patrimônio organizado</h2></div>
+              <button class="secondary-button" type="button" data-new-account>＋ Adicionar</button>
+            </div>
+            <div class="account-grid" data-accounts></div>
+          </section>
+
+          <div class="section-divider">
+            <div><p class="eyebrow">FATURA DO CARTÃO</p><h2>Importar e analisar gastos</h2></div>
+            <button class="secondary-button" type="button" data-select-card-file>⇧ Importar fatura</button>
+          </div>
+          <div class="card-summary-grid">
+            <article class="summary-card summary-card--expense">
+              <div class="summary-label"><span class="summary-dot"></span>Total da fatura</div>
+              <strong data-card-total>R$ 0,00</strong>
+              <small data-card-count>Nenhuma compra</small>
+            </article>
+            <article class="summary-card summary-card--balance">
+              <div class="summary-label"><span class="summary-dot"></span>Ticket médio</div>
+              <strong data-card-average>R$ 0,00</strong>
+              <small>por compra</small>
+            </article>
+            <article class="summary-card summary-card--category">
+              <div class="summary-label"><span class="summary-dot"></span>Maior compra</div>
+              <strong data-card-largest>R$ 0,00</strong>
+              <small>no período selecionado</small>
+            </article>
+            <article class="summary-card summary-card--income">
+              <div class="summary-label"><span class="summary-dot"></span>Estornos</div>
+              <strong data-card-refunds>R$ 0,00</strong>
+              <small>descontados da fatura</small>
+            </article>
+          </div>
+
+          <section class="panel invoice-import-panel">
+            <div class="invoice-drop">
+              <input type="file" accept=".pdf,.csv,.txt,application/pdf,text/csv" data-card-file-input hidden>
+              <span class="invoice-drop-icon" aria-hidden="true">⇧</span>
+              <div>
+                <h2>Importar fatura do cartão</h2>
+                <p>PDF com texto selecionável ou CSV, até 8 MB. Mostraremos uma prévia antes de salvar.</p>
+                <p class="invoice-privacy">O arquivo é lido e descartado. Apenas as compras confirmadas entram no seu diário.</p>
+              </div>
+              <button class="secondary-button" type="button" data-select-card-file>Escolher arquivo</button>
+            </div>
+            <div class="invoice-selected" data-card-selected hidden>
+              <span aria-hidden="true">📄</span>
+              <div><strong data-card-filename></strong><small data-card-filesize></small></div>
+              <button class="text-button" type="button" data-card-clear>Remover</button>
+            </div>
+            <div class="invoice-preview" data-card-preview hidden>
+              <div class="invoice-preview-head">
+                <div>
+                  <p class="panel-kicker">PRÉVIA DA IMPORTAÇÃO</p>
+                  <h2><span data-card-preview-count>0</span> lançamentos encontrados</h2>
+                  <p>Confira antes de adicionar ao diário.</p>
+                </div>
+                <div class="invoice-preview-total"><span>Total líquido</span><strong data-card-preview-total>R$ 0,00</strong></div>
+              </div>
+              <div class="invoice-preview-list" data-card-preview-items></div>
+              <div class="invoice-preview-actions">
+                <span data-card-preview-warning></span>
+                <button class="primary-button" type="button" data-card-import-confirm>Confirmar importação</button>
+              </div>
+            </div>
+          </section>
+
+          <div class="cards-dashboard-grid">
+            <section class="panel">
+              <div class="panel-heading">
+                <div><p class="panel-kicker">PARA ONDE FOI</p><h2>Categorias da fatura</h2></div>
+              </div>
+              <div class="category-breakdown" data-card-categories></div>
+            </section>
+            <section class="panel">
+              <div class="panel-heading">
+                <div><p class="panel-kicker">ÚLTIMOS 6 MESES</p><h2>Evolução das faturas</h2></div>
+              </div>
+              <div class="history-chart" data-card-history></div>
+            </section>
+            <section class="panel">
+              <div class="panel-heading">
+                <div><p class="panel-kicker">MAIORES VALORES</p><h2>Estabelecimentos</h2></div>
+              </div>
+              <div class="merchant-list" data-card-merchants></div>
+            </section>
+            <section class="panel">
+              <div class="panel-heading">
+                <div><p class="panel-kicker">COMPRAS PARCELADAS</p><h2>Parcelas identificadas</h2></div>
+              </div>
+              <div class="installment-list" data-card-installments></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="page" data-page="categories" aria-labelledby="categories-title">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">ORGANIZAÇÃO DO SEU JEITO</p>
+              <h1 id="categories-title">Categorias</h1>
+              <p>Escolha nomes, cores e ícones que façam sentido para sua vida.</p>
+            </div>
+            <button class="primary-button" type="button" data-new-category>
+              <span aria-hidden="true">＋</span> Nova categoria
+            </button>
+          </div>
+          <div class="category-manager-grid">
+            <section class="panel">
+              <div class="panel-heading">
+                <div><p class="panel-kicker">PARA ONDE FOI</p><h2>Categorias de despesas</h2></div>
+                <span class="category-count" data-expense-category-count>0</span>
+              </div>
+              <div class="category-card-grid" data-expense-categories></div>
+            </section>
+            <section class="panel">
+              <div class="panel-heading">
+                <div><p class="panel-kicker">DE ONDE VEIO</p><h2>Categorias de entradas</h2></div>
+                <span class="category-count" data-income-category-count>0</span>
+              </div>
+              <div class="category-card-grid" data-income-categories></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="page" data-page="calendar" aria-labelledby="calendar-title">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">SEU MÊS, DIA POR DIA</p>
+              <h1 id="calendar-title">Calendário financeiro</h1>
+              <p>Veja vencimentos, entradas e gastos na data em que aconteceram.</p>
+            </div>
+            <button class="primary-button" type="button" data-new-transaction>
+              <span aria-hidden="true">＋</span> Novo lançamento
+            </button>
+          </div>
+          <div class="calendar-page-grid">
+            <section class="panel financial-calendar-panel">
+              <div class="panel-heading">
+                <div><p class="panel-kicker">MOVIMENTAÇÕES DO MÊS</p><h2 data-calendar-month-label>Mês atual</h2></div>
+                <div class="mini-month-nav">
+                  <button class="icon-button" type="button" data-calendar-prev aria-label="Mês anterior">‹</button>
+                  <button class="icon-button" type="button" data-calendar-next aria-label="Próximo mês">›</button>
+                </div>
+              </div>
+              <div class="financial-calendar financial-calendar--large" data-full-calendar></div>
+            </section>
+            <section class="panel calendar-day-panel">
+              <div class="panel-heading">
+                <div><p class="panel-kicker">DETALHES DO DIA</p><h2 data-calendar-day-title>Selecione um dia</h2></div>
+              </div>
+              <div class="transaction-list" data-calendar-day-items>
+                <div class="empty-state"><div><span>▦</span><strong>Escolha um dia</strong><p>Os lançamentos dessa data aparecerão aqui.</p></div></div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="page" data-page="goals" aria-labelledby="goals-title">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">PLANOS PARA O FUTURO</p>
+              <h1 id="goals-title">Caixinhas de metas</h1>
+              <p>Crie um objetivo e guarde valores aos poucos, no seu ritmo.</p>
+            </div>
+            <button class="primary-button" type="button" data-new-goal>
+              <span aria-hidden="true">＋</span> Nova caixinha
+            </button>
+          </div>
+          <div class="goal-summary" data-goal-summary></div>
+          <div class="goal-grid" data-goals></div>
+        </section>
+
+        <section class="page" data-page="budgets" aria-labelledby="budgets-title">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">CONTAS E COMPROMISSOS</p>
+              <h1 id="budgets-title">Planejamento</h1>
+              <p>Antecipe vencimentos, compras e limites sem misturar previsão com gasto realizado.</p>
+            </div>
+            <button class="primary-button" type="button" data-planning-primary>＋ Nova previsão</button>
+          </div>
+          <div class="segmented-control planning-tabs" role="tablist" aria-label="Planejamento">
+            <button class="is-active" type="button" data-planning-tab="scheduled">▤ Despesas previstas</button>
+            <button type="button" data-planning-tab="purchases">🛒 Compras futuras</button>
+            <button type="button" data-planning-tab="budgets">◔ Orçamentos</button>
+          </div>
+          <div data-planning-section="scheduled">
+            <div class="planning-summary" data-scheduled-summary></div>
+            <section class="panel"><div class="planned-list" data-scheduled-expenses></div></section>
+          </div>
+          <div data-planning-section="purchases" hidden>
+            <div class="planning-summary" data-purchase-summary></div>
+            <div class="purchase-grid" data-purchase-plans></div>
+          </div>
+          <div data-planning-section="budgets" hidden>
+            <div class="budget-grid" data-budgets></div>
+          </div>
+        </section>
+
+        <section class="page" data-page="reminders" aria-labelledby="reminders-title">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">CONTAS E COMPROMISSOS</p>
+              <h1 id="reminders-title">Lembretes financeiros</h1>
+              <p>Não deixe vencimentos e compromissos importantes passarem.</p>
+            </div>
+            <button class="primary-button" type="button" data-new-reminder>
+              <span aria-hidden="true">＋</span> Novo lembrete
+            </button>
+          </div>
+          <div class="reminder-summary" data-reminder-summary></div>
+          <section class="panel">
+            <div class="reminder-list" data-reminders></div>
+          </section>
+        </section>
+
+        <section class="page" data-page="conscious" aria-label="Modo Consciente">
+          <section data-finpilot-conscious>
+            <div class="conscious-fallback">
+              <p class="eyebrow">MODO CONSCIENTE</p>
+              <h1>Dinheiro com mais consciência.</h1>
+              <p>Registre como você estava se sentindo, observe padrões e escolha um próximo passo sem culpa.</p>
+              <div class="conscious-fallback-grid">
+                <article><strong>Check-in semanal</strong><span>Como estão sua tranquilidade e confiança?</span></article>
+                <article><strong>Reflexão de gastos</strong><span>O que estava por trás daquela decisão?</span></article>
+                <article><strong>Padrões percebidos</strong><span>Emoções, categorias e momentos que se repetem.</span></article>
+              </div>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <nav class="bottom-nav" aria-label="Menu do celular">
+    <button class="is-active" type="button" data-page-link="overview"><span>▤</span>Diário</button>
+    <button type="button" data-page-link="categories"><span>◈</span>Categorias</button>
+    <button class="bottom-nav-add" type="button" data-new-transaction aria-label="Novo lançamento"><span>＋</span></button>
+    <button type="button" data-page-link="calendar"><span>▦</span>Calendário</button>
+    <button type="button" data-page-link="goals"><span>◎</span>Metas</button>
+  </nav>
+  <button class="sidebar-overlay" type="button" data-menu-close aria-label="Fechar menu" hidden></button>
+
+  <dialog class="modal" data-transaction-modal>
+    <form class="modal-card transaction-form" data-transaction-form>
+      <div class="modal-heading">
+        <div>
+          <p class="eyebrow">DIÁRIO</p>
+          <h2 data-transaction-modal-title>Novo lançamento</h2>
+        </div>
+        <button class="modal-close" type="button" data-close-modal aria-label="Fechar">×</button>
+      </div>
+      <input type="hidden" name="id">
+      <div class="form-grid form-grid--two">
+        <label>Tipo
+          <select name="tipo" required>
+            <option value="despesa">Despesa</option>
+            <option value="receita">Entrada</option>
+          </select>
+        </label>
+        <label>Data
+          <input name="data" type="date" required>
+        </label>
+      </div>
+      <label>Descrição
+        <input name="descricao" maxlength="255" placeholder="Ex.: Mercado" required>
+      </label>
+      <div class="form-grid form-grid--two">
+        <label>Valor em reais
+          <span class="money-field">
+            <span>R$</span>
+            <input name="valor" inputmode="decimal" autocomplete="off" placeholder="0,00" required>
+            <button type="button" class="calculator-toggle" data-calculator-toggle aria-label="Abrir calculadora">⌗</button>
+          </span>
+        </label>
+        <label>Categoria
+          <select name="category_id"></select>
+        </label>
+      </div>
+      <label data-subcategory-field hidden>Subcategoria
+        <select name="subcategory_id"></select>
+      </label>
+      <div class="calculator" data-calculator hidden>
+        <div class="calculator-screen">
+          <small data-calculator-memory>Calculadora</small>
+          <strong data-calculator-display>0</strong>
+        </div>
+        <div class="calculator-keys">
+          <button type="button" data-calc="clear">C</button>
+          <button type="button" data-calc="back">⌫</button>
+          <button type="button" data-calc="percent">%</button>
+          <button class="operator" type="button" data-calc-op="÷">÷</button>
+          <button type="button" data-calc="7">7</button>
+          <button type="button" data-calc="8">8</button>
+          <button type="button" data-calc="9">9</button>
+          <button class="operator" type="button" data-calc-op="×">×</button>
+          <button type="button" data-calc="4">4</button>
+          <button type="button" data-calc="5">5</button>
+          <button type="button" data-calc="6">6</button>
+          <button class="operator" type="button" data-calc-op="−">−</button>
+          <button type="button" data-calc="1">1</button>
+          <button type="button" data-calc="2">2</button>
+          <button type="button" data-calc="3">3</button>
+          <button class="operator" type="button" data-calc-op="+">+</button>
+          <button class="zero" type="button" data-calc="0">0</button>
+          <button type="button" data-calc="decimal">,</button>
+          <button class="equals" type="button" data-calc="equals">=</button>
+        </div>
+        <button class="calculator-use" type="button" data-calculator-use>Usar este valor</button>
+      </div>
+      <div class="form-grid form-grid--two">
+        <label>Forma de pagamento
+          <select name="metodo_pagamento">
+            <option value="">Não informar</option>
+            <option>Pix</option>
+            <option>Cartão de crédito</option>
+            <option>Cartão de débito</option>
+            <option>Dinheiro</option>
+            <option>Transferência</option>
+            <option>Boleto</option>
+          </select>
+        </label>
+        <label class="checkbox-field">
+          <input name="recorrente" type="checkbox">
+          <span>Este lançamento se repete</span>
+        </label>
+      </div>
+      <label>Observação opcional
+        <textarea name="notas" maxlength="500" placeholder="O que vale lembrar sobre este lançamento?"></textarea>
+      </label>
+      <div class="modal-actions">
+        <button class="secondary-button" type="button" data-close-modal>Cancelar</button>
+        <button class="primary-button" type="submit">Salvar no diário</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="modal" data-goal-modal>
+    <form class="modal-card compact-form" data-goal-form>
+      <div class="modal-heading">
+        <div><p class="eyebrow">CAIXINHA</p><h2 data-goal-modal-title>Nova meta</h2></div>
+        <button class="modal-close" type="button" data-close-modal aria-label="Fechar">×</button>
+      </div>
+      <input type="hidden" name="id">
+      <label>Nome da meta
+        <input name="nome" maxlength="150" placeholder="Ex.: Reserva de emergência" required>
+      </label>
+      <div class="form-grid form-grid--two">
+        <label>Objetivo em reais
+          <input name="valor_alvo" inputmode="decimal" placeholder="10.000,00" required>
+        </label>
+        <label>Já guardado
+          <input name="valor_atual" inputmode="decimal" placeholder="0,00">
+        </label>
+      </div>
+      <label>Prazo opcional
+        <input name="prazo" type="date">
+      </label>
+      <div class="modal-actions">
+        <button class="secondary-button" type="button" data-close-modal>Cancelar</button>
+        <button class="primary-button" type="submit">Salvar caixinha</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="modal" data-budget-modal>
+    <form class="modal-card compact-form" data-budget-form>
+      <div class="modal-heading">
+        <div><p class="eyebrow">LIMITE GENTIL</p><h2 data-budget-modal-title>Novo orçamento</h2></div>
+        <button class="modal-close" type="button" data-close-modal aria-label="Fechar">×</button>
+      </div>
+      <input type="hidden" name="id">
+      <label>Categoria
+        <select name="category_id" required></select>
+      </label>
+      <label>Limite em reais
+        <input name="limite" inputmode="decimal" placeholder="500,00" required>
+      </label>
+      <label class="checkbox-field">
+        <input name="recorrente" type="checkbox" checked>
+        <span>Repetir este limite nos próximos meses</span>
+      </label>
+      <div class="modal-actions">
+        <button class="secondary-button" type="button" data-close-modal>Cancelar</button>
+        <button class="primary-button" type="submit">Salvar orçamento</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="modal" data-category-modal>
+    <form class="modal-card compact-form" data-category-form>
+      <div class="modal-heading">
+        <div><p class="eyebrow">ORGANIZAÇÃO</p><h2 data-category-modal-title>Nova categoria</h2></div>
+        <button class="modal-close" type="button" data-close-modal aria-label="Fechar">×</button>
+      </div>
+      <input type="hidden" name="id">
+      <input type="hidden" name="icone" value="📦">
+      <label>Nome da categoria
+        <input name="nome" maxlength="100" placeholder="Ex.: Casa e decoração" required>
+      </label>
+      <label>Tipo
+        <select name="tipo" required>
+          <option value="despesa">Despesa</option>
+          <option value="receita">Entrada</option>
+        </select>
+      </label>
+      <label>Categoria principal
+        <select name="parent_id">
+          <option value="">Nenhuma — criar categoria principal</option>
+        </select>
+        <small class="field-help">Selecione uma categoria para criar uma subcategoria.</small>
+      </label>
+      <fieldset class="picker-field">
+        <legend>Ícone</legend>
+        <div class="icon-picker" data-icon-picker>
+          <button type="button" data-category-icon="🍽️" title="Alimentação">🍽️</button>
+          <button type="button" data-category-icon="🏠" title="Casa">🏠</button>
+          <button type="button" data-category-icon="🛋️" title="Sofá">🛋️</button>
+          <button type="button" data-category-icon="🪑" title="Poltrona">🪑</button>
+          <button type="button" data-category-icon="🏢" title="Prédio">🏢</button>
+          <button type="button" data-category-icon="🚗" title="Transporte">🚗</button>
+          <button type="button" data-category-icon="🩺" title="Paciente e saúde">🩺</button>
+          <button type="button" data-category-icon="💊" title="Remédios">💊</button>
+          <button type="button" data-category-icon="💻" title="Computador">💻</button>
+          <button type="button" data-category-icon="👤" title="Pessoa">👤</button>
+          <button type="button" data-category-icon="👕" title="Roupas">👕</button>
+          <button type="button" data-category-icon="👟" title="Tênis">👟</button>
+          <button type="button" data-category-icon="💎" title="Brincos e joias">💎</button>
+          <button type="button" data-category-icon="🧴" title="Shampoo">🧴</button>
+          <button type="button" data-category-icon="🎂" title="Bolos">🎂</button>
+          <button type="button" data-category-icon="🧰" title="Materiais">🧰</button>
+          <button type="button" data-category-icon="🎁" title="Presentes">🎁</button>
+          <button type="button" data-category-icon="🎮" title="Lazer">🎮</button>
+          <button type="button" data-category-icon="🧾" title="Contas">🧾</button>
+          <button type="button" data-category-icon="📦" title="Outros">📦</button>
+          <button type="button" data-category-icon="💰" title="Dinheiro">💰</button>
+          <button type="button" data-category-icon="📈" title="Rendimentos">📈</button>
+        </div>
+      </fieldset>
+      <label>Cor
+        <span class="color-field">
+          <input name="cor" type="color" value="#7046d9" aria-label="Cor da categoria">
+          <span data-category-color-label>#7046D9</span>
+        </span>
+      </label>
+      <label class="checkbox-field">
+        <input name="essencial" type="checkbox">
+        <span>Esta é uma categoria essencial</span>
+      </label>
+      <div class="modal-actions">
+        <button class="secondary-button" type="button" data-close-modal>Cancelar</button>
+        <button class="primary-button" type="submit">Salvar categoria</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="modal" data-reminder-modal>
+    <form class="modal-card compact-form" data-reminder-form>
+      <div class="modal-heading">
+        <div><p class="eyebrow">LEMBRETE</p><h2 data-reminder-modal-title>Novo lembrete</h2></div>
+        <button class="modal-close" type="button" data-close-modal aria-label="Fechar">×</button>
+      </div>
+      <input type="hidden" name="id">
+      <label>Título
+        <input name="titulo" maxlength="180" placeholder="Ex.: Pagar internet" required>
+      </label>
+      <div class="form-grid form-grid--two">
+        <label>Data
+          <input name="data_vencimento" type="date" required>
+        </label>
+        <label>Valor opcional
+          <input name="valor" inputmode="decimal" placeholder="0,00">
+        </label>
+      </div>
+      <label>Observação opcional
+        <textarea name="notas" maxlength="500" placeholder="O que vale lembrar?"></textarea>
+      </label>
+      <label class="checkbox-field">
+        <input name="recorrente" type="checkbox">
+        <span>Este lembrete se repete todo mês</span>
+      </label>
+      <div class="modal-actions">
+        <button class="secondary-button" type="button" data-close-modal>Cancelar</button>
+        <button class="primary-button" type="submit">Salvar lembrete</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="modal" data-account-modal>
+    <form class="modal-card compact-form" data-account-form>
+      <div class="modal-heading">
+        <div><p class="eyebrow">PATRIMÔNIO</p><h2 data-account-modal-title>Nova conta</h2></div>
+        <button class="modal-close" type="button" data-close-modal aria-label="Fechar">×</button>
+      </div>
+      <input type="hidden" name="id">
+      <label>Tipo
+        <select name="account_type" required>
+          <option value="bank">▣ Conta bancária</option>
+          <option value="credit_card">▰ Cartão de crédito</option>
+          <option value="investment">↗ Investimento</option>
+        </select>
+      </label>
+      <div class="form-grid form-grid--two">
+        <label>Nome
+          <input name="nome" maxlength="120" placeholder="Ex.: Conta principal" required>
+        </label>
+        <label>Instituição
+          <input name="instituicao" maxlength="120" placeholder="Ex.: Nubank">
+        </label>
+      </div>
+      <div class="form-grid form-grid--two">
+        <label data-account-value-label>Saldo atual
+          <input name="valor" inputmode="decimal" placeholder="0,00">
+        </label>
+        <label data-account-limit-field hidden>Limite do cartão
+          <input name="limite" inputmode="decimal" placeholder="0,00">
+        </label>
+      </div>
+      <div class="form-grid form-grid--two" data-account-card-days hidden>
+        <label>Dia do fechamento
+          <input name="dia_fechamento" type="number" min="1" max="31">
+        </label>
+        <label>Dia do vencimento
+          <input name="dia_vencimento" type="number" min="1" max="31">
+        </label>
+      </div>
+      <label>Detalhe opcional
+        <input name="subtipo" maxlength="100" placeholder="Ex.: Conta corrente, CDB, Visa">
+      </label>
+      <label>Cor
+        <input name="cor" type="color" value="#7046d9">
+      </label>
+      <div class="modal-actions">
+        <button class="secondary-button" type="button" data-close-modal>Cancelar</button>
+        <button class="primary-button" type="submit">Salvar conta</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="modal" data-scheduled-modal>
+    <form class="modal-card compact-form" data-scheduled-form>
+      <div class="modal-heading">
+        <div><p class="eyebrow">DESPESA PREVISTA</p><h2 data-scheduled-modal-title>Nova previsão</h2></div>
+        <button class="modal-close" type="button" data-close-modal aria-label="Fechar">×</button>
+      </div>
+      <input type="hidden" name="id">
+      <label>Descrição
+        <input name="titulo" maxlength="180" placeholder="Ex.: Aluguel da casa" required>
+      </label>
+      <div class="form-grid form-grid--two">
+        <label>Valor
+          <input name="valor" inputmode="decimal" placeholder="0,00" required>
+        </label>
+        <label>Vencimento
+          <input name="data_vencimento" type="date" required>
+        </label>
+      </div>
+      <div class="form-grid form-grid--two">
+        <label>Categoria
+          <select name="category_id"></select>
+        </label>
+        <label>Repetição
+          <select name="recorrencia">
+            <option value="mensal">Todo mês</option>
+            <option value="unica">Somente uma vez</option>
+          </select>
+        </label>
+      </div>
+      <label>Observação opcional
+        <textarea name="notas" maxlength="500"></textarea>
+      </label>
+      <div class="modal-actions">
+        <button class="secondary-button" type="button" data-close-modal>Cancelar</button>
+        <button class="primary-button" type="submit">Salvar previsão</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="modal" data-purchase-modal>
+    <form class="modal-card compact-form" data-purchase-form>
+      <div class="modal-heading">
+        <div><p class="eyebrow">COMPRA FUTURA</p><h2 data-purchase-modal-title>Planejar compra</h2></div>
+        <button class="modal-close" type="button" data-close-modal aria-label="Fechar">×</button>
+      </div>
+      <input type="hidden" name="id">
+      <label>O que você deseja comprar?
+        <input name="nome" maxlength="120" placeholder="Ex.: Notebook novo" required>
+      </label>
+      <div class="form-grid form-grid--two">
+        <label>Valor estimado
+          <input name="valor_estimado" inputmode="decimal" placeholder="0,00">
+        </label>
+        <label>Prioridade
+          <select name="prioridade">
+            <option value="alta">Alta</option>
+            <option value="media" selected>Média</option>
+            <option value="baixa">Baixa</option>
+          </select>
+        </label>
+      </div>
+      <label>Data desejada
+        <input name="data_desejada" type="date">
+      </label>
+      <label>Observação opcional
+        <textarea name="notas" maxlength="500"></textarea>
+      </label>
+      <div class="modal-actions">
+        <button class="secondary-button" type="button" data-close-modal>Cancelar</button>
+        <button class="primary-button" type="submit">Salvar compra</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast-stack" data-toasts aria-live="polite" aria-atomic="true"></div>
+  <div class="loading-screen" data-loading>
+    <div class="loading-logo">⛵</div>
+    <strong>Preparando seu FinPilot…</strong>
+  </div>
+</body>
+</html>

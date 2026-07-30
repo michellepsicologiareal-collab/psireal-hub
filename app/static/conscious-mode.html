@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>FinPilot — Modo Consciente</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f7f5fb; }
+    .demo-layout { min-height: 100vh; display: grid; grid-template-columns: 240px 1fr; }
+    .demo-sidebar { display: flex; min-height: 100vh; flex-direction: column; padding: 22px 8px; background: #151924; color: #f7f4ff; }
+    .demo-brand { margin: 0 14px 22px; font: 800 22px/1.1 Inter, system-ui, sans-serif; letter-spacing: -.03em; }
+    .demo-nav { margin: 7px 12px; padding: 11px; border-radius: 10px; color: #bfc5d3; font: 600 14px/1.2 Inter, system-ui, sans-serif; }
+    .demo-logout { margin: auto 12px 4px; border: 1px solid #3a4150; border-radius: 10px; background: transparent; padding: 11px; color: #d4d8e2; cursor: pointer; font: 700 13px/1.2 Inter, system-ui, sans-serif; }
+    .demo-logout:hover { border-color: #8060d1; color: white; }
+    .demo-main { min-width: 0; padding: 28px; }
+    @media (prefers-color-scheme: dark) { body { background: #0f1219; } }
+    @media (max-width: 760px) {
+      .demo-layout { display: block; } .demo-sidebar { padding: 14px 8px; }
+      .demo-sidebar { min-height: auto; flex-direction: row; align-items: center; }
+      .demo-brand { display: inline-block; margin: 0 8px; }
+      .demo-nav { display: none; } .demo-main { padding: 14px; }
+      .demo-logout { margin: 0 8px 0 auto; padding: 9px 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-layout">
+    <aside class="demo-sidebar" data-finpilot-sidebar>
+      <h1 class="demo-brand">⛵ FinPilot</h1>
+      <div class="demo-nav">Visão geral</div>
+      <div class="demo-nav">Diário</div>
+      <div class="demo-nav">Metas</div>
+      <button class="demo-logout" id="logoutButton" type="button">Sair</button>
+    </aside>
+    <main class="demo-main">
+      <section data-finpilot-conscious></section>
+    </main>
+  </div>
+  <script src="/static/conscious-mode.js"></script>
+  <script>
+    document.getElementById("logoutButton").addEventListener("click", async () => {
+      await fetch("/api/auth/logout", {method: "POST"});
+      location.href = "/entrar?mode=login";
+    });
+  </script>
+</body>
+</html>

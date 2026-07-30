@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <title>Entrar — FinPilot</title>
+  <style>
+    :root {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #25354b;
+      background: #343b44;
+      font-synthesis: none;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    button, input { font: inherit; }
+    button { -webkit-tap-highlight-color: transparent; }
+    .auth-shell {
+      position: relative;
+      display: grid;
+      min-height: 100svh;
+      overflow: hidden;
+      place-items: center;
+      padding: 28px;
+      background:
+        radial-gradient(circle at 14% 18%, rgba(102,122,83,.28), transparent 28rem),
+        radial-gradient(circle at 86% 8%, rgba(128,81,202,.28), transparent 30rem),
+        linear-gradient(135deg,#37423f 0%,#333a44 55%,#303643 100%);
+    }
+    .auth-ambient {
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      filter: blur(110px);
+      opacity: .42;
+      pointer-events: none;
+    }
+    .auth-ambient-purple { top: -130px; right: -90px; background: #8152c8; }
+    .auth-ambient-moss { bottom: -150px; left: -80px; background: #677b55; }
+    .auth-back-link {
+      position: absolute;
+      z-index: 5;
+      top: 24px;
+      left: 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #7c5bdb;
+      font-size: 12px;
+      font-weight: 780;
+      text-decoration: none;
+    }
+    .auth-back-link:hover { color: #9c82eb; }
+    .auth-card {
+      position: relative;
+      display: grid;
+      width: min(940px,100%);
+      overflow: hidden;
+      grid-template-columns: minmax(0,.9fr) minmax(390px,1.1fr);
+      border: 1px solid #59636e;
+      border-radius: 24px;
+      background: #dfe3e7;
+      box-shadow: 0 35px 90px rgba(11,15,20,.4);
+    }
+    .auth-brand-panel {
+      position: relative;
+      display: flex;
+      min-height: 620px;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+      padding: clamp(34px,5vw,58px);
+      color: white;
+      background: linear-gradient(155deg,rgba(109,125,91,.96),rgba(49,58,66,.99));
+    }
+    .auth-brand-panel::before {
+      content: "";
+      position: absolute;
+      inset: auto -8% -17% 8%;
+      height: 65%;
+      opacity: .12;
+      background:
+        radial-gradient(circle at 12% 54%,transparent 0 18%,#cbd7c4 19% 20%,transparent 21%),
+        linear-gradient(90deg,transparent 0 16%,#cbd7c4 16% 25%,transparent 25% 34%,#cbd7c4 34% 43%,transparent 43% 52%,#cbd7c4 52% 61%,transparent 61% 70%,#cbd7c4 70% 79%,transparent 79%);
+      border-radius: 45% 45% 0 0;
+      transform: rotate(-8deg);
+    }
+    .auth-brand-panel > * { position: relative; z-index: 1; }
+    .signin-brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      margin-bottom: 46px;
+    }
+    .brand-icon { width: 38px; height: 38px; }
+    .signin-brand strong { color: white; font-size: 22px; letter-spacing: -.04em; }
+    .eyebrow {
+      display: block;
+      color: #7253aa;
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .11em;
+    }
+    .auth-brand-panel .eyebrow { color: #ded0f2; }
+    .auth-brand-panel h1 {
+      max-width: 390px;
+      margin: 13px 0 0;
+      color: white;
+      font-size: clamp(30px,4vw,44px);
+      line-height: 1.06;
+      letter-spacing: -.045em;
+    }
+    .auth-brand-panel > p {
+      max-width: 390px;
+      margin: 18px 0 0;
+      color: #e0e6e9;
+      font-size: 12px;
+      line-height: 1.65;
+    }
+    .auth-security-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 38px;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 12px;
+      background: rgba(22,28,33,.24);
+      padding: 13px;
+      color: #e4eadf;
+      font-size: 10px;
+      line-height: 1.55;
+    }
+    .auth-security-note svg { flex: 0 0 auto; color: #d8e9c9; }
+    .auth-security-note span { display: grid; gap: 3px; }
+    .auth-security-note strong { color: white; }
+    .auth-form-panel {
+      display: flex;
+      min-height: 620px;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(34px,5vw,62px);
+    }
+    .auth-mode-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      margin-bottom: 28px;
+      border-radius: 11px;
+      background: #c9cfd5;
+      padding: 4px;
+    }
+    .auth-mode-tabs button {
+      min-height: 40px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: #647286;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 760;
+    }
+    .auth-mode-tabs button.active {
+      background: #e7e2ef;
+      box-shadow: 0 4px 13px rgba(52,45,70,.12);
+      color: #6741b0;
+    }
+    .auth-form-heading .eyebrow { margin-bottom: 6px; }
+    .auth-form-heading h2 { margin: 0; color: #25354b; font-size: 23px; letter-spacing: -.025em; }
+    .auth-form-heading p { margin: 8px 0 0; color: #69788b; font-size: 11px; line-height: 1.55; }
+    .auth-message {
+      display: none;
+      margin-top: 15px;
+      border: 1px solid #d4a2ad;
+      border-radius: 9px;
+      background: #efdbdf;
+      padding: 10px 12px;
+      color: #9c3f55;
+      font-size: 10px;
+      line-height: 1.45;
+    }
+    .auth-message.show { display: block; }
+    .auth-message.success { border-color: #abc49a; background: #dfe9d9; color: #47663b; }
+    .auth-form { display: grid; gap: 13px; margin-top: 20px; }
+    .auth-form > label { display: grid; gap: 6px; color: #4e5e73; font-size: 10px; font-weight: 720; }
+    .auth-input {
+      display: grid;
+      min-height: 45px;
+      grid-template-columns: 22px minmax(0,1fr) auto;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid #afb9c5;
+      border-radius: 10px;
+      background: #edf0f3;
+      padding: 0 10px;
+      color: #738094;
+    }
+    .auth-input:focus-within { border-color: #7b5bc2; box-shadow: 0 0 0 3px rgba(118,81,201,.12); }
+    .auth-input svg { width: 17px; height: 17px; }
+    .auth-input input {
+      min-width: 0;
+      height: 43px;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: #25354a;
+      font-size: 12px;
+    }
+    .auth-input input::placeholder { color: #8491a3; font-weight: 580; }
+    .auth-input button {
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      border: 0;
+      background: transparent;
+      color: #718095;
+      cursor: pointer;
+    }
+    .password-help { margin-top: -5px; color: #78869a; font-size: 9px; }
+    .auth-submit {
+      display: inline-flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 4px;
+      border: 0;
+      border-radius: 9px;
+      background: linear-gradient(180deg,#8357d5,#6a3fc2);
+      box-shadow: 0 8px 18px rgba(103,62,193,.2);
+      color: white;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 820;
+    }
+    .auth-submit:disabled { cursor: wait; opacity: .72; }
+    .auth-legal-copy {
+      max-width: 430px;
+      margin: 13px auto 0;
+      color: #8792a2;
+      font-size: 9px;
+      line-height: 1.55;
+      text-align: center;
+    }
+    .auth-legal-copy a { color: #7252bd; font-weight: 750; }
+    .auth-switch-copy { margin: 17px 0 0; color: #6d7b8e; font-size: 10px; text-align: center; }
+    .auth-switch-copy button { border: 0; background: transparent; color: #6640af; cursor: pointer; font-weight: 780; }
+    .hidden { display: none !important; }
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,.45);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (max-width:760px) {
+      .auth-shell { align-items: start; overflow: auto; padding: 14px; }
+      .auth-back-link { position: relative; top: auto; left: auto; justify-self: start; margin: 2px 0 12px; color: #bda6ff; }
+      .auth-card { display: block; max-width: 520px; border-radius: 18px; }
+      .auth-brand-panel { min-height: 245px; justify-content: flex-end; padding: 28px 24px; }
+      .signin-brand { margin-bottom: 22px; }
+      .auth-brand-panel h1 { max-width: 320px; font-size: 29px; }
+      .auth-brand-panel > p { margin-top: 11px; font-size: 10px; }
+      .auth-security-note { display: none; }
+      .auth-form-panel { min-height: auto; padding: 28px 22px calc(30px + env(safe-area-inset-bottom)); }
+      .auth-input { min-height: 49px; }
+      .auth-input input { height: 47px; font-size: 16px; }
+    }
+    @media (max-width:380px) {
+      .auth-shell { padding: 8px; }
+      .auth-brand-panel { min-height: 215px; padding: 22px 19px; }
+      .auth-form-panel { padding: 24px 17px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="auth-shell">
+    <div class="auth-ambient auth-ambient-purple"></div>
+    <div class="auth-ambient auth-ambient-moss"></div>
+    <a class="auth-back-link" href="/">← <span>Voltar para o início</span></a>
+    <section class="auth-card">
+      <div class="auth-brand-panel">
+        <div class="signin-brand">
+          <svg class="brand-icon" viewBox="0 0 48 48" aria-hidden="true">
+            <path fill="#8059eb" d="M7 36c10-2 18-10 22-27 2 14-2 23-8 28H7Z"/>
+            <path fill="#2b8bc6" d="M23 36c8-5 13-12 15-23 3 11 1 19-5 23H23Z"/>
+            <path fill="#92a96f" d="M5 39h36c-7 4-25 5-36 0Z"/>
+          </svg>
+          <strong>FinPilot</strong>
+        </div>
+        <span class="eyebrow">SEU SISTEMA FINANCEIRO</span>
+        <h1>Clareza para cuidar do seu dinheiro.</h1>
+        <p>Diário, calendário, metas, contas, investimentos e planejamento em uma conta protegida só sua.</p>
+        <div class="auth-security-note">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/>
+          </svg>
+          <span><strong>Dados separados por usuário</strong>Sua senha é protegida e nunca fica armazenada em texto aberto.</span>
+        </div>
+      </div>
+      <div class="auth-form-panel">
+        <div class="auth-mode-tabs" role="tablist" aria-label="Acesso ao FinPilot">
+          <button id="loginTab" type="button" role="tab">Entrar</button>
+          <button id="registerTab" type="button" role="tab">Criar conta</button>
+        </div>
+        <div class="auth-form-heading">
+          <span class="eyebrow" id="headingEyebrow"></span>
+          <h2 id="headingTitle"></h2>
+          <p id="headingCopy"></p>
+        </div>
+        <div class="auth-message" id="message" role="alert"></div>
+        <form class="auth-form" id="authForm">
+          <label id="nameField">
+            Nome
+            <span class="auth-input">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+              <input id="displayName" name="display_name" autocomplete="name" placeholder="Como podemos chamar você?" minlength="2" maxlength="60">
+            </span>
+          </label>
+          <label>
+            E-mail
+            <span class="auth-input">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+              <input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="voce@exemplo.com" required>
+            </span>
+          </label>
+          <label>
+            Senha
+            <span class="auth-input">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Sua senha" minlength="8" maxlength="128" required>
+              <button id="togglePassword" type="button" aria-label="Mostrar senha">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/></svg>
+              </button>
+            </span>
+          </label>
+          <label id="confirmField">
+            Confirmar senha
+            <span class="auth-input">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              <input id="confirmPassword" name="confirm_password" type="password" autocomplete="new-password" placeholder="Digite novamente" minlength="8" maxlength="128">
+            </span>
+          </label>
+          <small class="password-help" id="passwordHelp">Use pelo menos 8 caracteres, incluindo uma letra e um número.</small>
+          <button class="auth-submit" id="submitButton" type="submit"><span id="submitText"></span></button>
+        </form>
+        <p class="auth-legal-copy" id="legalCopy">Ao criar sua conta, você concorda com os <a href="/termos">Termos de uso</a> e a <a href="/privacidade">Política de privacidade</a>.</p>
+        <p class="auth-switch-copy"><span id="switchCopy"></span><button id="switchButton" type="button"></button></p>
+      </div>
+    </section>
+  </main>
+  <script>
+    (() => {
+      const elements = {
+        form: document.getElementById("authForm"), loginTab: document.getElementById("loginTab"),
+        registerTab: document.getElementById("registerTab"), nameField: document.getElementById("nameField"),
+        confirmField: document.getElementById("confirmField"), passwordHelp: document.getElementById("passwordHelp"),
+        legalCopy: document.getElementById("legalCopy"), displayName: document.getElementById("displayName"),
+        email: document.getElementById("email"), password: document.getElementById("password"),
+        confirmPassword: document.getElementById("confirmPassword"), togglePassword: document.getElementById("togglePassword"),
+        headingEyebrow: document.getElementById("headingEyebrow"), headingTitle: document.getElementById("headingTitle"),
+        headingCopy: document.getElementById("headingCopy"), message: document.getElementById("message"),
+        submitButton: document.getElementById("submitButton"), submitText: document.getElementById("submitText"),
+        switchCopy: document.getElementById("switchCopy"), switchButton: document.getElementById("switchButton")
+      };
+      let mode = new URLSearchParams(location.search).get("mode") === "login" ? "login" : "register";
+
+      function setMessage(text = "", success = false) {
+        elements.message.textContent = text;
+        elements.message.classList.toggle("show", Boolean(text));
+        elements.message.classList.toggle("success", success);
+      }
+      function render() {
+        const register = mode === "register";
+        elements.loginTab.classList.toggle("active", !register);
+        elements.registerTab.classList.toggle("active", register);
+        elements.loginTab.setAttribute("aria-selected", String(!register));
+        elements.registerTab.setAttribute("aria-selected", String(register));
+        elements.nameField.classList.toggle("hidden", !register);
+        elements.confirmField.classList.toggle("hidden", !register);
+        elements.passwordHelp.classList.toggle("hidden", !register);
+        elements.legalCopy.classList.toggle("hidden", !register);
+        elements.displayName.required = register;
+        elements.confirmPassword.required = register;
+        elements.password.autocomplete = register ? "new-password" : "current-password";
+        elements.headingEyebrow.textContent = register ? "NOVA CONTA" : "BEM-VINDA DE VOLTA";
+        elements.headingTitle.textContent = register ? "Crie seu acesso" : "Entre no FinPilot";
+        elements.headingCopy.textContent = register
+          ? "Se você já usava o FinPilot, cadastre o mesmo e-mail para manter seus dados."
+          : "Use o e-mail e a senha cadastrados no FinPilot.";
+        elements.submitText.textContent = register ? "Criar minha conta" : "Entrar no FinPilot";
+        elements.switchCopy.textContent = register ? "Já possui uma conta?" : "Ainda não tem uma conta?";
+        elements.switchButton.textContent = register ? "Entrar" : "Criar conta";
+        setMessage();
+      }
+      function changeMode(next) { mode = next; render(); setTimeout(() => (mode === "register" ? elements.displayName : elements.email).focus(), 20); }
+      elements.loginTab.addEventListener("click", () => changeMode("login"));
+      elements.registerTab.addEventListener("click", () => changeMode("register"));
+      elements.switchButton.addEventListener("click", () => changeMode(mode === "login" ? "register" : "login"));
+      elements.togglePassword.addEventListener("click", () => {
+        const show = elements.password.type === "password";
+        elements.password.type = show ? "text" : "password";
+        elements.confirmPassword.type = show ? "text" : "password";
+        elements.togglePassword.setAttribute("aria-label", show ? "Ocultar senha" : "Mostrar senha");
+      });
+      elements.form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        setMessage();
+        if (mode === "register" && elements.password.value !== elements.confirmPassword.value) {
+          setMessage("As senhas não coincidem."); return;
+        }
+        if (mode === "register" && (!/[A-Za-zÀ-ÿ]/.test(elements.password.value) || !/\d/.test(elements.password.value))) {
+          setMessage("Use pelo menos uma letra e um número na senha."); return;
+        }
+        elements.submitButton.disabled = true;
+        elements.submitText.innerHTML = '<span class="spinner" aria-hidden="true"></span> Aguarde…';
+        const body = { email: elements.email.value.trim(), password: elements.password.value };
+        if (mode === "register") {
+          body.display_name = elements.displayName.value.trim();
+          body.confirm_password = elements.confirmPassword.value;
+        }
+        try {
+          const response = await fetch(`/api/auth/${mode === "register" ? "register" : "login"}`, {
+            method: "POST", headers: {"content-type":"application/json"}, body: JSON.stringify(body)
+          });
+          const payload = await response.json().catch(() => ({}));
+          if (!response.ok) {
+            const detail = Array.isArray(payload.detail) ? payload.detail.map(item => item.msg).join(" ") : payload.detail;
+            throw new Error(detail || "Não foi possível concluir o acesso.");
+          }
+          if (payload.confirmation_required) {
+            setMessage(payload.message || "Confira seu e-mail para confirmar a conta.", true);
+            elements.submitButton.disabled = false;
+            elements.submitText.textContent = "Criar minha conta";
+            return;
+          }
+          location.href = "/";
+        } catch (error) {
+          setMessage(error instanceof Error ? error.message : "Erro inesperado.");
+          elements.submitButton.disabled = false;
+          elements.submitText.textContent = mode === "register" ? "Criar minha conta" : "Entrar no FinPilot";
+        }
+      });
+      render();
+      if (new URLSearchParams(location.search).get("config") === "required") {
+        setMessage("A conexão do Supabase Auth ainda precisa ser concluída na Vercel.");
+      }
+    })();
+  </script>
+</body>
+</html>
