@@ -1,0 +1,17 @@
+{
+  "name": "Psicologia Real — Michelle Donegá",
+  "short_name": "Psi Real",
+  "description": "Terapia, supervisão e consultoria corporativa com base em TCC",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F8F2F4",
+  "theme_color": "#3D2028",
+  "orientation": "portrait-primary",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ],
+  "categories": ["health", "medical", "education"],
+  "lang": "pt-BR"
+}

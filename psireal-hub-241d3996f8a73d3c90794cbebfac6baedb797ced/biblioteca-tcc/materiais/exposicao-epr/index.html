@@ -1,0 +1,1014 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exposição e Prevenção de Rituais — Foa & Kozak | Biblioteca Psi Real</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --rose: #8B3A4A;
+      --rose-2: #C4607A;
+      --rose-3: #E8899E;
+      --grad: linear-gradient(135deg, #8B3A4A 0%, #C4607A 55%, #E8899E 100%);
+      --rose-light: #FCEEF1;
+      --rose-hover: #FDF5F7;
+      --rose-border: #F2DCE1;
+      --rose-mid: #C4607A;
+      --ink: #2A1A18;
+      --ink-muted: #8A7370;
+      --ink-faint: #C4A8A4;
+      --bg: #FAF6F7;
+      --white: #FFFFFF;
+      --border: #EDE0E4;
+      --surface: #F5EEF1;
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; background: var(--bg); color: var(--ink); }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--rose-border);
+      padding: 0 2rem; height: 54px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-back { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--ink-muted); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: var(--rose); }
+    .nav-back-arrow { font-size: 16px; }
+    .nav-title { font-size: 13px; color: var(--ink-faint); }
+
+    .layout { display: flex; max-width: 1060px; margin: 0 auto; padding: 0 2rem; gap: 2.5rem; }
+
+    .sidebar {
+      width: 210px; min-width: 210px; flex-shrink: 0;
+      position: sticky; top: 70px;
+      height: calc(100vh - 78px); overflow-y: auto;
+      padding: 2rem 0;
+    }
+    .sidebar::-webkit-scrollbar { width: 3px; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .toc-label { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.75rem; padding: 0 8px; }
+    .toc-list { list-style: none; }
+    .toc-list a {
+      display: block; font-size: 13px; color: var(--ink-muted);
+      text-decoration: none; padding: 6px 10px; border-radius: var(--radius-sm);
+      transition: all 0.15s; line-height: 1.35; margin-bottom: 1px;
+    }
+    .toc-list a:hover { color: var(--ink); background: var(--rose-hover); }
+    .toc-list a.active { color: var(--rose); background: var(--rose-light); font-weight: 500; }
+    .toc-num { font-size: 10px; color: var(--ink-faint); margin-right: 5px; }
+
+    .content { flex: 1; min-width: 0; padding: 2.5rem 0 5rem; }
+
+    .doc-header { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+    .breadcrumb { font-size: 12px; color: var(--ink-faint); margin-bottom: 1rem; }
+    .breadcrumb a { color: var(--rose); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .doc-tags { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 1.1rem; }
+    .doc-tag {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 99px;
+    }
+    .tag-tcc  { background: var(--rose-light); color: var(--rose); border: 1px solid var(--rose-border); }
+    .tag-epr  { background: #FFF3F0; color: #8B3A2A; border: 1px solid #F5C4B8; }
+    .tag-prot { background: #FFF8E6; color: #8B6000; border: 1px solid #F0D98A; }
+
+    h1.doc-title {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: clamp(24px, 3.5vw, 36px); font-weight: 500;
+      line-height: 1.15; letter-spacing: -0.025em; color: var(--ink); margin-bottom: 0.9rem;
+    }
+    .doc-intro { font-size: 15px; color: var(--ink-muted); line-height: 1.75; max-width: 580px; }
+    .doc-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.25rem; }
+    .doc-meta-item { font-size: 12px; color: var(--ink-faint); }
+    .doc-meta-item strong { color: var(--ink-muted); font-weight: 500; }
+
+    .doc-section { margin-bottom: 3.5rem; scroll-margin-top: 78px; }
+    .sec-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.3rem; }
+    h2.sec-title {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: clamp(18px, 2.5vw, 24px); font-weight: 500; letter-spacing: -0.01em;
+      color: var(--ink); margin-bottom: 1.1rem;
+      padding-bottom: 0.65rem; border-bottom: 1px solid var(--border);
+    }
+    h3.sub-title { font-size: 15px; font-weight: 600; color: var(--ink); margin: 1.75rem 0 0.65rem; }
+    p.body { font-size: 15px; line-height: 1.8; color: var(--ink); margin-bottom: 0.9rem; }
+
+    .callout {
+      border-left: 3px solid var(--rose-mid);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      background: var(--rose-light); padding: 0.9rem 1.25rem; margin: 1.25rem 0;
+    }
+    .callout p { font-size: 14px; line-height: 1.7; color: var(--rose); margin: 0; }
+    .callout strong { font-weight: 500; }
+    .callout-warm  { background: #FFF6F0; border-left-color: #D4A882; }
+    .callout-warm p { color: #7A4020; }
+    .callout-blue  { background: #F0F4FF; border-left-color: #7A9BD4; }
+    .callout-blue p { color: #2A4070; }
+    .callout-green { background: #F0FAF3; border-left-color: #6BB885; }
+    .callout-green p { color: #1E5230; }
+    .callout-amber { background: #FFFBF0; border-left-color: #D4B84A; }
+    .callout-amber p { color: #6B4A00; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 1.1rem 0; }
+    @media (max-width: 540px) { .two-col { grid-template-columns: 1fr; } }
+
+    .info-box {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1rem 1.1rem;
+    }
+    .info-box-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--rose); margin-bottom: 0.5rem; }
+    .info-box p, .info-box li { font-size: 13px; line-height: 1.65; color: var(--ink-muted); }
+    .info-box ul { padding-left: 1rem; margin-top: 4px; }
+    .info-box li { margin-bottom: 3px; }
+
+    .comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); gap: 10px; margin: 1.25rem 0; }
+    .comp-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1rem 1.1rem;
+      transition: border-color 0.15s;
+    }
+    .comp-card:hover { border-color: var(--rose-border); }
+    .comp-n    { font-size: 10px; color: var(--ink-faint); margin-bottom: 4px; font-weight: 500; }
+    .comp-name { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 5px; }
+    .comp-desc { font-size: 12px; line-height: 1.6; color: var(--ink-muted); }
+
+    .steps { list-style: none; margin: 1.1rem 0; }
+    .steps li {
+      display: flex; gap: 13px; align-items: flex-start;
+      padding: 0.7rem 0; border-bottom: 1px solid var(--border);
+      font-size: 14px; line-height: 1.65; color: var(--ink);
+    }
+    .steps li:last-child { border-bottom: none; }
+    .step-dot {
+      min-width: 24px; height: 24px; border-radius: 50%;
+      background: var(--rose-light); border: 1px solid var(--rose-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 500; color: var(--rose); margin-top: 2px; flex-shrink: 0;
+    }
+
+    .hl-row {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 0.75rem 1rem;
+      margin: 5px 0; font-size: 14px; line-height: 1.65; color: var(--ink);
+    }
+    .hl-row strong { font-weight: 500; color: var(--rose); }
+
+    /* Hierarquia de exposição — escada visual com SUDS */
+    .ladder { list-style: none; margin: 1.25rem 0; }
+    .ladder-rung {
+      display: grid;
+      grid-template-columns: 52px 1fr auto;
+      align-items: center; gap: 12px;
+      padding: 0.7rem 1rem; margin-bottom: 6px;
+      border-radius: var(--radius-sm); border: 1px solid var(--border);
+      background: var(--white); transition: border-color 0.15s;
+    }
+    .ladder-rung:hover { border-color: var(--rose-border); }
+    .suds-badge {
+      text-align: center; font-size: 12px; font-weight: 700;
+      color: var(--white); padding: 4px 0; border-radius: 6px; flex-shrink: 0;
+    }
+    .s90  { background: #6B2D35; }
+    .s80  { background: #8B4A52; }
+    .s70  { background: #A45C65; }
+    .s60  { background: #BC7078; }
+    .s50  { background: #C98890; }
+    .s40  { background: #D4A0A6; }
+    .s30  { background: #DDBEC2; }
+    .s20  { background: #E8D0D3; color: var(--ink-muted); }
+    .ladder-text { font-size: 13px; color: var(--ink); line-height: 1.45; }
+    .ladder-ritual { font-size: 11px; color: var(--rose); font-style: italic; white-space: nowrap; }
+
+    /* Curva de habituação */
+    .habit-chart {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.5rem; margin: 1.25rem 0;
+      position: relative;
+    }
+    .habit-chart-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-faint); margin-bottom: 1rem; }
+    .habit-svg { width: 100%; height: 160px; }
+
+    /* Ciclo TOC */
+    .cycle-grid {
+      display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+      align-items: center; gap: 6px; margin: 1.25rem 0;
+    }
+    .cycle-node {
+      background: var(--rose-light); border: 1px solid var(--rose-border);
+      border-radius: var(--radius-sm); padding: 0.75rem 0.9rem;
+      text-align: center;
+    }
+    .cycle-node-neutral {
+      background: var(--surface); border-color: var(--border);
+    }
+    .cycle-label { font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--rose); margin-bottom: 3px; }
+    .cycle-label-n { color: var(--ink-faint); }
+    .cycle-text  { font-size: 12px; color: var(--ink); line-height: 1.4; }
+    .cycle-arrow { font-size: 16px; color: var(--rose-mid); text-align: center; }
+
+    /* Tabela de protocolos */
+    .proto-table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; font-size: 13px; }
+    .proto-table th {
+      text-align: left; font-size: 10px; font-weight: 500; letter-spacing: 0.07em;
+      text-transform: uppercase; color: var(--ink-faint);
+      padding: 7px 10px; border-bottom: 2px solid var(--border);
+      background: var(--surface);
+    }
+    .proto-table td {
+      padding: 10px; border-bottom: 1px solid var(--border);
+      line-height: 1.55; color: var(--ink-muted); vertical-align: top;
+    }
+    .proto-table tr:last-child td { border-bottom: none; }
+    .proto-table td:first-child { font-weight: 500; color: var(--ink); }
+    .proto-table tr:hover td { background: var(--rose-hover); }
+
+    /* Bloco de perguntas clínicas */
+    .question-block {
+      background: var(--surface); border-radius: var(--radius);
+      padding: 1.1rem 1.25rem; margin: 1rem 0;
+    }
+    .question-block-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-faint); margin-bottom: 0.6rem; }
+    .question-item {
+      font-size: 13px; color: var(--ink-muted); line-height: 1.6;
+      padding: 5px 0; border-bottom: 1px dashed var(--border);
+    }
+    .question-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .question-item::before { content: "— "; color: var(--rose-mid); }
+
+    /* Manejo de rituais — linha com destaque */
+    .ritual-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; margin: 5px 0;
+    }
+    .ritual-cell {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 0.75rem 1rem;
+      font-size: 13px; line-height: 1.55; color: var(--ink-muted);
+    }
+    .ritual-cell-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px; }
+    .label-evitar { color: #8B3A2A; }
+    .label-fazer  { color: #1E5230; }
+
+    .ref-item { font-size: 13px; color: var(--ink-muted); line-height: 1.7; padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .ref-item:last-child { border-bottom: none; }
+
+    @media (max-width: 720px) { .sidebar { display: none; } .layout { padding: 0 1.25rem; } }
+    @media (max-width: 580px) {
+      .cycle-grid { grid-template-columns: 1fr; }
+      .cycle-arrow { transform: rotate(90deg); }
+      .ritual-row { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <!-- PWA -->
+  <link rel="manifest" href="../../manifest.json" />
+  <meta name="theme-color" content="#8B4A52" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Psi Real" />
+  <link rel="apple-touch-icon" href="../../icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="../../icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="../../icons/icon-512.png" />
+
+<style id="psireal-layout-refresh">
+  :root{
+    --ps-bg:#FAF8F5;
+    --ps-surface:#FFFFFF;
+    --ps-ink:#171321;
+    --ps-muted:#686174;
+    --ps-soft:#A090C8;
+    --ps-border:#E8E2EC;
+    --ps-violet:#5B3DF5;
+    --ps-violet-dark:#2C1A69;
+    --ps-violet-soft:#EEE9FF;
+    --ps-shadow:0 18px 48px rgba(23,19,33,.08);
+    --ps-radius:22px;
+  }
+
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ps-bg)!important;
+    color:var(--ps-ink)!important;
+    font-family:'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif!important;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,h4,
+  .hero-title,.section-title,.material-title,.review-title,
+  .nav-logo-text,.card-title{
+    font-family:'Manrope', system-ui, sans-serif!important;
+    letter-spacing:-.045em!important;
+    color:var(--ps-ink)!important;
+  }
+
+  p,li,.subtitle,.description,.lead{
+    color:var(--ps-muted)!important;
+  }
+
+  nav,header,.topbar,.navbar{
+    background:rgba(250,248,245,.9)!important;
+    border-bottom:1px solid var(--ps-border)!important;
+    backdrop-filter:blur(18px)!important;
+  }
+
+  .nav-logo img,
+  .nav-real-logo{
+    width:42px!important;
+    height:42px!important;
+    border-radius:50%!important;
+    object-fit:contain!important;
+  }
+
+  .nav-logo-icon{
+    display:none!important;
+  }
+
+  .nav-logo{
+    gap:12px!important;
+  }
+
+  a{
+    color:inherit;
+  }
+
+  a:hover{
+    color:var(--ps-violet)!important;
+  }
+
+  .btn,
+  .button,
+  .cta,
+  .primary,
+  .btn-primary,
+  .hero-cta,
+  button,
+  a[class*="btn"]{
+    border-radius:14px!important;
+    font-weight:800!important;
+  }
+
+  .btn-primary,
+  .primary,
+  .cta,
+  .hero-cta,
+  button.primary,
+  a.primary,
+  a.btn-primary{
+    background:var(--ps-violet)!important;
+    color:#fff!important;
+    border-color:var(--ps-violet)!important;
+    box-shadow:0 16px 34px rgba(91,61,245,.18)!important;
+  }
+
+  .btn-primary:hover,
+  .primary:hover,
+  .cta:hover,
+  .hero-cta:hover,
+  a.primary:hover,
+  a.btn-primary:hover{
+    background:#4B30DA!important;
+    color:#fff!important;
+    transform:translateY(-1px);
+  }
+
+  .btn-secondary,
+  .secondary,
+  a.secondary{
+    background:#fff!important;
+    color:var(--ps-ink)!important;
+    border:1px solid var(--ps-border)!important;
+  }
+
+  .pill,.badge,.tag,.category,.label{
+    background:var(--ps-violet-soft)!important;
+    color:var(--ps-violet-dark)!important;
+    border:1px solid var(--ps-border)!important;
+    border-radius:999px!important;
+    font-weight:800!important;
+    letter-spacing:.06em!important;
+  }
+
+  .card,
+  .material-card,
+  .resource-card,
+  .review-card,
+  article,
+  .content-card,
+  .panel{
+    background:#fff!important;
+    border:1px solid var(--ps-border)!important;
+    border-radius:var(--ps-radius)!important;
+    box-shadow:0 8px 26px rgba(23,19,33,.045)!important;
+  }
+
+  .card:hover,
+  .material-card:hover,
+  .resource-card:hover,
+  .review-card:hover{
+    box-shadow:var(--ps-shadow)!important;
+    border-color:#D8D0E5!important;
+  }
+
+  .material-card .card-visual,
+  .card-visual,
+  .visual,
+  .gradient-card,
+  .cover{
+    background:linear-gradient(135deg,#171321 0%,#5B3DF5 100%)!important;
+  }
+
+  .toc,
+  .sidebar,
+  aside{
+    background:transparent!important;
+  }
+
+  .toc a.active,
+  .toc .active,
+  .sidebar .active,
+  .nav-links .active,
+  .active{
+    background:var(--ps-violet-soft)!important;
+    color:var(--ps-violet-dark)!important;
+    border-radius:12px!important;
+  }
+
+  hr,.divider{
+    border-color:var(--ps-border)!important;
+  }
+
+  #install-prompt,
+  .install-prompt,
+  .pwa-install,
+  .pwa-prompt,
+  .install-banner,
+  .app-install-banner,
+  [data-install-prompt]{
+    display:none!important;
+    visibility:hidden!important;
+    opacity:0!important;
+    pointer-events:none!important;
+  }
+</style>
+
+</head>
+<body>
+<!-- PWA Install Banner -->
+<div id="pwa-install-banner" style="display:none; position:fixed; bottom:1.25rem; left:50%; transform:translateX(-50%); z-index:9999; background:#fff; border:1px solid #F0E8E3; border-radius:12px; box-shadow:0 8px 32px rgba(139,74,82,0.15); padding:0.9rem 1.1rem; align-items:center; gap:0.9rem; max-width:360px; width:calc(100% - 2rem);">
+  <div style="width:36px;height:36px;background:#F8EDEB;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B4A52" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6s4-2 11-2 11 2 11 2v13s-4-2-11-2S1 19 1 19z"/><line x1="12" y1="4" x2="12" y2="17"/></svg>
+  </div>
+  <div style="flex:1;min-width:0;">
+    <div style="font-size:13px;font-weight:500;color:#2A1A18;">Instalar Psi Real</div>
+    <div style="font-size:11px;color:#8A7370;">Acesse offline, como um app</div>
+  </div>
+  <button onclick="installPWA()" style="background:#8B4A52;color:#fff;border:none;border-radius:7px;padding:7px 14px;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:inherit;">Instalar</button>
+  <button onclick="dismissInstallBanner()" style="background:none;border:none;color:#C4A8A4;cursor:pointer;padding:4px;line-height:1;" aria-label="Fechar">âœ•</button>
+</div>
+
+<nav>
+  <a class="nav-back" href="../../index.html">
+    <span class="nav-back-arrow">â†</span> Biblioteca Psi Real
+  </a>
+  <span class="nav-title">EPR · Foa & Kozak</span>
+</nav>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="toc-label">Neste material</div>
+    <ul class="toc-list" id="toc">
+      <li><a href="#s1"><span class="toc-num">01</span>Foa & Kozak</a></li>
+      <li><a href="#s2"><span class="toc-num">02</span>O ciclo do TOC</a></li>
+      <li><a href="#s3"><span class="toc-num">03</span>O que é EPR</a></li>
+      <li><a href="#s4"><span class="toc-num">04</span>Habituação e extinção</a></li>
+      <li><a href="#s5"><span class="toc-num">05</span>Avaliação e hierarquia</a></li>
+      <li><a href="#s6"><span class="toc-num">06</span>Protocolo passo a passo</a></li>
+      <li><a href="#s7"><span class="toc-num">07</span>Prevenção de rituais</a></li>
+      <li><a href="#s8"><span class="toc-num">08</span>EPR nos transtornos de ansiedade</a></li>
+      <li><a href="#s9"><span class="toc-num">09</span>Dificuldades e manejo</a></li>
+      <li><a href="#s10"><span class="toc-num">10</span>Referências</a></li>
+    </ul>
+  </aside>
+
+  <main class="content">
+
+    <div class="doc-header">
+      <div class="breadcrumb"><a href="../../index.html">Biblioteca Psi Real</a> / TCC / Exposição e Prevenção de Rituais</div>
+      <div class="doc-tags">
+        <span class="doc-tag tag-tcc">TCC</span>
+        <span class="doc-tag tag-epr">TOC</span>
+        <span class="doc-tag tag-prot">Protocolo</span>
+      </div>
+      <h1 class="doc-title">Exposição e Prevenção<br>de Rituais</h1>
+      <p class="doc-intro">Protocolo EPR para TOC e transtornos de ansiedade: fundamentos teóricos, construção da hierarquia, graduação das exposições e manejo clínico dos rituais — baseado em Foa & Kozak.</p>
+      <div class="doc-meta">
+        <div class="doc-meta-item"><strong>Referências:</strong> Foa & Kozak, 1986 · Foa et al., 2012</div>
+        <div class="doc-meta-item"><strong>Área:</strong> TCC / Transtornos de Ansiedade / TOC</div>
+        <div class="doc-meta-item"><strong>Seções:</strong> 10</div>
+      </div>
+    </div>
+
+    <!-- S1 -->
+    <div class="doc-section" id="s1">
+      <div class="sec-eyebrow">Seção 01</div>
+      <h2 class="sec-title">Foa, Kozak e o modelo do processamento emocional</h2>
+      <p class="body">Edna B. Foa é professora na Universidade da Pensilvânia e uma das pesquisadoras mais influentes no campo dos transtornos de ansiedade e TEPT. Michael J. Kozak, seu colaborador, é pesquisador especializado em psicofisiologia do medo e mecanismos de mudança terapêutica.</p>
+      <p class="body">Em 1986, Foa e Kozak publicaram o artigo seminal <em>Emotional Processing of Fear: Exposure to Corrective Information</em>, que estabeleceu as bases teóricas para compreender como a exposição funciona — e por que a prevenção de rituais é indispensável no tratamento do TOC. Esse modelo orientou décadas de pesquisa e o desenvolvimento dos protocolos de EPR mais eficazes disponíveis hoje.</p>
+      <div class="callout">
+        <p><strong>Contribuição central:</strong> Foa e Kozak propõem que o medo é armazenado em uma estrutura de memória que contém informações sobre o estímulo temido, as respostas de medo e o significado atribuído. Para que a mudança ocorra, essa estrutura precisa ser ativada <em>e</em> receber informações corretivas — o que a evitação permanentemente impede.</p>
+      </div>
+    </div>
+
+    <!-- S2 -->
+    <div class="doc-section" id="s2">
+      <div class="sec-eyebrow">Seção 02</div>
+      <h2 class="sec-title">O ciclo do TOC — o que mantém o problema</h2>
+      <p class="body">Antes de planejar qualquer exposição, é essencial que o terapeuta — e o paciente — compreendam o mecanismo que mantém o TOC. O ciclo obsessivo-compulsivo é autoalimentado: cada ritual oferece alívio imediato e, ao mesmo tempo, fortalece a crença de que o ritual era necessário.</p>
+
+      <div class="cycle-grid">
+        <div class="cycle-node cycle-node-neutral">
+          <div class="cycle-label cycle-label-n">Gatilho</div>
+          <div class="cycle-text">Situação, objeto, pensamento intrusivo</div>
+        </div>
+        <div class="cycle-arrow">→</div>
+        <div class="cycle-node">
+          <div class="cycle-label">Obsessão</div>
+          <div class="cycle-text">Pensamento, imagem ou impulso indesejado que gera angústia</div>
+        </div>
+        <div class="cycle-arrow">→</div>
+        <div class="cycle-node">
+          <div class="cycle-label">Ansiedade</div>
+          <div class="cycle-text">Desconforto intenso e sensação de perigo ou responsabilidade</div>
+        </div>
+        <div class="cycle-arrow">→</div>
+        <div class="cycle-node">
+          <div class="cycle-label">Compulsão</div>
+          <div class="cycle-text">Ritual que reduz a ansiedade — mas mantém e reforça o ciclo</div>
+        </div>
+      </div>
+
+      <h3 class="sub-title">Por que o ritual mantém o TOC</h3>
+      <div class="hl-row"><strong>Alívio imediato:</strong> O ritual reduz a ansiedade rapidamente — reforço negativo potente que garante que o comportamento se repita.</div>
+      <div class="hl-row"><strong>Confirmação da ameaça:</strong> Ao realizar o ritual, o paciente confirma implicitamente que o perigo era real e que o ritual era necessário. A crença ameaçadora nunca é desconfirmada.</div>
+      <div class="hl-row"><strong>Impedimento da habituação:</strong> A ansiedade nunca tem tempo de diminuir naturalmente — o ritual interrompe o processo antes que o sistema nervoso aprenda que o estímulo é seguro.</div>
+      <div class="hl-row"><strong>Ampliação do repertório:</strong> Com o tempo, mais situações ativam o ciclo, o ritual se torna mais elaborado e o paciente investe mais tempo e energia na compulsão.</div>
+
+      <div class="callout callout-amber">
+        <p><strong>Para psicoeducar o paciente:</strong> "O ritual é exatamente o que mantém o problema. Ele funciona como um extintor que apaga um incêndio — mas o incêndio nunca desaparece de verdade porque o extintor nunca deixa o fogo aprender que vai se apagar sozinho. O tratamento ensina o sistema nervoso que não precisa do extintor."</p>
+      </div>
+    </div>
+
+    <!-- S3 -->
+    <div class="doc-section" id="s3">
+      <div class="sec-eyebrow">Seção 03</div>
+      <h2 class="sec-title">O que é EPR — Exposição e Prevenção de Rituais</h2>
+      <p class="body">A Exposição e Prevenção de Rituais (EPR) é o tratamento de primeira linha para o TOC, com sólida base em evidências. Consiste em dois componentes interdependentes e igualmente essenciais.</p>
+
+      <div class="two-col">
+        <div class="info-box">
+          <div class="info-box-label">Exposição (E)</div>
+          <p>Contato deliberado e sistemático com o estímulo temido — situação, objeto, pensamento ou imagem que dispara a obsessão. A exposição é gradual, planejada e prolongada o suficiente para permitir a habituação.</p>
+        </div>
+        <div class="info-box">
+          <div class="info-box-label">Prevenção de Rituais (PR)</div>
+          <p>Abstenção completa do comportamento compulsivo durante e após a exposição. Sem a PR, a exposição não produz aprendizado corretivo — o alívio do ritual confirma a ameaça em vez de desconfirmá-la.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-warm">
+        <p><strong>Princípio inegociável:</strong> Exposição sem prevenção de rituais é parcialmente eficaz na melhor das hipóteses. Os dois componentes são necessários. Um paciente que se expõe mas realiza rituais após cada exposição não está fazendo EPR — está praticando um ciclo modificado de compulsão.</p>
+      </div>
+
+      <h3 class="sub-title">EPR intensiva vs. gradual</h3>
+      <div class="two-col">
+        <div class="info-box">
+          <div class="info-box-label">EPR Gradual (padrão ambulatorial)</div>
+          <ul>
+            <li>Começa por itens de SUDS baixo a moderado</li>
+            <li>Progride conforme habituação acontece</li>
+            <li>Permite ao paciente construir confiança</li>
+            <li>Mais tolerável — maior adesão a longo prazo</li>
+            <li>Padrão para a maioria dos casos ambulatoriais</li>
+          </ul>
+        </div>
+        <div class="info-box">
+          <div class="info-box-label">EPR Intensiva</div>
+          <ul>
+            <li>Sessões diárias ou múltiplas sessões por semana</li>
+            <li>Começa em itens de dificuldade moderada a alta</li>
+            <li>Eficaz em casos graves ou com tempo limitado</li>
+            <li>Exige maior suporte terapêutico e motivação</li>
+            <li>Base de evidências robusta — resultados rápidos</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- S4 -->
+    <div class="doc-section" id="s4">
+      <div class="sec-eyebrow">Seção 04</div>
+      <h2 class="sec-title">Habituação, extinção e aprendizado inibitório</h2>
+      <p class="body">A EPR opera por meio de mecanismos psicofisiológicos bem documentados. Compreendê-los permite ao terapeuta conduzir as exposições de forma tecnicamente precisa e explicar o processo ao paciente de maneira convincente.</p>
+
+      <h3 class="sub-title">Habituação</h3>
+      <p class="body">Quando o organismo é exposto repetidamente a um estímulo aversivo sem consequências nocivas, a resposta de ansiedade diminui progressivamente. Isso ocorre em dois tempos:</p>
+      <div class="hl-row"><strong>Habituação dentro da sessão:</strong> A ansiedade sobe ao contato com o estímulo, atinge um pico e começa a cair — geralmente em 20 a 45 minutos — quando o ritual é impedido. O paciente aprende experiencialmente que a ansiedade diminui por si mesma.</div>
+      <div class="hl-row"><strong>Habituação entre sessões:</strong> A cada nova exposição ao mesmo estímulo, o pico de ansiedade é menor e a queda é mais rápida. O aprendizado se consolida ao longo do tempo.</div>
+
+      <div class="habit-chart">
+        <div class="habit-chart-title">Curva típica de ansiedade durante uma exposição com prevenção de rituais</div>
+        <svg class="habit-svg" viewBox="0 0 500 140" xmlns="http://www.w3.org/2000/svg">
+          <!-- Eixos -->
+          <line x1="40" y1="120" x2="480" y2="120" stroke="#EDE6E0" stroke-width="1.5"/>
+          <line x1="40" y1="10"  x2="40"  y2="120" stroke="#EDE6E0" stroke-width="1.5"/>
+          <!-- Labels eixo Y -->
+          <text x="32" y="14"  text-anchor="end" font-size="10" fill="#C4A8A4">100</text>
+          <text x="32" y="47"  text-anchor="end" font-size="10" fill="#C4A8A4">75</text>
+          <text x="32" y="80"  text-anchor="end" font-size="10" fill="#C4A8A4">50</text>
+          <text x="32" y="113" text-anchor="end" font-size="10" fill="#C4A8A4">25</text>
+          <!-- Labels eixo X -->
+          <text x="40"  y="133" text-anchor="middle" font-size="10" fill="#C4A8A4">0</text>
+          <text x="150" y="133" text-anchor="middle" font-size="10" fill="#C4A8A4">10 min</text>
+          <text x="260" y="133" text-anchor="middle" font-size="10" fill="#C4A8A4">20 min</text>
+          <text x="370" y="133" text-anchor="middle" font-size="10" fill="#C4A8A4">30 min</text>
+          <text x="480" y="133" text-anchor="middle" font-size="10" fill="#C4A8A4">45 min</text>
+          <!-- Grade pontilhada -->
+          <line x1="40" y1="47" x2="480" y2="47" stroke="#F0E8E3" stroke-width="1" stroke-dasharray="4,4"/>
+          <line x1="40" y1="80" x2="480" y2="80" stroke="#F0E8E3" stroke-width="1" stroke-dasharray="4,4"/>
+          <!-- Curva "com ritual" (tracejada, sobe e desce rápido) -->
+          <path d="M40,105 C80,105 100,20 120,18 C135,18 145,90 165,105 C185,115 220,115 480,115"
+                stroke="#D4A0A6" stroke-width="1.5" stroke-dasharray="6,4" fill="none"/>
+          <!-- Curva EPR (sobe, pico, habituação longa) -->
+          <path d="M40,105 C70,105 100,18 130,14 C160,11 180,22 220,42 C270,65 330,85 400,100 C440,108 465,112 480,113"
+                stroke="#8B4A52" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- Ponto de pico -->
+          <circle cx="130" cy="14" r="4" fill="#8B4A52"/>
+          <text x="134" y="11" font-size="10" fill="#8B4A52" font-weight="500">Pico</text>
+          <!-- Área de habituação -->
+          <text x="310" y="72" font-size="10" fill="#8B4A52">habituação</text>
+          <!-- Legenda -->
+          <line x1="52" y1="20" x2="76" y2="20" stroke="#8B4A52" stroke-width="2.5"/>
+          <text x="80" y="24" font-size="10" fill="#8A7370">EPR (sem ritual)</text>
+          <line x1="52" y1="36" x2="76" y2="36" stroke="#D4A0A6" stroke-width="1.5" stroke-dasharray="6,4"/>
+          <text x="80" y="40" font-size="10" fill="#8A7370">Com ritual</text>
+        </svg>
+      </div>
+
+      <h3 class="sub-title">Aprendizado inibitório — modelo mais recente</h3>
+      <p class="body">Craske e colaboradores propuseram uma atualização ao modelo de habituação: a exposição não apaga a memória de medo — cria uma nova memória de segurança que compete com a antiga. O objetivo não é reduzir a ansiedade durante a exposição, mas maximizar o aprendizado de que o estímulo é seguro.</p>
+      <div class="callout callout-blue">
+        <p><strong>Implicação clínica:</strong> Pelo modelo inibitório, uma exposição bem-sucedida não é necessariamente aquela em que a ansiedade caiu muito — é aquela em que o paciente permaneceu no contato com o estímulo temido sem realizar o ritual, desconfirmando a ameaça esperada. A violação de expectativas é o mecanismo central.</p>
+      </div>
+    </div>
+
+    <!-- S5 -->
+    <div class="doc-section" id="s5">
+      <div class="sec-eyebrow">Seção 05</div>
+      <h2 class="sec-title">Avaliação e construção da hierarquia</h2>
+      <p class="body">A hierarquia de exposição — lista ordenada de situações temidas por grau de angústia — é o instrumento que organiza todo o protocolo EPR. Uma hierarquia bem construída é pré-requisito para exposições eficazes.</p>
+
+      <h3 class="sub-title">Avaliação das obsessões e compulsões</h3>
+      <div class="comp-grid">
+        <div class="comp-card">
+          <div class="comp-n">Mapear</div>
+          <div class="comp-name">Estímulos temidos</div>
+          <div class="comp-desc">Todos os objetos, situações, pensamentos e imagens que disparam obsessões — internos e externos.</div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-n">Identificar</div>
+          <div class="comp-name">Conteúdo das obsessões</div>
+          <div class="comp-desc">O que exatamente o paciente teme que aconteça? A ameaça específica — não apenas "tenho medo de contaminação" mas "tenho medo de transmitir doença para minha família".</div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-n">Listar</div>
+          <div class="comp-name">Todos os rituais</div>
+          <div class="comp-desc">Compulsões abertas (lavar, verificar, organizar) e encobertas (neutralização mental, oração, contar).</div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-n">Mapear</div>
+          <div class="comp-name">Comportamentos de evitação</div>
+          <div class="comp-desc">Situações que o paciente evita completamente — frequentemente não mencionadas espontaneamente.</div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-n">Medir</div>
+          <div class="comp-name">Tempo e impacto</div>
+          <div class="comp-desc">Horas por dia gastas em rituais e evitações. Impacto em trabalho, relações e qualidade de vida.</div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-n">Aplicar</div>
+          <div class="comp-name">Y-BOCS</div>
+          <div class="comp-desc">Yale-Brown Obsessive Compulsive Scale — linha de base quantitativa de gravidade. Reaplicar periodicamente para monitorar progresso.</div>
+        </div>
+      </div>
+
+      <h3 class="sub-title">Construindo a hierarquia — passo a passo</h3>
+      <ul class="steps">
+        <li><div class="step-dot">1</div><div>Introduzir a escala SUDS (0–100) e calibrar com o paciente: pedir dois exemplos — uma situação de SUDS 0 e uma de SUDS 100 — para garantir que a escala está ancorada na experiência real dele.</div></li>
+        <li><div class="step-dot">2</div><div>Listar todas as situações evitadas e todos os gatilhos de obsessão, sem ordenar ainda. Quanto mais exaustiva a lista, melhor a hierarquia.</div></li>
+        <li><div class="step-dot">3</div><div>Atribuir SUDS a cada item. Para cada situação: "Se você estivesse nessa situação agora, sem poder realizar o ritual, qual seria sua angústia de 0 a 100?"</div></li>
+        <li><div class="step-dot">4</div><div>Ordenar os itens do menor para o maior SUDS. Verificar se há itens em cada faixa (20–40, 40–60, 60–80, 80–100) — lacunas grandes dificultam a progressão.</div></li>
+        <li><div class="step-dot">5</div><div>Para cada item, registrar o ritual associado — qual compulsão o paciente realiza ou sente impulso de realizar nessa situação. A PR é planejada junto com a exposição.</div></li>
+      </ul>
+
+      <h3 class="sub-title">Exemplo de hierarquia — TOC de contaminação</h3>
+      <ul class="ladder">
+        <li class="ladder-rung">
+          <span class="suds-badge s90">90</span>
+          <span class="ladder-text">Tocar em corrimão de hospital público e não lavar as mãos por 2 horas</span>
+          <span class="ladder-ritual">Ritual: lavar mãos 20Ã—</span>
+        </li>
+        <li class="ladder-rung">
+          <span class="suds-badge s80">80</span>
+          <span class="ladder-text">Apertar a mão de alguém que parece doente e não lavar por 1 hora</span>
+          <span class="ladder-ritual">Ritual: lavar mãos 10Ã—</span>
+        </li>
+        <li class="ladder-rung">
+          <span class="suds-badge s70">70</span>
+          <span class="ladder-text">Tocar no celular após chegar da rua e depois tocar no rosto</span>
+          <span class="ladder-ritual">Ritual: limpar celular, lavar rosto</span>
+        </li>
+        <li class="ladder-rung">
+          <span class="suds-badge s60">60</span>
+          <span class="ladder-text">Usar banheiro público e tocar na maçaneta sem usar papel</span>
+          <span class="ladder-ritual">Ritual: lavar 5Ã—, verificar sabão</span>
+        </li>
+        <li class="ladder-rung">
+          <span class="suds-badge s50">50</span>
+          <span class="ladder-text">Sentar em cadeira de sala de espera de consultório médico</span>
+          <span class="ladder-ritual">Ritual: trocar roupa ao chegar em casa</span>
+        </li>
+        <li class="ladder-rung">
+          <span class="suds-badge s40">40</span>
+          <span class="ladder-text">Pegar dinheiro (cédulas) e guardar sem lavar as mãos antes de comer</span>
+          <span class="ladder-ritual">Ritual: lavar 3Ã— antes de qualquer refeição</span>
+        </li>
+        <li class="ladder-rung">
+          <span class="suds-badge s30">30</span>
+          <span class="ladder-text">Tocar em embalagem de supermercado antes de guardar sem higienizar</span>
+          <span class="ladder-ritual">Ritual: higienizar todas as embalagens</span>
+        </li>
+        <li class="ladder-rung">
+          <span class="suds-badge s20">20</span>
+          <span class="ladder-text">Deixar sapatos no corredor sem colocá-los em saco plástico</span>
+          <span class="ladder-ritual">Ritual: embalar sapatos, não pisar na área</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- S6 -->
+    <div class="doc-section" id="s6">
+      <div class="sec-eyebrow">Seção 06</div>
+      <h2 class="sec-title">Protocolo EPR — passo a passo</h2>
+      <p class="body">O protocolo EPR segue uma estrutura clara, mas exige adaptação clínica cuidadosa. A sequência abaixo reflete as diretrizes de Foa e colaboradores para aplicação em contexto ambulatorial.</p>
+
+      <h3 class="sub-title">Fase 1 — Psicoeducação (sessões 1–2)</h3>
+      <ul class="steps">
+        <li><div class="step-dot">1</div><div>Explicar o modelo cognitivo-comportamental do TOC — o ciclo obsessão → ansiedade → ritual → alívio → reforço. Usar exemplos do próprio paciente.</div></li>
+        <li><div class="step-dot">2</div><div>Explicar a lógica da EPR: como a habituação funciona e por que o ritual impede o aprendizado. A metáfora do extintor ou da "conta bancária da ansiedade" costuma ser útil.</div></li>
+        <li><div class="step-dot">3</div><div>Apresentar a escala SUDS e a hierarquia construída juntos — revisá-la e validar com o paciente. Ele deve reconhecer a hierarquia como precisa.</div></li>
+        <li><div class="step-dot">4</div><div>Esclarecer expectativas: a ansiedade vai subir no início de cada exposição. Isso não é sinal de perigo — é evidência de que o protocolo está funcionando.</div></li>
+      </ul>
+
+      <h3 class="sub-title">Fase 2 — Exposições graduadas (sessões 3 em diante)</h3>
+      <ul class="steps">
+        <li><div class="step-dot">1</div><div><strong>Selecionar o item inicial:</strong> Começar por um item de SUDS 25–35 — desafiador o suficiente para gerar aprendizado, mas tolerável o suficiente para garantir que o paciente consiga prevenir o ritual.</div></li>
+        <li><div class="step-dot">2</div><div><strong>Registrar SUDS antes:</strong> Pedir ao paciente que avalie a ansiedade antes do contato com o estímulo. Serve de linha de base para comparação.</div></li>
+        <li><div class="step-dot">3</div><div><strong>Iniciar o contato com o estímulo:</strong> Exposição ao vivo sempre que possível — em imaginação apenas quando a situação real não pode ser reproduzida na sessão. A exposição ao vivo é mais eficaz.</div></li>
+        <li><div class="step-dot">4</div><div><strong>Monitorar SUDS durante a exposição:</strong> Pedir ao paciente que avalie sua ansiedade a cada 5–10 minutos. Registrar os valores — a curva de habituação é dado clínico e pedagógico.</div></li>
+        <li><div class="step-dot">5</div><div><strong>Manter a exposição até habituação:</strong> Continuar até a ansiedade reduzir pelo menos 50% do pico, ou até atingir SUDS â‰¤ 30. Nunca encerrar a exposição no pico — isso reforça a evitação.</div></li>
+        <li><div class="step-dot">6</div><div><strong>Prevenir o ritual:</strong> Durante e após a exposição, o ritual é completamente impedido. Ver seção 07 para estratégias de manejo da PR.</div></li>
+        <li><div class="step-dot">7</div><div><strong>Processar após a exposição:</strong> "O que aconteceu? O que você esperava que fosse acontecer? O que de fato aconteceu?" — a violação da expectativa é explorada verbalmente.</div></li>
+        <li><div class="step-dot">8</div><div><strong>Prescrever exposição como tarefa:</strong> A mesma exposição realizada na sessão deve ser repetida em casa pelo menos uma vez por dia, até o próximo encontro.</div></li>
+      </ul>
+
+      <div class="callout callout-green">
+        <p><strong>Regra de progressão:</strong> Avançar para o próximo degrau da hierarquia quando o SUDS do item atual está consistentemente abaixo de 30, tanto na sessão quanto nas tarefas de casa. Progredir prematuramente compromete o aprendizado corretivo.</p>
+      </div>
+    </div>
+
+    <!-- S7 -->
+    <div class="doc-section" id="s7">
+      <div class="sec-eyebrow">Seção 07</div>
+      <h2 class="sec-title">Prevenção de rituais — o componente mais difícil</h2>
+      <p class="body">A Prevenção de Rituais é frequentemente o maior desafio clínico da EPR. O terapeuta precisa preparar o paciente, planejar estratégias concretas e antecipar as situações em que o impulso compulsivo será mais intenso.</p>
+
+      <h3 class="sub-title">Tipos de rituais e como abordar cada um</h3>
+
+      <div class="ritual-row">
+        <div class="ritual-cell">
+          <div class="ritual-cell-label label-evitar">Ritual aberto — lavar / limpar</div>
+          Não realizar a lavagem. Se necessário, limitar progressivamente (ex: 1 lavagem breve, depois nenhuma). Planejar o que fazer com as mãos durante o impulso.
+        </div>
+        <div class="ritual-cell">
+          <div class="ritual-cell-label label-fazer">Alternativa funcional</div>
+          Manter contato com o estímulo após a exposição — "contaminar" outros objetos e superfícies deliberadamente para ampliar o aprendizado corretivo.
+        </div>
+      </div>
+      <div class="ritual-row">
+        <div class="ritual-cell">
+          <div class="ritual-cell-label label-evitar">Ritual aberto — verificar</div>
+          Não retornar para verificar. Registrar a ansiedade e permanecer com a incerteza. Planejar uma atividade imediatamente após sair do ambiente.
+        </div>
+        <div class="ritual-cell">
+          <div class="ritual-cell-label label-fazer">Alternativa funcional</div>
+          Sair do ambiente imediatamente após a ação (fechar a porta, apagar a luz) sem verificação. Tolerar a incerteza como meta explícita.
+        </div>
+      </div>
+      <div class="ritual-row">
+        <div class="ritual-cell">
+          <div class="ritual-cell-label label-evitar">Ritual encoberto — neutralização mental</div>
+          Não realizar o pensamento neutralizador, a oração compulsiva ou a contagem. Esses rituais são mais difíceis de prevenir porque são invisíveis.
+        </div>
+        <div class="ritual-cell">
+          <div class="ritual-cell-label label-fazer">Alternativa funcional</div>
+          Notar o impulso de neutralizar sem agir sobre ele. Usar defusão cognitiva: "Estou tendo o pensamento de que devo neutralizar" — observar sem obedecer.
+        </div>
+      </div>
+      <div class="ritual-row">
+        <div class="ritual-cell">
+          <div class="ritual-cell-label label-evitar">Busca de reasseguramento</div>
+          Não perguntar a familiares, ao terapeuta ou a fontes externas se o perigo é real. O reasseguramento é um ritual relacional — funciona como compulsão.
+        </div>
+        <div class="ritual-cell">
+          <div class="ritual-cell-label label-fazer">Alternativa funcional</div>
+          Tolerar a incerteza sem resolução. Dizer a si mesmo: "Talvez seja verdade, talvez não seja. Vou conviver com a dúvida." — a tolerância Ã  incerteza é a habilidade central.
+        </div>
+      </div>
+
+      <h3 class="sub-title">Estratégias de manejo durante o impulso compulsivo</h3>
+      <div class="question-block">
+        <div class="question-block-label">O que o paciente pode fazer no momento do impulso</div>
+        <div class="question-item">Registrar o SUDS e observar — "minha ansiedade está em 70. Vou esperar 5 minutos e registrar de novo"</div>
+        <div class="question-item">Surfar a onda — imaginar a ansiedade como uma onda que vai subir e descer sem precisar de ação</div>
+        <div class="question-item">Nomear o processo — "isso é TOC me dizendo para realizar o ritual. Não é perigo real."</div>
+        <div class="question-item">Atrasar o ritual progressivamente — se não conseguir prevenir completamente, atrasar 5, 10, 15 minutos como estratégia de fading</div>
+        <div class="question-item">Engajar-se em atividade incompatível com o ritual — telefonar para alguém, caminhar, fazer qualquer tarefa que ocupe as mãos ou a mente</div>
+      </div>
+
+      <div class="callout callout-warm">
+        <p><strong>Sobre o reasseguramento na terapia:</strong> O terapeuta também pode se tornar fonte de reasseguramento — ao responder perguntas do tipo "você acha que vai dar certo?", "isso é realmente perigoso?", "quantas vezes mais vou precisar fazer isso?". A resposta clínica correta é apontar o padrão: "Percebo que você está me pedindo reasseguramento — o que acontece quando não fico em paz com a incerteza?"</div>
+    </div>
+
+    <!-- S8 -->
+    <div class="doc-section" id="s8">
+      <div class="sec-eyebrow">Seção 08</div>
+      <h2 class="sec-title">EPR nos transtornos de ansiedade</h2>
+      <p class="body">O protocolo de exposição com prevenção de resposta — em suas variações — é o núcleo do tratamento baseado em evidências para todos os transtornos de ansiedade. Os princípios são os mesmos; a aplicação técnica varia conforme o transtorno.</p>
+
+      <table class="proto-table">
+        <thead>
+          <tr>
+            <th>Transtorno</th>
+            <th>Alvo da exposição</th>
+            <th>Prevenção de resposta</th>
+            <th>Especificidades</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TOC</td>
+            <td>Situações e pensamentos obsessivos que disparam rituais</td>
+            <td>Abstenção completa de compulsões abertas e encobertas</td>
+            <td>Incluir rituais mentais e reasseguramento; exposição Ã  incerteza é central</td>
+          </tr>
+          <tr>
+            <td>Fobia específica</td>
+            <td>Objeto ou situação fóbica (altura, sangue, animal, etc.)</td>
+            <td>Não escapar nem evitar — permanecer no contato</td>
+            <td>Habituação frequentemente rápida; exposição ao vivo preferível; sessão única pode ser suficiente em casos simples</td>
+          </tr>
+          <tr>
+            <td>Ansiedade social (TAS)</td>
+            <td>Situações sociais temidas; observação dos outros; avaliação negativa</td>
+            <td>Não usar comportamentos de segurança (evitar contato visual, falar baixo, preparar excessivamente)</td>
+            <td>Eliminar comportamentos de segurança é essencial; vídeo-feedback útil; exposição em grupo tem evidências adicionais</td>
+          </tr>
+          <tr>
+            <td>Transtorno de pânico com agorafobia</td>
+            <td>Situações agorafóbicas + sensações físicas internas (exposição interoceptiva)</td>
+            <td>Não escapar, não usar objetos de segurança (celular, água, companhia)</td>
+            <td>Exposição interoceptiva (hiperventilação, girar em cadeira) expõe Ã s sensações temidas diretamente</td>
+          </tr>
+          <tr>
+            <td>TEPT</td>
+            <td>Memórias traumáticas (exposição prolongada em imaginação) e situações evitadas (in vivo)</td>
+            <td>Não interromper o relato, não mudar assunto, não dissociar</td>
+            <td>Protocolo de Exposição Prolongada de Foa — 90 min de imaginação com processamento emocional; exige formação específica</td>
+          </tr>
+          <tr>
+            <td>TAG</td>
+            <td>Incerteza e preocupações catastrofizadas</td>
+            <td>Não realizar comportamentos de controle e reasseguramento</td>
+            <td>Exposição Ã  incerteza e Ã  possibilidade do pior cenário (imaginal); exposição ao comportamento adiado por preocupação</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- S9 -->
+    <div class="doc-section" id="s9">
+      <div class="sec-eyebrow">Seção 09</div>
+      <h2 class="sec-title">Dificuldades clínicas e manejo</h2>
+      <div class="hl-row"><strong>Recusa da exposição:</strong> O paciente entende a lógica mas recusa iniciar. Revisar a psicoeducação, explorar os custos do TOC, verificar se a hierarquia começa baixa o suficiente. Considerar motivational interviewing antes da EPR.</div>
+      <div class="hl-row"><strong>Abandono no pico de ansiedade:</strong> O paciente encerra a exposição quando a ansiedade está no pico — o pior momento possível. Reforça a evitação. Planejar a duração mínima da exposição com antecedência e combinar como lidar com o impulso de escapar.</div>
+      <div class="hl-row"><strong>Rituais encobertos durante a exposição:</strong> O paciente se expõe ao estímulo mas neutraliza mentalmente ao mesmo tempo — a exposição não produz aprendizado. Identificar os rituais mentais na avaliação e incluí-los explicitamente na prevenção de rituais.</div>
+      <div class="hl-row"><strong>Família como facilitadora do TOC:</strong> Familiares que realizam rituais pelo paciente, fornecem reasseguramento ou modificam a rotina para acomodar as compulsões. Sessões de psicoeducação familiar e orientação sobre como deixar de participar do ciclo são essenciais.</div>
+      <div class="hl-row"><strong>Insight pobre:</strong> Pacientes com baixo insight acreditam fortemente que o perigo é real e a compulsão é necessária. EPR ainda é indicada, mas exige mais psicoeducação, progressão mais lenta e atenção Ã  aliança.</div>
+      <div class="hl-row"><strong>Comorbidade com depressão grave:</strong> Depressão intensa reduz a motivação e prejudica o aprendizado durante a exposição. Considerar tratamento da depressão em paralelo (farmacológico ou ativação comportamental) antes ou junto com a EPR.</div>
+      <div class="hl-row"><strong>Progresso estagnado:</strong> Quando o paciente não avança na hierarquia após várias semanas. Revisar a hierarquia, verificar rituais não identificados, explorar comportamentos de segurança ocultos, avaliar se as tarefas de casa estão sendo realizadas.</div>
+
+      <div class="callout callout-blue">
+        <p><strong>Sobre recaídas:</strong> Recaídas são parte esperada do processo — não indicam falha do tratamento. Ao encerrar a EPR, dedicar sessões Ã  prevenção de recaídas: identificar situações de risco, criar plano de resposta a futuros aumentos de sintoma e normalizar flutuações ao longo do tempo.</p>
+      </div>
+    </div>
+
+    <!-- S10 -->
+    <div class="doc-section" id="s10">
+      <div class="sec-eyebrow">Seção 10</div>
+      <h2 class="sec-title">Referências</h2>
+      <div class="ref-item">Foa, E. B., & Kozak, M. J. (1986). Emotional processing of fear: Exposure to corrective information. <em>Psychological Bulletin, 99</em>(1), 20–35.</div>
+      <div class="ref-item">Foa, E. B., Yadin, E., & Lichner, T. K. (2012). <em>Exposure and Response (Ritual) Prevention for Obsessive-Compulsive Disorder: Therapist Guide</em> (2ª ed.). Oxford University Press.</div>
+      <div class="ref-item">Foa, E. B., & McLean, C. P. (2016). The efficacy of exposure therapy for anxiety-related disorders and its underlying mechanisms. <em>Annual Review of Clinical Psychology, 12</em>, 1–28.</div>
+      <div class="ref-item">Craske, M. G., Treanor, M., Conway, C. C., Zbozinek, T., & Vervliet, B. (2014). Maximizing exposure therapy: An inhibitory learning approach. <em>Behaviour Research and Therapy, 58</em>, 10–23.</div>
+      <div class="ref-item">Abramowitz, J. S., Taylor, S., & McKay, D. (2009). Obsessive-compulsive disorder. <em>The Lancet, 374</em>(9688), 491–499.</div>
+      <div class="ref-item">Foa, E. B., Huppert, J. D., & Cahill, S. P. (2006). Emotional processing theory: An update. Em B. O. Rothbaum (Ed.), <em>Pathological Anxiety: Emotional Processing in Etiology and Treatment.</em> Guilford Press.</div>
+      <div class="ref-item">Clark, D. A., & Beck, A. T. (2010). <em>Cognitive Therapy of Anxiety Disorders: Science and Practice.</em> Guilford Press.</div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  const sections = document.querySelectorAll('.doc-section');
+  const links = document.querySelectorAll('.toc-list a');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const l = document.querySelector(`.toc-list a[href="#${e.target.id}"]`);
+        if (l) l.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => obs.observe(s));
+</script>
+
+<script>
+  // Service Worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('../../sw.js')
+        .catch(err => console.warn('SW registration failed:', err));
+    });
+  }
+
+  // Install prompt (A2HS banner)
+  let deferredPrompt = null;
+  window.addEventListener('beforeinstallprompt_disabled', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    const banner = document.getElementById('pwa-install-banner');
+    if (banner) banner.style.display = 'flex';
+  });
+
+  window.addEventListener('appinstalled', () => {
+    const banner = document.getElementById('pwa-install-banner');
+    if (banner) banner.style.display = 'none';
+    deferredPrompt = null;
+  });
+
+  function installPWA() {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+  }
+
+  function dismissInstallBanner() {
+    const banner = document.getElementById('pwa-install-banner');
+    if (banner) banner.style.display = 'none';
+    sessionStorage.setItem('pwa-banner-dismissed', '1');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    if (sessionStorage.getItem('pwa-banner-dismissed')) {
+      const banner = document.getElementById('pwa-install-banner');
+      if (banner) banner.style.display = 'none';
+    }
+  });
+</script>
+</body>
+</html>

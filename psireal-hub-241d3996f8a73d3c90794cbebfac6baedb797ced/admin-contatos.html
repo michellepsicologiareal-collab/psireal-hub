@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Admin - Psi Real</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    * { margin: 0; }
+    body {
+      --paper: #fbf8f5;
+      --surface: #fffdf9;
+      --surface-2: #f2e8e1;
+      --ink: #1d1315;
+      --muted: #766463;
+      --soft: #a58b88;
+      --line: #dfd1c8;
+      --wine: #3a1624;
+      --wine-2: #5a2638;
+      --rose: #b87972;
+      --sage: #496a50;
+      --sage-bg: #edf5ef;
+      --amber: #95652e;
+      --amber-bg: #fff4df;
+      --red: #9a3a35;
+      --red-bg: #fae9e7;
+      --serif: 'Instrument Serif', Georgia, serif;
+      --sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+      min-height: 100vh;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    button, input, select, textarea { font: inherit; }
+    .lock {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: var(--wine);
+    }
+    .lock-card {
+      width: min(390px, 100%);
+      padding: 38px;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,.18);
+      text-align: center;
+    }
+    .lock-logo {
+      font-family: var(--serif);
+      font-size: 38px;
+      line-height: .92;
+      color: var(--wine);
+    }
+    .lock-sub {
+      margin: 14px 0 26px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .lock-input {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      padding: 14px 16px;
+      text-align: center;
+      outline: none;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+    .lock-input:focus { border-color: var(--wine); box-shadow: 0 0 0 3px rgba(58,22,36,.08); }
+    .lock-btn, .primary-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      border: 0;
+      background: var(--wine);
+      color: var(--paper);
+      padding: 0 20px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .lock-btn { width: 100%; }
+    .lock-error { display: none; margin-top: 10px; color: var(--red); font-size: 13px; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      height: 66px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 clamp(18px, 4vw, 52px);
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(16px);
+    }
+    .brand {
+      font-family: var(--serif);
+      font-size: 25px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .brand span { color: var(--rose); }
+    .top-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .top-links a, .logout-btn {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .top-links a:hover, .logout-btn:hover { color: var(--wine); }
+    main { width: min(1240px, calc(100% - 36px)); margin: 0 auto; padding: 34px 0 60px; }
+    .hero-admin {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 28px;
+    }
+    .eyebrow {
+      color: var(--rose);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(44px, 6vw, 76px);
+      font-weight: 400;
+      line-height: .95;
+      max-width: 760px;
+    }
+    .hero-admin p {
+      margin-top: 18px;
+      max-width: 720px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin: 26px 0;
+    }
+    .metric {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: 20px;
+      min-height: 112px;
+    }
+    .metric strong {
+      display: block;
+      font-family: var(--serif);
+      color: var(--wine);
+      font-size: 44px;
+      font-weight: 400;
+      line-height: 1;
+    }
+    .metric span {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .tab-btn, .filter-btn {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--muted);
+      padding: 10px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .tab-btn.active, .filter-btn.active { background: var(--wine); border-color: var(--wine); color: var(--paper); }
+    .danger-btn {
+      border: 1px solid #e4c4c0;
+      background: #fff6f5;
+      color: var(--red);
+      padding: 10px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .panel {
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--line);
+    }
+    .panel.active { display: block; }
+    .schemas-layout { display: grid; grid-template-columns: minmax(250px, 330px) minmax(0, 1fr); min-height: 560px; }
+    .schemas-list { border-right: 1px solid var(--line); background: var(--paper); }
+    .schemas-list-head, .schemas-detail { padding: 18px; }
+    .schemas-items { display: grid; }
+    .schema-item { border: 0; border-top: 1px solid var(--line); background: transparent; padding: 16px 18px; text-align: left; cursor: pointer; }
+    .schema-item:hover, .schema-item.active { background: rgba(58,22,36,.05); }
+    .schema-item strong { display: block; color: var(--ink); }
+    .schema-item span { display: block; color: var(--soft); font-size: 12px; margin-top: 4px; }
+    .schema-head { display: flex; justify-content: space-between; gap: 18px; align-items: start; margin-bottom: 18px; }
+    .schema-head h2 { font-family: var(--serif); font-size: 34px; font-weight: 400; }
+    .schema-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; margin-bottom: 16px; }
+    .schema-metric, .schema-chart { border: 1px solid var(--line); background: var(--surface); padding: 16px; }
+    .schema-metric strong { display: block; font-family: var(--serif); color: var(--wine); font-size: 32px; line-height: 1; }
+    .schema-metric span { display: block; margin-top: 8px; color: var(--soft); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .schema-charts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .schema-chart-wrap { height: 260px; }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface-2);
+    }
+    .search {
+      min-width: 230px;
+      flex: 1;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      padding: 11px 13px;
+      color: var(--ink);
+      outline: none;
+    }
+    .search:focus, .select:focus, .note-input:focus { border-color: var(--wine); }
+    .select {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      padding: 10px 12px;
+      color: var(--ink);
+      outline: none;
+    }
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 920px; }
+    th {
+      padding: 13px 16px;
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+      color: var(--soft);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-align: left;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    td {
+      padding: 15px 16px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      vertical-align: top;
+    }
+    tbody tr:hover { background: rgba(58,22,36,.03); }
+    .name { color: var(--ink); font-weight: 700; }
+    .muted { color: var(--soft); font-size: 12px; }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 9px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--muted);
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .tag.new { background: var(--red-bg); color: var(--red); border-color: #e8bcb8; }
+    .tag.progress { background: var(--amber-bg); color: var(--amber); border-color: #e7d1a8; }
+    .tag.done { background: var(--sage-bg); color: var(--sage); border-color: #c4dac8; }
+    .whats {
+      color: var(--wine);
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .whats:hover { text-decoration: underline; }
+    .message-cell { max-width: 260px; }
+    .note-input {
+      width: 190px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      padding: 9px 10px;
+      color: var(--ink);
+      outline: none;
+      font-size: 12px;
+    }
+    .empty {
+      padding: 54px 20px;
+      text-align: center;
+      color: var(--soft);
+    }
+    .top-scores {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      max-width: 310px;
+    }
+    .score-chip {
+      display: inline-flex;
+      gap: 5px;
+      align-items: center;
+      padding: 5px 8px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+    .score-chip strong { color: var(--wine); }
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      padding: 16px;
+    }
+    .link-card {
+      display: flex;
+      min-height: 142px;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: inherit;
+      text-decoration: none;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+    .link-card:hover { transform: translateY(-2px); border-color: var(--wine); background: var(--surface); }
+    .link-card strong {
+      display: block;
+      color: var(--wine);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .link-card span {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .link-card em {
+      color: var(--rose);
+      font-family: var(--serif);
+      font-size: 30px;
+      font-style: normal;
+      line-height: 1;
+      align-self: flex-end;
+    }
+    .psi-admin-grid {
+      display: grid;
+      grid-template-columns: minmax(320px, .8fr) minmax(0, 1.2fr);
+      gap: 22px;
+      align-items: start;
+    }
+    .psi-card {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      padding: 22px;
+    }
+    .psi-card h2 {
+      margin: 0 0 8px;
+      font-family: var(--serif);
+      font-size: 28px;
+      line-height: 1.05;
+    }
+    .psi-card p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .psi-form {
+      display: grid;
+      gap: 12px;
+    }
+    .psi-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+    .field label {
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .field input, .field select {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+    }
+    .psi-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 6px;
+    }
+    .helper {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border: 1px solid var(--line);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .status-pill.active { color: #2e6b45; background: #edf6ef; border-color: #cfe3d4; }
+    .status-pill.inactive { color: #8d3c42; background: #fbefef; border-color: #ead0d3; }
+    #toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 2000;
+      padding: 12px 16px;
+      background: var(--ink);
+      color: var(--paper);
+      font-size: 13px;
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    #toast.show { opacity: 1; transform: none; }
+    @media (max-width: 980px) {
+      .topbar { height: auto; align-items: flex-start; padding-top: 16px; padding-bottom: 16px; flex-direction: column; }
+      .top-links { justify-content: flex-start; }
+      .hero-admin { grid-template-columns: 1fr; }
+      .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .links-grid { grid-template-columns: 1fr; }
+      .psi-admin-grid { grid-template-columns: 1fr; }
+      .schemas-layout, .schema-grid, .schema-charts { grid-template-columns: 1fr; }
+      .schemas-list { border-right: 0; border-bottom: 1px solid var(--line); }
+    }
+    @media (max-width: 560px) {
+      main { width: min(100% - 28px, 1240px); }
+      .metrics { grid-template-columns: 1fr; }
+      .psi-form-grid { grid-template-columns: 1fr; }
+      .toolbar { align-items: stretch; }
+      .search, .select, .primary-btn { width: 100%; }
+      .lock-card { padding: 30px 22px; }
+    }
+  </style>
+  <link rel="stylesheet" href="brand-refresh.css?v=20260518-4" />
+</head>
+<body>
+  <div class="lock" id="lockScreen">
+    <div class="lock-card">
+      <div class="lock-logo">Psi Real<br><span style="color:var(--rose)">Admin</span></div>
+      <div class="lock-sub">Acesso restrito para contatos, testes, formulários e operação do ecossistema.</div>
+      <input class="lock-input" id="lockInput" type="password" placeholder="Senha do painel" autofocus />
+      <button class="lock-btn" type="button" onclick="tryLogin()">Entrar</button>
+      <div class="lock-error" id="lockError">Senha incorreta. Tente novamente.</div>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html">Psi <span>Real</span></a>
+    <nav class="top-links" aria-label="Links administrativos">
+      <a href="index.html">Site</a>
+      <a href="painel-psi.html">Painel Psi</a>
+      <a href="formulario-esquemas.html">Formulário YSQ</a>
+      <a href="https://psireal.app" target="_blank" rel="noopener">psireal.app</a>
+      <button class="logout-btn" type="button" onclick="logout()">Sair</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero-admin">
+      <div>
+        <div class="eyebrow">Operação Psi Real</div>
+        <h1>Contatos, testes e links em um painel só.</h1>
+        <p>Os formulários de contato entram na tabela de contatos. Os testes e inventários entram em respostas clínicas. Este painel organiza os dois fluxos para você acompanhar leads, pacientes, formulários e acessos importantes.</p>
+      </div>
+      <button class="primary-btn" type="button" onclick="loadAll()">Atualizar dados</button>
+    </section>
+
+    <section class="metrics" aria-label="Resumo do painel">
+      <div class="metric"><strong id="mContacts">-</strong><span>Contatos</span></div>
+      <div class="metric"><strong id="mNew">-</strong><span>Novos leads</span></div>
+      <div class="metric"><strong id="mToday">-</strong><span>Contatos hoje</span></div>
+      <div class="metric"><strong id="mTests">-</strong><span>Testes recebidos</span></div>
+      <div class="metric"><strong id="mYsq">-</strong><span>YSQ-S3</span></div>
+      <div class="metric"><strong id="mPsis">-</strong><span>Psis com teste</span></div>
+    </section>
+
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" type="button" data-tab="contacts" onclick="setTab('contacts')">Contatos</button>
+      <button class="tab-btn" type="button" data-tab="tests" onclick="setTab('tests')">Testes</button>
+      <button class="tab-btn" type="button" data-tab="schemas" onclick="setTab('schemas')">Esquemas</button>
+      <button class="tab-btn" type="button" data-tab="psis" onclick="setTab('psis')">Psicólogas</button>
+      <button class="tab-btn" type="button" data-tab="links" onclick="setTab('links')">Links do sistema</button>
+    </div>
+
+    <section class="panel active" id="panel-contacts">
+      <div class="toolbar">
+        <input class="search" id="contactSearch" type="search" placeholder="Buscar por nome, WhatsApp, serviço, página..." oninput="renderContacts()" />
+        <button class="filter-btn active" type="button" data-status="todos" onclick="setStatusFilter(this)">Todos</button>
+        <button class="filter-btn" type="button" data-status="novo" onclick="setStatusFilter(this)">Novos</button>
+        <button class="filter-btn" type="button" data-status="em_contato" onclick="setStatusFilter(this)">Em contato</button>
+        <button class="filter-btn" type="button" data-status="convertido" onclick="setStatusFilter(this)">Convertidos</button>
+        <button class="filter-btn" type="button" data-status="arquivado" onclick="setStatusFilter(this)">Arquivados</button>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Lead</th>
+              <th>WhatsApp</th>
+              <th>Interesse</th>
+              <th>Mensagem</th>
+              <th>Origem</th>
+              <th>Status</th>
+              <th>Nota</th>
+              <th>Data</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+        <tbody id="contactsBody"><tr><td colspan="9" class="empty">Carregando contatos...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-tests">
+      <div class="toolbar">
+        <input class="search" id="testSearch" type="search" placeholder="Buscar paciente, psi_id ou formulário..." oninput="renderTests()" />
+        <select class="select" id="testFormFilter" onchange="renderTests()">
+          <option value="todos">Todos os formulários</option>
+          <option value="YSQ-S3">YSQ-S3</option>
+        </select>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Paciente</th>
+              <th>Formulário</th>
+              <th>psi_id</th>
+              <th>Score total</th>
+              <th>Maiores índices</th>
+              <th>Nota clínica</th>
+              <th>Data</th>
+            </tr>
+          </thead>
+          <tbody id="testsBody"><tr><td colspan="7" class="empty">Carregando testes...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-schemas">
+      <div class="schemas-layout">
+        <aside class="schemas-list">
+          <div class="schemas-list-head">
+            <div class="eyebrow">YSQ-S3</div>
+            <input class="search" id="schemaSearch" type="search" placeholder="Buscar paciente..." oninput="renderSchemas()" />
+          </div>
+          <div class="schemas-items" id="schemasItems"></div>
+        </aside>
+        <div class="schemas-detail" id="schemaDetail">
+          <div class="empty">Selecione uma resposta YSQ-S3 para ver o painel clínico de esquemas.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-psis">
+      <div class="psi-admin-grid">
+        <div class="psi-card">
+          <div class="eyebrow">Nova assinante</div>
+          <h2>Cadastrar psicóloga</h2>
+          <p>Cria o login no Supabase Auth e o registro clínico na tabela <code>psis</code> em uma única operação segura.</p>
+          <form class="psi-form" id="psiForm" onsubmit="createPsi(event)">
+            <div class="field">
+              <label for="psiNome">Nome</label>
+              <input id="psiNome" required placeholder="Nome da psicóloga" />
+            </div>
+            <div class="psi-form-grid">
+              <div class="field">
+                <label for="psiEmail">E-mail</label>
+                <input id="psiEmail" type="email" required placeholder="email@exemplo.com" />
+              </div>
+              <div class="field">
+                <label for="psiWhatsapp">WhatsApp</label>
+                <input id="psiWhatsapp" placeholder="5511999999999" />
+              </div>
+            </div>
+            <div class="psi-form-grid">
+              <div class="field">
+                <label for="psiSlug">psi_id</label>
+                <input id="psiSlug" required placeholder="ana-silva" />
+              </div>
+              <div class="field">
+                <label for="psiPlano">Plano</label>
+                <select id="psiPlano">
+                  <option value="mensal">Mensal</option>
+                  <option value="fundadora">Fundadora</option>
+                  <option value="cortesia">Cortesia</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="psiPassword">Senha inicial</label>
+              <input id="psiPassword" type="password" required minlength="8" placeholder="mínimo 8 caracteres" />
+            </div>
+            <div class="psi-actions">
+              <button class="primary-btn" id="createPsiBtn" type="submit">Cadastrar psi</button>
+              <span class="helper">Depois você envia o e-mail e a senha inicial para ela.</span>
+            </div>
+          </form>
+        </div>
+
+        <div class="psi-card">
+          <div class="toolbar">
+            <input class="search" id="psiSearch" type="search" placeholder="Buscar por nome, e-mail ou psi_id..." oninput="renderPsis()" />
+          </div>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Psicóloga</th>
+                  <th>E-mail</th>
+                  <th>psi_id</th>
+                  <th>Plano</th>
+                  <th>Status</th>
+                  <th>Cadastro</th>
+                </tr>
+              </thead>
+              <tbody id="psisBody"><tr><td colspan="6" class="empty">Carregando psicólogas...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-links">
+      <div class="links-grid">
+        <a class="link-card" href="https://psireal.app" target="_blank" rel="noopener"><div><strong>psireal.app</strong><span>Aplicativo e hub principal do ecossistema Psi Real.</span></div><em>↗</em></a>
+        <a class="link-card" href="biblioteca-tcc/index.html"><div><strong>Biblioteca TCC</strong><span>Materiais e recursos digitais para psicólogos.</span></div><em>→</em></a>
+        <a class="link-card" href="psireal-tcc.html"><div><strong>PsiReal TCC</strong><span>Nova plataforma clínica para terapeutas cognitivo-comportamentais.</span></div><em>→</em></a>
+        <a class="link-card" href="painel-psi.html"><div><strong>Painel Psi</strong><span>Área da psicóloga assinante para gerar links e ver pacientes.</span></div><em>→</em></a>
+        <a class="link-card" href="formulario-esquemas.html"><div><strong>Formulário YSQ</strong><span>Formulário do paciente conectado ao Supabase.</span></div><em>→</em></a>
+        <a class="link-card" href="corporativo.html"><div><strong>Corporativo</strong><span>Palestras e soluções para empresas.</span></div><em>→</em></a>
+        <a class="link-card" href="supervisao.html"><div><strong>Supervisão</strong><span>Página para psicólogos em formação e supervisão clínica.</span></div><em>→</em></a>
+        <a class="link-card" href="index.html"><div><strong>Home</strong><span>Landing principal da clínica e do ecossistema.</span></div><em>→</em></a>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast"></div>
+
+  <script>
+    const SB_URL = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
+    const SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
+    let SB_SESSION_TOKEN = sessionStorage.getItem('sb_admin_session_token') || '';
+    let refreshTimer;
+
+    let contacts = [];
+    let tests = [];
+    let psis = [];
+    let statusFilter = 'todos';
+    let activeSchemaId = null;
+    let radarChart = null;
+    let barChart = null;
+    const SCHEMA_LABELS = {
+      PA:'Privação Emocional', AB:'Abandono', MA:'Desconfiança/Abuso', SI:'Isolamento Social',
+      DS:'Defectividade', SF:'Fracasso', DI:'Dependência', VH:'Vulnerabilidade',
+      EM:'Emaranhamento', SB:'Subjugação', SS:'Autossacrifício', AS:'Inibição Emocional',
+      UP:'Padrões Inflexíveis', EP:'Arrogo', IS:'Autocontrole Insuficiente', BL:'Busca de Aprovação',
+      NP:'Negativismo', PU:'Punição'
+    };
+
+    function authHeaders(extra = {}) {
+      return {
+        apikey: SB_KEY,
+        Authorization: 'Bearer ' + (SB_SESSION_TOKEN || SB_KEY),
+        ...extra
+      };
+    }
+
+    function ensureLoginFields() {
+      const legacyInput = document.getElementById('lockInput');
+      let email = document.getElementById('lockEmail');
+      let password = document.getElementById('lockPassword');
+
+      if (!email && legacyInput) {
+        email = legacyInput;
+        email.id = 'lockEmail';
+        email.type = 'email';
+        email.placeholder = 'seu@email.com';
+        email.autocomplete = 'email';
+      }
+
+      if (!password && email) {
+        password = email.cloneNode();
+        password.id = 'lockPassword';
+        password.type = 'password';
+        password.placeholder = 'Senha';
+        password.autocomplete = 'current-password';
+        password.value = '';
+        email.insertAdjacentElement('afterend', password);
+      }
+
+      const subtitle = document.querySelector('#lockScreen .lock-sub');
+      if (subtitle) subtitle.textContent = 'Acesso restrito para a administração do ecossistema.';
+      const error = document.getElementById('lockError');
+      if (error) error.textContent = 'Não foi possível entrar. Verifique e-mail e senha.';
+
+      return { email, password };
+    }
+
+    async function tryLogin() {
+      const { email, password } = ensureLoginFields();
+      const error = document.getElementById('lockError');
+      error.style.display = 'none';
+
+      try {
+        const res = await fetch(`${SB_URL}/auth/v1/token?grant_type=password`, {
+          method: 'POST',
+          headers: {
+            apikey: SB_KEY,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: email.value.trim(),
+            password: password.value
+          })
+        });
+        const data = await res.json();
+        if (!res.ok || !data.access_token) throw new Error('auth failed');
+
+        SB_SESSION_TOKEN = data.access_token;
+        sessionStorage.setItem('sb_admin_session_token', data.access_token);
+        document.getElementById('lockScreen').style.display = 'none';
+        loadAll();
+        return;
+      } catch (err) {
+        error.style.display = 'block';
+        password.value = '';
+        password.focus();
+      }
+    }
+    function logout() {
+      sessionStorage.removeItem('sb_admin_session_token');
+      SB_SESSION_TOKEN = '';
+      document.getElementById('lockScreen').style.display = 'grid';
+      ensureLoginFields().email.focus();
+    }
+    ensureLoginFields();
+    document.getElementById('lockEmail').addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') tryLogin();
+    });
+    document.getElementById('lockPassword').addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') tryLogin();
+    });
+
+    async function loadAll() {
+      await Promise.allSettled([loadContacts(), loadTests(), loadPsis()]);
+      updateMetrics();
+      renderContacts();
+      renderTests();
+      renderSchemas();
+      renderPsis();
+    }
+    async function loadContacts() {
+      const res = await fetch(`${SB_URL}/rest/v1/contatos?select=*&limit=500`, {
+        headers: authHeaders()
+      });
+      if (!res.ok) throw new Error('contatos ' + res.status);
+      contacts = (await res.json()).sort((a, b) => safeDate(getCreatedAt(b)) - safeDate(getCreatedAt(a)));
+    }
+    async function loadTests() {
+      const res = await fetch(`${SB_URL}/rest/v1/respostas_clinicas?select=*&limit=500`, {
+        headers: authHeaders()
+      });
+      if (!res.ok) throw new Error('respostas_clinicas ' + res.status);
+      tests = (await res.json()).sort((a, b) => safeDate(getCreatedAt(b)) - safeDate(getCreatedAt(a)));
+    }
+    async function loadPsis() {
+      const res = await fetch(`${SB_URL}/rest/v1/psis?select=*&order=created_at.desc`, {
+        headers: authHeaders()
+      });
+      if (!res.ok) throw new Error('psis ' + res.status);
+      psis = await res.json();
+    }
+    function updateMetrics() {
+      const today = new Date().toDateString();
+      document.getElementById('mContacts').textContent = contacts.length;
+      document.getElementById('mNew').textContent = contacts.filter(c => (c.status || 'novo') === 'novo').length;
+      document.getElementById('mToday').textContent = contacts.filter(c => safeDate(getCreatedAt(c)).toDateString() === today).length;
+      document.getElementById('mTests').textContent = tests.length;
+      document.getElementById('mYsq').textContent = tests.filter(t => (t.formulario || '').toUpperCase().includes('YSQ')).length;
+      document.getElementById('mPsis').textContent = new Set(tests.map(t => t.psi_id).filter(Boolean)).size;
+    }
+    function setTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tab));
+      document.querySelectorAll('.panel').forEach(panel => panel.classList.remove('active'));
+      document.getElementById('panel-' + tab).classList.add('active');
+    }
+    async function createPsi(event) {
+      event.preventDefault();
+      const button = document.getElementById('createPsiBtn');
+      const payload = {
+        nome: document.getElementById('psiNome').value.trim(),
+        email: document.getElementById('psiEmail').value.trim(),
+        whatsapp: document.getElementById('psiWhatsapp').value.trim(),
+        psi_id: document.getElementById('psiSlug').value.trim().toLowerCase(),
+        plano: document.getElementById('psiPlano').value,
+        password: document.getElementById('psiPassword').value
+      };
+      button.disabled = true;
+      button.textContent = 'Cadastrando...';
+      try {
+        const res = await fetch(`${SB_URL}/functions/v1/create-psi-user`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...authHeaders()
+          },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.error || 'Falha ao cadastrar');
+        document.getElementById('psiForm').reset();
+        await loadPsis();
+        renderPsis();
+        showToast('Psicóloga cadastrada');
+      } catch (err) {
+        showToast(err.message || 'Erro ao cadastrar psicóloga');
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Cadastrar psi';
+      }
+    }
+    function renderPsis() {
+      const body = document.getElementById('psisBody');
+      if (!body) return;
+      const q = normalize(document.getElementById('psiSearch').value);
+      let rows = psis.slice();
+      if (q) rows = rows.filter(p => normalize([p.nome, p.email, p.psi_id, p.plano].join(' ')).includes(q));
+      if (!rows.length) {
+        body.innerHTML = '<tr><td colspan="6" class="empty">Nenhuma psicóloga cadastrada.</td></tr>';
+        return;
+      }
+      body.innerHTML = rows.map(p => `<tr>
+        <td><div class="name">${esc(p.nome || '-')}</div></td>
+        <td>${esc(p.email || '-')}</td>
+        <td><span class="tag">${esc(p.psi_id || '-')}</span></td>
+        <td>${esc(p.plano || '-')}</td>
+        <td><span class="status-pill ${p.ativa ? 'active' : 'inactive'}">${p.ativa ? 'Ativa' : 'Inativa'}</span></td>
+        <td>${formatDate(p.created_at)}</td>
+      </tr>`).join('');
+    }
+    function setStatusFilter(button) {
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      statusFilter = button.dataset.status;
+      renderContacts();
+    }
+    function renderContacts() {
+      const body = document.getElementById('contactsBody');
+      const q = normalize(document.getElementById('contactSearch').value);
+      let rows = contacts.slice();
+      if (statusFilter !== 'todos') rows = rows.filter(c => (c.status || 'novo') === statusFilter);
+      if (q) {
+        rows = rows.filter(c => normalize([c.nome, c.whatsapp, c.servico, c.mensagem, c.pagina].join(' ')).includes(q));
+      }
+      if (!rows.length) {
+        body.innerHTML = '<tr><td colspan="9" class="empty">Nenhum contato encontrado.</td></tr>';
+        return;
+      }
+      body.innerHTML = rows.map(c => {
+        const status = c.status || 'novo';
+        const whats = String(c.whatsapp || '').replace(/\D/g, '');
+        const whatsHref = whats ? `https://wa.me/55${whats}` : '#';
+        return `<tr>
+          <td><div class="name">${esc(c.nome || 'Sem nome')}</div><div class="muted">ID ${esc(c.id)}</div></td>
+          <td><a class="whats" href="${whatsHref}" target="_blank" rel="noopener">${esc(c.whatsapp || '-')}</a></td>
+          <td>${esc(c.servico || '-')}</td>
+          <td class="message-cell">${esc(c.mensagem || '-')}</td>
+          <td><span class="tag">${esc(c.pagina || '-')}</span></td>
+          <td>
+            <select class="select" onchange="updateContactStatus(${Number(c.id)}, this.value)">
+              <option value="novo" ${status === 'novo' ? 'selected' : ''}>Novo</option>
+              <option value="em_contato" ${status === 'em_contato' ? 'selected' : ''}>Em contato</option>
+              <option value="concluido" ${status === 'concluido' ? 'selected' : ''}>Concluído</option>
+              <option value="convertido" ${status === 'convertido' ? 'selected' : ''}>Convertido</option>
+              <option value="arquivado" ${status === 'arquivado' ? 'selected' : ''}>Arquivado</option>
+            </select>
+          </td>
+          <td><input class="note-input" value="${esc(c.notas || '')}" placeholder="Nota..." onblur="updateContactNote(${Number(c.id)}, this.value)" /></td>
+          <td>${formatDate(getCreatedAt(c))}</td>
+          <td><button class="danger-btn" type="button" onclick="deleteContact(${Number(c.id)})">Excluir</button></td>
+        </tr>`;
+      }).join('');
+    }
+    function renderTests() {
+      const body = document.getElementById('testsBody');
+      const q = normalize(document.getElementById('testSearch').value);
+      const form = document.getElementById('testFormFilter').value;
+      let rows = tests.slice();
+      if (form !== 'todos') rows = rows.filter(t => (t.formulario || '') === form);
+      if (q) rows = rows.filter(t => normalize([t.paciente_nome, t.psi_id, t.formulario].join(' ')).includes(q));
+      if (!rows.length) {
+        body.innerHTML = '<tr><td colspan="7" class="empty">Nenhum teste encontrado.</td></tr>';
+        return;
+      }
+      body.innerHTML = rows.map(t => {
+        const scores = parseScores(t.scores || t.respostas_json);
+        const top = topScores(scores);
+        return `<tr>
+          <td><div class="name">${esc(t.paciente_nome || 'Sem nome')}</div><div class="muted">${esc(formatBirth(t.paciente_nascimento))}</div></td>
+          <td>${esc(t.formulario || t.instrumento || 'Teste')}</td>
+          <td><span class="tag">${esc(t.psi_id || '-')}</span></td>
+          <td><strong style="color:var(--wine)">${esc(Number(t.score_total || 0).toFixed(2))}</strong></td>
+          <td><div class="top-scores">${top}</div></td>
+          <td><input class="note-input" value="${esc(t.notas_psi || '')}" placeholder="Nota clínica..." onblur="updateTestNote(${Number(t.id)}, this.value)" /></td>
+          <td>${formatDate(getCreatedAt(t))}</td>
+        </tr>`;
+      }).join('');
+    }
+    function getYsqTests() {
+      return tests.filter(t => String(t.formulario || t.instrumento || '').toUpperCase() === 'YSQ-S3');
+    }
+    function renderSchemas() {
+      const list = document.getElementById('schemasItems');
+      if (!list) return;
+      const q = normalize(document.getElementById('schemaSearch').value);
+      let rows = getYsqTests();
+      if (q) rows = rows.filter(t => normalize([t.paciente_nome, t.psi_id].join(' ')).includes(q));
+      if (!rows.length) {
+        list.innerHTML = '<div class="empty">Nenhum YSQ-S3 encontrado.</div>';
+        document.getElementById('schemaDetail').innerHTML = '<div class="empty">Ainda não há respostas YSQ-S3 para exibir.</div>';
+        return;
+      }
+      if (!activeSchemaId || !rows.some(t => Number(t.id) === Number(activeSchemaId))) activeSchemaId = rows[0].id;
+      list.innerHTML = rows.map(t => `<button class="schema-item ${Number(t.id)===Number(activeSchemaId)?'active':''}" onclick="openSchema(${Number(t.id)})"><strong>${esc(t.paciente_nome || 'Sem nome')}</strong><span>${esc(t.psi_id || '-')} · ${formatDate(getCreatedAt(t))}</span></button>`).join('');
+      renderSchemaDetail(rows.find(t => Number(t.id) === Number(activeSchemaId)));
+    }
+    function openSchema(id) {
+      activeSchemaId = id;
+      renderSchemas();
+    }
+    function renderSchemaDetail(test) {
+      if (!test) return;
+      const scores = parseScores(test.scores || test.respostas_json);
+      const entries = Object.entries(scores).map(([key,value])=>({key,label:SCHEMA_LABELS[key]||key,value:Number(value)||0})).filter(x=>x.key!=='total'&&x.key!=='nivel');
+      const sorted = entries.slice().sort((a,b)=>b.value-a.value);
+      const mean = entries.length ? entries.reduce((sum,x)=>sum+x.value,0)/entries.length : 0;
+      const elevated = entries.filter(x=>x.value>=4).length;
+      const peak = sorted[0] || {label:'-',value:0};
+      document.getElementById('schemaDetail').innerHTML = `
+        <div class="schema-head">
+          <div>
+            <div class="eyebrow">Painel de esquemas</div>
+            <h2>${esc(test.paciente_nome || 'Sem nome')}</h2>
+            <div class="muted">${esc(test.psi_id || '-')} · ${formatDate(getCreatedAt(test))}</div>
+          </div>
+          <input class="note-input" value="${esc(test.notas_psi || '')}" placeholder="Nota clínica..." onblur="updateTestNote(${Number(test.id)}, this.value)" />
+        </div>
+        <div class="schema-grid">
+          <div class="schema-metric"><strong>${mean.toFixed(1)}</strong><span>Média geral</span></div>
+          <div class="schema-metric"><strong>${elevated}</strong><span>Esquemas elevados</span></div>
+          <div class="schema-metric"><strong>${peak.value.toFixed(1)}</strong><span>Pico: ${esc(peak.label)}</span></div>
+        </div>
+        <div class="schema-charts">
+          <div class="schema-chart"><div class="eyebrow">Radar por esquema</div><div class="schema-chart-wrap"><canvas id="adminRadar"></canvas></div></div>
+          <div class="schema-chart"><div class="eyebrow">Ranking</div><div class="schema-chart-wrap"><canvas id="adminBar"></canvas></div></div>
+        </div>`;
+      const labels = entries.map(x=>x.label);
+      const values = entries.map(x=>x.value);
+      if (radarChart) radarChart.destroy();
+      if (barChart) barChart.destroy();
+      radarChart = new Chart(document.getElementById('adminRadar'), {type:'radar',data:{labels,datasets:[{data:values,backgroundColor:'rgba(184,121,114,.18)',borderColor:'#5a2638'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{r:{min:0,max:6}}}});
+      const top = sorted.slice(0,10);
+      barChart = new Chart(document.getElementById('adminBar'), {type:'bar',data:{labels:top.map(x=>x.label),datasets:[{data:top.map(x=>x.value),backgroundColor:'#b87972'}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{min:0,max:6}}}});
+    }
+    async function updateContactStatus(id, status) {
+      try {
+        const res = await patch('contatos', id, { status });
+        if (!res.ok) throw new Error(res.status);
+        const item = contacts.find(c => Number(c.id) === Number(id));
+        if (item) item.status = status;
+        updateMetrics();
+        showToast('Status atualizado');
+      } catch (err) { showToast('Erro ao atualizar status'); }
+    }
+    async function updateContactNote(id, notas) {
+      const item = contacts.find(c => Number(c.id) === Number(id));
+      if (!item || (item.notas || '') === notas) return;
+      try {
+        const res = await patch('contatos', id, { notas });
+        if (!res.ok) throw new Error(res.status);
+        item.notas = notas;
+        showToast('Nota salva');
+      } catch (err) { showToast('Erro ao salvar nota'); }
+    }
+    async function deleteContact(id) {
+      const item = contacts.find(c => Number(c.id) === Number(id));
+      if (!item) return;
+      if (!confirm(`Excluir o contato de ${item.nome || 'sem nome'}?`)) return;
+      try {
+        const res = await fetch(`${SB_URL}/rest/v1/contatos?id=eq.${id}`, {
+          method: 'DELETE',
+          headers: {
+            ...authHeaders(),
+            Prefer: 'return=minimal'
+          }
+        });
+        if (!res.ok) throw new Error(res.status);
+        contacts = contacts.filter(c => Number(c.id) !== Number(id));
+        updateMetrics();
+        renderContacts();
+        showToast('Contato excluído');
+      } catch (err) {
+        showToast('Erro ao excluir contato');
+      }
+    }
+    async function updateTestNote(id, notas_psi) {
+      const item = tests.find(t => Number(t.id) === Number(id));
+      if (!item || (item.notas_psi || '') === notas_psi) return;
+      try {
+        const res = await patch('respostas_clinicas', id, { notas_psi });
+        if (!res.ok) throw new Error(res.status);
+        item.notas_psi = notas_psi;
+        showToast('Nota clínica salva');
+      } catch (err) { showToast('Erro ao salvar nota clínica'); }
+    }
+    function patch(table, id, payload) {
+      return fetch(`${SB_URL}/rest/v1/${table}?id=eq.${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          ...authHeaders(),
+          Prefer: 'return=minimal'
+        },
+        body: JSON.stringify(payload)
+      });
+    }
+    function parseScores(raw) {
+      if (!raw) return {};
+      if (typeof raw === 'object') return raw;
+      try { return JSON.parse(raw); } catch (err) { return {}; }
+    }
+    function topScores(scores) {
+      const entries = Object.entries(scores || {})
+        .map(([key, value]) => [key, Number(value) || 0])
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3);
+      if (!entries.length) return '<span class="muted">Sem scores</span>';
+      return entries.map(([key, value]) => `<span class="score-chip">${esc(key)} <strong>${value.toFixed(1)}</strong></span>`).join('');
+    }
+    function formatBirth(value) {
+      if (!value) return 'Nascimento não informado';
+      return 'Nasc. ' + new Date(value + 'T00:00:00').toLocaleDateString('pt-BR');
+    }
+    function formatDate(value) {
+      const d = safeDate(value);
+      return `${d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit' })}<br><span class="muted">${d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</span>`;
+    }
+    function safeDate(value) {
+      const d = value ? new Date(value) : new Date(0);
+      return Number.isNaN(d.getTime()) ? new Date(0) : d;
+    }
+    function normalize(value) {
+      return String(value || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+    function esc(value) {
+      return String(value ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function getCreatedAt(item) {
+      return item.created_at || item.criado_em || null;
+    }
+    let toastTimer;
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+    if (SB_SESSION_TOKEN) {
+      document.getElementById('lockScreen').style.display = 'none';
+      loadAll();
+    }
+    refreshTimer = setInterval(() => {
+      if (SB_SESSION_TOKEN) loadAll();
+    }, 60000);
+  </script>
+</body>
+</html>

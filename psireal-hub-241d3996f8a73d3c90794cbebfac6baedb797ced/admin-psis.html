@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PsiReal Admin — Gestão de Psicólogas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:           #0f0b1a;
+  --bg-card:      #17112a;
+  --bg-hover:     #1e1638;
+  --border:       rgba(109,79,194,.20);
+  --border-soft:  rgba(109,79,194,.10);
+  --primary:      #6d4fc2;
+  --primary-light:#8b6fd4;
+  --gold:         #c9a84c;
+  --gold-light:   #e8c97a;
+  --ink:          #f0eaff;
+  --ink2:         #a090c8;
+  --ink3:         #6a5880;
+  --success:      #3b6d11;
+  --success-bg:   rgba(59,109,17,.15);
+  --success-text: #7ec94a;
+  --urgency:      #854f0b;
+  --urgency-bg:   rgba(133,79,11,.15);
+  --urgency-text: #f59e3a;
+  --inactive-bg:  rgba(106,88,128,.12);
+  --inactive-text:#8070a8;
+  --radius:       14px;
+  --radius-lg:    20px;
+  --shadow:       0 8px 32px rgba(0,0,0,.4);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100dvh;
+  font-size: 14px;
+  line-height: 1.55;
+}
+a { text-decoration: none; color: inherit; }
+
+/* ── LOGIN ── */
+#loginScreen {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100dvh;
+  background: radial-gradient(ellipse at 30% 40%, rgba(109,79,194,.18) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 80%, rgba(201,168,76,.08) 0%, transparent 50%),
+              var(--bg);
+}
+.login-card {
+  width: min(420px, 92vw);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  box-shadow: var(--shadow);
+}
+.login-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 5px 12px; border-radius: 40px;
+  background: rgba(201,168,76,.12); border: 1px solid rgba(201,168,76,.25);
+  color: var(--gold-light); font-size: 11px; font-weight: 600;
+  letter-spacing: .08em; margin-bottom: 24px;
+  font-family: 'Syne', sans-serif;
+}
+.login-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 26px; font-weight: 700; color: var(--ink);
+  line-height: 1.2; margin-bottom: 6px;
+}
+.login-sub { font-size: 13px; color: var(--ink3); margin-bottom: 28px; }
+.field { margin-bottom: 16px; }
+.field label { display: block; font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .08em; color: var(--ink3);
+  margin-bottom: 7px; font-family: 'Syne', sans-serif; }
+.field input {
+  width: 100%; padding: 12px 16px;
+  background: rgba(255,255,255,.04);
+  border: 1.5px solid var(--border);
+  border-radius: 10px; color: var(--ink);
+  font: inherit; font-size: 14px;
+  transition: border-color .15s, box-shadow .15s; outline: none;
+}
+.field input:focus {
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 3px rgba(109,79,194,.15);
+}
+.btn-login {
+  width: 100%; padding: 13px;
+  background: var(--primary); color: #fff;
+  border: none; border-radius: 10px;
+  font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+  cursor: pointer; margin-top: 4px;
+  transition: background .15s, transform .1s;
+}
+.btn-login:hover { background: var(--primary-light); transform: translateY(-1px); }
+.login-error {
+  margin-top: 12px; padding: 10px 14px;
+  background: var(--urgency-bg); border-radius: 8px;
+  color: var(--urgency-text); font-size: 13px; display: none;
+}
+
+/* ── LAYOUT ADMIN ── */
+#adminApp { display: none; }
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  height: 64px; display: flex; align-items: center;
+  justify-content: space-between; padding: 0 28px;
+  background: rgba(15,11,26,.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-soft);
+}
+.topbar-brand {
+  display: flex; align-items: center; gap: 10px;
+}
+.topbar-badge {
+  font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--ink);
+}
+.topbar-admin-tag {
+  font-size: 10px; font-weight: 600; letter-spacing: .1em;
+  padding: 3px 8px; border-radius: 40px;
+  background: rgba(201,168,76,.15); color: var(--gold);
+  border: 1px solid rgba(201,168,76,.25);
+  font-family: 'Syne', sans-serif;
+}
+.topbar-actions { display: flex; align-items: center; gap: 10px; }
+.btn { display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border-radius: var(--radius); font-size: 13px;
+  font-weight: 600; cursor: pointer; border: none; font-family: 'Syne', sans-serif;
+  transition: all .15s; }
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-light); }
+.btn-ghost { background: transparent; color: var(--ink2); border: 1px solid var(--border); }
+.btn-ghost:hover { background: var(--bg-hover); color: var(--ink); }
+.btn-danger { background: var(--urgency-bg); color: var(--urgency-text); border: 1px solid rgba(133,79,11,.3); }
+.btn-danger:hover { background: rgba(133,79,11,.25); }
+.btn-sm { padding: 5px 12px; font-size: 12px; }
+
+.content { max-width: 1200px; margin: 0 auto; padding: 28px 28px 80px; }
+
+/* ── STATS ── */
+.stats-row {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  margin-bottom: 28px;
+}
+.stat-card {
+  background: var(--bg-card); border: 1px solid var(--border-soft);
+  border-radius: var(--radius); padding: 20px 22px;
+  position: relative; overflow: hidden;
+}
+.stat-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+}
+.stat-card.violet::before { background: linear-gradient(90deg, var(--primary), var(--primary-light)); }
+.stat-card.gold::before { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+.stat-card.green::before { background: linear-gradient(90deg, #3b6d11, #7ec94a); }
+.stat-card.red::before { background: linear-gradient(90deg, #854f0b, #f59e3a); }
+.stat-label { font-size: 10px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--ink3); margin-bottom: 10px;
+  font-family: 'Syne', sans-serif; }
+.stat-value { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 700;
+  color: var(--ink); line-height: 1; }
+.stat-sub { font-size: 12px; color: var(--ink3); margin-top: 6px; }
+
+/* ── SEÇÃO ── */
+.section-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--ink);
+}
+.section-sub { font-size: 12px; color: var(--ink3); margin-top: 2px; }
+
+/* ── FILTROS ── */
+.filters {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;
+}
+.filter-chip {
+  padding: 5px 14px; border-radius: 40px; font-size: 12px; font-weight: 600;
+  cursor: pointer; border: 1.5px solid var(--border); color: var(--ink3);
+  background: transparent; font-family: 'Syne', sans-serif; transition: all .15s;
+}
+.filter-chip:hover { border-color: var(--primary); color: var(--primary-light); }
+.filter-chip.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+.search-input {
+  flex: 1; max-width: 280px; padding: 8px 14px;
+  background: var(--bg-card); border: 1.5px solid var(--border);
+  border-radius: 10px; color: var(--ink); font: inherit; outline: none;
+  transition: border-color .15s;
+}
+.search-input:focus { border-color: var(--primary-light); }
+
+/* ── TABELA ── */
+.table-wrap {
+  background: var(--bg-card); border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg); overflow: hidden;
+}
+.table { width: 100%; border-collapse: collapse; }
+.table th {
+  padding: 13px 18px; text-align: left;
+  font-size: 10px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--ink3);
+  border-bottom: 1px solid var(--border-soft);
+  font-family: 'Syne', sans-serif;
+  background: rgba(255,255,255,.02);
+}
+.table td { padding: 14px 18px; border-bottom: 1px solid var(--border-soft); vertical-align: middle; }
+.table tr:last-child td { border-bottom: none; }
+.table tr:hover td { background: var(--bg-hover); }
+.psi-name { font-weight: 600; color: var(--ink); font-size: 14px; }
+.psi-email { font-size: 12px; color: var(--ink3); margin-top: 2px; }
+.avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: #fff;
+  flex-shrink: 0;
+}
+.psi-cell { display: flex; align-items: center; gap: 12px; }
+
+/* ── BADGES ── */
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 10px; border-radius: 40px;
+  font-size: 11px; font-weight: 600; font-family: 'Syne', sans-serif;
+}
+.badge-ativa { background: var(--success-bg); color: var(--success-text); }
+.badge-inativa { background: var(--inactive-bg); color: var(--inactive-text); }
+.badge-trial { background: rgba(201,168,76,.15); color: var(--gold-light); }
+.badge-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.plano-badge {
+  font-size: 11px; color: var(--ink2);
+  background: rgba(109,79,194,.12); border-radius: 6px;
+  padding: 2px 8px; font-family: 'Syne', sans-serif;
+}
+
+/* ── AÇÕES DA LINHA ── */
+.row-actions { display: flex; align-items: center; gap: 6px; }
+.icon-btn {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; border: 1px solid var(--border); background: transparent;
+  color: var(--ink3); transition: all .15s;
+}
+.icon-btn:hover { background: var(--bg-hover); color: var(--ink); border-color: var(--primary); }
+.icon-btn.danger:hover { background: var(--urgency-bg); color: var(--urgency-text); border-color: rgba(133,79,11,.4); }
+
+/* ── MODAL ── */
+.modal-backdrop {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,.6); backdrop-filter: blur(6px);
+  display: none; align-items: center; justify-content: center; padding: 20px;
+}
+.modal-backdrop.open { display: flex; }
+.modal-card {
+  width: min(480px,100%);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 32px 80px rgba(0,0,0,.5);
+  overflow: hidden;
+}
+.modal-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 24px; border-bottom: 1px solid var(--border-soft);
+}
+.modal-head-left { display: flex; align-items: center; gap: 14px; }
+.modal-icon {
+  width: 42px; height: 42px; border-radius: 12px;
+  background: rgba(109,79,194,.15);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--primary-light);
+}
+.modal-title { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; color: var(--ink); }
+.modal-sub { font-size: 12px; color: var(--ink3); margin-top: 2px; }
+.modal-close {
+  width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--border);
+  background: transparent; color: var(--ink3); cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .15s;
+}
+.modal-close:hover { background: var(--bg-hover); color: var(--ink); }
+.modal-body { padding: 22px 24px; }
+.modal-grid { display: grid; gap: 14px; }
+.modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.modal-footer { display: flex; gap: 10px; justify-content: flex-end;
+  padding: 16px 24px; border-top: 1px solid var(--border-soft); }
+.modal-error {
+  margin-top: 10px; padding: 10px 14px;
+  background: var(--urgency-bg); border-radius: 8px;
+  color: var(--urgency-text); font-size: 13px; display: none;
+}
+.modal-success {
+  margin-top: 10px; padding: 10px 14px;
+  background: var(--success-bg); border-radius: 8px;
+  color: var(--success-text); font-size: 13px; display: none;
+}
+
+/* ── EMPTY ── */
+.empty { text-align: center; padding: 60px 20px; color: var(--ink3); }
+.empty-icon { font-size: 40px; margin-bottom: 12px; opacity: .4; }
+.empty-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 600; color: var(--ink2); margin-bottom: 6px; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 22px; right: 22px; z-index: 500;
+  padding: 12px 18px; border-radius: 12px;
+  background: var(--primary); color: #fff;
+  font-size: 13px; font-weight: 600; font-family: 'Syne', sans-serif;
+  box-shadow: 0 12px 32px rgba(0,0,0,.4);
+  opacity: 0; transform: translateY(12px); pointer-events: none;
+  transition: .2s ease;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast.error { background: #7a1a1a; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .topbar { padding: 0 16px; }
+  .content { padding: 20px 16px 60px; }
+}
+@media (max-width: 600px) {
+  .stats-row { grid-template-columns: 1fr; }
+  .table th:nth-child(n+4), .table td:nth-child(n+4) { display: none; }
+  .modal-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-badge">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+      Acesso restrito — Admin
+    </div>
+    <div class="login-title">PsiReal Admin</div>
+    <div class="login-sub">Painel de gestão de psicólogas e assinaturas.</div>
+    <div class="field">
+      <label>E-mail</label>
+      <input id="adminEmail" type="email" placeholder="seu@email.com">
+    </div>
+    <div class="field">
+      <label>Senha</label>
+      <input id="adminPassword" type="password" placeholder="••••••••">
+    </div>
+    <button class="btn-login" onclick="adminLogin()">Entrar no painel</button>
+    <div class="login-error" id="loginError">E-mail ou senha incorretos.</div>
+  </div>
+</div>
+
+<!-- APP ADMIN -->
+<div id="adminApp">
+  <nav class="topbar">
+    <div class="topbar-brand">
+      <div class="topbar-badge">PsiReal</div>
+      <span class="topbar-admin-tag">ADMIN</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-primary" onclick="openAddModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+        Nova psicóloga
+      </button>
+      <button class="btn btn-ghost" onclick="adminLogout()">Sair</button>
+    </div>
+  </nav>
+
+  <div class="content">
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card violet">
+        <div class="stat-label">Total de psis</div>
+        <div class="stat-value" id="statTotal">—</div>
+        <div class="stat-sub">cadastradas</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-label">Ativas</div>
+        <div class="stat-value" id="statAtivas">—</div>
+        <div class="stat-sub">com acesso ativo</div>
+      </div>
+      <div class="stat-card gold">
+        <div class="stat-label">Em trial</div>
+        <div class="stat-value" id="statTrial">—</div>
+        <div class="stat-sub">período gratuito</div>
+      </div>
+      <div class="stat-card red">
+        <div class="stat-label">Inativas</div>
+        <div class="stat-value" id="statInativas">—</div>
+        <div class="stat-sub">sem acesso</div>
+      </div>
+    </div>
+
+    <!-- Lista de psis -->
+    <div class="section-head">
+      <div>
+        <div class="section-title">Psicólogas cadastradas</div>
+        <div class="section-sub">Gerencie acesso, plano e status de cada usuária</div>
+      </div>
+    </div>
+
+    <div class="filters">
+      <button class="filter-chip active" onclick="filterPsis('todas', this)">Todas</button>
+      <button class="filter-chip" onclick="filterPsis('ativa', this)">Ativas</button>
+      <button class="filter-chip" onclick="filterPsis('trial', this)">Trial</button>
+      <button class="filter-chip" onclick="filterPsis('inativa', this)">Inativas</button>
+      <input class="search-input" id="searchInput" placeholder="Buscar por nome ou e-mail..." oninput="renderTable()">
+    </div>
+
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Psicóloga</th>
+            <th>Plano</th>
+            <th>Status</th>
+            <th>Trial até</th>
+            <th>Pacientes</th>
+            <th>Cadastro</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="psiTableBody">
+          <tr><td colspan="7"><div class="empty"><div class="empty-icon">⏳</div><div class="empty-title">Carregando...</div></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Nova Psicóloga -->
+<div class="modal-backdrop" id="addModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+        </div>
+        <div>
+          <div class="modal-title">Cadastrar psicóloga</div>
+          <div class="modal-sub">Cria conta Auth + perfil no banco</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('addModal')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-grid">
+        <div class="modal-row">
+          <div class="field">
+            <label>Nome completo</label>
+            <input id="newNome" placeholder="Dra. Ana Silva">
+          </div>
+          <div class="field">
+            <label>E-mail</label>
+            <input id="newEmail" type="email" placeholder="ana@email.com">
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="field">
+            <label>Senha inicial</label>
+            <input id="newSenha" type="password" placeholder="mínimo 8 caracteres">
+          </div>
+          <div class="field">
+            <label>WhatsApp</label>
+            <input id="newWhatsapp" placeholder="5511999999999">
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="field">
+            <label>Plano</label>
+            <select id="newPlano" style="width:100%;padding:12px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;color:var(--ink);font:inherit;outline:none;">
+              <option value="trial">Trial 30 dias</option>
+              <option value="mensal">Mensal</option>
+              <option value="anual">Anual</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Trial até (opcional)</label>
+            <input id="newTrialAte" type="date">
+          </div>
+        </div>
+      </div>
+      <div class="modal-error" id="addError"></div>
+      <div class="modal-success" id="addSuccess"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('addModal')">Cancelar</button>
+      <button class="btn btn-primary" onclick="createPsi()">Criar conta</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Editar Psicóloga -->
+<div class="modal-backdrop" id="editModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </div>
+        <div>
+          <div class="modal-title">Editar psicóloga</div>
+          <div class="modal-sub" id="editSubtitle"></div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('editModal')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editUserId">
+      <div class="modal-grid">
+        <div class="modal-row">
+          <div class="field">
+            <label>Nome</label>
+            <input id="editNome">
+          </div>
+          <div class="field">
+            <label>WhatsApp</label>
+            <input id="editWhatsapp">
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="field">
+            <label>Plano</label>
+            <select id="editPlano" style="width:100%;padding:12px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;color:var(--ink);font:inherit;outline:none;">
+              <option value="trial">Trial</option>
+              <option value="mensal">Mensal</option>
+              <option value="anual">Anual</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Trial até</label>
+            <input id="editTrialAte" type="date">
+          </div>
+        </div>
+        <div class="field">
+          <label>Status</label>
+          <select id="editAtiva" style="width:100%;padding:12px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;color:var(--ink);font:inherit;outline:none;">
+            <option value="true">Ativa</option>
+            <option value="false">Inativa</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-error" id="editError"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('editModal')">Cancelar</button>
+      <button class="btn btn-primary" onclick="savePsi()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SB_URL = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
+const SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
+const EDGE_URL = `${SB_URL}/functions/v1/create-psi-user`;
+
+let SESSION_TOKEN = sessionStorage.getItem('admin_token') || '';
+let ALL_PSIS = [];
+let FILTER = 'todas';
+
+// ── AUTH ──────────────────────────────────────────────────────
+async function adminLogin() {
+  const email = document.getElementById('adminEmail').value.trim();
+  const pass = document.getElementById('adminPassword').value;
+  const err = document.getElementById('loginError');
+  err.style.display = 'none';
+  try {
+    const res = await fetch(`${SB_URL}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: { apikey: SB_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password: pass })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error('login failed');
+    SESSION_TOKEN = data.access_token;
+    sessionStorage.setItem('admin_token', SESSION_TOKEN);
+
+    // Verificar se é admin
+    const check = await sbGet('admin_users?select=user_id&limit=1');
+    if (!check || check.length === 0) throw new Error('not admin');
+
+    bootAdmin();
+  } catch(e) {
+    err.style.display = 'block';
+    err.textContent = e.message === 'not admin'
+      ? 'Acesso negado. Você não tem permissão de administrador.'
+      : 'E-mail ou senha incorretos.';
+  }
+}
+
+async function restoreSession() {
+  if (!SESSION_TOKEN) return;
+  try {
+    const check = await sbGet('admin_users?select=user_id&limit=1');
+    if (check && check.length > 0) bootAdmin();
+    else throw new Error('not admin');
+  } catch(e) {
+    SESSION_TOKEN = '';
+    sessionStorage.removeItem('admin_token');
+  }
+}
+
+function adminLogout() {
+  SESSION_TOKEN = '';
+  sessionStorage.removeItem('admin_token');
+  document.getElementById('adminApp').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+}
+
+function bootAdmin() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('adminApp').style.display = 'block';
+  loadPsis();
+}
+
+// ── SUPABASE HELPERS ──────────────────────────────────────────
+async function sbGet(path) {
+  const res = await fetch(`${SB_URL}/rest/v1/${path}`, {
+    headers: { apikey: SB_KEY, Authorization: `Bearer ${SESSION_TOKEN}`,
+      'Content-Type': 'application/json' }
+  });
+  if (!res.ok) throw new Error(await res.text());
+  return res.json();
+}
+
+async function sbPatch(table, id, data) {
+  const res = await fetch(`${SB_URL}/rest/v1/${table}?user_id=eq.${id}`, {
+    method: 'PATCH',
+    headers: { apikey: SB_KEY, Authorization: `Bearer ${SESSION_TOKEN}`,
+      'Content-Type': 'application/json', Prefer: 'return=minimal' },
+    body: JSON.stringify(data)
+  });
+  if (!res.ok) throw new Error(await res.text());
+}
+
+// ── CARREGAR PSIS ─────────────────────────────────────────────
+async function loadPsis() {
+  try {
+    const [psis, links] = await Promise.all([
+      sbGet('psis?select=*&order=criado_em.desc'),
+      sbGet('patient_links?select=psi_user_id')
+    ]);
+    // Contar pacientes por psi
+    const countMap = {};
+    (links || []).forEach(l => {
+      countMap[l.psi_user_id] = (countMap[l.psi_user_id] || 0) + 1;
+    });
+    ALL_PSIS = (psis || []).map(p => ({ ...p, pacientes: countMap[p.user_id] || 0 }));
+    updateStats();
+    renderTable();
+  } catch(e) {
+    showToast('Erro ao carregar dados: ' + e.message, true);
+  }
+}
+
+function updateStats() {
+  const ativas = ALL_PSIS.filter(p => p.ativa && p.plano !== 'trial').length;
+  const trial = ALL_PSIS.filter(p => p.plano === 'trial' && p.ativa).length;
+  const inativas = ALL_PSIS.filter(p => !p.ativa).length;
+  setText('statTotal', ALL_PSIS.length);
+  setText('statAtivas', ativas);
+  setText('statTrial', trial);
+  setText('statInativas', inativas);
+}
+
+function filterPsis(f, btn) {
+  FILTER = f;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  renderTable();
+}
+
+function renderTable() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  let list = ALL_PSIS;
+
+  if (FILTER === 'ativa') list = list.filter(p => p.ativa && p.plano !== 'trial');
+  else if (FILTER === 'trial') list = list.filter(p => p.plano === 'trial' && p.ativa);
+  else if (FILTER === 'inativa') list = list.filter(p => !p.ativa);
+
+  if (q) list = list.filter(p =>
+    (p.nome||'').toLowerCase().includes(q) ||
+    (p.email||'').toLowerCase().includes(q)
+  );
+
+  const tbody = document.getElementById('psiTableBody');
+  if (!list.length) {
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty">
+      <div class="empty-icon">🔍</div>
+      <div class="empty-title">Nenhuma psicóloga encontrada</div>
+    </div></td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = list.map(p => {
+    const initials = initialsFrom(p.nome || p.email || '?');
+    const statusBadge = !p.ativa
+      ? `<span class="badge badge-inativa"><span class="badge-dot"></span>Inativa</span>`
+      : p.plano === 'trial'
+        ? `<span class="badge badge-trial"><span class="badge-dot"></span>Trial</span>`
+        : `<span class="badge badge-ativa"><span class="badge-dot"></span>Ativa</span>`;
+    const trialDate = p.trial_ate ? new Date(p.trial_ate).toLocaleDateString('pt-BR') : '—';
+    const criadoEm = p.criado_em ? new Date(p.criado_em).toLocaleDateString('pt-BR') : '—';
+
+    return `<tr>
+      <td>
+        <div class="psi-cell">
+          <div class="avatar">${initials}</div>
+          <div>
+            <div class="psi-name">${esc(p.nome || '—')}</div>
+            <div class="psi-email">${esc(p.email || '—')}</div>
+          </div>
+        </div>
+      </td>
+      <td><span class="plano-badge">${esc(p.plano || '—')}</span></td>
+      <td>${statusBadge}</td>
+      <td style="color:var(--ink3);font-size:12px">${trialDate}</td>
+      <td style="font-family:'Syne',sans-serif;font-weight:600">${p.pacientes}</td>
+      <td style="color:var(--ink3);font-size:12px">${criadoEm}</td>
+      <td>
+        <div class="row-actions">
+          <button class="icon-btn" title="Editar" onclick="openEditModal(${JSON.stringify(p).replace(/"/g,'&quot;')})">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </button>
+          <button class="icon-btn" title="${p.ativa ? 'Desativar' : 'Ativar'}" onclick="toggleAtiva('${p.user_id}', ${p.ativa})">
+            ${p.ativa
+              ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>`
+              : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>`
+            }
+          </button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ── CRIAR PSI ─────────────────────────────────────────────────
+function openAddModal() {
+  document.getElementById('newNome').value = '';
+  document.getElementById('newEmail').value = '';
+  document.getElementById('newSenha').value = '';
+  document.getElementById('newWhatsapp').value = '';
+  document.getElementById('newPlano').value = 'trial';
+  document.getElementById('newTrialAte').value = '';
+  const d = new Date(); d.setDate(d.getDate() + 30);
+  document.getElementById('newTrialAte').value = d.toISOString().split('T')[0];
+  hideMsg('addError'); hideMsg('addSuccess');
+  openModal('addModal');
+}
+
+async function createPsi() {
+  const nome = document.getElementById('newNome').value.trim();
+  const email = document.getElementById('newEmail').value.trim();
+  const password = document.getElementById('newSenha').value.trim();
+  const whatsapp = document.getElementById('newWhatsapp').value.trim();
+  const plano = document.getElementById('newPlano').value;
+  const trialAte = document.getElementById('newTrialAte').value;
+  const errEl = document.getElementById('addError');
+  const succEl = document.getElementById('addSuccess');
+
+  hideMsg('addError'); hideMsg('addSuccess');
+  if (!nome || !email || !password) {
+    showMsg('addError', 'Preencha nome, e-mail e senha.'); return;
+  }
+  if (password.length < 8) {
+    showMsg('addError', 'Senha deve ter ao menos 8 caracteres.'); return;
+  }
+
+  try {
+    const psiId = email.split('@')[0].replace(/[^a-z0-9]/gi, '').toLowerCase();
+    const res = await fetch(EDGE_URL, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${SESSION_TOKEN}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ nome, email, password, psi_id: psiId, whatsapp, plano })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Erro ao criar conta');
+
+    // Atualiza trial_ate se informado
+    if (trialAte && data.user_id) {
+      await sbPatch('psis', data.user_id, { trial_ate: trialAte });
+    }
+
+    showMsg('addSuccess', `✅ Conta criada! E-mail: ${email}`);
+    await loadPsis();
+    setTimeout(() => closeModal('addModal'), 2000);
+  } catch(e) {
+    showMsg('addError', e.message);
+  }
+}
+
+// ── EDITAR PSI ────────────────────────────────────────────────
+function openEditModal(p) {
+  document.getElementById('editUserId').value = p.user_id || '';
+  document.getElementById('editNome').value = p.nome || '';
+  document.getElementById('editWhatsapp').value = p.whatsapp || '';
+  document.getElementById('editPlano').value = p.plano || 'mensal';
+  document.getElementById('editTrialAte').value = p.trial_ate ? p.trial_ate.split('T')[0] : '';
+  document.getElementById('editAtiva').value = String(p.ativa !== false);
+  document.getElementById('editSubtitle').textContent = p.email || '';
+  hideMsg('editError');
+  openModal('editModal');
+}
+
+async function savePsi() {
+  const userId = document.getElementById('editUserId').value;
+  const nome = document.getElementById('editNome').value.trim();
+  const whatsapp = document.getElementById('editWhatsapp').value.trim();
+  const plano = document.getElementById('editPlano').value;
+  const trialAte = document.getElementById('editTrialAte').value || null;
+  const ativa = document.getElementById('editAtiva').value === 'true';
+
+  try {
+    await sbPatch('psis', userId, { nome, whatsapp, plano, trial_ate: trialAte, ativa });
+    closeModal('editModal');
+    showToast('Dados salvos com sucesso!');
+    await loadPsis();
+  } catch(e) {
+    showMsg('editError', e.message);
+  }
+}
+
+async function toggleAtiva(userId, atual) {
+  try {
+    await sbPatch('psis', userId, { ativa: !atual });
+    showToast(!atual ? 'Psicóloga ativada!' : 'Psicóloga desativada.');
+    await loadPsis();
+  } catch(e) {
+    showToast('Erro: ' + e.message, true);
+  }
+}
+
+// ── HELPERS ───────────────────────────────────────────────────
+function openModal(id) {
+  const m = document.getElementById(id);
+  m.classList.add('open'); m.setAttribute('aria-hidden', 'false');
+}
+function closeModal(id) {
+  const m = document.getElementById(id);
+  m.classList.remove('open'); m.setAttribute('aria-hidden', 'true');
+}
+function showMsg(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg; el.style.display = 'block';
+}
+function hideMsg(id) {
+  const el = document.getElementById(id);
+  if (el) { el.style.display = 'none'; el.textContent = ''; }
+}
+function setText(id, val) {
+  const el = document.getElementById(id); if (el) el.textContent = val;
+}
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function initialsFrom(name) {
+  const parts = name.trim().split(' ').filter(Boolean);
+  if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+  return name.substring(0,2).toUpperCase();
+}
+function showToast(msg, isError = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (isError ? ' error' : '');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// Fechar modal clicando no backdrop
+document.querySelectorAll('.modal-backdrop').forEach(el => {
+  el.addEventListener('click', e => { if (e.target === el) closeModal(el.id); });
+});
+
+// Enter no login
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.getElementById('loginScreen').style.display !== 'none') {
+    adminLogin();
+  }
+});
+
+// Init
+restoreSession();
+</script>
+</body>
+</html>

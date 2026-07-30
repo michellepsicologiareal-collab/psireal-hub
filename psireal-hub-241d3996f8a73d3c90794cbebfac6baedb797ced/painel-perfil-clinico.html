@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PsiReal Clínica — Meu Perfil Clínico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Fundos */
+  --bg:          #faf8ff;
+  --bg2:         #f7f4ff;
+  --bg3:         #f0ebff;
+  --surface:     #ffffff;
+  --border:      #ede9f8;
+  --border2:     #e4dff5;
+  /* Violeta texto */
+  --ink:         #1a1030;
+  --ink2:        #6a5880;
+  --ink3:        #8070a8;
+  /* Aliases compatibilidade */
+  --brown:       #3d2b8a;
+  --brown2:      #6d4fc2;
+  --brown3:      #8070a8;
+  --lilac:       #6d4fc2;
+  --lilac2:      #8b6fd4;
+  --lilac3:      rgba(109,79,194,0.15);
+  --lilac4:      rgba(109,79,194,0.08);
+  /* Dourado */
+  --teal:        #c9a84c;
+  --teal2:       #e8c97a;
+  --teal3:       rgba(201,168,76,0.10);
+  --amber:       #c9a84c;
+  --amber2:      #e8c97a;
+  --amber3:      rgba(201,168,76,0.10);
+  /* Semânticas */
+  --coral:       #854f0b;
+  --coral2:      #f59e3a;
+  --coral3:      #fdf8f0;
+  --green:       #3b6d11;
+  --green2:      #7ec94a;
+  --green3:      #eaf3de;
+  /* Primário */
+  --primary:        #6d4fc2;
+  --primary-dark:   #3d2b8a;
+  --primary-hover:  #5c3db0;
+  --primary-subtle: rgba(109,79,194,0.08);
+  --primary-border: rgba(109,79,194,0.20);
+  /* Forma */
+  --sidebar-w:220px;
+  --radius:    12px;
+  --radius-lg: 16px;
+  --shadow:    0 2px 12px rgba(61,43,138,.06),0 1px 3px rgba(61,43,138,.04);
+  --shadow-md: 0 12px 40px rgba(61,43,138,.12),0 4px 12px rgba(61,43,138,.06);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;min-height:100vh;display:flex}
+
+/* SIDEBAR */
+.sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100}
+.logo{padding:24px 20px 20px;border-bottom:1px solid var(--border)}
+.logo-mark{display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;border-radius:8px;background:url("logo-psicologia-real.png") center/contain no-repeat;display:block;flex-shrink:0}
+.logo-text{font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.3px;line-height:1.1}
+.logo-sub{display:none}
+.nav{padding:16px 12px;flex:1}
+.nav-section{margin-bottom:24px}
+.nav-label{font-size:9px;font-weight:500;color:var(--ink3);text-transform:uppercase;letter-spacing:.12em;padding:0 8px;margin-bottom:6px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius);cursor:pointer;transition:all .15s;color:var(--ink2);font-size:13px;font-weight:400;position:relative}
+.nav-item:hover{background:var(--bg2);color:var(--ink)}
+.nav-item.active{background:var(--lilac4);color:var(--brown);font-weight:500}
+.nav-item.active::before{content:'';position:absolute;left:-12px;top:50%;transform:translateY(-50%);width:3px;height:20px;background:var(--lilac);border-radius:0 2px 2px 0}
+.nav-icon{width:16px;height:16px;flex-shrink:0}
+.sidebar-user{padding:16px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.user-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--lilac) 0%,var(--lilac2) 100%);display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;font-weight:500;flex-shrink:0}
+.user-name{font-size:12px;font-weight:500;color:var(--ink)}
+.user-plan{font-size:10px;color:var(--amber);font-weight:500;font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:.04em}
+
+/* MAIN */
+.main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;display:flex;flex-direction:column}
+.topbar{height:56px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 28px;gap:16px;position:sticky;top:0;z-index:50}
+.topbar-left{flex:1}
+.topbar-title{font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:20px;font-weight:500;color:var(--ink)}
+.topbar-sub{font-size:11px;color:var(--ink3);margin-top:1px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius);font-size:12px;font-weight:500;cursor:pointer;border:none;transition:all .15s;font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.btn-primary{background:linear-gradient(135deg,var(--brown) 0%,var(--brown2) 50%,var(--brown3) 100%);color:#fff}
+.btn-primary:hover{opacity:.92}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.btn-ghost{background:transparent;color:var(--ink2);border:1px solid var(--border2)}
+.btn-ghost:hover{background:var(--bg2)}
+
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface);padding:0 28px;gap:0;position:sticky;top:56px;z-index:40}
+.tab{padding:14px 20px;font-size:13px;font-weight:400;color:var(--ink3);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;display:flex;align-items:center;gap:6px}
+.tab:hover{color:var(--ink2)}
+.tab.active{color:var(--brown);border-bottom-color:var(--brown);font-weight:500}
+.tab-badge{font-size:10px;background:var(--coral3);color:var(--coral);padding:1px 6px;border-radius:99px;font-weight:500}
+
+/* CONTENT */
+.content{padding:28px;flex:1}
+.screen{display:none;animation:fadeUp .2s ease}
+.screen.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* SECTION */
+.section-head{margin-bottom:24px}
+.section-title{font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:24px;font-weight:500;color:var(--ink);margin-bottom:4px}
+.section-sub{font-size:13px;color:var(--ink3);line-height:1.6}
+
+/* SYSTEM REDESIGN: branco, limpo, editorial-sans */
+:root{
+  --bg:#faf8ff;
+  --bg2:#f7f4ff;
+  --bg3:#f0ebff;
+  --surface:#FFFFFF;
+  --border:#ede9f8;
+  --border2:#ede9f8;
+  --ink:#1a1030;
+  --ink2:#6a5880;
+  --ink3:#8070a8;
+  --radius:16px;
+  --radius-lg:22px;
+  --shadow:0 1px 2px rgba(36,24,29,.03),0 10px 24px rgba(61,32,40,.04);
+  --shadow-md:0 18px 44px rgba(61,32,40,.10);
+}
+body{background:#fff;font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;line-height:1.55}
+.sidebar{background:#fff;border-right:1px solid var(--border)}
+.logo-text,.topbar-title,.section-title,.dominio-name{font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:-.02em}
+.logo-text{font-size:17px;font-weight:700}
+.nav-item{min-height:42px;border-radius:14px;font-size:14px}
+.nav-item:hover{background:var(--bg2)}
+.nav-item.active{background:var(--bg3);color:var(--brown)}
+.nav-item.active::before{display:none}
+.topbar{height:72px;background:#fff}
+.topbar-title{font-size:20px;font-weight:700}
+.topbar-sub{font-size:13px}
+.content{padding:30px 34px 40px}
+.section-title{font-size:24px;font-weight:700}
+.section-sub{font-size:14px}
+.dominio-card,.aviso,.perfil-card,.alerta-card{
+  border-radius:22px;
+  box-shadow:var(--shadow);
+}
+.dominio-header{padding:18px 22px}
+.dominio-name{font-size:16px;font-weight:700}
+.btn,.lock-input,.lock-btn{border-radius:14px}
+@media (max-width: 860px){
+  body{display:block}
+  .sidebar{position:static;width:auto;min-height:auto}
+  .main{margin-left:0}
+  .topbar{height:auto;min-height:72px;flex-wrap:wrap;padding:18px}
+  .content{padding:20px 16px 32px}
+}
+
+/* AVISO CLÍNICO */
+.aviso{background:var(--amber3);border:1px solid var(--amber2);border-radius:var(--radius-lg);padding:16px 20px;display:flex;gap:14px;margin-bottom:28px}
+.aviso-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.aviso-text{font-size:13px;color:var(--amber);line-height:1.6}
+.aviso-text strong{color:var(--brown)}
+
+/* PROGRESSO */
+.progress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.progress-label{font-size:12px;color:var(--ink3);font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.progress-bar{height:4px;background:var(--bg3);border-radius:99px;overflow:hidden;margin-bottom:28px}
+.progress-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--brown),var(--brown3));transition:width .4s ease}
+
+/* DOMÍNIO CARD */
+.dominio-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:20px}
+.dominio-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;cursor:pointer;transition:background .15s}
+.dominio-header:hover{background:var(--bg)}
+.dominio-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.dominio-name{font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:17px;font-weight:500;color:var(--ink)}
+.dominio-count{font-size:11px;color:var(--ink3);margin-left:auto;font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.dominio-chevron{margin-left:8px;transition:transform .2s;color:var(--ink3);font-size:12px}
+.dominio-body{padding:0}
+.dominio-body.collapsed{display:none}
+
+/* ESQUEMA ROW */
+.esquema-row{display:flex;align-items:center;gap:16px;padding:14px 20px;border-bottom:1px solid var(--border);transition:background .1s}
+.esquema-row:last-child{border-bottom:none}
+.esquema-row:hover{background:var(--bg)}
+.esquema-name{font-size:13px;color:var(--ink);width:220px;flex-shrink:0;line-height:1.4}
+.esquema-desc{font-size:11px;color:var(--ink3);line-height:1.4;flex:1}
+.likert{display:flex;gap:6px;flex-shrink:0}
+.likert-btn{width:32px;height:32px;border-radius:6px;border:1px solid var(--border2);background:var(--surface);font-size:12px;font-weight:500;color:var(--ink3);cursor:pointer;transition:all .15s;font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;display:flex;align-items:center;justify-content:center}
+.likert-btn:hover{border-color:var(--brown2);color:var(--brown);background:var(--bg2)}
+.likert-btn.selected{border-color:var(--brown);background:var(--brown);color:#fff}
+.likert-labels{display:flex;justify-content:space-between;width:222px;padding:0 2px;flex-shrink:0}
+.likert-label{font-size:9px;color:var(--ink3);font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-align:center;width:32px}
+.esquema-score{width:36px;text-align:right;font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;color:var(--ink3)}
+.esquema-score.filled{color:var(--brown);font-weight:500}
+
+/* MODO CARD (SMI) */
+.modo-section{margin-bottom:24px}
+.modo-section-title{font-size:11px;font-weight:500;color:var(--ink3);text-transform:uppercase;letter-spacing:.1em;padding:12px 0 8px;border-bottom:1px solid var(--border);margin-bottom:0}
+.modo-row{display:flex;align-items:center;gap:16px;padding:14px 20px;border-bottom:1px solid var(--border);background:var(--surface);border-left:1px solid var(--border);border-right:1px solid var(--border)}
+.modo-row:last-child{border-bottom:1px solid var(--border);border-radius:0 0 var(--radius-lg) var(--radius-lg)}
+.modo-row:hover{background:var(--bg)}
+.modo-badge{font-size:9px;font-weight:500;padding:2px 7px;border-radius:99px;flex-shrink:0;letter-spacing:.04em;width:76px;text-align:center}
+.modo-name{font-size:13px;color:var(--ink);width:200px;flex-shrink:0}
+.modo-desc{font-size:11px;color:var(--ink3);flex:1;line-height:1.4}
+
+/* RESULTADOS */
+.resultado-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
+.resultado-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
+.resultado-card-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.resultado-card-title{font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:16px;font-weight:500;color:var(--ink)}
+.resultado-body{padding:16px 20px}
+.resultado-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
+.resultado-row:last-child{border-bottom:none}
+.resultado-label{font-size:12px;color:var(--ink2);flex:1}
+.resultado-bar-wrap{width:100px;flex-shrink:0}
+.resultado-bar{height:4px;border-radius:99px;background:var(--bg3);overflow:hidden}
+.resultado-bar-fill{height:100%;border-radius:99px;transition:width .6s ease}
+.resultado-val{font-size:12px;font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--ink);width:28px;text-align:right}
+.resultado-nivel{font-size:10px;font-weight:500;padding:2px 7px;border-radius:99px}
+
+/* ALERTAS */
+.alerta-card{border-radius:var(--radius-lg);border:1px solid;padding:18px 20px;margin-bottom:14px;position:relative;overflow:hidden}
+.alerta-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.alerta-critico{background:var(--coral3);border-color:var(--coral2)}
+.alerta-critico::before{background:var(--coral)}
+.alerta-alto{background:var(--amber3);border-color:var(--amber2)}
+.alerta-alto::before{background:var(--amber)}
+.alerta-moderado{background:var(--lilac4);border-color:var(--lilac3)}
+.alerta-moderado::before{background:var(--lilac)}
+.alerta-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}
+.alerta-nivel-badge{font-size:9px;font-weight:500;padding:3px 8px;border-radius:99px;letter-spacing:.06em;flex-shrink:0;margin-top:2px}
+.alerta-titulo{font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;font-weight:500;color:var(--ink);line-height:1.3;flex:1}
+.alerta-score{font-size:11px;font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--ink3);margin-left:auto;flex-shrink:0}
+.alerta-texto{font-size:13px;color:var(--ink2);line-height:1.6;font-style:italic;margin-bottom:10px}
+.alerta-sugestao{font-size:12px;color:var(--ink2);line-height:1.6;padding:10px 12px;background:rgba(255,255,255,.6);border-radius:var(--radius);margin-bottom:10px}
+.alerta-sugestao strong{color:var(--ink);font-style:normal}
+.alerta-footer{display:flex;align-items:center;justify-content:space-between}
+.alerta-ref{font-size:10px;color:var(--ink3);font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.alerta-temas{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tema-chip{font-size:10px;padding:3px 9px;border-radius:99px;background:rgba(255,255,255,.7);color:var(--ink2);border:1px solid rgba(0,0,0,.06);cursor:pointer;transition:all .15s}
+.tema-chip:hover{background:#fff}
+.tema-chip.confirmado{background:var(--brown);color:#fff;border-color:var(--brown)}
+
+/* RADAR MOCK */
+.radar-wrap{display:flex;justify-content:center;padding:20px 0}
+
+/* LOADING */
+.loading-overlay{position:fixed;inset:0;background:rgba(250,248,245,.85);display:none;align-items:center;justify-content:center;z-index:200;flex-direction:column;gap:16px}
+.loading-overlay.visible{display:flex}
+.spinner{width:36px;height:36px;border:2px solid var(--border2);border-top-color:var(--brown);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:18px;color:var(--ink2)}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--ink);color:#fff;padding:12px 20px;border-radius:var(--radius);font-size:13px;opacity:0;transform:translateY(8px);transition:all .3s;z-index:300;pointer-events:none}
+.toast.show{opacity:1;transform:none}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:60px 20px}
+.empty-icon{font-size:40px;margin-bottom:16px;opacity:.3}
+.empty-title{font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:22px;font-weight:500;color:var(--ink);margin-bottom:8px}
+.empty-sub{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:24px}
+
+/* SCROLL */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px}
+
+/* SaaS legivel: mais proximo da HumanTrack, menos editorial dentro do sistema */
+*{letter-spacing:0}
+body,
+button,
+input,
+select,
+textarea,
+.logo-text,
+.topbar-title,
+.section-title,
+.dominio-name,
+.modo-section-title,
+.resultado-card-title,
+.alerta-titulo,
+.empty-title,
+.loading-text,
+.lock-title,
+[style*="font-family:'Cormorant Garamond'"],
+[style*="font-family:'Instrument Serif'"],
+[style*="font-family:'DM Mono'"]{
+  font-family:'Instrument Sans','Plus Jakarta Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif !important;
+}
+.topbar-title{font-size:18px;font-weight:700;letter-spacing:-.02em}
+.logo-text{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.section-title{font-size:22px;font-weight:700;letter-spacing:-.02em}
+.dominio-name,
+.modo-section-title,
+.resultado-card-title,
+.alerta-titulo,
+.empty-title,
+.loading-text,
+.lock-title{font-weight:600;letter-spacing:-.01em}
+
+/* Perfil clinico: linhas respiradas, sem sobreposicao */
+.dominio-head{gap:12px}
+.esquema-row{
+  display:grid !important;
+  grid-template-columns:minmax(160px,240px) minmax(280px,1fr) auto 44px;
+  align-items:center;
+  gap:16px;
+  min-height:72px;
+}
+.modo-row{
+  display:grid !important;
+  grid-template-columns:minmax(112px,150px) minmax(150px,220px) minmax(260px,1fr) auto 44px;
+  align-items:center;
+  gap:16px;
+  min-height:72px;
+}
+.esquema-name,
+.modo-name{
+  width:auto !important;
+  min-width:0;
+  font-size:14px;
+  font-weight:600;
+  line-height:1.22;
+}
+.esquema-desc,
+.modo-desc{
+  font-size:13px;
+  line-height:1.45;
+  color:var(--ink2);
+}
+.esquema-domain,
+.modo-badge{
+  width:auto !important;
+  min-width:92px;
+  max-width:132px;
+  justify-self:start;
+  white-space:normal;
+  line-height:1.15;
+  font-size:11px;
+  font-weight:600;
+  padding:6px 10px;
+}
+.likert{justify-content:flex-end;flex-wrap:nowrap}
+.likert-btn{width:30px;height:30px}
+.esquema-score{width:40px}
+
+@media (max-width:980px){
+  .esquema-row,
+  .modo-row{
+    grid-template-columns:1fr;
+    gap:10px;
+    align-items:start;
+    padding:16px;
+  }
+  .esquema-domain,
+  .modo-badge{max-width:none}
+  .likert{justify-content:flex-start;flex-wrap:wrap}
+  .esquema-score{text-align:left}
+}
+
+#lockScreen{display:none !important;
+  position:fixed; inset:0; z-index:9999;
+  display:grid; place-items:center;
+  background:var(--bg2);
+  padding:20px;
+}
+.lock-card{
+  width:min(380px,100%);
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:18px;
+  box-shadow:var(--shadow-md);
+  padding:28px;
+}
+.lock-logo{
+  width:56px;height:56px;margin:0 auto 16px;
+  background:url("logo-psicologia-real.png") center/contain no-repeat;
+}
+.lock-title{
+  font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-size:28px;
+  text-align:center;
+  margin-bottom:6px;
+}
+.lock-sub{
+  font-size:13px;color:var(--ink3);
+  text-align:center;line-height:1.5;
+  margin-bottom:20px;
+}
+.lock-field{
+  width:100%;
+  border:1px solid var(--border2);
+  background:var(--surface);
+  color:var(--ink);
+  border-radius:10px;
+  padding:12px 13px;
+  font:inherit;
+  margin-bottom:10px;
+}
+.lock-field:focus{
+  outline:none;
+  border-color:var(--brown2);
+  box-shadow:0 0 0 3px rgba(122,74,85,.12);
+}
+.lock-btn{
+  width:100%;
+  border:none;
+  border-radius:10px;
+  padding:12px 14px;
+  font:inherit;
+  font-weight:600;
+  color:#fff;
+  background:linear-gradient(135deg,var(--brown),var(--brown2),var(--brown3));
+  cursor:pointer;
+}
+.lock-error{
+  display:none;
+  color:#9b2f43;
+  font-size:12px;
+  margin-top:10px;
+  text-align:center;
+}
+
+/* HumanTrack-like readable system typography */
+html, body, button, input, select, textarea, a, div, span, p, h1, h2, h3, h4, h5, h6{
+  font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif !important;
+  letter-spacing:0 !important;
+}
+.logo-text,.topbar-title,.section-title,.dominio-name,.modo-section-title,.resultado-card-title,.alerta-titulo,.loading-text,.empty-title,.lock-title{font-family:'Syne',sans-serif !important;
+  font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif !important;
+  font-weight:700 !important;
+  line-height:1.18 !important;
+}
+.logo-text{font-size:16px !important}.topbar-title{font-size:18px !important}.section-title{font-size:22px !important}.dominio-name{font-size:15px !important}.modo-section-title{font-size:14px !important}
+.esquema-row,.modo-row{display:grid !important;align-items:center !important;gap:12px !important}
+.esquema-row{grid-template-columns:minmax(170px,240px) minmax(280px,1fr) auto 42px !important}
+.modo-row{grid-template-columns:minmax(106px,134px) minmax(170px,220px) minmax(280px,1fr) auto 42px !important}
+.esquema-name,.modo-name{width:auto !important;min-width:0 !important;font-size:14px !important;font-weight:650 !important;line-height:1.25 !important;color:var(--ink) !important}
+.esquema-desc,.modo-desc{font-size:13px !important;line-height:1.45 !important;color:var(--ink2) !important;min-width:0 !important}
+.modo-badge{width:auto !important;min-width:88px !important;max-width:118px !important;white-space:normal !important;line-height:1.1 !important;font-size:10px !important;font-weight:700 !important;padding:6px 8px !important;text-align:center !important}
+.likert{justify-content:flex-end !important}.likert-btn{font-family:'Instrument Sans',system-ui,sans-serif !important;font-size:13px !important;font-weight:600 !important}
+@media (max-width:1100px){.modo-row,.esquema-row{grid-template-columns:1fr !important;align-items:start !important}.likert{justify-content:flex-start !important;flex-wrap:wrap !important}.score-display{justify-self:start !important}.modo-badge{max-width:none !important}}
+
+
+/* Ressonância Clínica incorporada */
+.nav-item.active{background:linear-gradient(135deg,var(--brown),var(--brown2));color:#fff;box-shadow:var(--shadow)}
+.hero-title{font-family:'Syne',sans-serif;font-size:34px;line-height:1.1;color:var(--ink);letter-spacing:-.8px;margin-bottom:8px}
+.hero-sub{font-size:14px;color:var(--ink2);max-width:680px;line-height:1.7}
+.action-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--ink2);font-size:12px;font-weight:600;text-decoration:none;cursor:pointer;transition:.15s}
+.action-btn:hover{background:var(--bg2);color:var(--brown)}
+.res-grid{display:grid;grid-template-columns:1fr 190px 1fr;gap:16px;align-items:stretch;margin-bottom:16px}
+.person-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:20px;position:relative;overflow:hidden}
+.person-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--brown),var(--amber))}
+.card-kicker{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px}
+.person-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.circle-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--bg2),#fff);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--brown);font-weight:800;font-size:18px;flex-shrink:0}
+.person-name{font-family:'Syne',sans-serif;font-size:24px;font-weight:700;color:var(--ink);letter-spacing:-.4px;line-height:1.1}
+.person-role{font-size:12px;color:var(--ink3);margin-top:3px}
+.pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.soft-pill{display:inline-flex;align-items:center;gap:6px;border-radius:99px;padding:6px 10px;background:var(--lilac3);color:var(--brown2);font-size:12px;font-weight:600;border:1px solid var(--border)}
+.soft-pill.amber{background:var(--amber3);color:var(--coral);border-color:rgba(201,168,76,.22)}
+.soft-pill.green{background:var(--green3);color:var(--green);border-color:rgba(109,79,194,.12)}
+.mid-link{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;min-height:210px}
+.link-orb{width:76px;height:76px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff 0,#fff 22%,rgba(201,168,76,.25) 23%,rgba(109,79,194,.12) 100%);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;box-shadow:var(--shadow)}
+.link-orb::before,.link-orb::after{content:'';width:32px;height:32px;border-radius:50%;background:rgba(133,79,11,.75);position:absolute;mix-blend-mode:multiply}.link-orb::before{left:22px}.link-orb::after{right:22px;background:rgba(109,79,194,.55)}
+.sync-badge{font-size:11px;font-weight:700;color:var(--green);background:var(--green3);border:1px solid rgba(109,79,194,.15);border-radius:99px;padding:6px 12px}
+.zone-layout{display:grid;grid-template-columns:1.5fr .9fr;gap:16px;margin-bottom:16px}
+.zone-item{display:grid;grid-template-columns:1fr 96px;gap:14px;align-items:center;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:8px}
+.zone-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:2px}.zone-desc{font-size:11.5px;color:var(--ink2);line-height:1.5}.dots{display:flex;gap:4px;justify-content:flex-end}.dot{width:8px;height:8px;border-radius:50%;border:1px solid var(--brown3);background:transparent}.dot.on{background:var(--coral);border-color:var(--coral)}
+.resource-card{display:flex;gap:12px;background:rgba(109,79,194,.04);border:1px solid var(--border);border-radius:var(--radius);padding:12px;margin-bottom:8px}.resource-ico{width:34px;height:34px;border-radius:50%;background:var(--green3);display:flex;align-items:center;justify-content:center;color:var(--green);font-weight:800;flex-shrink:0}.resource-title{font-size:13px;font-weight:700;color:var(--ink)}.resource-desc{font-size:11.5px;color:var(--ink2);line-height:1.45;margin-top:2px}
+.radar-wrap{height:260px;display:flex;align-items:center;justify-content:center;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);margin-top:10px}
+.reflection-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.reflection{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px;text-align:center;font-size:11.5px;color:var(--ink2);font-weight:600;min-height:72px;display:flex;align-items:center;justify-content:center;line-height:1.35}
+.ethic-box{border:1px solid rgba(201,168,76,.35);background:rgba(201,168,76,.08);border-radius:var(--radius-lg);padding:14px 16px;font-size:12px;color:var(--ink2);line-height:1.65;margin-top:16px}.ethic-box strong{color:var(--brown);font-weight:800}
+@media(max-width:1100px){.res-grid,.zone-layout{grid-template-columns:1fr}.mid-link{min-height:auto}.reflection-row{grid-template-columns:1fr 1fr}.grid-2-1{grid-template-columns:1fr}}
+
+
+</style>
+  <link rel="stylesheet" href="visual-modern.css">
+</head>
+<body>
+
+<div id="lockScreen" style="display:none">
+  <div class="lock-card">
+    <div class="lock-logo"></div>
+    <div class="lock-title">Perfil Clínico</div>
+    <div class="lock-sub">Acesso restrito. Entre com seu e-mail e senha do PsiReal Clínica.</div>
+    <input id="lockEmail" class="lock-field" type="email" placeholder="E-mail" autocomplete="email">
+    <input id="lockPassword" class="lock-field" type="password" placeholder="Senha" autocomplete="current-password">
+    <button class="lock-btn" onclick="tryLogin()">Entrar</button>
+    <div id="lockError" class="lock-error">Não foi possível entrar. Verifique e-mail e senha.</div>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loading-text" id="loadingText">Salvando perfil…</div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="logo">
+    <div class="logo-mark">
+      <div class="logo-icon"></div>
+      <div>
+        <div class="logo-text">PsiReal Clínica</div>
+        <div class="logo-sub">Plataforma Clínica</div>
+      </div>
+    </div>
+  </div>
+  <nav class="nav">
+    <div class="nav-section">
+      <div class="nav-label">Principal</div>
+      <a class="nav-item" href="painel-tcc.html">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+        Dashboard
+      </a>
+      <a class="nav-item" href="painel-tcc.html#pacientes">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5"/></svg>
+        Pacientes
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Clínico</div>
+      <a class="nav-item" href="painel-tcc.html#biblioteca">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2h8l2 2v10a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z"/><path d="M5 8h6M5 11h4"/></svg>
+        Biblioteca PsiReal
+      </a>
+      <a class="nav-item" href="painel-tcc.html#evolucao">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="2,12 5,7 8,9 12,4 14,6"/></svg>
+        Evolução Emocional
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Minha conta</div>
+      <a class="nav-item active" href="painel-perfil-clinico.html">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M3 14c0-2.2 2.2-4 5-4s5 1.8 5 4"/><circle cx="12" cy="4" r="1.5" fill="currentColor" stroke="none"/></svg>
+        Perfil Clínico
+      </a>
+      <a class="nav-item" href="painel-tcc.html#configuracoes">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3.2 3.2l1 1M11.8 11.8l1 1M11.8 3.2l-1 1M3.2 11.8l1 1"/></svg>
+        Configurações
+      </a>
+    </div>
+  </nav>
+  <div class="sidebar-user">
+    <div class="user-avatar">MD</div>
+    <div>
+      <div class="user-name">Michelle Donegá</div>
+      <div class="user-plan">Pro · Fundadora</div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-title">Meu Perfil Clínico</div>
+      <div class="topbar-sub">Autoconhecimento estruturado para leitura da ressonância terapêutica</div>
+    </div>
+    <button class="btn btn-ghost" id="btnSalvarRascunho">Salvar rascunho</button>
+    <button class="btn btn-primary" id="btnSalvarPerfil" disabled>Salvar perfil</button>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('ysq',this)">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2h10v10H2z"/><path d="M5 5h4M5 8h2"/></svg>
+      YSQ-S3 · Esquemas
+    </div>
+    <div class="tab" onclick="showTab('smi',this)">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M7 4v3l2 2"/></svg>
+      Mapa de Modos
+    </div>
+    <div class="tab" onclick="showTab('resultado',this)">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="2,10 5,6 7,8 10,3 12,5"/></svg>
+      Meu Perfil
+    </div>
+    <div class="tab" onclick="showTab('alertas',this)">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 1l1.5 4h4l-3.3 2.4 1.3 4L7 9 3.5 11.4l1.3-4L1.5 5h4z"/></svg>
+      Ressonância Clínica
+      <span class="tab-badge" id="alertaCount">3</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════ YSQ-S3 ═══════════════ -->
+  <div id="tab-ysq" class="screen active">
+    <div class="content">
+      <div class="section-head">
+        <div class="section-title">Young Schema Questionnaire — S3</div>
+        <div class="section-sub">Avalie seus próprios esquemas. Para cada esquema, atribua um score de 1 (ausente) a 6 (muito elevado) baseado em sua percepção clínica de si mesma. Este é um instrumento de autoconhecimento — não um diagnóstico.</div>
+      </div>
+
+      <div class="aviso">
+        <div class="aviso-icon">◎</div>
+        <div class="aviso-text">
+          <strong>Uso clínico e confidencial.</strong> Esses dados são visíveis apenas para você. Eles alimentam a Ressonância Terapêutica — quando um paciente responde ao YSQ ou SMI, o sistema cruza os resultados com seu perfil para indicar possíveis zonas de ativação clínica e ressonância esquemática. Trate como hipóteses contratransferenciais, não como verdades absolutas.
+        </div>
+      </div>
+
+      <div class="progress-header">
+        <span class="progress-label">Progresso: <span id="ysqProgress">0</span>/18 esquemas avaliados</span>
+        <span class="progress-label" id="ysqPct">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="ysqProgressBar" style="width:0%"></div></div>
+
+      <!-- DOMÍNIO 1 -->
+      <div class="dominio-card">
+        <div class="dominio-header" onclick="toggleDominio(this)">
+          <div class="dominio-dot" style="background:var(--coral)"></div>
+          <div class="dominio-name">Desconexão e Rejeição</div>
+          <span class="dominio-count">5 esquemas</span>
+          <span class="dominio-chevron">▾</span>
+        </div>
+        <div class="dominio-body" id="dom1">
+          <div class="esquema-row" style="background:var(--bg2);padding:8px 20px">
+            <div style="width:220px;flex-shrink:0;font-size:10px;color:var(--ink3);font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">Esquema</div>
+            <div style="flex:1;font-size:10px;color:var(--ink3);font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">Núcleo clínico</div>
+            <div class="likert-labels">
+              <span class="likert-label">1</span><span class="likert-label">2</span><span class="likert-label">3</span><span class="likert-label">4</span><span class="likert-label">5</span><span class="likert-label">6</span>
+            </div>
+            <div style="width:36px"></div>
+          </div>
+          <!-- 5 schemas -->
+          <div class="esquema-row" data-esquema="abandono">
+            <div class="esquema-name">Abandono /<br>Instabilidade</div>
+            <div class="esquema-desc">Crença de que pessoas próximas são imprevisíveis, vão embora ou não estarão disponíveis</div>
+            <div class="likert" data-key="abandono">
+              <button class="likert-btn" onclick="setScore(this,'abandono',1)">1</button>
+              <button class="likert-btn" onclick="setScore(this,'abandono',2)">2</button>
+              <button class="likert-btn" onclick="setScore(this,'abandono',3)">3</button>
+              <button class="likert-btn" onclick="setScore(this,'abandono',4)">4</button>
+              <button class="likert-btn" onclick="setScore(this,'abandono',5)">5</button>
+              <button class="likert-btn" onclick="setScore(this,'abandono',6)">6</button>
+            </div>
+            <div class="esquema-score" id="score-abandono">—</div>
+          </div>
+          <div class="esquema-row" data-esquema="desconfianca_abuso">
+            <div class="esquema-name">Desconfiança /<br>Abuso</div>
+            <div class="esquema-desc">Expectativa de que os outros vão magoar, humilhar, enganar ou abusar</div>
+            <div class="likert" data-key="desconfianca_abuso">
+              <button class="likert-btn" onclick="setScore(this,'desconfianca_abuso',1)">1</button>
+              <button class="likert-btn" onclick="setScore(this,'desconfianca_abuso',2)">2</button>
+              <button class="likert-btn" onclick="setScore(this,'desconfianca_abuso',3)">3</button>
+              <button class="likert-btn" onclick="setScore(this,'desconfianca_abuso',4)">4</button>
+              <button class="likert-btn" onclick="setScore(this,'desconfianca_abuso',5)">5</button>
+              <button class="likert-btn" onclick="setScore(this,'desconfianca_abuso',6)">6</button>
+            </div>
+            <div class="esquema-score" id="score-desconfianca_abuso">—</div>
+          </div>
+          <div class="esquema-row" data-esquema="privacao_emocional">
+            <div class="esquema-name">Privação<br>Emocional</div>
+            <div class="esquema-desc">Crença de que suas necessidades emocionais não serão atendidas pelos outros</div>
+            <div class="likert" data-key="privacao_emocional">
+              <button class="likert-btn" onclick="setScore(this,'privacao_emocional',1)">1</button>
+              <button class="likert-btn" onclick="setScore(this,'privacao_emocional',2)">2</button>
+              <button class="likert-btn" onclick="setScore(this,'privacao_emocional',3)">3</button>
+              <button class="likert-btn" onclick="setScore(this,'privacao_emocional',4)">4</button>
+              <button class="likert-btn" onclick="setScore(this,'privacao_emocional',5)">5</button>
+              <button class="likert-btn" onclick="setScore(this,'privacao_emocional',6)">6</button>
+            </div>
+            <div class="esquema-score" id="score-privacao_emocional">—</div>
+          </div>
+          <div class="esquema-row" data-esquema="defectividade">
+            <div class="esquema-name">Defectividade /<br>Vergonha</div>
+            <div class="esquema-desc">Sentimento de ser fundamentalmente defeituoso, inferior, indesejável</div>
+            <div class="likert" data-key="defectividade">
+              <button class="likert-btn" onclick="setScore(this,'defectividade',1)">1</button>
+              <button class="likert-btn" onclick="setScore(this,'defectividade',2)">2</button>
+              <button class="likert-btn" onclick="setScore(this,'defectividade',3)">3</button>
+              <button class="likert-btn" onclick="setScore(this,'defectividade',4)">4</button>
+              <button class="likert-btn" onclick="setScore(this,'defectividade',5)">5</button>
+              <button class="likert-btn" onclick="setScore(this,'defectividade',6)">6</button>
+            </div>
+            <div class="esquema-score" id="score-defectividade">—</div>
+          </div>
+          <div class="esquema-row" data-esquema="isolamento_social">
+            <div class="esquema-name">Isolamento Social /<br>Alienação</div>
+            <div class="esquema-desc">Sensação de estar isolado, diferente dos outros, não pertencer a nenhum grupo</div>
+            <div class="likert" data-key="isolamento_social">
+              <button class="likert-btn" onclick="setScore(this,'isolamento_social',1)">1</button>
+              <button class="likert-btn" onclick="setScore(this,'isolamento_social',2)">2</button>
+              <button class="likert-btn" onclick="setScore(this,'isolamento_social',3)">3</button>
+              <button class="likert-btn" onclick="setScore(this,'isolamento_social',4)">4</button>
+              <button class="likert-btn" onclick="setScore(this,'isolamento_social',5)">5</button>
+              <button class="likert-btn" onclick="setScore(this,'isolamento_social',6)">6</button>
+            </div>
+            <div class="esquema-score" id="score-isolamento_social">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DOMÍNIO 2 -->
+      <div class="dominio-card">
+        <div class="dominio-header" onclick="toggleDominio(this)">
+          <div class="dominio-dot" style="background:var(--amber)"></div>
+          <div class="dominio-name">Autonomia e Desempenho Prejudicados</div>
+          <span class="dominio-count">4 esquemas</span>
+          <span class="dominio-chevron">▾</span>
+        </div>
+        <div class="dominio-body" id="dom2">
+          <div class="esquema-row" data-esquema="dependencia">
+            <div class="esquema-name">Dependência /<br>Incompetência</div>
+            <div class="esquema-desc">Crença de ser incapaz de funcionar de forma independente sem ajuda dos outros</div>
+            <div class="likert">
+              <button class="likert-btn" onclick="setScore(this,'dependencia',1)">1</button>
+              <button class="likert-btn" onclick="setScore(this,'dependencia',2)">2</button>
+              <button class="likert-btn" onclick="setScore(this,'dependencia',3)">3</button>
+              <button class="likert-btn" onclick="setScore(this,'dependencia',4)">4</button>
+              <button class="likert-btn" onclick="setScore(this,'dependencia',5)">5</button>
+              <button class="likert-btn" onclick="setScore(this,'dependencia',6)">6</button>
+            </div>
+            <div class="esquema-score" id="score-dependencia">—</div>
+          </div>
+          <div class="esquema-row" data-esquema="vulnerabilidade_dano">
+            <div class="esquema-name">Vulnerabilidade<br>ao Dano</div>
+            <div class="esquema-desc">Medo exagerado de catástrofes iminentes — médicas, emocionais, externas</div>
+            <div class="likert">
+              <button class="likert-btn" onclick="setScore(this,'vulnerabilidade_dano',1)">1</button>
+              <button class="likert-btn" onclick="setScore(this,'vulnerabilidade_dano',2)">2</button>
+              <button class="likert-btn" onclick="setScore(this,'vulnerabilidade_dano',3)">3</button>
+              <button class="likert-btn" onclick="setScore(this,'vulnerabilidade_dano',4)">4</button>
+              <button class="likert-btn" onclick="setScore(this,'vulnerabilidade_dano',5)">5</button>
+              <button class="likert-btn" onclick="setScore(this,'vulnerabilidade_dano',6)">6</button>
+            </div>
+            <div class="esquema-score" id="score-vulnerabilidade_dano">—</div>
+          </div>
+          <div class="esquema-row" data-esquema="emaranhamento">
+            <div class="esquema-name">Emaranhamento /<br>Self Subdesenv.</div>
+            <div class="esquema-desc">Fusão excessiva com outra pessoa — dificuldade de identidade separada</div>
+            <div class="likert">
+              <button class="likert-btn" onclick="setScore(this,'emaranhamento',1)">1</button>
+              <button class="likert-btn" onclick="setScore(this,'emaranhamento',2)">2</button>
+              <button class="likert-btn" onclick="setScore(this,'emaranhamento',3)">3</button>
+              <button class="likert-btn" onclick="setScore(this,'emaranhamento',4)">4</button>
+              <button class="likert-btn" onclick="setScore(this,'emaranhamento',5)">5</button>
+              <button class="likert-btn" onclick="setScore(this,'emaranhamento',6)">6</button>
+            </div>
+            <div class="esquema-score" id="score-emaranhamento">—</div>
+          </div>
+          <div class="esquema-row" data-esquema="fracasso">
+            <div class="esquema-name">Fracasso</div>
+            <div class="esquema-desc">Crença de que inevitavelmente falhará em áreas de desempenho comparado aos outros</div>
+            <div class="likert">
+              <button class="likert-btn" onclick="setScore(this,'fracasso',1)">1</button>
+              <button class="likert-btn" onclick="setScore(this,'fracasso',2)">2</button>
+              <button class="likert-btn" onclick="setScore(this,'fracasso',3)">3</button>
+              <button class="likert-btn" onclick="setScore(this,'fracasso',4)">4</button>
+              <button class="likert-btn" onclick="setScore(this,'fracasso',5)">5</button>
+              <button class="likert-btn" onclick="setScore(this,'fracasso',6)">6</button>
+            </div>
+            <div class="esquema-score" id="score-fracasso">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DOMÍNIO 3 -->
+      <div class="dominio-card">
+        <div class="dominio-header" onclick="toggleDominio(this)">
+          <div class="dominio-dot" style="background:var(--teal)"></div>
+          <div class="dominio-name">Limites Prejudicados</div>
+          <span class="dominio-count">2 esquemas</span>
+          <span class="dominio-chevron">▾</span>
+        </div>
+        <div class="dominio-body" id="dom3">
+          <div class="esquema-row" data-esquema="arrogo">
+            <div class="esquema-name">Arrogo /<br>Grandiosidade</div>
+            <div class="esquema-desc">Crença de ser superior, ter direitos especiais, sem limites baseados em reciprocidade</div>
+            <div class="likert">
+              <button class="likert-btn" onclick="setScore(this,'arrogo',1)">1</button>
+              <button class="likert-btn" onclick="setScore(this,'arrogo',2)">2</button>
+              <button class="likert-btn" onclick="setScore(this,'arrogo',3)">3</button>
+              <button class="likert-btn" onclick="setScore(this,'arrogo',4)">4</button>
+              <button class="likert-btn" onclick="setScore(this,'arrogo',5)">5</button>
+              <button class="likert-btn" onclick="setScore(this,'arrogo',6)">6</button>
+            </div>
+            <div class="esquema-score" id="score-arrogo">—</div>
+          </div>
+          <div class="esquema-row" data-esquema="autocontrole_insuf">
+            <div class="esquema-name">Autocontrole<br>Insuficiente</div>
+            <div class="esquema-desc">Dificuldade de tolerar frustração e controlar impulsos e emoções</div>
+            <div class="likert">
+              <button class="likert-btn" onclick="setScore(this,'autocontrole_insuf',1)">1</button>
+              <button class="likert-btn" onclick="setScore(this,'autocontrole_insuf',2)">2</button>
+              <button class="likert-btn" onclick="setScore(this,'autocontrole_insuf',3)">3</button>
+              <button class="likert-btn" onclick="setScore(this,'autocontrole_insuf',4)">4</button>
+              <button class="likert-btn" onclick="setScore(this,'autocontrole_insuf',5)">5</button>
+              <button class="likert-btn" onclick="setScore(this,'autocontrole_insuf',6)">6</button>
+            </div>
+            <div class="esquema-score" id="score-autocontrole_insuf">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DOMÍNIO 4 -->
+      <div class="dominio-card">
+        <div class="dominio-header" onclick="toggleDominio(this)">
+          <div class="dominio-dot" style="background:var(--lilac)"></div>
+          <div class="dominio-name">Orientação para o Outro</div>
+          <span class="dominio-count">3 esquemas</span>
+          <span class="dominio-chevron">▾</span>
+        </div>
+        <div class="dominio-body" id="dom4">
+          <div class="esquema-row" data-esquema="subjugacao">
+            <div class="esquema-name">Subjugação</div>
+            <div class="esquema-desc">Ceder o controle para os outros por medo de consequências — raiva suprimida</div>
+            <div class="likert">
+              <button class="likert-btn" onclick="setScore(this,'subjugacao',1)">1</button>
+              <button class="likert-btn" onclick="setScore(this,'subjugacao',2)">2</button>
+              <button class="likert-btn" onclick="setScore(this,'subjugacao',3)">3</button>
+              <button class="likert-btn" onclick="setScore(this,'subjugacao',4)">4</button>
+              <button class="likert-btn" onclick="setScore(this,'subjugacao',5)">5</button>
+              <button class="likert-btn" onclick="setScore(this,'subjugacao',6)">6</button>
+            </div>
+            <div class="esquema-score" id="score-subjugacao">—</div>
+          </div>
+          <div class="esquema-row" data-esquema="autossacrificio">
+            <div class="esquema-name">Autossacrifício</div>
+            <div class="esquema-desc">Foco excessivo nas necessidades dos outros em detrimento das próprias — culpa ao priorizar a si</div>
+            <div class="likert">
+              <button class="likert-btn" onclick="setScore(this,'autossacrificio',1)">1</button>
+              <button class="likert-btn" onclick="setScore(this,'autossacrificio',2)">2</button>
+              <button class="likert-btn" onclick="setScore(this,'autossacrificio',3)">3</button>
+              <button class="likert-btn" onclick="setScore(this,'autossacrificio',4)">4</button>
+              <button class="likert-btn" onclick="setScore(this,'autossacrificio',5)">5</button>
+              <button class="likert-btn" onclick="setScore(this,'autossacrificio',6)">6</button>
+            </div>
+            <div class="esquema-score" id="score-autossacrificio">—</div>
+          </div>
+          <div class="esquema-row" data-esquema="busca_aprovacao">
+            <div class="esquema-name">Busca de<br>Aprovação</div>
+            <div class="esquema-desc">Ênfase excessiva em obter aprovação e reconhecimento — auto-estima dependente da reação dos outros</div>
+            <div class="likert">
+              <button class="likert-btn" onclick="setScore(this,'busca_aprovacao',1)">1</button>
+              <button class="likert-btn" onclick="setScore(this,'busca_aprovacao',2)">2</button>
+              <button class="likert-btn" onclick="setScore(this,'busca_aprovacao',3)">3</button>
+              <button class="likert-btn" onclick="setScore(this,'busca_aprovacao',4)">4</button>
+              <button class="likert-btn" onclick="setScore(this,'busca_aprovacao',5)">5</button>
+              <button class="likert-btn" onclick="setScore(this,'busca_aprovacao',6)">6</button>
+            </div>
+            <div class="esquema-score" id="score-busca_aprovacao">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DOMÍNIO 5 -->
+      <div class="dominio-card">
+        <div class="dominio-header" onclick="toggleDominio(this)">
+          <div class="dominio-dot" style="background:var(--brown2)"></div>
+          <div class="dominio-name">Supervigilância e Inibição</div>
+          <span class="dominio-count">4 esquemas</span>
+          <span class="dominio-chevron">▾</span>
+        </div>
+        <div class="dominio-body" id="dom5">
+          <div class="esquema-row" data-esquema="negativismo">
+            <div class="esquema-name">Negativismo /<br>Pessimismo</div>
+            <div class="esquema-desc">Foco persistente nos aspectos negativos — subestimação dos positivos</div>
+            <div class="likert">
+              <button class="likert-btn" onclick="setScore(this,'negativismo',1)">1</button>
+              <button class="likert-btn" onclick="setScore(this,'negativismo',2)">2</button>
+              <button class="likert-btn" onclick="setScore(this,'negativismo',3)">3</button>
+              <button class="likert-btn" onclick="setScore(this,'negativismo',4)">4</button>
+              <button class="likert-btn" onclick="setScore(this,'negativismo',5)">5</button>
+              <button class="likert-btn" onclick="setScore(this,'negativismo',6)">6</button>
+            </div>
+            <div class="esquema-score" id="score-negativismo">—</div>
+          </div>
+          <div class="esquema-row" data-esquema="inibicao_emocional">
+            <div class="esquema-name">Inibição<br>Emocional</div>
+            <div class="esquema-desc">Supressão excessiva de emoções e impulsos espontâneos — especialmente raiva e alegria</div>
+            <div class="likert">
+              <button class="likert-btn" onclick="setScore(this,'inibicao_emocional',1)">1</button>
+              <button class="likert-btn" onclick="setScore(this,'inibicao_emocional',2)">2</button>
+              <button class="likert-btn" onclick="setScore(this,'inibicao_emocional',3)">3</button>
+              <button class="likert-btn" onclick="setScore(this,'inibicao_emocional',4)">4</button>
+              <button class="likert-btn" onclick="setScore(this,'inibicao_emocional',5)">5</button>
+              <button class="likert-btn" onclick="setScore(this,'inibicao_emocional',6)">6</button>
+            </div>
+            <div class="esquema-score" id="score-inibicao_emocional">—</div>
+          </div>
+          <div class="esquema-row" data-esquema="padroes_inflexiveis">
+            <div class="esquema-name">Padrões<br>Inflexíveis</div>
+            <div class="esquema-desc">Crença de que deve atingir padrões muito elevados — autocrítica intensa por falhas</div>
+            <div class="likert">
+              <button class="likert-btn" onclick="setScore(this,'padroes_inflexiveis',1)">1</button>
+              <button class="likert-btn" onclick="setScore(this,'padroes_inflexiveis',2)">2</button>
+              <button class="likert-btn" onclick="setScore(this,'padroes_inflexiveis',3)">3</button>
+              <button class="likert-btn" onclick="setScore(this,'padroes_inflexiveis',4)">4</button>
+              <button class="likert-btn" onclick="setScore(this,'padroes_inflexiveis',5)">5</button>
+              <button class="likert-btn" onclick="setScore(this,'padroes_inflexiveis',6)">6</button>
+            </div>
+            <div class="esquema-score" id="score-padroes_inflexiveis">—</div>
+          </div>
+          <div class="esquema-row" data-esquema="postura_punitiva">
+            <div class="esquema-name">Postura<br>Punitiva</div>
+            <div class="esquema-desc">Crença de que erros merecem punição severa — dificuldade de perdoar a si e aos outros</div>
+            <div class="likert">
+              <button class="likert-btn" onclick="setScore(this,'postura_punitiva',1)">1</button>
+              <button class="likert-btn" onclick="setScore(this,'postura_punitiva',2)">2</button>
+              <button class="likert-btn" onclick="setScore(this,'postura_punitiva',3)">3</button>
+              <button class="likert-btn" onclick="setScore(this,'postura_punitiva',4)">4</button>
+              <button class="likert-btn" onclick="setScore(this,'postura_punitiva',5)">5</button>
+              <button class="likert-btn" onclick="setScore(this,'postura_punitiva',6)">6</button>
+            </div>
+            <div class="esquema-score" id="score-postura_punitiva">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;margin-top:8px">
+        <button class="btn btn-primary" onclick="showTab('smi',document.querySelectorAll('.tab')[1])">Continuar para SMI →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SMI ═══════════════ -->
+  <div id="tab-smi" class="screen">
+    <div class="content">
+      <div class="section-head">
+        <div class="section-title">Mapa de Modos — Terapia do Esquema</div>
+        <div class="section-sub">Avalie a frequência de ativação dos seus modos esquemáticos. Use 1 para ausente ou raro e 6 para muito frequente. Este mapa organiza modos Criança, enfrentamentos disfuncionais, modos pais internalizados e Adulto Saudável.</div>
+      </div>
+
+      <div class="progress-header">
+        <span class="progress-label">Progresso: <span id="smiProgress">0</span>/14 modos mapeados</span>
+        <span class="progress-label" id="smiPct">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="smiProgressBar" style="width:0%"></div></div>
+
+      <!-- MODOS CRIANÇA -->
+      <div class="modo-section">
+        <div class="modo-section-title" style="background:var(--surface);padding:10px 20px;border:1px solid var(--border);border-radius:var(--radius-lg) var(--radius-lg) 0 0;font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;font-weight:500;color:var(--ink);text-transform:none;letter-spacing:0">
+          Modos Criança <span style="font-size:11px;color:var(--ink3);font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:400;margin-left:8px">6 modos</span>
+        </div>
+        <div id="smiModosCrianca">
+          <div class="modo-row">
+            <div class="modo-badge" style="background:var(--coral3);color:var(--coral)">Criança</div>
+            <div class="modo-name">Vulnerável</div>
+            <div class="modo-desc">Medo, abandono, tristeza, desamparo — necessidades não atendidas</div>
+            <div class="likert">
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_vulneravel',1)">1</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_vulneravel',2)">2</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_vulneravel',3)">3</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_vulneravel',4)">4</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_vulneravel',5)">5</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_vulneravel',6)">6</button>
+            </div>
+            <div class="esquema-score" id="smi-crianca_vulneravel">—</div>
+          </div>
+          <div class="modo-row">
+            <div class="modo-badge" style="background:var(--coral3);color:var(--coral)">Criança</div>
+            <div class="modo-name">Zangada</div>
+            <div class="modo-desc">Percepção de injustiça por necessidades não atendidas — irritação, impaciência</div>
+            <div class="likert">
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_zangada',1)">1</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_zangada',2)">2</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_zangada',3)">3</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_zangada',4)">4</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_zangada',5)">5</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_zangada',6)">6</button>
+            </div>
+            <div class="esquema-score" id="smi-crianca_zangada">—</div>
+          </div>
+          <div class="modo-row">
+            <div class="modo-badge" style="background:var(--coral3);color:var(--coral)">Criança</div>
+            <div class="modo-name">Raivosa</div>
+            <div class="modo-desc">Indignação, fúria, perda de controle sobre emoções e impulsos</div>
+            <div class="likert">
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_raivosa',1)">1</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_raivosa',2)">2</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_raivosa',3)">3</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_raivosa',4)">4</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_raivosa',5)">5</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_raivosa',6)">6</button>
+            </div>
+            <div class="esquema-score" id="smi-crianca_raivosa">—</div>
+          </div>
+          <div class="modo-row">
+            <div class="modo-badge" style="background:var(--coral3);color:var(--coral)">Criança</div>
+            <div class="modo-name">Impulsiva</div>
+            <div class="modo-desc">Busca imediata de prazer, baixa tolerância à frustração</div>
+            <div class="likert">
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_impulsiva',1)">1</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_impulsiva',2)">2</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_impulsiva',3)">3</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_impulsiva',4)">4</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_impulsiva',5)">5</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_impulsiva',6)">6</button>
+            </div>
+            <div class="esquema-score" id="smi-crianca_impulsiva">—</div>
+          </div>
+          <div class="modo-row">
+            <div class="modo-badge" style="background:var(--coral3);color:var(--coral)">Criança</div>
+            <div class="modo-name">Indisciplinada</div>
+            <div class="modo-desc">Procrastinação, dificuldade de persistência e organização</div>
+            <div class="likert">
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_indisciplinada',1)">1</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_indisciplinada',2)">2</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_indisciplinada',3)">3</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_indisciplinada',4)">4</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_indisciplinada',5)">5</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_indisciplinada',6)">6</button>
+            </div>
+            <div class="esquema-score" id="smi-crianca_indisciplinada">—</div>
+          </div>
+          <div class="modo-row" style="border-radius:0 0 0 0">
+            <div class="modo-badge" style="background:var(--green3);color:var(--green)">Adaptativo</div>
+            <div class="modo-name">Feliz</div>
+            <div class="modo-desc">Leveza, espontaneidade, necessidades atendidas — modo adaptativo</div>
+            <div class="likert">
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_feliz',1)">1</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_feliz',2)">2</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_feliz',3)">3</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_feliz',4)">4</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_feliz',5)">5</button>
+              <button class="likert-btn" onclick="setSmiScore(this,'crianca_feliz',6)">6</button>
+            </div>
+            <div class="esquema-score" id="smi-crianca_feliz">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODOS ENFRENTAMENTO -->
+      <div class="modo-section">
+        <div class="modo-section-title" style="background:var(--surface);padding:10px 20px;border:1px solid var(--border);border-top:none;font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;font-weight:500;color:var(--ink);text-transform:none;letter-spacing:0">
+          Modos de Enfrentamento Disfuncional <span style="font-size:11px;color:var(--ink3);font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:400;margin-left:8px">3 modos</span>
+        </div>
+        <div class="modo-row">
+          <div class="modo-badge" style="background:var(--amber3);color:var(--amber)">Enfrentamento</div>
+          <div class="modo-name">Capitulador<br>Complacente</div>
+          <div class="modo-desc">Submissão, passividade, dificuldade de defender limites próprios</div>
+          <div class="likert">
+            <button class="likert-btn" onclick="setSmiScore(this,'capitulador_complacente',1)">1</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'capitulador_complacente',2)">2</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'capitulador_complacente',3)">3</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'capitulador_complacente',4)">4</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'capitulador_complacente',5)">5</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'capitulador_complacente',6)">6</button>
+          </div>
+          <div class="esquema-score" id="smi-capitulador_complacente">—</div>
+        </div>
+        <div class="modo-row">
+          <div class="modo-badge" style="background:var(--amber3);color:var(--amber)">Enfrentamento</div>
+          <div class="modo-name">Protetor<br>Desligado</div>
+          <div class="modo-desc">Desligamento emocional, evitação, entorpecimento afetivo</div>
+          <div class="likert">
+            <button class="likert-btn" onclick="setSmiScore(this,'protetor_desligado',1)">1</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'protetor_desligado',2)">2</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'protetor_desligado',3)">3</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'protetor_desligado',4)">4</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'protetor_desligado',5)">5</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'protetor_desligado',6)">6</button>
+          </div>
+          <div class="esquema-score" id="smi-protetor_desligado">—</div>
+        </div>
+        <div class="modo-row">
+          <div class="modo-badge" style="background:var(--amber3);color:var(--amber)">Enfrentamento</div>
+          <div class="modo-name">Autoconfortador<br>Desligado</div>
+          <div class="modo-desc">Comportamentos autoapaziguadores para reduzir emoções intensas</div>
+          <div class="likert">
+            <button class="likert-btn" onclick="setSmiScore(this,'autoconfortador_desligado',1)">1</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'autoconfortador_desligado',2)">2</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'autoconfortador_desligado',3)">3</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'autoconfortador_desligado',4)">4</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'autoconfortador_desligado',5)">5</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'autoconfortador_desligado',6)">6</button>
+          </div>
+          <div class="esquema-score" id="smi-autoconfortador_desligado">—</div>
+        </div>
+      </div>
+
+      <!-- HIPERCOMPENSADORES -->
+      <div class="modo-section">
+        <div class="modo-section-title" style="background:var(--surface);padding:10px 20px;border:1px solid var(--border);border-top:none;font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;font-weight:500;color:var(--ink);text-transform:none;letter-spacing:0">
+          Modos Hipercompensadores <span style="font-size:11px;color:var(--ink3);font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:400;margin-left:8px">2 modos</span>
+        </div>
+        <div class="modo-row">
+          <div class="modo-badge" style="background:var(--lilac4);color:var(--lilac)">Hipercomp.</div>
+          <div class="modo-name">Autoengrandecedor</div>
+          <div class="modo-desc">Grandiosidade, competitividade, crença em direitos diferenciados</div>
+          <div class="likert">
+            <button class="likert-btn" onclick="setSmiScore(this,'autoengrandecedor',1)">1</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'autoengrandecedor',2)">2</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'autoengrandecedor',3)">3</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'autoengrandecedor',4)">4</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'autoengrandecedor',5)">5</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'autoengrandecedor',6)">6</button>
+          </div>
+          <div class="esquema-score" id="smi-autoengrandecedor">—</div>
+        </div>
+        <div class="modo-row">
+          <div class="modo-badge" style="background:var(--lilac4);color:var(--lilac)">Hipercomp.</div>
+          <div class="modo-name">Intimidação<br>e Ataque</div>
+          <div class="modo-desc">Dominação, intimidação para manter controle e evitar humilhação</div>
+          <div class="likert">
+            <button class="likert-btn" onclick="setSmiScore(this,'intimidacao_ataque',1)">1</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'intimidacao_ataque',2)">2</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'intimidacao_ataque',3)">3</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'intimidacao_ataque',4)">4</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'intimidacao_ataque',5)">5</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'intimidacao_ataque',6)">6</button>
+          </div>
+          <div class="esquema-score" id="smi-intimidacao_ataque">—</div>
+        </div>
+      </div>
+
+      <!-- PAIS INTERNALIZADOS -->
+      <div class="modo-section">
+        <div class="modo-section-title" style="background:var(--surface);padding:10px 20px;border:1px solid var(--border);border-top:none;font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;font-weight:500;color:var(--ink);text-transform:none;letter-spacing:0">
+          Modos Pais Internalizados <span style="font-size:11px;color:var(--ink3);font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:400;margin-left:8px">2 modos</span>
+        </div>
+        <div class="modo-row">
+          <div class="modo-badge" style="background:var(--coral3);color:var(--coral)">Pais</div>
+          <div class="modo-name">Pai/Mãe<br>Punitivo(a)</div>
+          <div class="modo-desc">Vozes internalizadas implacáveis, críticas, depreciativas</div>
+          <div class="likert">
+            <button class="likert-btn" onclick="setSmiScore(this,'pai_punitivo',1)">1</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'pai_punitivo',2)">2</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'pai_punitivo',3)">3</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'pai_punitivo',4)">4</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'pai_punitivo',5)">5</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'pai_punitivo',6)">6</button>
+          </div>
+          <div class="esquema-score" id="smi-pai_punitivo">—</div>
+        </div>
+        <div class="modo-row">
+          <div class="modo-badge" style="background:var(--coral3);color:var(--coral)">Pais</div>
+          <div class="modo-name">Pai/Mãe<br>Exigente</div>
+          <div class="modo-desc">Padrões rígidos internalizados — hipervigilância focada em eficiência e erros</div>
+          <div class="likert">
+            <button class="likert-btn" onclick="setSmiScore(this,'pai_exigente',1)">1</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'pai_exigente',2)">2</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'pai_exigente',3)">3</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'pai_exigente',4)">4</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'pai_exigente',5)">5</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'pai_exigente',6)">6</button>
+          </div>
+          <div class="esquema-score" id="smi-pai_exigente">—</div>
+        </div>
+      </div>
+
+      <!-- ADULTO SAUDÁVEL -->
+      <div class="modo-section">
+        <div class="modo-section-title" style="background:var(--surface);padding:10px 20px;border:1px solid var(--border);border-top:none;font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;font-weight:500;color:var(--ink);text-transform:none;letter-spacing:0">
+          Modo Adulto Saudável
+        </div>
+        <div class="modo-row" style="border-radius:0 0 var(--radius-lg) var(--radius-lg)">
+          <div class="modo-badge" style="background:var(--green3);color:var(--green)">Adaptativo</div>
+          <div class="modo-name">Adulto Saudável</div>
+          <div class="modo-desc">Integração equilibrada das demandas internas e externas com compaixão — modo de referência terapêutico</div>
+          <div class="likert">
+            <button class="likert-btn" onclick="setSmiScore(this,'adulto_saudavel',1)">1</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'adulto_saudavel',2)">2</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'adulto_saudavel',3)">3</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'adulto_saudavel',4)">4</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'adulto_saudavel',5)">5</button>
+            <button class="likert-btn" onclick="setSmiScore(this,'adulto_saudavel',6)">6</button>
+          </div>
+          <div class="esquema-score" id="smi-adulto_saudavel">—</div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;margin-top:8px">
+        <button class="btn btn-ghost" onclick="showTab('ysq',document.querySelectorAll('.tab')[0])">← Voltar ao YSQ</button>
+        <button class="btn btn-primary" id="btnGerarPerfil" onclick="gerarPerfil()">Gerar meu perfil →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ RESULTADO ═══════════════ -->
+  <div id="tab-resultado" class="screen">
+    <div class="content">
+      <div class="section-head">
+        <div class="section-title">Meu Perfil Clínico</div>
+        <div class="section-sub">Hipóteses de autoconhecimento para manejo da ressonância terapêutica — não um diagnóstico. Preenchido em <span id="dataPreenchimento">—</span></div>
+      </div>
+
+      <div id="emptyResultado" class="empty-state">
+        <div class="empty-icon">◎</div>
+        <div class="empty-title">Perfil ainda não gerado</div>
+        <div class="empty-sub">Preencha o YSQ-S3 e o SMI para visualizar seu perfil clínico e ativar a Ressonância Terapêutica com seus pacientes.</div>
+        <button class="btn btn-primary" onclick="showTab('ysq',document.querySelectorAll('.tab')[0])">Começar agora</button>
+      </div>
+
+      <div id="resultadoConteudo" style="display:none">
+        <div class="resultado-grid">
+          <!-- YSQ por domínio -->
+          <div class="resultado-card">
+            <div class="resultado-card-head">
+              <span class="resultado-card-title">Esquemas — YSQ-S3</span>
+              <span style="font-size:11px;color:var(--ink3)">por domínio</span>
+            </div>
+            <div class="resultado-body" id="ysqResultadoBody"></div>
+          </div>
+          <!-- SMI por categoria -->
+          <div class="resultado-card">
+            <div class="resultado-card-head">
+              <span class="resultado-card-title">Mapa de Modos</span>
+              <span style="font-size:11px;color:var(--ink3)">por domínio</span>
+            </div>
+            <div class="resultado-body" id="smiResultadoBody"></div>
+          </div>
+        </div>
+
+        <!-- Esquemas elevados -->
+        <div class="resultado-card" style="margin-bottom:20px">
+          <div class="resultado-card-head">
+            <span class="resultado-card-title">Esquemas com score ≥ 4.0</span>
+            <span style="font-size:11px;color:var(--ink3)">zona de atenção clínica</span>
+          </div>
+          <div class="resultado-body" id="esquemaElevadoBody">
+            <div style="font-size:13px;color:var(--ink3);font-style:italic">Nenhum esquema elevado identificado.</div>
+          </div>
+        </div>
+
+        <div style="text-align:center;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg)">
+          <div style="font-family:'Instrument Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:16px;color:var(--ink);margin-bottom:6px">Perfil salvo. Ressonância Terapêutica ativa.</div>
+          <div style="font-size:12px;color:var(--ink3);margin-bottom:16px">A partir de agora, quando seus pacientes responderem ao YSQ ou SMI, o sistema poderá indicar possíveis zonas de ressonância terapêutica para orientar sua observação clínica.</div>
+          <button class="btn btn-primary" onclick="showTab('alertas',document.querySelectorAll('.tab')[3])">Ver Ressonância Clínica →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ RESSONÂNCIA CLÍNICA ═══════════════ -->
+  <div id="tab-alertas" class="screen">
+    <div class="content">
+<div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:24px;flex-wrap:wrap">
+      <div>
+        <h1 class="hero-title">Zonas de Ressonância Clínica</h1>
+        <p class="hero-sub">Cruzamento prudente entre seu mapa de esquemas/modos e os dados do paciente para apoiar autoconsciência clínica, diferenciação emocional e manejo terapêutico.</p>
+      </div>
+      <a class="action-btn" href="painel-perfil-clinico.html">Abrir meu Mapa de Ativação</a>
+    </div>
+
+    <section class="res-grid">
+      <div class="person-card">
+        <div class="card-kicker">Terapeuta</div>
+        <div class="person-head"><div class="circle-avatar" id="psiAvatar">M</div><div><div class="person-name" id="psiName">Michelle</div><div class="person-role">Panorama dos seus padrões atuais</div></div></div>
+        <div class="stat-label">Maior ativação atual</div>
+        <div class="pill-row"><span class="soft-pill amber">Padrões Inflexíveis</span><span class="soft-pill amber">Autossacrifício</span><span class="soft-pill">Busca de Aprovação</span></div>
+        <div style="margin-top:18px;font-size:12px;color:var(--ink2)">● Adulto Saudável: parcialmente ativo</div>
+      </div>
+      <div class="mid-link">
+        <div class="link-orb"></div>
+        <div style="font-family:'Syne';font-size:18px;text-align:center;color:var(--ink);line-height:1.2">Análise de<br>Ressonância Clínica</div>
+        <div class="sync-badge">● Hipótese reflexiva</div>
+      </div>
+      <div class="person-card">
+        <div class="card-kicker">Paciente</div>
+        <div class="person-head"><div class="circle-avatar" id="pacAvatar">P</div><div><div class="person-name" id="pacName">Paciente</div><div class="person-role">Resumo dos dados mais relevantes</div></div></div>
+        <div class="grid-1-1" style="margin:0;gap:8px">
+          <div class="pstat" style="text-align:left"><div class="stat-label">YSQ</div><div style="font-size:13px;color:var(--ink)">Abandono / Instabilidade</div><span class="level-badge level-moderada" style="margin-top:6px">Elevado</span></div>
+          <div class="pstat" style="text-align:left"><div class="stat-label">GAD-7</div><div class="pstat-val" id="gadVal">—</div><div class="pstat-label" id="gadLevel">sem dados</div></div>
+        </div>
+        <div class="pill-row" style="margin-top:12px"><span class="soft-pill">Modo predominante: Criança Vulnerável</span><span class="soft-pill green">Vulnerabilidade + Ansiedade</span></div>
+      </div>
+    </section>
+
+    <section class="zone-layout">
+      <div class="card">
+        <div class="card-header"><div><div class="card-title">Possíveis Zonas de Ressonância</div><div style="font-size:12px;color:var(--ink3);margin-top:4px">Áreas em que seus padrões podem ressoar com os temas do paciente.</div></div></div>
+        <div class="card-body">
+          <div class="zone-item"><div><div class="zone-title">Hiperresponsabilização</div><div class="zone-desc">Tendência a assumir responsabilidade excessiva pelo bem-estar do paciente.</div></div><div class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></div></div>
+          <div class="zone-item"><div><div class="zone-title">Necessidade de aprovação</div><div class="zone-desc">Busca por reconhecimento ou validação através do cuidado ao paciente.</div></div><div class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span><span class="dot"></span></div></div>
+          <div class="zone-item"><div><div class="zone-title">Medo de rejeição</div><div class="zone-desc">Sensibilidade aumentada a sinais de desaprovação ou distanciamento.</div></div><div class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span><span class="dot"></span></div></div>
+          <div class="zone-item"><div><div class="zone-title">Tendência ao resgate</div><div class="zone-desc">Impulso de solucionar ou aliviar sofrimento rapidamente, antes da formulação completa.</div></div><div class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></div></div>
+          <div class="radar-wrap"><canvas id="radar" width="420" height="240"></canvas></div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Recursos Preservados</div></div>
+          <div class="card-body">
+            <div class="resource-card"><div class="resource-ico">✓</div><div><div class="resource-title">Adulto Saudável parcialmente ativo</div><div class="resource-desc">Capacidade de reflexão e autorregulação preservada.</div></div></div>
+            <div class="resource-card"><div class="resource-ico">◌</div><div><div class="resource-title">Boa capacidade reflexiva</div><div class="resource-desc">Consciência dos próprios processos emocionais.</div></div></div>
+            <div class="resource-card"><div class="resource-ico">↔</div><div><div class="resource-title">Empatia funcional</div><div class="resource-desc">Conexão emocional sem perda total de diferenciação.</div></div></div>
+            <div class="resource-card"><div class="resource-ico">＋</div><div><div class="resource-title">Flexibilidade terapêutica</div><div class="resource-desc">Abertura para novas perspectivas e intervenções.</div></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Lembre-se</div></div>
+          <div class="card-body" style="font-size:13px;color:var(--ink2);line-height:1.8">Ressonância não significa incapacidade. Consciência clínica gera liberdade, escolha e manejo mais alinhado.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-header"><div class="card-title">Sugestões Reflexivas</div></div>
+      <div class="card-body"><div class="reflection-row"><div class="reflection">Observar impulsos de resgate.</div><div class="reflection">Monitorar necessidade de aprovação.</div><div class="reflection">Fortalecer limites terapêuticos.</div><div class="reflection">Manter diferenciação entre histórias.</div><div class="reflection">Utilizar supervisão como apoio.</div></div></div>
+    </section>
+
+    <div class="ethic-box"><strong>Aviso ético:</strong> as interpretações representam hipóteses reflexivas de apoio à autoconsciência clínica e não devem ser interpretadas como avaliação psicológica da terapeuta. Recomenda-se integração com supervisão clínica, experiência profissional e contexto terapêutico.</div>
+    </div>
+  </div>
+
+<script>
+// ── ESTADO ──────────────────────────────────────────────
+const SB_URL = 'https://qpwjxacdjzzsyjbuuwsq.supabase.co';
+const SB_KEY = 'sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
+let SB_SESSION_TOKEN = sessionStorage.getItem('sb_session_token') || '';
+
+let ysqScores = {};
+let smiScores = {};
+let totalYsq  = 0;
+let totalSmi  = 0;
+
+const YSQ_TOTAL = 18;
+const SMI_TOTAL = 14;
+
+async function tryLogin() {
+  const email = document.getElementById('lockEmail');
+  const password = document.getElementById('lockPassword');
+  const error = document.getElementById('lockError');
+  error.style.display = 'none';
+
+  try {
+    const res = await fetch(`${SB_URL}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: {
+        apikey: SB_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email.value.trim(),
+        password: password.value
+      })
+    });
+    const data = await res.json();
+    if (!res.ok || !data.access_token) throw new Error('login');
+
+    SB_SESSION_TOKEN = data.access_token;
+    sessionStorage.setItem('sb_session_token', data.access_token);
+    document.getElementById('lockScreen').style.display = 'none';
+  } catch (e) {
+    error.style.display = 'block';
+  }
+}
+
+async function restoreAuth() {
+  // Use session token shared from painel-tcc.html
+  const stored = sessionStorage.getItem('sb_session_token');
+  if (stored) { SB_SESSION_TOKEN = stored; }
+  if (!SB_SESSION_TOKEN) return;
+  try {
+    const res = await fetch(`${SB_URL}/auth/v1/user`, {
+      headers: {
+        apikey: SB_KEY,
+        Authorization: 'Bearer ' + SB_SESSION_TOKEN
+      }
+    });
+    if (!res.ok) throw new Error('expired');
+    document.getElementById('lockScreen').style.display = 'none';
+  } catch (e) {
+    SB_SESSION_TOKEN = '';
+    sessionStorage.removeItem('sb_session_token');
+  }
+}
+
+document.getElementById('lockEmail').addEventListener('keydown', e => {
+  if (e.key === 'Enter') tryLogin();
+});
+document.getElementById('lockPassword').addEventListener('keydown', e => {
+  if (e.key === 'Enter') tryLogin();
+});
+restoreAuth();
+
+// ── TABS ────────────────────────────────────────────────
+function showTab(id, el) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  if (el) el.classList.add('active');
+}
+
+// ── DOMÍNIO COLLAPSE ────────────────────────────────────
+function toggleDominio(header) {
+  const body = header.nextElementSibling;
+  const ch   = header.querySelector('.dominio-chevron');
+  const collapsed = body.classList.toggle('collapsed');
+  ch.textContent = collapsed ? '▸' : '▾';
+}
+
+// ── YSQ SCORING ─────────────────────────────────────────
+function setScore(btn, key, val) {
+  const wasEmpty = ysqScores[key] === undefined;
+  ysqScores[key] = val;
+
+  // Update buttons in group
+  btn.closest('.likert').querySelectorAll('.likert-btn').forEach((b, i) => {
+    b.classList.toggle('selected', i + 1 === val);
+  });
+
+  // Update display
+  const scoreEl = document.getElementById('score-' + key);
+  if (scoreEl) {
+    scoreEl.textContent = val.toFixed(1);
+    scoreEl.classList.add('filled');
+  }
+
+  // Color hint on row
+  const row = btn.closest('.esquema-row');
+  if (row) {
+    row.style.borderLeft = val >= 4.0
+      ? '3px solid ' + (val >= 5.0 ? 'var(--coral)' : val >= 4.5 ? 'var(--amber)' : 'var(--amber2)')
+      : '';
+  }
+
+  if (wasEmpty) totalYsq++;
+  updateYsqProgress();
+  checkSaveReady();
+}
+
+function updateYsqProgress() {
+  const pct = Math.round(totalYsq / YSQ_TOTAL * 100);
+  document.getElementById('ysqProgress').textContent = totalYsq;
+  document.getElementById('ysqPct').textContent = pct + '%';
+  document.getElementById('ysqProgressBar').style.width = pct + '%';
+}
+
+// ── SMI SCORING ─────────────────────────────────────────
+function setSmiScore(btn, key, val) {
+  const wasEmpty = smiScores[key] === undefined;
+  smiScores[key] = val;
+
+  btn.closest('.likert').querySelectorAll('.likert-btn').forEach((b, i) => {
+    b.classList.toggle('selected', i + 1 === val);
+  });
+
+  const scoreEl = document.getElementById('smi-' + key);
+  if (scoreEl) {
+    scoreEl.textContent = val.toFixed(1);
+    scoreEl.classList.add('filled');
+  }
+
+  const row = btn.closest('.modo-row');
+  if (row) {
+    const isAdaptive = key === 'crianca_feliz' || key === 'adulto_saudavel';
+    row.style.borderLeft = val >= 4.0 && !isAdaptive
+      ? '3px solid ' + (val >= 5.0 ? 'var(--coral)' : 'var(--amber)')
+      : '';
+  }
+
+  if (wasEmpty) totalSmi++;
+  updateSmiProgress();
+  checkSaveReady();
+}
+
+function updateSmiProgress() {
+  const pct = Math.round(totalSmi / SMI_TOTAL * 100);
+  document.getElementById('smiProgress').textContent = totalSmi;
+  document.getElementById('smiPct').textContent = pct + '%';
+  document.getElementById('smiProgressBar').style.width = pct + '%';
+}
+
+// ── SAVE READY ───────────────────────────────────────────
+function checkSaveReady() {
+  const ready = totalYsq >= 12 && totalSmi >= 10; // ao menos 2/3 preenchido
+  document.getElementById('btnSalvarPerfil').disabled = !ready;
+}
+
+// ── GERAR PERFIL ─────────────────────────────────────────
+function gerarPerfil() {
+  if (Object.keys(ysqScores).length < 12 || Object.keys(smiScores).length < 10) {
+    showToast('Preencha ao menos os principais esquemas e modos antes de gerar o perfil.');
+    return;
+  }
+  showLoading('Gerando seu perfil clínico…');
+  setTimeout(() => {
+    renderResultado();
+    hideLoading();
+    showTab('resultado', document.querySelectorAll('.tab')[2]);
+    showToast('Perfil gerado com sucesso.');
+  }, 1200);
+}
+
+function renderResultado() {
+  document.getElementById('emptyResultado').style.display = 'none';
+  document.getElementById('resultadoConteudo').style.display = 'block';
+
+  const agora = new Date().toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit',year:'numeric'});
+  document.getElementById('dataPreenchimento').textContent = agora;
+
+  // YSQ por domínio
+  const dominios = [
+    {nome:'Desconexão e Rejeição',  cor:'var(--coral)',  keys:['abandono','desconfianca_abuso','privacao_emocional','defectividade','isolamento_social']},
+    {nome:'Autonomia Prejudicada',  cor:'var(--amber)',  keys:['dependencia','vulnerabilidade_dano','emaranhamento','fracasso']},
+    {nome:'Limites Prejudicados',   cor:'var(--teal)',   keys:['arrogo','autocontrole_insuf']},
+    {nome:'Orientação ao Outro',    cor:'var(--lilac)',  keys:['subjugacao','autossacrificio','busca_aprovacao']},
+    {nome:'Supervigilância',        cor:'var(--brown2)', keys:['negativismo','inibicao_emocional','padroes_inflexiveis','postura_punitiva']},
+  ];
+
+  const ysqBody = document.getElementById('ysqResultadoBody');
+  ysqBody.innerHTML = '';
+  dominios.forEach(d => {
+    const scores = d.keys.map(k => ysqScores[k] || 0);
+    const media  = scores.filter(s => s > 0).length
+      ? scores.filter(s => s > 0).reduce((a,b) => a+b,0) / scores.filter(s=>s>0).length
+      : 0;
+    const pct = media / 6 * 100;
+    ysqBody.innerHTML += `
+      <div class="resultado-row">
+        <div class="resultado-label">${d.nome}</div>
+        <div class="resultado-bar-wrap">
+          <div class="resultado-bar">
+            <div class="resultado-bar-fill" style="width:${pct}%;background:${d.cor}"></div>
+          </div>
+        </div>
+        <div class="resultado-val">${media.toFixed(1)}</div>
+        <div class="resultado-nivel" style="background:${media>=4?'var(--amber3)':'var(--bg3)'};color:${media>=4?'var(--amber)':'var(--ink3)'}">
+          ${media >= 5.0 ? 'Crítico' : media >= 4.0 ? 'Elevado' : media >= 3.0 ? 'Moderado' : 'Baixo'}
+        </div>
+      </div>`;
+  });
+
+  // SMI por categoria
+  const categoriasMode = [
+    {nome:'Modos Criança',       cor:'var(--coral)',  keys:['crianca_vulneravel','crianca_zangada','crianca_raivosa','crianca_impulsiva','crianca_indisciplinada']},
+    {nome:'Criança Feliz',       cor:'var(--green)',  keys:['crianca_feliz'], adaptativo:true},
+    {nome:'Enfrentamento',       cor:'var(--amber)',  keys:['capitulador_complacente','protetor_desligado','autoconfortador_desligado']},
+    {nome:'Hipercompensadores',  cor:'var(--lilac)',  keys:['autoengrandecedor','intimidacao_ataque']},
+    {nome:'Pais Internalizados', cor:'var(--brown2)', keys:['pai_punitivo','pai_exigente']},
+    {nome:'Adulto Saudável',     cor:'var(--green)',  keys:['adulto_saudavel'], adaptativo:true},
+  ];
+
+  const smiBody = document.getElementById('smiResultadoBody');
+  smiBody.innerHTML = '';
+  categoriasMode.forEach(c => {
+    const scores = c.keys.map(k => smiScores[k] || 0);
+    const media  = scores.filter(s=>s>0).length
+      ? scores.filter(s=>s>0).reduce((a,b)=>a+b,0)/scores.filter(s=>s>0).length
+      : 0;
+    const pct = media/6*100;
+    const elevado = !c.adaptativo && media >= 4.0;
+    smiBody.innerHTML += `
+      <div class="resultado-row">
+        <div class="resultado-label">${c.nome}</div>
+        <div class="resultado-bar-wrap">
+          <div class="resultado-bar">
+            <div class="resultado-bar-fill" style="width:${pct}%;background:${c.cor}"></div>
+          </div>
+        </div>
+        <div class="resultado-val">${media.toFixed(1)}</div>
+        <div class="resultado-nivel" style="background:${elevado?'var(--amber3)':c.adaptativo&&media>=4?'var(--green3)':'var(--bg3)'};color:${elevado?'var(--amber)':c.adaptativo&&media>=4?'var(--green)':'var(--ink3)'}">
+          ${c.adaptativo ? (media>=4?'Forte':'Baixo') : media>=5?'Crítico':media>=4?'Elevado':media>=3?'Moderado':'Baixo'}
+        </div>
+      </div>`;
+  });
+
+  // Esquemas elevados
+  const elevados = Object.entries(ysqScores)
+    .filter(([,v]) => v >= 4.0)
+    .sort(([,a],[,b]) => b-a);
+
+  const elevBody = document.getElementById('esquemaElevadoBody');
+  if (elevados.length === 0) {
+    elevBody.innerHTML = '<div style="font-size:13px;color:var(--ink3);font-style:italic">Nenhum esquema com score ≥ 4.0.</div>';
+  } else {
+    elevBody.innerHTML = elevados.map(([k,v]) => `
+      <div class="resultado-row">
+        <div class="resultado-label">${k.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase())}</div>
+        <div class="resultado-bar-wrap"><div class="resultado-bar"><div class="resultado-bar-fill" style="width:${v/6*100}%;background:${v>=5?'var(--coral)':v>=4.5?'var(--amber)':'var(--amber2)'}"></div></div></div>
+        <div class="resultado-val">${v.toFixed(1)}</div>
+        <div class="resultado-nivel" style="background:${v>=5?'var(--coral3)':'var(--amber3)'};color:${v>=5?'var(--coral)':'var(--amber)'}">
+          ${v>=5?'Crítico':v>=4.5?'Alto':'Moderado'}
+        </div>
+      </div>`).join('');
+  }
+}
+
+// ── SAVE ─────────────────────────────────────────────────
+document.getElementById('btnSalvarPerfil').addEventListener('click', async () => {
+  showLoading('Salvando perfil no banco…');
+  try {
+    const token = SB_SESSION_TOKEN || sessionStorage.getItem('sb_session_token');
+    if (!token) {
+      hideLoading();
+      showToast('Entre no painel antes de salvar o perfil.');
+      return;
+    }
+
+    const userRes = await fetch(`${SB_URL}/auth/v1/user`, {
+      headers: {
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + token
+      }
+    });
+    if (!userRes.ok) throw new Error('auth');
+    const user = await userRes.json();
+
+    const currentRes = await fetch(`${SB_URL}/rest/v1/perfil_psi_clinico?psi_user_id=eq.${user.id}&select=n_preenchimentos&limit=1`, {
+      headers: {
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + token
+      }
+    });
+    const currentRows = currentRes.ok ? await currentRes.json() : [];
+    const body = {
+      psi_user_id: user.id,
+      ysq_scores: ysqScores,
+      smi_scores: smiScores,
+      preenchido_em: new Date().toISOString(),
+      n_preenchimentos: (currentRows[0]?.n_preenchimentos || 0) + 1
+    };
+    const res = await fetch(`${SB_URL}/rest/v1/perfil_psi_clinico?on_conflict=psi_user_id`, {
+      method: 'POST',
+      headers: {
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates,return=minimal'
+      },
+      body: JSON.stringify(body)
+    });
+    hideLoading();
+    if (res.ok) {
+      showToast('Perfil salvo com sucesso.');
+      gerarPerfil();
+    } else {
+      showToast('Erro ao salvar. Tente novamente.');
+    }
+  } catch(e) {
+    hideLoading();
+    showToast('Erro de conexão.');
+  }
+});
+
+document.getElementById('btnSalvarRascunho').addEventListener('click', () => {
+  localStorage.setItem('psireal_ysq_rascunho', JSON.stringify(ysqScores));
+  localStorage.setItem('psireal_smi_rascunho', JSON.stringify(smiScores));
+  showToast('Rascunho salvo localmente.');
+});
+
+// Carregar rascunho ao abrir
+function carregarRascunho() {
+  const ysqR = localStorage.getItem('psireal_ysq_rascunho');
+  const smiR = localStorage.getItem('psireal_smi_rascunho');
+  if (ysqR) {
+    const scores = JSON.parse(ysqR);
+    Object.entries(scores).forEach(([k,v]) => {
+      const group = document.querySelector(`[data-key="${k}"]`) ||
+                    document.querySelectorAll('.likert')[Object.keys(scores).indexOf(k)];
+      // Simula clique no botão correto
+      document.querySelectorAll(`[onclick*="setScore"][onclick*="${k}"][onclick*=",${v})"]`).forEach(btn => {
+        setScore(btn, k, v);
+      });
+    });
+  }
+}
+
+// ── UI HELPERS ────────────────────────────────────────────
+function showLoading(txt) {
+  document.getElementById('loadingText').textContent = txt || 'Aguarde…';
+  document.getElementById('loadingOverlay').classList.add('visible');
+}
+function hideLoading() {
+  document.getElementById('loadingOverlay').classList.remove('visible');
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// Tema chip toggle
+document.querySelectorAll('.tema-chip').forEach(chip => {
+  if (!chip.textContent.includes('adicionar')) {
+    chip.addEventListener('click', () => chip.classList.toggle('confirmado'));
+  }
+});
+
+
+/* Ressonância Clínica integrada */
+var RES_PARAMS=new URLSearchParams(location.search);var PAC=RES_PARAMS.get('paciente')?decodeURIComponent(RES_PARAMS.get('paciente')):'Paciente';
+function initials(n){return (n||'?').split(' ').filter(Boolean).slice(0,2).map(p=>p[0].toUpperCase()).join('')}
+document.getElementById('pacName').textContent=PAC;document.getElementById('pacAvatar').textContent=initials(PAC);
+const psiName=sessionStorage.getItem('psi_nome')||'Michelle';document.getElementById('psiName').textContent=psiName;document.getElementById('psiAvatar').textContent=initials(psiName);document.getElementById('sidebarName').textContent=psiName;document.getElementById('sidebarAvatar').textContent=initials(psiName);
+function drawRadar(){const c=document.getElementById('radar'),ctx=c.getContext('2d'),W=c.width,H=c.height,cx=W/2,cy=H/2+8,R=86;ctx.clearRect(0,0,W,H);const labels=['Resgate','Hipersensib. rejeição','Necessidade aprovação','Rigidez terapêutica','Dificuldade limites'];const vals=[4,3,4,5,3];const vals2=[2,4,5,2,4];function pt(i,r){let a=-Math.PI/2+i*2*Math.PI/labels.length;return [cx+r*Math.cos(a),cy+r*Math.sin(a)]}for(let k=1;k<=5;k++){ctx.beginPath();for(let i=0;i<labels.length;i++){let [x,y]=pt(i,R*k/5);i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.closePath();ctx.strokeStyle='rgba(128,112,168,.18)';ctx.stroke()}labels.forEach((l,i)=>{let [x,y]=pt(i,R+30);ctx.fillStyle='#6a5880';ctx.font='11px Instrument Sans';ctx.textAlign=i===0?'center':(x<cx?'right':'left');ctx.fillText(l,x,y)});function poly(values,color,fill,dash){ctx.beginPath();values.forEach((v,i)=>{let [x,y]=pt(i,R*v/5);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.closePath();ctx.strokeStyle=color;ctx.lineWidth=2;if(dash)ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle=fill;ctx.fill()}poly(vals,'#854f0b','rgba(133,79,11,.18)',false);poly(vals2,'#6d4fc2','rgba(109,79,194,.08)',true);ctx.fillStyle='#1a1030';ctx.font='12px Instrument Sans';ctx.fillText('Você',cx-46,H-12);ctx.fillText('Paciente',cx+26,H-12)}drawRadar();
+</script>
+</body>
+</html>

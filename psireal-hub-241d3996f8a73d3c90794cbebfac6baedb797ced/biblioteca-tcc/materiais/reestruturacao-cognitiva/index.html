@@ -1,0 +1,989 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reestruturação Cognitiva — Beck & Clark | Biblioteca Psi Real</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --rose: #8B3A4A;
+      --rose-2: #C4607A;
+      --rose-3: #E8899E;
+      --grad: linear-gradient(135deg, #8B3A4A 0%, #C4607A 55%, #E8899E 100%);
+      --rose-light: #FCEEF1;
+      --rose-hover: #FDF5F7;
+      --rose-border: #F2DCE1;
+      --rose-mid: #C4607A;
+      --ink: #2A1A18;
+      --ink-muted: #8A7370;
+      --ink-faint: #C4A8A4;
+      --bg: #FAF6F7;
+      --white: #FFFFFF;
+      --border: #EDE0E4;
+      --surface: #F5EEF1;
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; background: var(--bg); color: var(--ink); }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--rose-border);
+      padding: 0 2rem; height: 54px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-back { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--ink-muted); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: var(--rose); }
+    .nav-back-arrow { font-size: 16px; }
+    .nav-title { font-size: 13px; color: var(--ink-faint); }
+
+    .layout { display: flex; max-width: 1060px; margin: 0 auto; padding: 0 2rem; gap: 2.5rem; }
+
+    .sidebar {
+      width: 210px; min-width: 210px; flex-shrink: 0;
+      position: sticky; top: 70px;
+      height: calc(100vh - 78px); overflow-y: auto;
+      padding: 2rem 0;
+    }
+    .sidebar::-webkit-scrollbar { width: 3px; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .toc-label { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.75rem; padding: 0 8px; }
+    .toc-list { list-style: none; }
+    .toc-list a {
+      display: block; font-size: 13px; color: var(--ink-muted);
+      text-decoration: none; padding: 6px 10px; border-radius: var(--radius-sm);
+      transition: all 0.15s; line-height: 1.35; margin-bottom: 1px;
+    }
+    .toc-list a:hover { color: var(--ink); background: var(--rose-hover); }
+    .toc-list a.active { color: var(--rose); background: var(--rose-light); font-weight: 500; }
+    .toc-num { font-size: 10px; color: var(--ink-faint); margin-right: 5px; }
+
+    .content { flex: 1; min-width: 0; padding: 2.5rem 0 5rem; }
+
+    .doc-header { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+    .breadcrumb { font-size: 12px; color: var(--ink-faint); margin-bottom: 1rem; }
+    .breadcrumb a { color: var(--rose); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .doc-tags { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 1.1rem; }
+    .doc-tag {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 99px;
+    }
+    .tag-tcc  { background: var(--rose-light); color: var(--rose); border: 1px solid var(--rose-border); }
+    .tag-cogn { background: #F3F0FF; color: #5A3A9B; border: 1px solid #D8CCFA; }
+    .tag-tec  { background: #FFF8E6; color: #8B6000; border: 1px solid #F0D98A; }
+
+    h1.doc-title {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: clamp(24px, 3.5vw, 36px); font-weight: 500;
+      line-height: 1.15; letter-spacing: -0.025em; color: var(--ink); margin-bottom: 0.9rem;
+    }
+    .doc-intro { font-size: 15px; color: var(--ink-muted); line-height: 1.75; max-width: 580px; }
+    .doc-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.25rem; }
+    .doc-meta-item { font-size: 12px; color: var(--ink-faint); }
+    .doc-meta-item strong { color: var(--ink-muted); font-weight: 500; }
+
+    .doc-section { margin-bottom: 3.5rem; scroll-margin-top: 78px; }
+    .sec-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.3rem; }
+    h2.sec-title {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: clamp(18px, 2.5vw, 24px); font-weight: 500; letter-spacing: -0.01em;
+      color: var(--ink); margin-bottom: 1.1rem;
+      padding-bottom: 0.65rem; border-bottom: 1px solid var(--border);
+    }
+    h3.sub-title { font-size: 15px; font-weight: 600; color: var(--ink); margin: 1.75rem 0 0.65rem; }
+    p.body { font-size: 15px; line-height: 1.8; color: var(--ink); margin-bottom: 0.9rem; }
+
+    .callout {
+      border-left: 3px solid var(--rose-mid);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      background: var(--rose-light); padding: 0.9rem 1.25rem; margin: 1.25rem 0;
+    }
+    .callout p { font-size: 14px; line-height: 1.7; color: var(--rose); margin: 0; }
+    .callout strong { font-weight: 500; }
+    .callout-warm { background: #FFF6F0; border-left-color: #D4A882; }
+    .callout-warm p { color: #7A4020; }
+    .callout-blue { background: #F0F4FF; border-left-color: #7A9BD4; }
+    .callout-blue p { color: #2A4070; }
+    .callout-green { background: #F0FAF3; border-left-color: #6BB885; }
+    .callout-green p { color: #1E5230; }
+    .callout-purple { background: #F3F0FF; border-left-color: #9B7DD4; }
+    .callout-purple p { color: #3A2070; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 1.1rem 0; }
+    @media (max-width: 540px) { .two-col { grid-template-columns: 1fr; } }
+
+    .info-box {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1rem 1.1rem;
+    }
+    .info-box-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--rose); margin-bottom: 0.5rem; }
+    .info-box p, .info-box li { font-size: 13px; line-height: 1.65; color: var(--ink-muted); }
+    .info-box ul { padding-left: 1rem; margin-top: 4px; }
+    .info-box li { margin-bottom: 3px; }
+
+    .comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); gap: 10px; margin: 1.25rem 0; }
+    .comp-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1rem 1.1rem;
+      transition: border-color 0.15s;
+    }
+    .comp-card:hover { border-color: var(--rose-border); }
+    .comp-n { font-size: 10px; color: var(--ink-faint); margin-bottom: 4px; font-weight: 500; }
+    .comp-name { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 5px; }
+    .comp-desc { font-size: 12px; line-height: 1.6; color: var(--ink-muted); }
+
+    .steps { list-style: none; margin: 1.1rem 0; }
+    .steps li {
+      display: flex; gap: 13px; align-items: flex-start;
+      padding: 0.7rem 0; border-bottom: 1px solid var(--border);
+      font-size: 14px; line-height: 1.65; color: var(--ink);
+    }
+    .steps li:last-child { border-bottom: none; }
+    .step-dot {
+      min-width: 24px; height: 24px; border-radius: 50%;
+      background: var(--rose-light); border: 1px solid var(--rose-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 500; color: var(--rose); margin-top: 2px; flex-shrink: 0;
+    }
+
+    .hl-row {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 0.75rem 1rem;
+      margin: 5px 0; font-size: 14px; line-height: 1.65; color: var(--ink);
+    }
+    .hl-row strong { font-weight: 500; color: var(--rose); }
+
+    /* Registro de pensamentos — tabela clínica */
+    .rp-table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; font-size: 13px; }
+    .rp-table th {
+      text-align: left; font-size: 10px; font-weight: 500; letter-spacing: 0.07em;
+      text-transform: uppercase; color: var(--ink-faint);
+      padding: 7px 10px; border-bottom: 2px solid var(--border);
+      background: var(--surface);
+    }
+    .rp-table td {
+      padding: 10px; border-bottom: 1px solid var(--border);
+      line-height: 1.55; color: var(--ink-muted); vertical-align: top;
+    }
+    .rp-table tr:last-child td { border-bottom: none; }
+    .rp-table td:first-child { font-weight: 500; color: var(--rose); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; width: 110px; }
+    .rp-table tr:hover td { background: var(--rose-hover); }
+
+    /* Distorções — lista visual */
+    .dist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin: 1.25rem 0; }
+    .dist-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1rem 1.1rem;
+      transition: border-color 0.15s;
+    }
+    .dist-card:hover { border-color: var(--rose-border); }
+    .dist-name { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+    .dist-def  { font-size: 12px; color: var(--ink-muted); line-height: 1.6; margin-bottom: 6px; }
+    .dist-ex   { font-size: 11px; color: var(--rose); font-style: italic; line-height: 1.5; padding-top: 6px; border-top: 1px dashed var(--rose-border); }
+
+    /* Diálogo socrático — bloco de perguntas */
+    .socratic-block {
+      background: var(--surface); border-radius: var(--radius);
+      padding: 1.1rem 1.25rem; margin: 1rem 0;
+    }
+    .socratic-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-faint); margin-bottom: 0.7rem; }
+    .socratic-q {
+      font-size: 13px; color: var(--ink); line-height: 1.6;
+      padding: 6px 0 6px 1rem;
+      border-bottom: 1px dashed var(--border);
+      border-left: 2px solid var(--rose-mid);
+      margin-bottom: 4px;
+    }
+    .socratic-q:last-child { border-bottom: none; margin-bottom: 0; }
+
+    /* Experimento comportamental */
+    .exp-row {
+      display: grid; grid-template-columns: 28px 1fr;
+      gap: 12px; align-items: start;
+      padding: 0.75rem 0; border-bottom: 1px solid var(--border);
+      font-size: 14px; line-height: 1.6; color: var(--ink);
+    }
+    .exp-row:last-child { border-bottom: none; }
+    .exp-num {
+      font-size: 11px; font-weight: 600; color: var(--white);
+      background: var(--grad); border-radius: 50%;
+      width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
+      margin-top: 2px; flex-shrink: 0;
+    }
+
+    /* Seta de fluxo entre pensamento → emoção */
+    .flow-strip {
+      display: flex; align-items: center; gap: 0;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; margin: 1.25rem 0;
+    }
+    .flow-node {
+      flex: 1; padding: 0.85rem 1rem; text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .flow-node:last-child { border-right: none; }
+    .flow-node-label { font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-faint); margin-bottom: 4px; }
+    .flow-node-text  { font-size: 12px; color: var(--ink-muted); line-height: 1.4; }
+    .flow-arrow { font-size: 14px; color: var(--rose-mid); padding: 0 2px; flex-shrink: 0; }
+
+    .question-block {
+      background: var(--surface); border-radius: var(--radius);
+      padding: 1.1rem 1.25rem; margin: 1rem 0;
+    }
+    .question-block-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-faint); margin-bottom: 0.6rem; }
+    .question-item {
+      font-size: 13px; color: var(--ink-muted); line-height: 1.6;
+      padding: 5px 0; border-bottom: 1px dashed var(--border);
+    }
+    .question-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .question-item::before { content: "— "; color: var(--rose-mid); }
+
+    .ref-item { font-size: 13px; color: var(--ink-muted); line-height: 1.7; padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .ref-item:last-child { border-bottom: none; }
+
+    @media (max-width: 720px) { .sidebar { display: none; } .layout { padding: 0 1.25rem; } }
+  </style>
+
+  <!-- PWA -->
+  <link rel="manifest" href="../../manifest.json" />
+  <meta name="theme-color" content="#8B4A52" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Psi Real" />
+  <link rel="apple-touch-icon" href="../../icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="../../icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="../../icons/icon-512.png" />
+
+<style id="psireal-layout-refresh">
+  :root{
+    --ps-bg:#FAF8F5;
+    --ps-surface:#FFFFFF;
+    --ps-ink:#171321;
+    --ps-muted:#686174;
+    --ps-soft:#A090C8;
+    --ps-border:#E8E2EC;
+    --ps-violet:#5B3DF5;
+    --ps-violet-dark:#2C1A69;
+    --ps-violet-soft:#EEE9FF;
+    --ps-shadow:0 18px 48px rgba(23,19,33,.08);
+    --ps-radius:22px;
+  }
+
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ps-bg)!important;
+    color:var(--ps-ink)!important;
+    font-family:'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif!important;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,h4,
+  .hero-title,.section-title,.material-title,.review-title,
+  .nav-logo-text,.card-title{
+    font-family:'Manrope', system-ui, sans-serif!important;
+    letter-spacing:-.045em!important;
+    color:var(--ps-ink)!important;
+  }
+
+  p,li,.subtitle,.description,.lead{
+    color:var(--ps-muted)!important;
+  }
+
+  nav,header,.topbar,.navbar{
+    background:rgba(250,248,245,.9)!important;
+    border-bottom:1px solid var(--ps-border)!important;
+    backdrop-filter:blur(18px)!important;
+  }
+
+  .nav-logo img,
+  .nav-real-logo{
+    width:42px!important;
+    height:42px!important;
+    border-radius:50%!important;
+    object-fit:contain!important;
+  }
+
+  .nav-logo-icon{
+    display:none!important;
+  }
+
+  .nav-logo{
+    gap:12px!important;
+  }
+
+  a{
+    color:inherit;
+  }
+
+  a:hover{
+    color:var(--ps-violet)!important;
+  }
+
+  .btn,
+  .button,
+  .cta,
+  .primary,
+  .btn-primary,
+  .hero-cta,
+  button,
+  a[class*="btn"]{
+    border-radius:14px!important;
+    font-weight:800!important;
+  }
+
+  .btn-primary,
+  .primary,
+  .cta,
+  .hero-cta,
+  button.primary,
+  a.primary,
+  a.btn-primary{
+    background:var(--ps-violet)!important;
+    color:#fff!important;
+    border-color:var(--ps-violet)!important;
+    box-shadow:0 16px 34px rgba(91,61,245,.18)!important;
+  }
+
+  .btn-primary:hover,
+  .primary:hover,
+  .cta:hover,
+  .hero-cta:hover,
+  a.primary:hover,
+  a.btn-primary:hover{
+    background:#4B30DA!important;
+    color:#fff!important;
+    transform:translateY(-1px);
+  }
+
+  .btn-secondary,
+  .secondary,
+  a.secondary{
+    background:#fff!important;
+    color:var(--ps-ink)!important;
+    border:1px solid var(--ps-border)!important;
+  }
+
+  .pill,.badge,.tag,.category,.label{
+    background:var(--ps-violet-soft)!important;
+    color:var(--ps-violet-dark)!important;
+    border:1px solid var(--ps-border)!important;
+    border-radius:999px!important;
+    font-weight:800!important;
+    letter-spacing:.06em!important;
+  }
+
+  .card,
+  .material-card,
+  .resource-card,
+  .review-card,
+  article,
+  .content-card,
+  .panel{
+    background:#fff!important;
+    border:1px solid var(--ps-border)!important;
+    border-radius:var(--ps-radius)!important;
+    box-shadow:0 8px 26px rgba(23,19,33,.045)!important;
+  }
+
+  .card:hover,
+  .material-card:hover,
+  .resource-card:hover,
+  .review-card:hover{
+    box-shadow:var(--ps-shadow)!important;
+    border-color:#D8D0E5!important;
+  }
+
+  .material-card .card-visual,
+  .card-visual,
+  .visual,
+  .gradient-card,
+  .cover{
+    background:linear-gradient(135deg,#171321 0%,#5B3DF5 100%)!important;
+  }
+
+  .toc,
+  .sidebar,
+  aside{
+    background:transparent!important;
+  }
+
+  .toc a.active,
+  .toc .active,
+  .sidebar .active,
+  .nav-links .active,
+  .active{
+    background:var(--ps-violet-soft)!important;
+    color:var(--ps-violet-dark)!important;
+    border-radius:12px!important;
+  }
+
+  hr,.divider{
+    border-color:var(--ps-border)!important;
+  }
+
+  #install-prompt,
+  .install-prompt,
+  .pwa-install,
+  .pwa-prompt,
+  .install-banner,
+  .app-install-banner,
+  [data-install-prompt]{
+    display:none!important;
+    visibility:hidden!important;
+    opacity:0!important;
+    pointer-events:none!important;
+  }
+</style>
+
+</head>
+<body>
+<!-- PWA Install Banner -->
+<div id="pwa-install-banner" style="display:none; position:fixed; bottom:1.25rem; left:50%; transform:translateX(-50%); z-index:9999; background:#fff; border:1px solid #F0E8E3; border-radius:12px; box-shadow:0 8px 32px rgba(139,74,82,0.15); padding:0.9rem 1.1rem; align-items:center; gap:0.9rem; max-width:360px; width:calc(100% - 2rem);">
+  <div style="width:36px;height:36px;background:#F8EDEB;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B4A52" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6s4-2 11-2 11 2 11 2v13s-4-2-11-2S1 19 1 19z"/><line x1="12" y1="4" x2="12" y2="17"/></svg>
+  </div>
+  <div style="flex:1;min-width:0;">
+    <div style="font-size:13px;font-weight:500;color:#2A1A18;">Instalar Psi Real</div>
+    <div style="font-size:11px;color:#8A7370;">Acesse offline, como um app</div>
+  </div>
+  <button onclick="installPWA()" style="background:#8B4A52;color:#fff;border:none;border-radius:7px;padding:7px 14px;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:inherit;">Instalar</button>
+  <button onclick="dismissInstallBanner()" style="background:none;border:none;color:#C4A8A4;cursor:pointer;padding:4px;line-height:1;" aria-label="Fechar">âœ•</button>
+</div>
+
+<nav>
+  <a class="nav-back" href="../../index.html">
+    <span class="nav-back-arrow">â†</span> Biblioteca Psi Real
+  </a>
+  <span class="nav-title">Reestruturação Cognitiva · Beck & Clark</span>
+</nav>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="toc-label">Neste material</div>
+    <ul class="toc-list" id="toc">
+      <li><a href="#s1"><span class="toc-num">01</span>Fundamentos</a></li>
+      <li><a href="#s2"><span class="toc-num">02</span>O que é RC</a></li>
+      <li><a href="#s3"><span class="toc-num">03</span>Identificar PAs</a></li>
+      <li><a href="#s4"><span class="toc-num">04</span>Distorções cognitivas</a></li>
+      <li><a href="#s5"><span class="toc-num">05</span>Registro de pensamentos</a></li>
+      <li><a href="#s6"><span class="toc-num">06</span>Questionamento socrático</a></li>
+      <li><a href="#s7"><span class="toc-num">07</span>Crenças intermediárias</a></li>
+      <li><a href="#s8"><span class="toc-num">08</span>Experimentos comportamentais</a></li>
+      <li><a href="#s9"><span class="toc-num">09</span>Erros técnicos frequentes</a></li>
+      <li><a href="#s10"><span class="toc-num">10</span>Referências</a></li>
+    </ul>
+  </aside>
+
+  <main class="content">
+
+    <div class="doc-header">
+      <div class="breadcrumb"><a href="../../index.html">Biblioteca Psi Real</a> / TCC / Reestruturação Cognitiva</div>
+      <div class="doc-tags">
+        <span class="doc-tag tag-tcc">TCC</span>
+        <span class="doc-tag tag-cogn">Cognição</span>
+        <span class="doc-tag tag-tec">Técnica</span>
+      </div>
+      <h1 class="doc-title">Reestruturação<br>Cognitiva</h1>
+      <p class="doc-intro">Técnicas de identificação e modificação de pensamentos automáticos e crenças intermediárias — da teoria de Beck & Clark Ã  prática clínica sessão a sessão.</p>
+      <div class="doc-meta">
+        <div class="doc-meta-item"><strong>Referências:</strong> Beck, 2021 · Clark & Beck, 2010</div>
+        <div class="doc-meta-item"><strong>Área:</strong> TCC / Técnica Clínica</div>
+        <div class="doc-meta-item"><strong>Seções:</strong> 10</div>
+      </div>
+    </div>
+
+    <!-- S1 -->
+    <div class="doc-section" id="s1">
+      <div class="sec-eyebrow">Seção 01</div>
+      <h2 class="sec-title">Fundamentos teóricos</h2>
+      <p class="body">A reestruturação cognitiva (RC) é a técnica central da Terapia Cognitivo-Comportamental. Sua base está na hipótese mediacional de Aaron Beck: não são os eventos que causam as emoções, mas a <em>interpretação</em> que o indivíduo faz deles.</p>
+      <p class="body">David A. Clark, colaborador direto de Beck, aprofundou o modelo cognitivo da ansiedade e depressão, detalhando os processos de processamento tendencioso da informação que sustentam os transtornos emocionais. Juntos, Beck e Clark fornecem o arcabouço teórico mais robusto para compreender e modificar cognições disfuncionais.</p>
+
+      <div class="flow-strip">
+        <div class="flow-node">
+          <div class="flow-node-label">Evento</div>
+          <div class="flow-node-text">Situação objetiva — o que aconteceu</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">
+          <div class="flow-node-label">Pensamento automático</div>
+          <div class="flow-node-text">Interpretação imediata e espontânea</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">
+          <div class="flow-node-label">Emoção</div>
+          <div class="flow-node-text">Resposta afetiva ao pensamento</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">
+          <div class="flow-node-label">Comportamento</div>
+          <div class="flow-node-text">Ação derivada da emoção</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p><strong>Princípio fundamental:</strong> Se o problema está na interpretação — e não no evento —, modificar o pensamento é a via de acesso Ã  mudança emocional e comportamental. A RC não nega a realidade; ensina o paciente a avaliá-la com mais precisão.</p>
+      </div>
+    </div>
+
+    <!-- S2 -->
+    <div class="doc-section" id="s2">
+      <div class="sec-eyebrow">Seção 02</div>
+      <h2 class="sec-title">O que é reestruturação cognitiva</h2>
+      <p class="body">Reestruturação cognitiva é o conjunto de técnicas que ajuda o paciente a identificar pensamentos disfuncionais, examinar as evidências a favor e contra esses pensamentos, e construir interpretações mais acuradas e adaptativas da realidade.</p>
+      <p class="body">Não se trata de pensamento positivo. A RC é um processo de investigação rigorosa — o terapeuta funciona como um cientista colaborativo que ajuda o paciente a testar hipóteses sobre a realidade, não a substituí-las por afirmações otimistas.</p>
+
+      <div class="two-col">
+        <div class="info-box">
+          <div class="info-box-label">O que a RC É</div>
+          <ul>
+            <li>Exame das evidências reais a favor e contra um pensamento</li>
+            <li>Construção de interpretações mais precisas e equilibradas</li>
+            <li>Processo colaborativo e socrático</li>
+            <li>Habilidade que o paciente aprende a usar sozinho</li>
+            <li>Baseada em dados — o que realmente aconteceu?</li>
+          </ul>
+        </div>
+        <div class="info-box">
+          <div class="info-box-label">O que a RC NÃƒO é</div>
+          <ul>
+            <li>Substituir pensamentos negativos por positivos</li>
+            <li>Convencer o paciente de que está errado</li>
+            <li>Debate ou confrontação direta</li>
+            <li>Técnica aplicada pelo terapeuta ao paciente</li>
+            <li>Ignorar ou minimizar dificuldades reais</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="sub-title">Alvos da reestruturação cognitiva</h3>
+      <div class="comp-grid">
+        <div class="comp-card">
+          <div class="comp-n">Alvo 01</div>
+          <div class="comp-name">Pensamentos automáticos</div>
+          <div class="comp-desc">Conteúdo cognitivo situacional e imediato. Primeiro alvo na RC — mais acessível e concreto para o trabalho clínico inicial.</div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-n">Alvo 02</div>
+          <div class="comp-name">Crenças intermediárias</div>
+          <div class="comp-desc">Regras, atitudes e suposições condicionais. Trabalho de médio prazo, após o paciente dominar a identificação de PAs.</div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-n">Alvo 03</div>
+          <div class="comp-name">Crenças nucleares</div>
+          <div class="comp-desc">Crenças absolutas e globais sobre si. Alvo de longo prazo, especialmente em TCC para transtornos de personalidade.</div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-n">Alvo 04</div>
+          <div class="comp-name">Imagens mentais</div>
+          <div class="comp-desc">Representações visuais automáticas associadas Ã  angústia. Especialmente relevantes em TEPT, ansiedade social e fobias específicas.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- S3 -->
+    <div class="doc-section" id="s3">
+      <div class="sec-eyebrow">Seção 03</div>
+      <h2 class="sec-title">Identificar pensamentos automáticos</h2>
+      <p class="body">O primeiro passo da RC é ensinar o paciente a perceber seus próprios pensamentos automáticos — algo que a maioria das pessoas nunca aprendeu a fazer. Pensamentos automáticos são rápidos, plausíveis e frequentemente passam despercebidos porque o paciente reage Ã  emoção, não ao pensamento que a gerou.</p>
+
+      <h3 class="sub-title">Características dos pensamentos automáticos</h3>
+      <div class="hl-row"><strong>Espontâneos:</strong> Surgem sem esforço deliberado, em resposta a situações internas ou externas.</div>
+      <div class="hl-row"><strong>Plausíveis:</strong> O paciente geralmente os aceita como verdade sem questionar — parecem óbvios ou evidentes.</div>
+      <div class="hl-row"><strong>Breves:</strong> Frequentemente são fragmentos — uma palavra, uma imagem, uma frase curta.</div>
+      <div class="hl-row"><strong>Tenaces:</strong> Persistem mesmo quando o paciente tenta afastá-los ou quando há evidências contrárias.</div>
+      <div class="hl-row"><strong>Idiossincráticos:</strong> O mesmo evento produz pensamentos diferentes em pessoas diferentes, dependendo das crenças subjacentes.</div>
+
+      <h3 class="sub-title">Como eliciar pensamentos automáticos na sessão</h3>
+      <ul class="steps">
+        <li>
+          <div class="step-dot">1</div>
+          <div><strong>Partir de uma emoção:</strong> "Você disse que ficou ansioso. O que passou pela sua cabeça naquele momento?" — a emoção é a porta de entrada para o pensamento.</div>
+        </li>
+        <li>
+          <div class="step-dot">2</div>
+          <div><strong>Ancoragem situacional:</strong> Pedir que o paciente descreva a situação com detalhes — onde estava, quem estava presente, o que estava acontecendo. O contexto ativa o pensamento.</div>
+        </li>
+        <li>
+          <div class="step-dot">3</div>
+          <div><strong>Uso do presente:</strong> "Imagine que você está naquela situação agora. O que está passando pela sua cabeça?" — reconstruir no presente ativa melhor os conteúdos cognitivos.</div>
+        </li>
+        <li>
+          <div class="step-dot">4</div>
+          <div><strong>Identificar imagens:</strong> Quando o paciente tem dificuldade de verbalizar pensamentos, perguntar: "Tem alguma imagem que vem junto com esse sentimento?"</div>
+        </li>
+        <li>
+          <div class="step-dot">5</div>
+          <div><strong>Técnica da seta descendente:</strong> A partir de um PA, perguntar "E se isso fosse verdade, o que isso significaria para você?" — aprofunda até a crença nuclear subjacente.</div>
+        </li>
+      </ul>
+
+      <div class="callout callout-warm">
+        <p><strong>Erro comum na supervisão:</strong> Terapeutas confundem pensamento automático com fato ("fui demitido") ou com emoção ("fiquei com medo"). O PA é a <em>interpretação</em> do evento: "Fui demitido porque não presto" ou "Nunca vou conseguir outro emprego". Treinar essa distinção é essencial.</p>
+      </div>
+    </div>
+
+    <!-- S4 -->
+    <div class="doc-section" id="s4">
+      <div class="sec-eyebrow">Seção 04</div>
+      <h2 class="sec-title">Distorções cognitivas</h2>
+      <p class="body">Beck identificou padrões sistemáticos de processamento tendencioso da informação que caracterizam os transtornos emocionais. Conhecer essas distorções ajuda o terapeuta a nomear o padrão e o paciente a reconhecê-lo nos próprios pensamentos — sem que o rótulo substitua o exame das evidências.</p>
+
+      <div class="dist-grid">
+        <div class="dist-card">
+          <div class="dist-name">Pensamento tudo-ou-nada</div>
+          <div class="dist-def">Avaliar experiências em categorias absolutas e dicotômicas, sem considerar gradações.</div>
+          <div class="dist-ex">"Se não fiz perfeito, falhei completamente."</div>
+        </div>
+        <div class="dist-card">
+          <div class="dist-name">Catastrofização</div>
+          <div class="dist-def">Superestimar a probabilidade ou a gravidade de um resultado negativo.</div>
+          <div class="dist-ex">"Se travar nessa apresentação, minha carreira acabou."</div>
+        </div>
+        <div class="dist-card">
+          <div class="dist-name">Leitura mental</div>
+          <div class="dist-def">Supor que conhece os pensamentos ou intenções dos outros sem evidências suficientes.</div>
+          <div class="dist-ex">"Ela ficou em silêncio — com certeza está me julgando."</div>
+        </div>
+        <div class="dist-card">
+          <div class="dist-name">Adivinhação do futuro</div>
+          <div class="dist-def">Prever resultados negativos como se fossem fatos, sem considerar outras possibilidades.</div>
+          <div class="dist-ex">"Não adianta tentar — sei que vou fracassar."</div>
+        </div>
+        <div class="dist-card">
+          <div class="dist-name">Magnificação / minimização</div>
+          <div class="dist-def">Exagerar a importância dos aspectos negativos e diminuir os positivos.</div>
+          <div class="dist-ex">"Errei uma questão — mas os dez acertos não contam."</div>
+        </div>
+        <div class="dist-card">
+          <div class="dist-name">Supergeneralização</div>
+          <div class="dist-def">Tirar conclusões amplas a partir de um único evento negativo.</div>
+          <div class="dist-ex">"Essa relação não deu certo — nunca vou ter um relacionamento saudável."</div>
+        </div>
+        <div class="dist-card">
+          <div class="dist-name">Abstração seletiva</div>
+          <div class="dist-def">Focar num detalhe negativo e ignorar o quadro mais amplo.</div>
+          <div class="dist-ex">"Uma pessoa saiu mais cedo da palestra — toda a audiência estava entediada."</div>
+        </div>
+        <div class="dist-card">
+          <div class="dist-name">Personalização</div>
+          <div class="dist-def">Atribuir a si mesmo a causa de eventos externos sem evidências suficientes.</div>
+          <div class="dist-ex">"Meu filho está mal — é culpa minha por não ter sido boa mãe."</div>
+        </div>
+        <div class="dist-card">
+          <div class="dist-name">Rotulação</div>
+          <div class="dist-def">Atribuir um rótulo global e fixo a si mesmo ou aos outros com base em eventos pontuais.</div>
+          <div class="dist-ex">"Esqueci o compromisso — sou um completo irresponsável."</div>
+        </div>
+        <div class="dist-card">
+          <div class="dist-name">Raciocínio emocional</div>
+          <div class="dist-def">Usar a emoção como evidência da realidade — sentir como prova de que algo é verdadeiro.</div>
+          <div class="dist-ex">"Sinto que sou incompetente, portanto devo ser."</div>
+        </div>
+        <div class="dist-card">
+          <div class="dist-name">Afirmações "devo"</div>
+          <div class="dist-def">Regras rígidas e absolutas sobre como o próprio comportamento ou o dos outros deveria ser.</div>
+          <div class="dist-ex">"Nunca deveria pedir ajuda — tenho que dar conta sozinho."</div>
+        </div>
+        <div class="dist-card">
+          <div class="dist-name">Desqualificação do positivo</div>
+          <div class="dist-def">Rejeitar experiências positivas, transformando-as em negativas ou neutras.</div>
+          <div class="dist-ex">"Me elogiaram só por educação — não significa que fiz algo bom."</div>
+        </div>
+      </div>
+
+      <div class="callout callout-purple">
+        <p><strong>Uso clínico das distorções:</strong> O rótulo da distorção não é o objetivo — é um atalho pedagógico. O trabalho real é examinar as evidências. Nomear "isso é catastrofização" sem questionar o pensamento é superficial e pode fazer o paciente sentir que foi simplesmente corrigido.</p>
+      </div>
+    </div>
+
+    <!-- S5 -->
+    <div class="doc-section" id="s5">
+      <div class="sec-eyebrow">Seção 05</div>
+      <h2 class="sec-title">Registro de Pensamentos — o instrumento central</h2>
+      <p class="body">O Registro de Pensamentos Disfuncionais (RPD) — originalmente desenvolvido por Beck e refinado ao longo de décadas — é o principal instrumento de autorregistro da RC. Funciona como um laboratório em papel: o paciente aprende a observar, nomear e questionar seus próprios processos cognitivos entre as sessões.</p>
+
+      <h3 class="sub-title">Versão de 5 colunas (formato básico)</h3>
+      <table class="rp-table">
+        <thead>
+          <tr>
+            <th>Coluna</th>
+            <th>O que registrar</th>
+            <th>Função clínica</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Situação</td>
+            <td>Onde, quando, com quem. O evento factual, sem interpretação.</td>
+            <td>Ancoragem situacional — separa evento de interpretação.</td>
+          </tr>
+          <tr>
+            <td>Emoção(ões)</td>
+            <td>Nome da emoção + intensidade de 0–100. Uma palavra apenas: ansiedade, tristeza, raiva.</td>
+            <td>Treina o paciente a nomear e quantificar estados afetivos.</td>
+          </tr>
+          <tr>
+            <td>Pensamento automático</td>
+            <td>O pensamento exato que surgiu. Crença no PA: 0–100%.</td>
+            <td>Tornada visível a interpretação que media evento e emoção.</td>
+          </tr>
+          <tr>
+            <td>Resposta adaptativa</td>
+            <td>Evidências a favor e contra o PA. Perspectiva alternativa mais equilibrada.</td>
+            <td>Aplicação do questionamento socrático em formato de autorregistro.</td>
+          </tr>
+          <tr>
+            <td>Resultado</td>
+            <td>Crença no PA após a análise (0–100%). Emoção atual e intensidade.</td>
+            <td>Avalia o impacto do trabalho cognitivo — mudança de crença e de emoção.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 class="sub-title">Como introduzir o RPD ao paciente</h3>
+      <ul class="steps">
+        <li><div class="step-dot">1</div><div>Fazer o primeiro RPD <strong>dentro da sessão</strong>, com uma situação recente que o paciente trouxe. O terapeuta guia, o paciente preenche.</div></li>
+        <li><div class="step-dot">2</div><div>Verificar a compreensão de cada coluna antes de propor como tarefa. Dificuldades na sessão aparecem também em casa.</div></li>
+        <li><div class="step-dot">3</div><div>Começar com versão simplificada (3 colunas: situação, pensamento, emoção) se o paciente nunca fez autorregistro.</div></li>
+        <li><div class="step-dot">4</div><div>Revisar o RPD no início da sessão seguinte — não ao final, quando o tempo já acabou. O registro não revisado perde valor clínico e de adesão.</div></li>
+        <li><div class="step-dot">5</div><div>Explorar dificuldades com o registro como dado clínico: "O que aconteceu quando tentou preencher?" pode revelar evitação, dificuldade afetiva ou crenças sobre o tratamento.</div></li>
+      </ul>
+
+      <div class="callout callout-blue">
+        <p><strong>Regra clínica de Beck:</strong> O RPD não é lição de casa burocrática — é a extensão da sessão para a vida do paciente. Quando o paciente não traz o registro, a pergunta não é "por que não fez?" mas "o que tornou difícil fazer?"</p>
+      </div>
+    </div>
+
+    <!-- S6 -->
+    <div class="doc-section" id="s6">
+      <div class="sec-eyebrow">Seção 06</div>
+      <h2 class="sec-title">Questionamento socrático</h2>
+      <p class="body">O questionamento socrático — também chamado de descoberta guiada — é o método pelo qual o terapeuta ajuda o paciente a examinar seus próprios pensamentos através de perguntas cuidadosamente construídas. O objetivo não é convencer, mas conduzir o paciente a chegar Ã s próprias conclusões.</p>
+      <p class="body">Beck e Clark diferenciam o questionamento socrático do debate: o terapeuta nunca diz ao paciente que ele está errado. A pergunta bem formulada permite que o paciente descubra, por conta própria, que o pensamento não resiste ao exame das evidências.</p>
+
+      <h3 class="sub-title">Quatro categorias de perguntas socráticas</h3>
+
+      <div class="socratic-block">
+        <div class="socratic-label">1 — Evidências</div>
+        <div class="socratic-q">Quais são as evidências de que esse pensamento é verdadeiro?</div>
+        <div class="socratic-q">Quais são as evidências de que esse pensamento pode não ser verdadeiro?</div>
+        <div class="socratic-q">Você está considerando todos os fatos, ou apenas parte deles?</div>
+        <div class="socratic-q">Existe alguma informação que contradiz esse pensamento?</div>
+      </div>
+
+      <div class="socratic-block">
+        <div class="socratic-label">2 — Perspectivas alternativas</div>
+        <div class="socratic-q">Existe outra forma de ver essa situação?</div>
+        <div class="socratic-q">O que um amigo próximo diria sobre essa situação?</div>
+        <div class="socratic-q">Se outra pessoa tivesse esse pensamento, o que você diria a ela?</div>
+        <div class="socratic-q">Daqui a um ano, como você vai ver esse evento?</div>
+      </div>
+
+      <div class="socratic-block">
+        <div class="socratic-label">3 — Consequências e utilidade</div>
+        <div class="socratic-q">O que acontece quando você acredita nesse pensamento? E quando não acredita?</div>
+        <div class="socratic-q">Esse pensamento te ajuda a lidar com a situação ou te atrapalha?</div>
+        <div class="socratic-q">Qual é o custo de continuar pensando dessa forma? E o benefício?</div>
+      </div>
+
+      <div class="socratic-block">
+        <div class="socratic-label">4 — Descatastrofização</div>
+        <div class="socratic-q">Qual é o pior cenário possível? Qual a probabilidade real de acontecer?</div>
+        <div class="socratic-q">Se o pior acontecer, você seria capaz de lidar com isso? Como?</div>
+        <div class="socratic-q">Qual é o cenário mais provável, considerando tudo que você sabe?</div>
+        <div class="socratic-q">O que seria necessário para que você conseguisse enfrentar esse cenário?</div>
+      </div>
+
+      <div class="callout callout-warm">
+        <p><strong>Atenção técnica:</strong> Perguntas retóricas disfarçadas ("Mas você não acha que está exagerando?") não são questionamento socrático — são confrontação velada. O terapeuta deve genuinamente não saber a resposta antes de perguntar. Se já sabe o que quer que o paciente diga, a pergunta não é socrática.</p>
+      </div>
+    </div>
+
+    <!-- S7 -->
+    <div class="doc-section" id="s7">
+      <div class="sec-eyebrow">Seção 07</div>
+      <h2 class="sec-title">Trabalhando crenças intermediárias</h2>
+      <p class="body">Crenças intermediárias são regras, atitudes e pressupostos condicionais que conectam as crenças nucleares aos pensamentos automáticos. São mais estáveis e generalizadas que os PAs, mas mais acessíveis Ã  consciência do que as crenças nucleares.</p>
+      <p class="body">Beck as classifica em três formas: <strong>atitudes</strong> ("É terrível ser criticado"), <strong>regras</strong> ("Devo sempre agir de forma competente") e <strong>pressupostos</strong> ("Se eu for perfeito, as pessoas vão me aceitar").</p>
+
+      <h3 class="sub-title">Como identificar crenças intermediárias</h3>
+      <div class="hl-row"><strong>Técnica da seta descendente:</strong> A partir de um PA — "E se isso for verdade, o que significa para você?" — repetida sucessivamente até alcançar a regra subjacente.</div>
+      <div class="hl-row"><strong>Padrão entre PAs:</strong> Crenças intermediárias revelam-se quando o mesmo tema aparece em situações muito diferentes. Ex: PA sobre trabalho, família e amizades todos envolvendo medo de falhar.</div>
+      <div class="hl-row"><strong>Formulação condicional:</strong> Pedir ao paciente para completar: "Se eu _____________, então _____________". A estrutura condicional é a forma linguística das crenças intermediárias.</div>
+      <div class="hl-row"><strong>Reação emocional intensa:</strong> Reações desproporcionais a eventos menores frequentemente sinalizam ativação de crença intermediária, não apenas PA situacional.</div>
+
+      <h3 class="sub-title">Técnicas para modificar crenças intermediárias</h3>
+      <ul class="steps">
+        <li>
+          <div class="step-dot">1</div>
+          <div><strong>Tornar a crença explícita:</strong> Primeiro, formulá-la em palavras claras com o paciente. Uma crença vaga é difícil de examinar. "Parece que há uma regra aqui — algo como 'devo ser competente o tempo todo para ser respeitado'. Isso ressoa?"</div>
+        </li>
+        <li>
+          <div class="step-dot">2</div>
+          <div><strong>Examinar a utilidade da regra:</strong> "Essa regra que você aprendeu fazia sentido em algum momento da sua vida? E agora, ela ainda serve? Qual o custo de segui-la?"</div>
+        </li>
+        <li>
+          <div class="step-dot">3</div>
+          <div><strong>Examinar as evidências:</strong> O mesmo questionamento socrático dos PAs — mas agora aplicado Ã  regra mais ampla. "Em quantas situações você aplicou essa regra? Sempre funcionou da forma que esperava?"</div>
+        </li>
+        <li>
+          <div class="step-dot">4</div>
+          <div><strong>Construir crença alternativa mais flexível:</strong> Não apenas enfraquecer a antiga — propor ativamente uma regra mais adaptativa. "Ao invés de 'devo ser perfeito sempre', o que seria mais realista e útil para você?"</div>
+        </li>
+        <li>
+          <div class="step-dot">5</div>
+          <div><strong>Experimentos comportamentais:</strong> Testar a nova crença na prática — agir como se a regra mais flexível fosse verdade e observar o que acontece. Ver seção 08.</div>
+        </li>
+      </ul>
+
+      <div class="callout callout-green">
+        <p><strong>Timing clínico:</strong> Segundo Beck, trabalhar crenças intermediárias prematuramente — antes de o paciente dominar a identificação e questionamento de PAs — costuma ser ineficaz. A sequência importa: PAs primeiro, crenças intermediárias no meio do tratamento, nucleares quando há aliança sólida e habilidades consolidadas.</p>
+      </div>
+    </div>
+
+    <!-- S8 -->
+    <div class="doc-section" id="s8">
+      <div class="sec-eyebrow">Seção 08</div>
+      <h2 class="sec-title">Experimentos comportamentais</h2>
+      <p class="body">Experimentos comportamentais são intervenções planejadas nas quais o paciente testa empiricamente, na vida real, a validade de um pensamento ou crença. Para Beck e Clark, são frequentemente mais poderosos que o questionamento verbal, porque oferecem evidências <em>experienciais</em> — não apenas lógicas.</p>
+      <p class="body">A lógica é simples: se um pensamento é uma hipótese sobre a realidade, a forma mais direta de testá-lo é observar o que realmente acontece quando o paciente age de forma diferente.</p>
+
+      <h3 class="sub-title">Como estruturar um experimento comportamental</h3>
+      <div class="exp-row">
+        <div class="exp-num">1</div>
+        <div><strong>Identificar a crença a ser testada</strong> — formular o pensamento como uma hipótese testável. "Se eu pedir ajuda, as pessoas vão me achar fraco" é testável. "Sou uma pessoa fraca" é uma crença nuclear — mais difícil de testar diretamente.</div>
+      </div>
+      <div class="exp-row">
+        <div class="exp-num">2</div>
+        <div><strong>Definir a predição específica</strong> — o que o paciente prevê que vai acontecer se agir diferente? Quantificar quando possível. "Acredito 80% que meu chefe vai me julgar negativamente se eu disser que não sei."</div>
+      </div>
+      <div class="exp-row">
+        <div class="exp-num">3</div>
+        <div><strong>Planejar o experimento</strong> — o que exatamente o paciente vai fazer, quando, onde e com quem. Quanto mais concreto, melhor. Antecipar dificuldades e planejar como lidar com elas.</div>
+      </div>
+      <div class="exp-row">
+        <div class="exp-num">4</div>
+        <div><strong>Executar e registrar</strong> — o paciente realiza o comportamento e registra o que aconteceu — não apenas o resultado, mas seus pensamentos, emoções e a reação dos outros.</div>
+      </div>
+      <div class="exp-row">
+        <div class="exp-num">5</div>
+        <div><strong>Revisar na sessão</strong> — comparar o que o paciente previu com o que realmente aconteceu. Explorar o impacto na crença. "Você previa 80% de julgamento — o que aconteceu de fato? Como isso afeta sua crença?"</div>
+      </div>
+      <div class="exp-row">
+        <div class="exp-num">6</div>
+        <div><strong>Generalizar o aprendizado</strong> — ajudar o paciente a extrair uma conclusão mais ampla do experimento. "O que esse resultado sugere sobre a regra que você tinha? Em que outras situações isso pode valer?"</div>
+      </div>
+
+      <div class="callout">
+        <p><strong>Tipos de experimento:</strong> Podem ser de <em>testagem ativa</em> (agir diferente e observar), <em>observação</em> (prestar atenção a algo específico no ambiente), ou <em>pesquisa</em> (buscar informações sobre o tema). A escolha depende da crença e do momento do tratamento.</p>
+      </div>
+    </div>
+
+    <!-- S9 -->
+    <div class="doc-section" id="s9">
+      <div class="sec-eyebrow">Seção 09</div>
+      <h2 class="sec-title">Erros técnicos frequentes na RC</h2>
+      <div class="hl-row"><strong>Debater em vez de questionar:</strong> O terapeuta tenta convencer o paciente de que está errado, usando argumentos lógicos. Gera resistência. A RC é descoberta guiada, não persuasão.</div>
+      <div class="hl-row"><strong>Impor pensamento alternativo:</strong> Sugerir a resposta adaptativa antes que o paciente a construa. "Você poderia pensar queâ€¦" dito pelo terapeuta é menos eficaz do que o paciente chegar lá sozinho.</div>
+      <div class="hl-row"><strong>Trabalhar PAs sem ancoragem situacional:</strong> Tentar modificar pensamentos abstratos ("me sinto um fracasso") sem situação concreta. Sem contexto específico, a RC fica genérica e ineficaz.</div>
+      <div class="hl-row"><strong>Pular para crenças nucleares cedo:</strong> Trabalhar crenças profundas antes de o paciente ter habilidade e aliança suficientes. Pode ser desestabilizador e produzir dropout.</div>
+      <div class="hl-row"><strong>RPD sem revisão em sessão:</strong> Propor autorregistros que não são revisados na sessão seguinte. O paciente perde motivação para registrar e o terapeuta perde dados clínicos valiosos.</div>
+      <div class="hl-row"><strong>RC como ritual sem impacto emocional:</strong> O paciente preenche o registro corretamente mas sem redução de crença ou emoção. Sinal de que a RC está sendo feita intelectualmente, não emocionalmente — o alvo precisa ser revisado.</div>
+      <div class="hl-row"><strong>Confundir distorção com alvo:</strong> Nomear a distorção e considerar o trabalho feito. A distorção é o rótulo descritivo — o trabalho real é examinar as evidências do PA específico.</div>
+
+      <div class="callout callout-warm">
+        <p><strong>Na supervisão:</strong> Quando o paciente diz "entendo racionalmente, mas não sinto diferença", o terapeuta provavelmente está fazendo RC intelectual. A mudança cognitiva relevante é a que muda a crença <em>e</em> a emoção — não apenas a que produz um argumento lógico convincente.</p>
+      </div>
+    </div>
+
+    <!-- S10 -->
+    <div class="doc-section" id="s10">
+      <div class="sec-eyebrow">Seção 10</div>
+      <h2 class="sec-title">Referências</h2>
+      <div class="ref-item">Beck, J. S. (2021). <em>Cognitive Behavior Therapy: Basics and Beyond</em> (3ª ed.). Guilford Press.</div>
+      <div class="ref-item">Clark, D. A., & Beck, A. T. (2010). <em>Cognitive Therapy of Anxiety Disorders: Science and Practice.</em> Guilford Press.</div>
+      <div class="ref-item">Beck, A. T., Rush, A. J., Shaw, B. F., & Emery, G. (1979). <em>Cognitive Therapy of Depression.</em> Guilford Press.</div>
+      <div class="ref-item">Beck, A. T. (1976). <em>Cognitive Therapy and the Emotional Disorders.</em> International Universities Press.</div>
+      <div class="ref-item">Bennett-Levy, J., Butler, G., Fennell, M., Hackmann, A., Mueller, M., & Westbrook, D. (Eds.). (2004). <em>Oxford Guide to Behavioural Experiments in Cognitive Therapy.</em> Oxford University Press.</div>
+      <div class="ref-item">Greenberger, D., & Padesky, C. A. (2015). <em>Mind Over Mood: Change How You Feel by Changing the Way You Think</em> (2ª ed.). Guilford Press.</div>
+      <div class="ref-item">Padesky, C. A. (1993). Socratic questioning: Changing minds or guiding discovery? <em>Keynote address delivered at the European Congress of Behavioural and Cognitive Therapies.</em> London.</div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  const sections = document.querySelectorAll('.doc-section');
+  const links = document.querySelectorAll('.toc-list a');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const l = document.querySelector(`.toc-list a[href="#${e.target.id}"]`);
+        if (l) l.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => obs.observe(s));
+</script>
+
+<script>
+  // Service Worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('../../sw.js')
+        .catch(err => console.warn('SW registration failed:', err));
+    });
+  }
+
+  // Install prompt (A2HS banner)
+  let deferredPrompt = null;
+  window.addEventListener('beforeinstallprompt_disabled', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    const banner = document.getElementById('pwa-install-banner');
+    if (banner) banner.style.display = 'flex';
+  });
+
+  window.addEventListener('appinstalled', () => {
+    const banner = document.getElementById('pwa-install-banner');
+    if (banner) banner.style.display = 'none';
+    deferredPrompt = null;
+  });
+
+  function installPWA() {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+  }
+
+  function dismissInstallBanner() {
+    const banner = document.getElementById('pwa-install-banner');
+    if (banner) banner.style.display = 'none';
+    sessionStorage.setItem('pwa-banner-dismissed', '1');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    if (sessionStorage.getItem('pwa-banner-dismissed')) {
+      const banner = document.getElementById('pwa-install-banner');
+      if (banner) banner.style.display = 'none';
+    }
+  });
+</script>
+</body>
+</html>

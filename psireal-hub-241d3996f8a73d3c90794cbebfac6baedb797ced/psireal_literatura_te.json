@@ -1,0 +1,396 @@
+{
+  "biblioteca": [
+    {
+      "categoria": "Fundamentos da Terapia do Esquema",
+      "cor": "purple",
+      "referencias": [
+        {
+          "id": "young2003",
+          "autores": "Young, J. E., Klosko, J. S., & Weishaar, M. E.",
+          "ano": 2003,
+          "titulo": "Schema therapy: A practitioner's guide",
+          "editora": "Guilford Press",
+          "local": "New York",
+          "destaque": true,
+          "resumo": "Obra fundacional da Terapia do Esquema. Apresenta os 18 Esquemas Iniciais Desadaptativos, os domínios de esquemas, os estilos de enfrentamento e o modelo de modos. Base teórica essencial para aplicação clínica.",
+          "tags": ["esquemas", "modos", "fundamentos", "EID", "formulação de caso"]
+        },
+        {
+          "id": "young1990",
+          "autores": "Young, J. E.",
+          "ano": 1990,
+          "titulo": "Cognitive therapy for personality disorders: A schema-focused approach",
+          "editora": "Professional Resource Exchange",
+          "local": "Sarasota, FL",
+          "destaque": false,
+          "resumo": "Obra original que introduz o modelo focado em esquemas para transtornos de personalidade. Precursora da TE completa.",
+          "tags": ["esquemas", "transtornos de personalidade", "histórico"]
+        },
+        {
+          "id": "arntz2012",
+          "autores": "Arntz, A., & Jacob, G.",
+          "ano": 2012,
+          "titulo": "Schema therapy in practice: An introductory guide to the schema mode model",
+          "editora": "Wiley-Blackwell",
+          "local": "Oxford",
+          "destaque": true,
+          "resumo": "Guia prático do modelo de modos. Apresenta os modos esquemáticos de forma acessível, com técnicas específicas para cada modo e estratégias de intervenção.",
+          "tags": ["modos", "prática clínica", "intervenção", "técnicas"]
+        },
+        {
+          "id": "vreeswijk2012",
+          "autores": "van Vreeswijk, M., Broersen, J., & Nadort, M. (Eds.)",
+          "ano": 2012,
+          "titulo": "The Wiley-Blackwell handbook of schema therapy: Theory, research and practice",
+          "editora": "Wiley-Blackwell",
+          "local": "Oxford",
+          "destaque": false,
+          "resumo": "Handbook abrangente cobrindo teoria, pesquisa e aplicações clínicas da TE. Inclui capítulos sobre populações específicas, adaptações culturais e evidências empíricas.",
+          "tags": ["fundamentos", "pesquisa", "evidências", "populações"]
+        }
+      ]
+    },
+    {
+      "categoria": "Modos Esquemáticos",
+      "cor": "teal",
+      "referencias": [
+        {
+          "id": "young2007smi",
+          "autores": "Young, J. E., Arntz, A., Atkinson, T., Lobbestael, J., Weishaar, M. E., Van Vreeswijk, M. F., & Klokman, J.",
+          "ano": 2007,
+          "titulo": "The schema mode inventory",
+          "editora": "Schema Therapy Institute",
+          "local": "New York",
+          "destaque": true,
+          "resumo": "Instrumento original de avaliação dos modos esquemáticos. Define operacionalmente os 14 modos e estabelece a estrutura de subescalas utilizada nas versões validadas.",
+          "tags": ["SMI", "avaliação", "modos", "instrumento"]
+        },
+        {
+          "id": "lobbestael2010",
+          "autores": "Lobbestael, J., van Vreeswijk, M., Spinhoven, P., Schouten, E., & Arntz, A.",
+          "ano": 2010,
+          "titulo": "Reliability and validity of the short Schema Mode Inventory (SMI)",
+          "periodico": "Behavioural and Cognitive Psychotherapy",
+          "volume": "38",
+          "numero": "4",
+          "paginas": "437-458",
+          "doi": "10.1017/S1352465810000226",
+          "destaque": true,
+          "resumo": "Estudo de validação da versão abreviada do SMI. Apresenta evidências de fidedignidade e validade para os 14 modos esquemáticos. Base para a adaptação brasileira.",
+          "tags": ["SMI", "validação", "psicometria", "modos"]
+        },
+        {
+          "id": "damasceno2020",
+          "autores": "Damasceno, E. S.",
+          "ano": 2020,
+          "titulo": "Adaptação e evidências de validade do Inventário de Modos Esquemáticos (Schema Mode Inventory – SMI) para população brasileira",
+          "tipo": "Dissertação de Mestrado",
+          "instituicao": "Pontifícia Universidade Católica do Rio Grande do Sul (PUCRS)",
+          "destaque": true,
+          "resumo": "Adaptação e validação do SMI para o contexto brasileiro. Estudo coordenado pelo GAAPCC (Dra. Margareth Oliveira). Base da versão SMI 1.1 em português utilizada na plataforma.",
+          "tags": ["SMI", "Brasil", "validação", "adaptação", "GAAPCC"]
+        },
+        {
+          "id": "lobbestael2008",
+          "autores": "Lobbestael, J., van Vreeswijk, M., & Arntz, A.",
+          "ano": 2008,
+          "titulo": "An empirical test of schema mode conceptualizations in personality disorders",
+          "periodico": "Behaviour Research and Therapy",
+          "volume": "46",
+          "numero": "7",
+          "paginas": "854-860",
+          "doi": "10.1016/j.brat.2008.03.009",
+          "destaque": false,
+          "resumo": "Teste empírico das conceituações de modos em transtornos de personalidade. Valida a estrutura de modos como marcadores diferenciais entre diagnósticos.",
+          "tags": ["modos", "transtornos de personalidade", "evidências", "diagnóstico diferencial"]
+        }
+      ]
+    },
+    {
+      "categoria": "Esquemas Iniciais Desadaptativos (YSQ)",
+      "cor": "coral",
+      "referencias": [
+        {
+          "id": "young1998ysq",
+          "autores": "Young, J. E., & Brown, G.",
+          "ano": 1998,
+          "titulo": "Young Schema Questionnaire: Short form",
+          "editora": "Schema Therapy Institute",
+          "local": "New York",
+          "destaque": true,
+          "resumo": "Instrumento original de avaliação dos Esquemas Iniciais Desadaptativos. Versão abreviada com 75 itens distribuídos nos 5 domínios e 18 esquemas.",
+          "tags": ["YSQ", "esquemas", "EID", "instrumento", "avaliação"]
+        },
+        {
+          "id": "rijkeboer2005",
+          "autores": "Rijkeboer, M. M., van den Bergh, H., & van den Bout, J.",
+          "ano": 2005,
+          "titulo": "Stability and discriminative power of the Young Schema Questionnaire in a Dutch clinical versus non-clinical population",
+          "periodico": "Journal of Behavior Therapy and Experimental Psychiatry",
+          "volume": "36",
+          "numero": "2",
+          "paginas": "129-144",
+          "doi": "10.1016/j.jbtep.2004.08.008",
+          "destaque": false,
+          "resumo": "Estudo de estabilidade e poder discriminativo do YSQ em população clínica versus não clínica. Evidências de validade convergente e discriminante.",
+          "tags": ["YSQ", "validação", "psicometria", "estabilidade"]
+        },
+        {
+          "id": "ba2020",
+          "autores": "Bastos, A. G., Aerts, D., & Béria, J. U.",
+          "ano": 2020,
+          "titulo": "Adaptação do Young Schema Questionnaire para o contexto brasileiro",
+          "periodico": "Avaliação Psicológica",
+          "volume": "19",
+          "numero": "2",
+          "paginas": "178-190",
+          "destaque": true,
+          "resumo": "Adaptação e evidências de validade do YSQ-S3 para o Brasil. Referência para uso do instrumento em contexto clínico brasileiro.",
+          "tags": ["YSQ", "Brasil", "validação", "adaptação"]
+        }
+      ]
+    },
+    {
+      "categoria": "Cruzamento Esquemas × Modos",
+      "cor": "amber",
+      "referencias": [
+        {
+          "id": "young2003modos",
+          "autores": "Young, J. E., Klosko, J. S., & Weishaar, M. E.",
+          "ano": 2003,
+          "titulo": "Schema therapy: A practitioner's guide — Capítulo 2: Schema modes",
+          "editora": "Guilford Press",
+          "local": "New York",
+          "paginas": "37-82",
+          "destaque": true,
+          "resumo": "Capítulo que estabelece as correlações entre Esquemas Iniciais Desadaptativos e modos esquemáticos. Base teórica para as regras de ativação: quais esquemas tendem a ativar quais modos predominantemente.",
+          "tags": ["esquemas", "modos", "correlação", "ativação", "formulação"]
+        },
+        {
+          "id": "arntz2007",
+          "autores": "Arntz, A., Klokman, J., & Sieswerda, S.",
+          "ano": 2005,
+          "titulo": "An experimental test of the schema mode model of borderline personality disorder",
+          "periodico": "Journal of Behavior Therapy and Experimental Psychiatry",
+          "volume": "36",
+          "numero": "3",
+          "paginas": "226-239",
+          "doi": "10.1016/j.jbtep.2005.05.006",
+          "destaque": false,
+          "resumo": "Teste experimental do modelo de modos no TPB. Demonstra empiricamente como esquemas de Abandono e Desconfiança ativam modos de Criança Vulnerável e Pai Punitivo.",
+          "tags": ["TPB", "modos", "esquemas", "experimental", "ativação"]
+        },
+        {
+          "id": "semplesimonds2020",
+          "autores": "Sempértegui, G. A., Karreman, A., Arntz, A., & Bekker, M. H. J.",
+          "ano": 2013,
+          "titulo": "Schema therapy for borderline personality disorder: A comprehensive review of its empirical foundations, effectiveness and implementation possibilities",
+          "periodico": "Clinical Psychology Review",
+          "volume": "33",
+          "numero": "3",
+          "paginas": "426-447",
+          "doi": "10.1016/j.cpr.2012.11.006",
+          "destaque": false,
+          "resumo": "Revisão abrangente das bases empíricas, efetividade e possibilidades de implementação da TE para TPB. Inclui análise dos padrões de ativação de modos por domínio de esquema.",
+          "tags": ["TE", "TPB", "efetividade", "revisão", "modos", "esquemas"]
+        },
+        {
+          "id": "bach2018",
+          "autores": "Bach, B., & First, M. B.",
+          "ano": 2018,
+          "titulo": "Application of the ICD-11 classification of personality disorders",
+          "periodico": "BMC Psychiatry",
+          "volume": "18",
+          "numero": "1",
+          "paginas": "351",
+          "doi": "10.1186/s12888-018-1908-3",
+          "destaque": false,
+          "resumo": "Aplicação da classificação de transtornos de personalidade do CID-11. Relevante para contextualizar modos esquemáticos no diagnóstico diferencial contemporâneo.",
+          "tags": ["CID-11", "diagnóstico", "transtornos de personalidade", "modos"]
+        }
+      ]
+    },
+    {
+      "categoria": "Técnicas e Intervenção Clínica",
+      "cor": "blue",
+      "referencias": [
+        {
+          "id": "pugh2015",
+          "autores": "Pugh, M.",
+          "ano": 2015,
+          "titulo": "A narrative review of schemas and schema therapy outcomes in the eating disorders",
+          "periodico": "Clinical Psychology Review",
+          "volume": "39",
+          "paginas": "30-41",
+          "doi": "10.1016/j.cpr.2015.04.003",
+          "destaque": false,
+          "resumo": "Revisão narrativa sobre esquemas e desfechos da TE nos transtornos alimentares. Relevante para aplicação em ansiedade e comportamentos alimentares disfuncionais.",
+          "tags": ["transtornos alimentares", "ansiedade", "desfechos", "TE"]
+        },
+        {
+          "id": "giesen2006",
+          "autores": "Giesen-Bloo, J., van Dyck, R., Spinhoven, P., van Tilburg, W., Dirksen, C., van Asselt, T., ... & Arntz, A.",
+          "ano": 2006,
+          "titulo": "Outpatient psychotherapy for borderline personality disorder: Randomized trial of schema-focused therapy vs transference-focused psychotherapy",
+          "periodico": "Archives of General Psychiatry",
+          "volume": "63",
+          "numero": "6",
+          "paginas": "649-658",
+          "doi": "10.1001/archpsyc.63.6.649",
+          "destaque": true,
+          "resumo": "Ensaio clínico randomizado comparando TE com terapia focada na transferência para TPB. Um dos estudos de maior impacto sobre efetividade da TE — redução de 94% no abandono de tratamento.",
+          "tags": ["ECR", "TPB", "efetividade", "evidências", "TE vs TFT"]
+        },
+        {
+          "id": "farrell2009",
+          "autores": "Farrell, J. M., Shaw, I. A., & Webber, M. A.",
+          "ano": 2009,
+          "titulo": "A schema-focused approach to group psychotherapy for outpatients with borderline personality disorder: A randomized controlled trial",
+          "periodico": "Journal of Behavior Therapy and Experimental Psychiatry",
+          "volume": "40",
+          "numero": "2",
+          "paginas": "317-328",
+          "doi": "10.1016/j.jbtep.2009.01.002",
+          "destaque": false,
+          "resumo": "ECR de TE em grupo para TPB. Relevante para adaptações grupais e para o contexto de supervisão clínica.",
+          "tags": ["TE em grupo", "TPB", "ECR", "supervisão"]
+        },
+        {
+          "id": "rafaeli2010",
+          "autores": "Rafaeli, E., Bernstein, D. P., & Young, J. E.",
+          "ano": 2010,
+          "titulo": "Schema therapy: Distinctive features",
+          "editora": "Routledge",
+          "local": "New York",
+          "destaque": true,
+          "resumo": "Apresenta os elementos distintivos da TE em formato acessível. Cobre técnicas experienciais, cognitivas e comportamentais, com foco na relação terapêutica de reparentalidade limitada.",
+          "tags": ["técnicas", "reparentalidade", "intervenção", "prática clínica"]
+        }
+      ]
+    },
+    {
+      "categoria": "Ansiedade e TCC — Contexto Clínico",
+      "cor": "green",
+      "referencias": [
+        {
+          "id": "beck1985",
+          "autores": "Beck, A. T., Emery, G., & Greenberg, R. L.",
+          "ano": 1985,
+          "titulo": "Anxiety disorders and phobias: A cognitive perspective",
+          "editora": "Basic Books",
+          "local": "New York",
+          "destaque": true,
+          "resumo": "Obra clássica sobre transtornos de ansiedade sob perspectiva cognitiva. Fundamento teórico para o BAI e para a conceituação cognitiva da ansiedade amplamente usada na prática TCC.",
+          "tags": ["ansiedade", "TCC", "cognitivo", "BAI", "fundamentos"]
+        },
+        {
+          "id": "clark1999",
+          "autores": "Clark, D. A., & Beck, A. T.",
+          "ano": 2010,
+          "titulo": "Cognitive therapy of anxiety disorders: Science and practice",
+          "editora": "Guilford Press",
+          "local": "New York",
+          "destaque": true,
+          "resumo": "Guia abrangente de TCC para transtornos de ansiedade. Cobre TAG, TOC, TEPT, fobia social e pânico com protocolos baseados em evidências. Altamente relevante para contexto clínico de ansiedade.",
+          "tags": ["ansiedade", "TCC", "protocolos", "TAG", "pânico", "fobia social"]
+        },
+        {
+          "id": "craske2014",
+          "autores": "Craske, M. G., & Barlow, D. H.",
+          "ano": 2014,
+          "titulo": "Panic disorder and agoraphobia",
+          "in": "Barlow, D. H. (Ed.), Clinical handbook of psychological disorders",
+          "editora": "Guilford Press",
+          "local": "New York",
+          "paginas": "1-61",
+          "destaque": false,
+          "resumo": "Protocolo de tratamento para transtorno do pânico e agorafobia. Base para intervenções de exposição e reestruturação cognitiva em contexto de ansiedade.",
+          "tags": ["pânico", "agorafobia", "exposição", "protocolo", "ansiedade"]
+        },
+        {
+          "id": "wells2009",
+          "autores": "Wells, A.",
+          "ano": 2009,
+          "titulo": "Metacognitive therapy for anxiety and depression",
+          "editora": "Guilford Press",
+          "local": "New York",
+          "destaque": false,
+          "resumo": "Terapia metacognitiva como abordagem complementar à TCC e TE. Relevante para casos de ansiedade generalizada com ruminação e preocupação excessiva.",
+          "tags": ["metacognição", "TAG", "ruminação", "preocupação", "ansiedade"]
+        }
+      ]
+    }
+  ],
+  "regras_ativacao": {
+    "fonte": "Young, Klosko & Weishaar (2003) — Capítulo 2 e Arntz & Jacob (2012)",
+    "correlacoes": [
+      {
+        "dominio_ysq": "Desconexão e Rejeição",
+        "esquemas": ["Abandono", "Desconfiança/Abuso", "Privação Emocional", "Defectividade", "Isolamento Social"],
+        "modos_primarios": ["Criança Vulnerável", "Pai Punitivo"],
+        "modos_secundarios": ["Protetor Desligado", "Capitulador Complacente"],
+        "descricao": "Esquemas de desconexão tendem a ativar estados de vulnerabilidade emocional intensa (Criança Vulnerável) e autocrítica severa (Pai Punitivo). Como enfrentamento, frequentemente surgem evitação emocional (Protetor Desligado) ou submissão (Capitulador Complacente).",
+        "nivel_alerta": "alto"
+      },
+      {
+        "dominio_ysq": "Autonomia e Desempenho Prejudicados",
+        "esquemas": ["Dependência", "Vulnerabilidade ao Dano", "Emaranhamento", "Fracasso"],
+        "modos_primarios": ["Criança Vulnerável", "Capitulador Complacente"],
+        "modos_secundarios": ["Protetor Desligado"],
+        "descricao": "Esquemas de autonomia prejudicada ativam dependência emocional e dificuldade de agir de forma autônoma. O modo Capitulador Complacente é frequentemente central nesse domínio.",
+        "nivel_alerta": "moderado"
+      },
+      {
+        "dominio_ysq": "Limites Prejudicados",
+        "esquemas": ["Arrogo/Grandiosidade", "Autocontrole Insuficiente"],
+        "modos_primarios": ["Criança Impulsiva", "Autoengrandecedor", "Criança Raivosa"],
+        "modos_secundarios": ["Intimidação e Ataque"],
+        "descricao": "Esquemas de limites prejudicados ativam estados de impulsividade, busca de gratificação imediata e desconsideração dos outros. Em contextos de frustração, podem emergir modos de raiva e dominação.",
+        "nivel_alerta": "alto"
+      },
+      {
+        "dominio_ysq": "Orientação para o Outro",
+        "esquemas": ["Subjugação", "Autossacrifício", "Busca de Aprovação"],
+        "modos_primarios": ["Capitulador Complacente", "Pai Exigente/Crítico"],
+        "modos_secundarios": ["Autoconfortador Desligado", "Criança Vulnerável"],
+        "descricao": "Esquemas de orientação ao outro ativam padrões de supressão das próprias necessidades. O Pai Exigente/Crítico frequentemente cobra performance e aprovação constante, levando a esgotamento e uso de comportamentos autoconsoladores.",
+        "nivel_alerta": "moderado"
+      },
+      {
+        "dominio_ysq": "Supervigilância e Inibição",
+        "esquemas": ["Negativismo", "Inibição Emocional", "Padrões Inflexíveis", "Postura Punitiva"],
+        "modos_primarios": ["Pai Punitivo", "Pai Exigente/Crítico"],
+        "modos_secundarios": ["Protetor Desligado", "Criança Vulnerável"],
+        "descricao": "Esquemas de supervigilância ativam exigência interna rígida e punição por erros. O Protetor Desligado pode emergir como forma de evitar o sofrimento causado pelos modos críticos internalizados.",
+        "nivel_alerta": "moderado"
+      }
+    ],
+    "combinacoes_criticas": [
+      {
+        "combinacao": "Criança Vulnerável elevada + Protetor Desligado elevado",
+        "interpretacao": "Ciclo de hiporregulação + evitação. A vulnerabilidade emocional não é processada — é bloqueada pelo desligamento. Risco de alexitimia funcional e dificuldade de progresso terapêutico.",
+        "implicacao_clinica": "Priorizar trabalho de segurança e reconexão emocional antes de técnicas cognitivas. Reparentalidade limitada é central."
+      },
+      {
+        "combinacao": "Criança Raivosa elevada + Criança Impulsiva elevada",
+        "interpretacao": "Impulsividade + externalização agressiva. Alta instabilidade emocional e comportamental. Frequente em quadros com baixa tolerância à frustração.",
+        "implicacao_clinica": "Trabalho com regulação emocional prioritário. Técnicas de mindfulness e pausas antes de resposta impulsiva."
+      },
+      {
+        "combinacao": "Pai Punitivo elevado + Criança Vulnerável elevada",
+        "interpretacao": "Ciclo de autocrítica e retraimento. A voz punitiva interna amplifica a vulnerabilidade, criando espiral de vergonha e isolamento.",
+        "implicacao_clinica": "Trabalho de imagery com reparentalidade. Diálogo de modos para enfraquecer o Pai Punitivo e fortalecer o Adulto Saudável."
+      },
+      {
+        "combinacao": "Capitulador Complacente elevado + Pai Exigente elevado",
+        "interpretacao": "Submissão externa + exigência interna. Padrão de autossacrifício com cobrança rígida. Frequente em ansiedade generalizada e burnout.",
+        "implicacao_clinica": "Identificar necessidades não atendidas. Assertividade e autocompaixão como alvos terapêuticos."
+      },
+      {
+        "combinacao": "Autoengrandecedor elevado + Criança Vulnerável elevado",
+        "interpretacao": "Grandiosidade como proteção da vulnerabilidade central. A hipercompensação mascara esquemas de Defectividade ou Privação Emocional profundos.",
+        "implicacao_clinica": "Acessar a vulnerabilidade subjacente com cuidado. A grandiosidade é defesa — não atacar, mas explorar o que protege."
+      }
+    ]
+  }
+}

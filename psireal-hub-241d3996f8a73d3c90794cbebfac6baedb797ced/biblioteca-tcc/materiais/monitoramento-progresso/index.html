@@ -1,0 +1,1015 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monitoramento de Progresso em TCC | Biblioteca Psi Real</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --rose: #8B3A4A;
+      --rose-2: #C4607A;
+      --rose-3: #E8899E;
+      --grad: linear-gradient(135deg, #8B3A4A 0%, #C4607A 55%, #E8899E 100%);
+      --grad-subtle: linear-gradient(135deg, #FDF0F3 0%, #FBE8EE 50%, #F7DCE6 100%);
+      --rose-light: #FCEEF1;
+      --rose-hover: #FDF5F7;
+      --rose-border: #F2DCE1;
+      --rose-mid: #C4607A;
+      --ink: #1C0F13;
+      --ink-2: #5C3A44;
+      --ink-muted: #9E7882;
+      --ink-faint: #C9ADB4;
+      --bg: #FAF6F7;
+      --white: #FFFFFF;
+      --border: #EDE0E4;
+      --surface: #F5EEF1;
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(250,246,247,0.92); backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--rose-border);
+      padding: 0 2.5rem; height: 58px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-back { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-muted); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: var(--rose); }
+    .nav-back-icon { width: 28px; height: 28px; background: var(--rose-light); border-radius: 7px; display: flex; align-items: center; justify-content: center; }
+    .nav-back-icon svg { width: 14px; height: 14px; stroke: var(--rose); fill: none; stroke-width: 2; stroke-linecap: round; }
+    .nav-title { font-size: 13px; color: var(--ink-faint); max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    .layout { display: flex; max-width: 1080px; margin: 0 auto; padding: 0 2.5rem; gap: 3rem; }
+
+    .sidebar {
+      width: 220px; min-width: 220px; flex-shrink: 0;
+      position: sticky; top: 68px;
+      height: calc(100vh - 76px); overflow-y: auto;
+      padding: 2.5rem 0;
+    }
+    .sidebar::-webkit-scrollbar { width: 3px; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .toc-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.75rem; padding: 0 10px; }
+    .toc-list { list-style: none; }
+    .toc-list a {
+      display: block; font-size: 13px; color: var(--ink-muted);
+      text-decoration: none; padding: 7px 12px; border-radius: var(--radius-sm);
+      transition: all 0.15s; line-height: 1.35; margin-bottom: 2px; font-weight: 300;
+    }
+    .toc-list a:hover { color: var(--ink); background: var(--rose-hover); }
+    .toc-list a.active { color: var(--rose); background: var(--rose-light); font-weight: 500; }
+    .toc-num { font-size: 10px; color: var(--ink-faint); margin-right: 6px; }
+
+    .content { flex: 1; min-width: 0; padding: 2.5rem 0 6rem; }
+
+    .doc-header { margin-bottom: 3rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border); }
+    .breadcrumb { font-size: 12px; color: var(--ink-faint); margin-bottom: 1rem; font-weight: 300; }
+    .breadcrumb a { color: var(--rose); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .doc-tags { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+    .doc-tag {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 99px;
+    }
+    .tag-tcc { background: var(--rose-light); color: var(--rose); border: 1px solid var(--rose-border); }
+    .tag-new { background: linear-gradient(135deg,#8B3A4A,#C4607A); color: #fff; }
+    .tag-monitor { background: #F0F0FF; color: #4A3A9B; border: 1px solid #DDDAF5; }
+    .tag-escala { background: #F0FAF3; color: #2E6B40; border: 1px solid #B8DFC4; }
+
+    h1.doc-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(28px, 4vw, 42px); font-weight: 400;
+      line-height: 1.1; letter-spacing: -0.025em; color: var(--ink); margin-bottom: 1rem;
+    }
+    .doc-intro { font-size: 15.5px; color: var(--ink-muted); line-height: 1.8; max-width: 600px; font-weight: 300; }
+    .doc-meta { display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 1.5rem; }
+    .doc-meta-item { font-size: 12px; color: var(--ink-faint); font-weight: 300; }
+    .doc-meta-item strong { color: var(--ink-muted); font-weight: 500; }
+
+    .doc-section { margin-bottom: 4rem; scroll-margin-top: 80px; }
+    .sec-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.3rem; }
+    h2.sec-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(20px, 3vw, 28px); font-weight: 400; letter-spacing: -0.01em;
+      color: var(--ink); margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);
+    }
+    h3.sub-title { font-size: 15.5px; font-weight: 600; color: var(--ink); margin: 2rem 0 0.75rem; }
+    p.body { font-size: 15px; line-height: 1.85; color: var(--ink); margin-bottom: 1rem; font-weight: 300; }
+
+    .callout {
+      border-left: 3px solid var(--rose-mid);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      background: var(--rose-light); padding: 1rem 1.4rem; margin: 1.5rem 0;
+    }
+    .callout p { font-size: 14px; line-height: 1.75; color: var(--rose); margin: 0; font-weight: 400; }
+    .callout strong { font-weight: 600; }
+    .callout-warm { background: #FFF6F0; border-left-color: #D4A882; }
+    .callout-warm p { color: #7A4020; }
+    .callout-blue { background: #F0F0FF; border-left-color: #7A7AD4; }
+    .callout-blue p { color: #2A2A70; }
+    .callout-green { background: #F0FAF3; border-left-color: #6BB885; }
+    .callout-green p { color: #1E5230; }
+    .callout-purple { background: #F5F0FF; border-left-color: #9A7AD4; }
+    .callout-purple p { color: #3A1A70; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1.25rem 0; }
+    @media (max-width: 560px) { .two-col { grid-template-columns: 1fr; } }
+    .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 1.25rem 0; }
+    @media (max-width: 660px) { .three-col { grid-template-columns: 1fr 1fr; } }
+
+    .info-box {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.1rem 1.35rem;
+      box-shadow: 0 1px 6px rgba(139,58,74,0.05);
+    }
+    .info-box-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--rose); margin-bottom: 0.6rem; }
+    .info-box p, .info-box li { font-size: 13px; line-height: 1.7; color: var(--ink-muted); font-weight: 300; }
+    .info-box ul { padding-left: 1.1rem; }
+    .info-box li { margin-bottom: 0.3rem; }
+
+    .scale-card {
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: 0 2px 10px rgba(139,58,74,0.06);
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .scale-card:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(139,58,74,0.12); }
+    .scale-card-header {
+      background: var(--grad);
+      padding: 1rem 1.35rem; display: flex; align-items: center; gap: 10px;
+    }
+    .scale-card-header-purple { background: linear-gradient(135deg, #6A3A8B 0%, #9A60C4 100%); }
+    .scale-card-header-blue { background: linear-gradient(135deg, #3A5A8B 0%, #6090C4 100%); }
+    .scale-card-header-green { background: linear-gradient(135deg, #2E6B40 0%, #5CA870 100%); }
+    .scale-card-icon { width: 36px; height: 36px; background: rgba(255,255,255,0.18); border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .scale-card-icon svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 1.8; stroke-linecap: round; }
+    .scale-card-name { font-size: 14px; font-weight: 500; color: #fff; }
+    .scale-card-full { font-size: 11px; color: rgba(255,255,255,0.72); font-weight: 300; }
+    .scale-card-body { padding: 1.1rem 1.35rem; }
+    .scale-card-desc { font-size: 13px; color: var(--ink-muted); line-height: 1.7; margin-bottom: 0.9rem; font-weight: 300; }
+    .scale-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 0.9rem; }
+    .scale-tag { font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 99px; }
+    .stag-rose { background: var(--rose-light); color: var(--rose); }
+    .stag-freq { background: #FFF7E0; color: #8B6400; }
+    .stag-pts { background: var(--surface); color: var(--ink-2); }
+
+    .range-bar { margin-top: 0.75rem; }
+    .range-label { font-size: 11px; color: var(--ink-faint); margin-bottom: 5px; display: flex; justify-content: space-between; font-weight: 300; }
+    .range-track { height: 7px; border-radius: 4px; overflow: hidden; display: flex; }
+    .seg-g { background: #5CA870; flex: 1; }
+    .seg-y { background: #E8C840; flex: 1; }
+    .seg-o { background: #E89040; flex: 1; }
+    .seg-r { background: #C85060; flex: 1; }
+    .range-ticks { display: flex; justify-content: space-between; font-size: 10px; color: var(--ink-faint); margin-top: 4px; font-weight: 300; }
+
+    .step-list { counter-reset: step; list-style: none; }
+    .step-item { display: flex; gap: 14px; margin-bottom: 1.25rem; align-items: flex-start; }
+    .step-num {
+      width: 32px; height: 32px; flex-shrink: 0;
+      background: var(--grad); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 12px; font-weight: 600;
+      box-shadow: 0 3px 10px rgba(139,58,74,0.3);
+      margin-top: 1px;
+    }
+    .step-body {}
+    .step-title { font-size: 14.5px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+    .step-text { font-size: 13px; color: var(--ink-muted); line-height: 1.7; font-weight: 300; }
+
+    .chart-wrap { position: relative; width: 100%; height: 280px; margin: 1.25rem 0; }
+    .chart-wrap-sm { position: relative; width: 100%; height: 220px; margin: 1.25rem 0; }
+
+    .chart-legend { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 12px; }
+    .chart-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-muted); font-weight: 300; }
+    .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+
+    .freq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 1rem 0; }
+    .freq-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; text-align: center; }
+    .freq-val { font-family: 'Instrument Serif', serif; font-size: 26px; color: var(--rose); }
+    .freq-desc { font-size: 12px; color: var(--ink-faint); margin-top: 3px; font-weight: 300; }
+    .freq-badge { font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 99px; background: var(--rose-light); color: var(--rose); margin-top: 6px; display: inline-block; }
+
+    .ref-item { border-left: 3px solid var(--rose-border); padding: 0.6rem 1.1rem; margin-bottom: 0.9rem; }
+    .ref-item:hover { border-left-color: var(--rose-3); }
+    .ref-author { font-size: 13.5px; font-weight: 500; color: var(--ink-2); }
+    .ref-work { font-size: 12px; color: var(--ink-muted); line-height: 1.6; margin-top: 2px; font-weight: 300; }
+
+    .badge-new {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--grad); color: #fff;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 99px; margin-left: 8px; vertical-align: middle;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .layout { padding: 0 1.5rem; }
+    }
+  </style>
+  <link rel="manifest" href="../../manifest.json" />
+  <meta name="theme-color" content="#8B3A4A" />
+  <link rel="apple-touch-icon" href="../../icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="../../icons/icon-192.png" />
+
+<style id="psireal-layout-refresh">
+  :root{
+    --ps-bg:#FAF8F5;
+    --ps-surface:#FFFFFF;
+    --ps-ink:#171321;
+    --ps-muted:#686174;
+    --ps-soft:#A090C8;
+    --ps-border:#E8E2EC;
+    --ps-violet:#5B3DF5;
+    --ps-violet-dark:#2C1A69;
+    --ps-violet-soft:#EEE9FF;
+    --ps-shadow:0 18px 48px rgba(23,19,33,.08);
+    --ps-radius:22px;
+  }
+
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ps-bg)!important;
+    color:var(--ps-ink)!important;
+    font-family:'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif!important;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,h4,
+  .hero-title,.section-title,.material-title,.review-title,
+  .nav-logo-text,.card-title{
+    font-family:'Manrope', system-ui, sans-serif!important;
+    letter-spacing:-.045em!important;
+    color:var(--ps-ink)!important;
+  }
+
+  p,li,.subtitle,.description,.lead{
+    color:var(--ps-muted)!important;
+  }
+
+  nav,header,.topbar,.navbar{
+    background:rgba(250,248,245,.9)!important;
+    border-bottom:1px solid var(--ps-border)!important;
+    backdrop-filter:blur(18px)!important;
+  }
+
+  .nav-logo img,
+  .nav-real-logo{
+    width:42px!important;
+    height:42px!important;
+    border-radius:50%!important;
+    object-fit:contain!important;
+  }
+
+  .nav-logo-icon{
+    display:none!important;
+  }
+
+  .nav-logo{
+    gap:12px!important;
+  }
+
+  a{
+    color:inherit;
+  }
+
+  a:hover{
+    color:var(--ps-violet)!important;
+  }
+
+  .btn,
+  .button,
+  .cta,
+  .primary,
+  .btn-primary,
+  .hero-cta,
+  button,
+  a[class*="btn"]{
+    border-radius:14px!important;
+    font-weight:800!important;
+  }
+
+  .btn-primary,
+  .primary,
+  .cta,
+  .hero-cta,
+  button.primary,
+  a.primary,
+  a.btn-primary{
+    background:var(--ps-violet)!important;
+    color:#fff!important;
+    border-color:var(--ps-violet)!important;
+    box-shadow:0 16px 34px rgba(91,61,245,.18)!important;
+  }
+
+  .btn-primary:hover,
+  .primary:hover,
+  .cta:hover,
+  .hero-cta:hover,
+  a.primary:hover,
+  a.btn-primary:hover{
+    background:#4B30DA!important;
+    color:#fff!important;
+    transform:translateY(-1px);
+  }
+
+  .btn-secondary,
+  .secondary,
+  a.secondary{
+    background:#fff!important;
+    color:var(--ps-ink)!important;
+    border:1px solid var(--ps-border)!important;
+  }
+
+  .pill,.badge,.tag,.category,.label{
+    background:var(--ps-violet-soft)!important;
+    color:var(--ps-violet-dark)!important;
+    border:1px solid var(--ps-border)!important;
+    border-radius:999px!important;
+    font-weight:800!important;
+    letter-spacing:.06em!important;
+  }
+
+  .card,
+  .material-card,
+  .resource-card,
+  .review-card,
+  article,
+  .content-card,
+  .panel{
+    background:#fff!important;
+    border:1px solid var(--ps-border)!important;
+    border-radius:var(--ps-radius)!important;
+    box-shadow:0 8px 26px rgba(23,19,33,.045)!important;
+  }
+
+  .card:hover,
+  .material-card:hover,
+  .resource-card:hover,
+  .review-card:hover{
+    box-shadow:var(--ps-shadow)!important;
+    border-color:#D8D0E5!important;
+  }
+
+  .material-card .card-visual,
+  .card-visual,
+  .visual,
+  .gradient-card,
+  .cover{
+    background:linear-gradient(135deg,#171321 0%,#5B3DF5 100%)!important;
+  }
+
+  .toc,
+  .sidebar,
+  aside{
+    background:transparent!important;
+  }
+
+  .toc a.active,
+  .toc .active,
+  .sidebar .active,
+  .nav-links .active,
+  .active{
+    background:var(--ps-violet-soft)!important;
+    color:var(--ps-violet-dark)!important;
+    border-radius:12px!important;
+  }
+
+  hr,.divider{
+    border-color:var(--ps-border)!important;
+  }
+
+  #install-prompt,
+  .install-prompt,
+  .pwa-install,
+  .pwa-prompt,
+  .install-banner,
+  .app-install-banner,
+  [data-install-prompt]{
+    display:none!important;
+    visibility:hidden!important;
+    opacity:0!important;
+    pointer-events:none!important;
+  }
+</style>
+
+</head>
+<body>
+
+<nav>
+  <a class="nav-back" href="../../index.html">
+    <div class="nav-back-icon">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </div>
+    Biblioteca Psi Real
+  </a>
+  <span class="nav-title">Monitoramento de Progresso</span>
+</nav>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="toc-label">Neste material</div>
+    <ul class="toc-list">
+      <li><a href="#introducao" class="active"><span class="toc-num">01</span>Por que medir?</a></li>
+      <li><a href="#instrumentos"><span class="toc-num">02</span>Instrumentos</a></li>
+      <li><a href="#depressao"><span class="toc-num">03</span>Depressão</a></li>
+      <li><a href="#ansiedade"><span class="toc-num">04</span>Ansiedade</a></li>
+      <li><a href="#funcionamento"><span class="toc-num">05</span>Funcionamento</a></li>
+      <li><a href="#especificos"><span class="toc-num">06</span>Específicos</a></li>
+      <li><a href="#graficos"><span class="toc-num">07</span>Gráficos</a></li>
+      <li><a href="#protocolo"><span class="toc-num">08</span>Protocolo</a></li>
+      <li><a href="#armadilhas"><span class="toc-num">09</span>Armadilhas</a></li>
+      <li><a href="#referencias"><span class="toc-num">10</span>Referências</a></li>
+    </ul>
+  </aside>
+
+  <main class="content">
+    <div class="doc-header">
+      <div class="breadcrumb">
+        <a href="../../index.html">Biblioteca Psi Real</a> â€º Monitoramento de Progresso
+      </div>
+      <div class="doc-tags">
+        <span class="doc-tag tag-tcc">TCC</span>
+        <span class="doc-tag tag-monitor">Monitoramento</span>
+        <span class="doc-tag tag-escala">Escalas</span>
+        <span class="doc-tag tag-new">âœ¦ Novo</span>
+      </div>
+      <h1 class="doc-title">Monitoramento de<br>Progresso em TCC</h1>
+      <p class="doc-intro">Uso sistemático de medidas de desfecho — inventários, escalas e gráficos de progresso — como parte integrante da prática clínica baseada em evidências.</p>
+      <div class="doc-meta">
+        <div class="doc-meta-item"><strong>Base:</strong> Lambert, Beck, Persons, Barlow, Hofmann</div>
+        <div class="doc-meta-item"><strong>Atualizado:</strong> 2025</div>
+        <div class="doc-meta-item"><strong>Leitura:</strong> ~18 min</div>
+      </div>
+    </div>
+
+    <!-- SEÇÃƒO 1: POR QUE MEDIR -->
+    <section class="doc-section" id="introducao">
+      <div class="sec-eyebrow">01 · Fundamentação</div>
+      <h2 class="sec-title">Por que medir o progresso sistematicamente?</h2>
+
+      <p class="body">Na TCC baseada em evidências, a mensuração contínua de desfechos não é opcional — é parte integrante do processo terapêutico. Ela serve tanto ao terapeuta quanto ao paciente, funcionando como bússola clínica e instrumento de engajamento colaborativo.</p>
+
+      <div class="callout">
+        <p><strong>Barlow (2004):</strong> Terapeutas eficazes monitoram desfechos como médicos monitoram pressão arterial — de forma rotineira e objetiva, não apenas quando percebem dificuldade.</p>
+      </div>
+
+      <ul class="step-list" style="margin-top:1.5rem;">
+        <li class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Feedback em tempo real</div>
+            <div class="step-text">Medidas frequentes permitem detectar falta de progresso precocemente e ajustar a conceitualização do caso antes que o paciente abandone o tratamento. Lambert et al. (2003) demonstraram que o feedback de resultados reduz em até 50% a taxa de deterioração em psicoterapia.</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Aliança terapêutica fortalecida</div>
+            <div class="step-text">Revisar os escores juntos ao paciente aumenta transparência, colaboração e senso de agência — pilares da TCC. Padesky & Mooney (2012) enfatizam que mostrar o gráfico de progresso transforma o dado em ferramenta de empoderamento.</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Responsabilidade científica</div>
+            <div class="step-text">A TCC nasce de uma tradição empírica. Hofmann (2012) argumenta que o comprometimento com dados objetivos diferencia a TCC de abordagens menos estruturadas — e o monitoramento é a expressão mais visível desse compromisso no dia a dia clínico.</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Supervisão qualificada</div>
+            <div class="step-text">Dados objetivos permitem ao supervisor identificar padrões, marcos terapêuticos e pontos de impasse com muito mais precisão do que relatos narrativos. Uma curva estagnada na sessão 8 diz mais do que três supervisões descritivas.</div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="two-col" style="margin-top:2rem;">
+        <div class="info-box">
+          <div class="info-box-label">Tipos de medida</div>
+          <ul>
+            <li><strong>Sintomáticas:</strong> medem a intensidade do sintoma-alvo</li>
+            <li><strong>Funcionais:</strong> avaliam o impacto no dia a dia</li>
+            <li><strong>Idiográficas:</strong> personalizadas para o caso</li>
+            <li><strong>Nomotéticas:</strong> padronizadas e comparáveis</li>
+            <li><strong>Qualidade de vida:</strong> desfechos amplos e globais</li>
+          </ul>
+        </div>
+        <div class="info-box">
+          <div class="info-box-label">Boa prática</div>
+          <p>Combine pelo menos uma medida <strong>nomotética</strong> (padrão, ex: PHQ-9) com uma <strong>idiográfica</strong> (personalizada para o caso específico). A primeira garante comparabilidade; a segunda garante relevância clínica para aquele paciente.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃƒO 2: VISÃƒO GERAL DOS INSTRUMENTOS -->
+    <section class="doc-section" id="instrumentos">
+      <div class="sec-eyebrow">02 · Instrumentos</div>
+      <h2 class="sec-title">Mapa dos instrumentos em TCC</h2>
+
+      <p class="body">A seleção de instrumentos deve ser guiada pela conceitualização do caso (Persons, 2008), não pela conveniência. Cada instrumento tem um propósito e uma janela temporal ideal de uso.</p>
+
+      <div class="freq-grid">
+        <div class="freq-card">
+          <div class="freq-val">PHQ-9</div>
+          <div class="freq-desc">Depressão — 9 itens</div>
+          <div class="freq-badge">Sessão a sessão</div>
+        </div>
+        <div class="freq-card">
+          <div class="freq-val">GAD-7</div>
+          <div class="freq-desc">Ansiedade — 7 itens</div>
+          <div class="freq-badge">Sessão a sessão</div>
+        </div>
+        <div class="freq-card">
+          <div class="freq-val">BDI-II</div>
+          <div class="freq-desc">Depressão — 21 itens</div>
+          <div class="freq-badge">Quinzenal</div>
+        </div>
+        <div class="freq-card">
+          <div class="freq-val">BAI</div>
+          <div class="freq-desc">Ansiedade — 21 itens</div>
+          <div class="freq-badge">Quinzenal</div>
+        </div>
+        <div class="freq-card">
+          <div class="freq-val">ORS</div>
+          <div class="freq-desc">Bem-estar — 4 itens</div>
+          <div class="freq-badge">Cada sessão</div>
+        </div>
+        <div class="freq-card">
+          <div class="freq-val">SRS</div>
+          <div class="freq-desc">Aliança — 4 itens</div>
+          <div class="freq-badge">Fim da sessão</div>
+        </div>
+      </div>
+
+      <div class="callout callout-blue" style="margin-top:1.5rem;">
+        <p><strong>Regra de Hays (2009):</strong> No máximo 3 instrumentos ativos por caso ao mesmo tempo. Sobre-testagem sobrecarrega o paciente e dilui o significado clínico dos dados coletados.</p>
+      </div>
+    </section>
+
+    <!-- SEÇÃƒO 3: DEPRESSÃƒO -->
+    <section class="doc-section" id="depressao">
+      <div class="sec-eyebrow">03 · Depressão</div>
+      <h2 class="sec-title">Escalas para monitoramento de depressão</h2>
+
+      <div class="two-col">
+        <div class="scale-card">
+          <div class="scale-card-header">
+            <div class="scale-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <div>
+              <div class="scale-card-name">PHQ-9</div>
+              <div class="scale-card-full">Patient Health Questionnaire</div>
+            </div>
+          </div>
+          <div class="scale-card-body">
+            <p class="scale-card-desc">9 itens baseados nos critérios diagnósticos do DSM. Autoaplicável. Validado para TCC — amplamente usado por Hofmann (2012) e em todos os grandes ensaios clínicos randomizados modernos. Detecta mudanças semana a semana com alta sensibilidade.</p>
+            <div class="scale-tags">
+              <span class="scale-tag stag-pts">0–27 pontos</span>
+              <span class="scale-tag stag-freq">Sessão a sessão</span>
+              <span class="scale-tag stag-rose">Autoaplicável</span>
+            </div>
+            <div class="range-bar">
+              <div class="range-label"><span>Mínimo (0–4)</span><span>Leve</span><span>Moderado</span><span>Grave</span></div>
+              <div class="range-track"><div class="seg-g"></div><div class="seg-y"></div><div class="seg-o"></div><div class="seg-r"></div></div>
+              <div class="range-ticks"><span>0</span><span>5</span><span>10</span><span>15</span><span>27</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scale-card">
+          <div class="scale-card-header">
+            <div class="scale-card-icon">
+              <svg viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6M9 16h4"/></svg>
+            </div>
+            <div>
+              <div class="scale-card-name">BDI-II</div>
+              <div class="scale-card-full">Inventário de Depressão de Beck</div>
+            </div>
+          </div>
+          <div class="scale-card-body">
+            <p class="scale-card-desc">21 itens desenvolvidos por Aaron Beck e revisados por Judith Beck (1996). Padrão ouro em TCC clássica. Avalia tanto aspectos cognitivos quanto somáticos da depressão. Ideal para uso quinzenal e para a conceitualização de crenças nucleares associadas ao humor.</p>
+            <div class="scale-tags">
+              <span class="scale-tag stag-pts">0–63 pontos</span>
+              <span class="scale-tag stag-freq">Quinzenal</span>
+              <span class="scale-tag stag-rose">21 itens</span>
+            </div>
+            <div class="range-bar">
+              <div class="range-label"><span>Mínimo</span><span>Leve</span><span>Moderado</span><span>Grave</span></div>
+              <div class="range-track"><div class="seg-g"></div><div class="seg-y"></div><div class="seg-o"></div><div class="seg-r"></div></div>
+              <div class="range-ticks"><span>0</span><span>14</span><span>20</span><span>29</span><span>63</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-warm" style="margin-top:1rem;">
+        <p><strong>Dica clínica (Padesky):</strong> Ao revisar o BDI-II, pergunte ao paciente qual item mudou mais desde a última sessão. Esse item costuma revelar o foco terapêutico mais produtivo da sessão corrente.</p>
+      </div>
+    </section>
+
+    <!-- SEÇÃƒO 4: ANSIEDADE -->
+    <section class="doc-section" id="ansiedade">
+      <div class="sec-eyebrow">04 · Ansiedade</div>
+      <h2 class="sec-title">Escalas para monitoramento de ansiedade</h2>
+
+      <div class="two-col">
+        <div class="scale-card">
+          <div class="scale-card-header scale-card-header-blue">
+            <div class="scale-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <div>
+              <div class="scale-card-name">GAD-7</div>
+              <div class="scale-card-full">Generalized Anxiety Disorder Scale</div>
+            </div>
+          </div>
+          <div class="scale-card-body">
+            <p class="scale-card-desc">7 itens para triagem e monitoramento de TAG. Muito sensível a mudanças semana a semana. Indicado por Barlow (2014) nos protocolos unificados para transtornos emocionais. Também detecta ansiedade em contextos de saúde geral.</p>
+            <div class="scale-tags">
+              <span class="scale-tag stag-pts">0–21 pontos</span>
+              <span class="scale-tag stag-freq">Sessão a sessão</span>
+              <span class="scale-tag stag-rose">7 itens</span>
+            </div>
+            <div class="range-bar">
+              <div class="range-label"><span>Mínimo</span><span>Leve</span><span>Moderado</span><span>Grave</span></div>
+              <div class="range-track"><div class="seg-g"></div><div class="seg-y"></div><div class="seg-o"></div><div class="seg-r"></div></div>
+              <div class="range-ticks"><span>0</span><span>5</span><span>10</span><span>15</span><span>21</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scale-card">
+          <div class="scale-card-header scale-card-header-blue">
+            <div class="scale-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <div>
+              <div class="scale-card-name">BAI</div>
+              <div class="scale-card-full">Inventário de Ansiedade de Beck</div>
+            </div>
+          </div>
+          <div class="scale-card-body">
+            <p class="scale-card-desc">21 sintomas físicos e cognitivos de ansiedade. Distingue ansiedade de depressão com maior especificidade do que escalas combinadas (Beck & Steer, 1993). Ãštil quando o componente somático da ansiedade é proeminente no quadro do paciente.</p>
+            <div class="scale-tags">
+              <span class="scale-tag stag-pts">0–63 pontos</span>
+              <span class="scale-tag stag-freq">Quinzenal</span>
+              <span class="scale-tag stag-rose">21 itens</span>
+            </div>
+            <div class="range-bar">
+              <div class="range-label"><span>Mínimo</span><span>Leve</span><span>Moderado</span><span>Grave</span></div>
+              <div class="range-track"><div class="seg-g"></div><div class="seg-y"></div><div class="seg-o"></div><div class="seg-r"></div></div>
+              <div class="range-ticks"><span>0</span><span>8</span><span>16</span><span>26</span><span>63</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃƒO 5: FUNCIONAMENTO -->
+    <section class="doc-section" id="funcionamento">
+      <div class="sec-eyebrow">05 · Funcionamento & Qualidade de vida</div>
+      <h2 class="sec-title">ORS, SRS e medidas de funcionamento global</h2>
+
+      <p class="body">Sintomas melhoram antes do funcionamento — monitorar apenas sintomas pode dar uma visão parcial do progresso real. Instrumentos de funcionamento capturam mudanças que as escalas sintomáticas perdem.</p>
+
+      <div class="two-col">
+        <div class="scale-card">
+          <div class="scale-card-header scale-card-header-green">
+            <div class="scale-card-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+            </div>
+            <div>
+              <div class="scale-card-name">ORS</div>
+              <div class="scale-card-full">Outcome Rating Scale</div>
+            </div>
+          </div>
+          <div class="scale-card-body">
+            <p class="scale-card-desc">4 itens de 0–10 cada, completados em 1 minuto no início de cada sessão. Avalia bem-estar individual, interpessoal, social e geral. Escores abaixo de 25 (total) sinalizam dificuldade clínica significativa. Criado por Miller & Duncan (2000).</p>
+            <div class="scale-tags">
+              <span class="scale-tag stag-pts">0–40 total</span>
+              <span class="scale-tag stag-freq">Cada sessão</span>
+              <span class="scale-tag" style="background:#EDFAF4;color:#1E7040;">4 domínios</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="scale-card">
+          <div class="scale-card-header scale-card-header-green">
+            <div class="scale-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div>
+              <div class="scale-card-name">SRS</div>
+              <div class="scale-card-full">Session Rating Scale</div>
+            </div>
+          </div>
+          <div class="scale-card-body">
+            <p class="scale-card-desc">4 itens de 0–10 cada, completados ao final da sessão. Avalia a aliança terapêutica de forma estruturada e não intrusiva. Escores abaixo de 36 (total) indicam que algum aspecto da sessão não funcionou para o paciente — abre espaço para reparação imediata.</p>
+            <div class="scale-tags">
+              <span class="scale-tag stag-pts">0–40 total</span>
+              <span class="scale-tag stag-freq">Fim da sessão</span>
+              <span class="scale-tag" style="background:#EDFAF4;color:#1E7040;">Aliança</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="sub-title">WHOQOL-BREF</h3>
+      <p class="body">26 itens distribuídos em 4 domínios — físico, psicológico, relações sociais e ambiente. Ferramenta da OMS validada para uso clínico. Ideal para avaliações de início, meio e fim de tratamento, especialmente quando o objetivo terapêutico inclui qualidade de vida ampliada (não apenas redução sintomática).</p>
+
+      <div class="callout callout-green">
+        <p><strong>Indicação de uso:</strong> Inclua o WHOQOL-BREF quando o paciente apresentar queixa funcional ampla ("minha vida toda está errada"), quando o tratamento for prolongado (mais de 20 sessões), ou quando a meta for prevenção de recaída e manutenção de ganhos.</p>
+      </div>
+    </section>
+
+    <!-- SEÇÃƒO 6: ESPECÃFICOS -->
+    <section class="doc-section" id="especificos">
+      <div class="sec-eyebrow">06 · Específicos por diagnóstico</div>
+      <h2 class="sec-title">Escalas específicas ao transtorno</h2>
+
+      <p class="body">Conforme a conceitualização do caso (Persons, 2008), adicione ao menos uma medida específica ao problema-alvo. Essas escalas capturam nuances que instrumentos genéricos não alcançam.</p>
+
+      <div class="three-col">
+        <div class="info-box">
+          <div class="info-box-label">TOC</div>
+          <p><strong>Y-BOCS</strong> — Yale-Brown Obsessive Compulsive Scale. Avalia obsessões e compulsões separadamente. Padrão ouro para monitorar resposta ao tratamento EPR.</p>
+        </div>
+        <div class="info-box">
+          <div class="info-box-label">TEPT</div>
+          <p><strong>PCL-5</strong> — PTSD Checklist. 20 itens baseados no DSM-5. Sensível a mudanças ao longo do protocolo de processamento traumático.</p>
+        </div>
+        <div class="info-box">
+          <div class="info-box-label">Transtorno do Pânico</div>
+          <p><strong>PDSS</strong> — Panic Disorder Severity Scale. 7 itens que avaliam frequência de ataques, ansiedade antecipatória e evitação agorafóbica.</p>
+        </div>
+        <div class="info-box">
+          <div class="info-box-label">Fobia Social</div>
+          <p><strong>SPIN</strong> — Social Phobia Inventory. 17 itens. Detecta medo, evitação e desconforto fisiológico em situações sociais.</p>
+        </div>
+        <div class="info-box">
+          <div class="info-box-label">Insônia</div>
+          <p><strong>ISI</strong> — Insomnia Severity Index. 7 itens. Essencial em casos com insônia comórbida, frequente em depressão e TAG.</p>
+        </div>
+        <div class="info-box">
+          <div class="info-box-label">Transt. Alimentares</div>
+          <p><strong>EAT-26</strong> — Eating Attitudes Test. 26 itens que avaliam atitudes e comportamentos alimentares problemáticos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃƒO 7: GRÁFICOS -->
+    <section class="doc-section" id="graficos">
+      <div class="sec-eyebrow">07 · Gráficos de Progresso</div>
+      <h2 class="sec-title">Visualizando o progresso clínico</h2>
+
+      <p class="body">Gráficos de progresso são ferramentas terapêuticas, não apenas administrativas. Apresentados ao paciente, ativam o processamento emocional positivo da mudança — o que Padesky (2012) chama de "revisão de evidências de força".</p>
+
+      <h3 class="sub-title">Trajetória de sintomas — caso clínico ilustrativo</h3>
+      <p class="body">Paciente com depressão moderada e ansiedade comórbida, 16 sessões de TCC. Notar a queda mais rápida nos primeiros 8 encontros, seguida de platô e retomada após reformulação de crenças nucleares.</p>
+
+      <div class="chart-legend">
+        <div class="chart-legend-item"><div class="legend-dot" style="background:#C4607A;"></div> PHQ-9 (Depressão)</div>
+        <div class="chart-legend-item"><div class="legend-dot" style="background:#8B3A4A; opacity:0.5; border: 2px dashed #8B3A4A;"></div> GAD-7 (Ansiedade)</div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="chart-progress" role="img" aria-label="Gráfico de linha mostrando queda progressiva dos escores PHQ-9 e GAD-7 ao longo de 16 sessões">PHQ-9 caiu de 18 para 5; GAD-7 caiu de 14 para 3.</canvas>
+      </div>
+
+      <h3 class="sub-title">Progresso por meta terapêutica (abordagem Persons)</h3>
+      <p class="body">Metas operacionalizadas como indicadores mensuráveis permitem ao terapeuta e supervisor visualizar avanços diferenciais por área de vida do paciente.</p>
+      <div class="chart-wrap-sm">
+        <canvas id="chart-goals" role="img" aria-label="Gráfico de barras horizontais mostrando progresso em 5 áreas terapêuticas">Progresso de 40% a 82% nas 5 áreas.</canvas>
+      </div>
+
+      <div class="callout" style="margin-top:1.5rem;">
+        <p><strong>Como usar o gráfico com o paciente:</strong> Mostre a curva e pergunte "O que esse gráfico te diz sobre você?" antes de interpretar. A resposta do paciente revela crenças sobre si mesmo mais rapidamente do que qualquer técnica de questionamento direto.</p>
+      </div>
+    </section>
+
+    <!-- SEÇÃƒO 8: PROTOCOLO -->
+    <section class="doc-section" id="protocolo">
+      <div class="sec-eyebrow">08 · Protocolo Clínico</div>
+      <h2 class="sec-title">Fluxo de monitoramento na prática</h2>
+
+      <p class="body">O monitoramento sistemático funciona quando integrado Ã  estrutura das sessões — não como tarefa adicional, mas como parte do ritual terapêutico.</p>
+
+      <ul class="step-list">
+        <li class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Avaliação inicial — sessões 1 e 2</div>
+            <div class="step-text">Aplicar bateria completa: BDI-II + BAI (ou PHQ-9 + GAD-7) + medida específica ao diagnóstico + ORS. Usar escores como linha de base na conceitualização do caso. Guardar os resultados no prontuário — serão a âncora comparativa de todo o tratamento.</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Monitoramento sessão a sessão</div>
+            <div class="step-text">ORS no início de cada sessão (1 minuto). PHQ-9 e/ou GAD-7 antes de cada sessão — pode ser via app ou papel na sala de espera. SRS ao final. Registrar os três dados no sistema. Todo o processo leva menos de 3 minutos por sessão.</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Revisão quinzenal com o paciente</div>
+            <div class="step-text">A cada 2 semanas, mostrar o gráfico de progresso. Usar a curva para reforçar mudanças, identificar gatilhos de piora e ajustar metas operacionais. Perguntar: "O que essa linha te diz sobre o que estamos fazendo?" cria reflexão metacognitiva sobre o processo.</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Supervisão — compartilhamento de dados</div>
+            <div class="step-text">Com autorização do paciente (LGPD), o terapeuta compartilha dashboard com o supervisor. O supervisor pode comentar diretamente na linha do tempo dos escores, identificando pontos de impasse e sugerindo ajustes no protocolo sem precisar de extensas narrativas do caso.</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <div class="step-title">Critérios de reavaliação da conceitualização</div>
+            <div class="step-text">Se o PHQ-9 não reduzir â‰¥ 5 pontos após 8 sessões → revisar conceitualização do caso e hipótese de trabalho. Se o ORS consistentemente abaixo de 25 → avaliar aliança com SRS e discutir em supervisão. Se deterioração (qualquer escore subindo) → ação imediata.</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">6</div>
+          <div class="step-body">
+            <div class="step-title">Alta e seguimento</div>
+            <div class="step-text">Reaplicar bateria completa na sessão de alta. Programar follow-up aos 3 e 6 meses com PHQ-9 remoto. Comparar com a linha de base — esse dado é poderoso tanto para o paciente quanto para o desenvolvimento clínico do terapeuta.</div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- SEÇÃƒO 9: ARMADILHAS -->
+    <section class="doc-section" id="armadilhas">
+      <div class="sec-eyebrow">09 · Riscos & Armadilhas</div>
+      <h2 class="sec-title">O que evitar no monitoramento</h2>
+
+      <div class="two-col">
+        <div class="callout callout-warm">
+          <p><strong>Falácia do número:</strong> O escore não substitui o julgamento clínico — ele informa. Hofmann (2012) alerta que instrumentos mal interpretados podem levar a intervenções prematuras ou Ã  conclusão equivocada de que "o paciente não está respondendo ao tratamento".</p>
+        </div>
+        <div class="callout callout-warm">
+          <p><strong>Sobre-testagem:</strong> Aplicar muitos instrumentos sobrecarrega o paciente e dilui o significado clínico. Hays (2009) recomenda no máximo 3 instrumentos ativos por caso. A simplicidade é mais sustentável clinicamente.</p>
+        </div>
+        <div class="callout callout-warm">
+          <p><strong>Ignorar deterioração:</strong> Yang & Hofmann (2020) mostram que cerca de 8% dos casos pioram durante a TCC. O monitoramento é a principal ferramenta para detecção precoce. Nunca minimizar um escore crescente sem investigação.</p>
+        </div>
+        <div class="callout callout-warm">
+          <p><strong>Monitoramento sem devolutiva:</strong> Coletar dados sem discuti-los com o paciente é paternalista e perde o maior benefício — o impacto terapêutico da reflexão sobre o próprio progresso. Cada escore deve ter uma conversa.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃƒO 10: REFERÃŠNCIAS -->
+    <section class="doc-section" id="referencias">
+      <div class="sec-eyebrow">10 · Referências</div>
+      <h2 class="sec-title">Base bibliográfica</h2>
+
+      <div class="ref-item">
+        <div class="ref-author">Beck, J. S. (2011)</div>
+        <div class="ref-work">Cognitive Behavior Therapy: Basics and Beyond (2nd ed.). Guilford Press. — Base do protocolo de monitoramento sessão a sessão em TCC estruturada.</div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-author">Padesky, C. A. & Mooney, K. A. (2012)</div>
+        <div class="ref-work">Strengths-Based Cognitive-Behavioural Therapy. Clinical Psychology & Psychotherapy. — Uso do feedback de progresso para empoderar o paciente e fortalecer a aliança.</div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-author">Persons, J. B. (2008)</div>
+        <div class="ref-work">The Case Formulation Approach to Cognitive-Behavior Therapy. Guilford. — Integração de medidas idiográficas e nomotéticas na conceitualização de caso.</div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-author">Barlow, D. H. et al. (2014)</div>
+        <div class="ref-work">Unified Protocol for Transdiagnostic Treatment of Emotional Disorders. Oxford University Press. — Uso de PHQ-9 e GAD-7 como medidas de desfecho primárias no protocolo unificado.</div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-author">Hofmann, S. G. (2012)</div>
+        <div class="ref-work">An Introduction to Modern CBT. Wiley-Blackwell. — Princípios de mensuração baseada em evidências e sua integração na prática clínica.</div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-author">Hays, P. A. (2009)</div>
+        <div class="ref-work">Integrating Evidence-Based Practice, Cognitive-Behavior Therapy, and Multicultural Therapy. Professional Psychology: Research and Practice. — Seleção criteriosa de instrumentos culturalmente sensíveis.</div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-author">Yang, Z. & Hofmann, S. G. (2020)</div>
+        <div class="ref-work">Monitoring treatment outcomes in CBT: A systematic review. Behaviour Research and Therapy. — Evidências para detecção precoce de deterioração em psicoterapia.</div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-author">Lambert, M. J. et al. (2003)</div>
+        <div class="ref-work">Is it time for clinicians to routinely track patient outcome? Clinical Psychology: Science and Practice. — Argumento clássico e empírico para feedback contínuo de desfechos.</div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-author">Miller, S. D. & Duncan, B. L. (2000)</div>
+        <div class="ref-work">The Outcome and Session Rating Scales. ISTC Press. — Desenvolvimento e validação do ORS e SRS para uso clínico rotineiro.</div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+// Sidebar active state on scroll
+const sections = document.querySelectorAll('.doc-section[id]');
+const tocLinks = document.querySelectorAll('.toc-list a');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      tocLinks.forEach(link => link.classList.remove('active'));
+      const active = document.querySelector(`.toc-list a[href="#${entry.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-15% 0px -70% 0px' });
+
+sections.forEach(s => observer.observe(s));
+
+// Charts
+window.addEventListener('load', () => {
+  const sessions = ['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12','S13','S14','S15','S16'];
+  const phq = [18,17,16,15,14,13,12,11,10,9,8,7,6,6,5,5];
+  const gad = [14,14,13,12,11,10,9,8,7,6,5,4,4,3,3,3];
+
+  new Chart(document.getElementById('chart-progress'), {
+    type: 'line',
+    data: {
+      labels: sessions,
+      datasets: [
+        {
+          label: 'PHQ-9', data: phq,
+          borderColor: '#C4607A', backgroundColor: 'rgba(196,96,122,0.07)',
+          tension: 0.4, pointBackgroundColor: '#C4607A', pointRadius: 4,
+          borderWidth: 2.5, fill: true
+        },
+        {
+          label: 'GAD-7', data: gad,
+          borderColor: '#8B3A4A', backgroundColor: 'rgba(139,58,74,0.04)',
+          borderDash: [6,3], tension: 0.4, pointBackgroundColor: '#8B3A4A',
+          pointRadius: 4, borderWidth: 2, fill: true
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: {
+          min: 0, max: 21,
+          grid: { color: 'rgba(196,96,122,0.1)' },
+          ticks: { font: { size: 11, family: "'Plus Jakarta Sans'" }, color: '#9E7882' }
+        },
+        x: {
+          grid: { display: false },
+          ticks: { font: { size: 11, family: "'Plus Jakarta Sans'" }, color: '#9E7882' }
+        }
+      }
+    }
+  });
+
+  new Chart(document.getElementById('chart-goals'), {
+    type: 'bar',
+    data: {
+      labels: ['Sono', 'Vida social', 'Trabalho', 'Ruminação', 'Autoestima'],
+      datasets: [{
+        label: 'Progresso (%)',
+        data: [40, 65, 58, 72, 82],
+        backgroundColor: ['#F2DCE1','#E8899E','#C4607A','#A04060','#8B3A4A'],
+        borderRadius: 8, borderSkipped: false
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: {
+        x: {
+          min: 0, max: 100,
+          grid: { color: 'rgba(196,96,122,0.1)' },
+          ticks: { callback: v => v+'%', font: { size: 11, family: "'Plus Jakarta Sans'" }, color: '#9E7882' }
+        },
+        y: {
+          grid: { display: false },
+          ticks: { font: { size: 12, family: "'Plus Jakarta Sans'" }, color: '#1C0F13' }
+        }
+      }
+    }
+  });
+});
+</script>
+</body>
+</html>

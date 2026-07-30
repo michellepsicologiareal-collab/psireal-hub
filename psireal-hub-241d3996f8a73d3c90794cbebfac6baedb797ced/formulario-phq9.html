@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>PHQ-9 - Depressao | Psi Real</title>
+  <meta name="description" content="Instrumento clinico de avaliacao de depressao. Uso profissional supervisionado.">
+  <meta property="og:title" content="PHQ-9 - Depressao | Psi Real">
+  <meta property="og:description" content="Instrumento clinico de avaliacao de humor e depressao. Uso profissional supervisionado.">
+  <meta property="og:image" content="https://psireal.com.br/icon-512.png">
+  <meta property="og:url" content="https://psireal.com.br/formulario-phq9.html">
+  <meta property="og:site_name" content="Psi Real">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--r1:#3D2235;--r2:#7A4060;--rose:#C8908A;--rose-pale:#F7F0F2;--rose-border:#DFBFBA;--sage:#4A7C6A;--sage-pale:#EDF5F0;--ink:#1E1018;--ink-2:#5A3048;--ink-3:#9A7088;--bg:#FDFBFC;--white:#fff;--border:#E8D8DF;--surface:#f7f4ff;--radius:18px;--radius-sm:11px}
+    body{font-family:'Instrument Sans',system-ui,-apple-system,sans-serif;background:#faf8ff;color:#1a1030;line-height:1.6}
+    nav{min-height:72px;padding:0 clamp(18px,4vw,42px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:#fff;box-shadow:0 8px 26px rgba(61,32,40,.05)}
+    .brand{font-size:22px;font-weight:800;color:#3d2b8a}
+    .nav-note,.eyebrow{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#9B5A66}
+    .nav-note{text-transform:none;color:#8070a8;font-weight:600;letter-spacing:0}
+    .hero{max-width:760px;margin:0 auto;padding:54px 20px 28px;text-align:center}
+    .eyebrow{margin-bottom:.75rem}
+    h1{font-size:clamp(34px,5vw,52px);font-weight:800;color:#2F2023;line-height:1.05;margin-bottom:.75rem}
+    .hero p{font-size:17px;line-height:1.65;color:#6a5880;max-width:620px;margin:0 auto}
+    .wrap{max-width:760px;margin:0 auto;padding:0 1.5rem 5rem}
+    .intro,.ident-card,.question-card,.result-card,.error{background:#fff;border:1px solid #ede9f8;border-radius:22px;box-shadow:0 14px 30px rgba(61,32,40,.05)}
+    .intro{padding:1.4rem 1.5rem;background:var(--surface);margin:1rem 0 1.25rem}
+    .intro p{font-size:14px;color:#6a5880}
+    .ident-card{padding:1.25rem;margin-bottom:1rem;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .consent-card{grid-template-columns:auto 1fr;align-items:flex-start}
+    label{display:block;font-size:12px;font-weight:700;color:#6d4fc2;margin-bottom:6px}
+    .consent-card label{margin:0;text-transform:none;font-weight:600;color:#6a5880;line-height:1.55}
+    input{width:100%;border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;font:inherit;background:#fff}
+    #consent{width:auto;margin-top:4px}
+    .questions{display:grid;gap:12px}
+    .question-card{padding:1.25rem}
+    .q-head{display:flex;gap:12px;margin-bottom:1rem}
+    .q-num{font-size:12px;font-weight:800;color:#6d4fc2;padding-top:3px}
+    .q-text{font-size:16px;font-weight:700;color:#1a1030;line-height:1.45}
+    .options{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+    .option input{display:none}
+    .option span{display:flex;min-height:58px;align-items:center;justify-content:center;text-align:center;padding:10px;border:1px solid #ede9f8;border-radius:16px;font-size:14px;color:#6a5880;background:#faf8ff;cursor:pointer;transition:.15s}
+    .option input:checked+span{background:#3d2b8a;border-color:#3d2b8a;color:#fff;font-weight:800}
+    .actions{position:sticky;bottom:0;background:rgba(253,250,248,.94);backdrop-filter:blur(12px);border-top:1px solid var(--border);margin-top:1.5rem;padding:1rem 0}
+    .actions-inner{display:flex;align-items:center;gap:12px}
+    .progress{flex:1;height:9px;border-radius:999px;background:#f7f4ff;overflow:hidden}
+    .progress div{height:100%;width:0;background:linear-gradient(90deg,#3d2b8a,#8070a8);transition:width .2s}
+    .progress-text{font-size:12px;color:#8070a8;white-space:nowrap}
+    button{border:none;border-radius:16px;padding:12px 18px;background:linear-gradient(135deg,#3d2b8a,#9B5A66);color:#fff;font:inherit;font-weight:800;cursor:pointer;box-shadow:0 14px 28px rgba(61,32,40,.15)}
+    button:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+    #result{display:none;margin-top:1rem}
+    .result-card{padding:1.5rem}
+    .result-score{font-size:52px;font-weight:800;color:#3d2b8a;line-height:1}
+    .result-level{font-size:14px;font-weight:800;color:#6d4fc2;margin-top:.35rem}
+    .result-copy{font-size:14px;color:#6a5880;margin-top:1rem}
+    .success{display:none;margin-bottom:1rem;padding:1rem;border-radius:16px;background:#f0ebff;color:#6a5880;border:1px solid #ede9f8;font-size:14px}
+    .error{display:none;margin-bottom:1rem;padding:1rem;background:#FFF4F2;color:#8A4738;border-color:#F0C8C0;font-size:14px;line-height:1.5}
+    @media(max-width:700px){nav{height:auto;gap:8px;align-items:flex-start;flex-direction:column;padding:16px 18px}.hero{text-align:left}.ident-card,.options{grid-template-columns:1fr}.question-card{padding:18px}.actions-inner{flex-wrap:wrap}.actions-inner button{width:100%}.progress{order:3;flex-basis:100%}}
+  </style>
+  <link rel="stylesheet" href="visual-modern.css">
+</head>
+<body>
+  <nav><div class="brand">Psi Real</div><div class="nav-note">Instrumento enviado pela sua psicologa</div></nav>
+  <section class="hero">
+    <div class="eyebrow">Depressao - acompanhamento clinico</div>
+    <h1>PHQ-9</h1>
+    <p>Nas ultimas duas semanas, marque com que frequencia cada sinal de humor apareceu para voce.</p>
+  </section>
+  <main class="wrap">
+    <div class="intro"><p>Responda pensando no periodo recente. O objetivo e apoiar o acompanhamento clinico ao longo do processo terapeutico.</p></div>
+    <section class="ident-card">
+      <div><label for="pacNome">Seu nome</label><input id="pacNome" placeholder="Como gostaria de ser chamado(a)"/></div>
+      <div><label for="pacNasc">Data de nascimento</label><input id="pacNasc" type="date"/></div>
+    </section>
+    <section class="ident-card consent-card" id="consentCard">
+      <input id="consent" type="checkbox"/>
+      <label for="consent">Compreendo e consinto com o tratamento dos meus dados de saude para finalidade clinica. Estou ciente de que este instrumento e um apoio clinico e nao substitui a avaliacao da minha psicologa.</label>
+    </section>
+    <div class="error" id="sendError">Nao foi possivel registrar suas respostas. Entre em contato com sua psicologa.</div>
+    <section class="questions" id="questions"></section>
+    <section id="result">
+      <div class="success" id="success">Respostas enviadas com sucesso.</div>
+      <div class="result-card">
+        <div class="eyebrow">Resultado</div>
+        <div class="result-score" id="score">0</div>
+        <div class="result-level" id="level"></div>
+        <p class="result-copy">Este resultado e um apoio clinico e deve ser interpretado junto com a avaliacao profissional.</p>
+        <p class="result-copy" id="safetyNote" style="display:none;color:#8a4738">Se voce marcou pensamentos de morte ou de se ferir, avise sua psicologa o quanto antes para que ela possa acolher e avaliar esse sinal com voce.</p>
+      </div>
+    </section>
+    <div class="actions">
+      <div class="actions-inner">
+        <div class="progress"><div id="bar"></div></div>
+        <div class="progress-text" id="progressText">0 / 9</div>
+        <button id="submitBtn" disabled>Concluir</button>
+      </div>
+    </div>
+  </main>
+  <script>
+    const SB_URL='https://qpwjxacdjzzsyjbuuwsq.supabase.co';
+    const SB_KEY='sb_publishable_hQclCJaEsVjcnGM4WAoYmA_r8H8NqAp';
+    const PARAMS=new URLSearchParams(window.location.search);
+    const PATIENT_TOKEN=PARAMS.get('token');
+    const PATIENT_NAME_PARAM=PARAMS.get('nome')||'';
+    const ITEMS=[
+      'Pouco interesse ou prazer em fazer as coisas.',
+      'Sentir-se para baixo, deprimido(a) ou sem esperanca.',
+      'Dificuldade para pegar no sono, continuar dormindo ou dormir demais.',
+      'Sentir-se cansado(a) ou com pouca energia.',
+      'Falta de apetite ou comer demais.',
+      'Sentir-se mal consigo mesmo(a), achar que fracassou ou decepcionou a si ou a familia.',
+      'Dificuldade para se concentrar em coisas como ler ou assistir televisao.',
+      'Mover-se ou falar tao devagar que outras pessoas poderiam notar, ou o oposto: ficar tao agitado(a) que se movimenta mais do que o habitual.',
+      'Pensar que seria melhor estar morto(a) ou em se ferir de alguma maneira.'
+    ];
+    const OPTIONS=[{v:0,l:'Nenhuma vez'},{v:1,l:'Varios dias'},{v:2,l:'Mais da metade dos dias'},{v:3,l:'Quase todos os dias'}];
+    const answers={};
+
+    function showTokenError(msg,isOk){
+      document.querySelector('.hero').style.display='none';
+      document.querySelector('.intro').style.display='none';
+      document.querySelector('.ident-card').style.display='none';
+      document.getElementById('consentCard').style.display='none';
+      document.getElementById('questions').innerHTML=`<article class="result-card"><div class="eyebrow">${isOk?'Concluido':'Link indisponivel'}</div><h1 style="font-size:28px;margin-bottom:10px">${isOk?'Questionario ja respondido':'Este link nao esta disponivel'}</h1><p class="result-copy">${msg}</p></article>`;
+      document.querySelector('.actions').style.display='none';
+    }
+
+    async function checkTokenStatus(){
+      if(!PATIENT_TOKEN){showTokenError('Solicite um novo link a sua psicologa.',false);return false}
+      try{
+        const res=await fetch(`${SB_URL}/rest/v1/patient_links?token=eq.${encodeURIComponent(PATIENT_TOKEN)}&select=status`,{headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY}});
+        const data=await res.json();
+        if(!data?.length){showTokenError('Link nao encontrado. Solicite um novo link a sua psicologa.',false);return false}
+        const status=data[0].status;
+        if(status==='respondido'){showTokenError('Obrigada pela sua participacao. Suas respostas ja foram registradas.',true);return false}
+        if(status==='revogado'||status==='expirado'){showTokenError('Este link nao esta mais ativo. Solicite um novo link a sua psicologa.',false);return false}
+        return true;
+      }catch(_){
+        showTokenError('Nao foi possivel validar este link agora. Tente novamente em alguns minutos.',false);
+        return false;
+      }
+    }
+
+    function build(){
+      document.getElementById('questions').innerHTML=ITEMS.map((item,idx)=>`<article class="question-card"><div class="q-head"><div class="q-num">${idx+1}</div><div class="q-text">${item}</div></div><div class="options">${OPTIONS.map(opt=>`<label class="option"><input type="radio" name="q${idx+1}" value="${opt.v}" onchange="answer(${idx+1},${opt.v})"/><span>${opt.l}</span></label>`).join('')}</div></article>`).join('');
+    }
+    function answer(n,v){
+      answers[n]=v;
+      const done=Object.keys(answers).length;
+      document.getElementById('bar').style.width=`${Math.round(done/9*100)}%`;
+      document.getElementById('progressText').textContent=`${done} / 9`;
+      document.getElementById('submitBtn').disabled=done<9;
+    }
+    function levelFor(score){
+      if(score<=4)return'Depressao minima';
+      if(score<=9)return'Depressao leve';
+      if(score<=14)return'Depressao moderada';
+      if(score<=19)return'Depressao moderadamente grave';
+      return'Depressao grave';
+    }
+    async function submit(){
+      const nome=document.getElementById('pacNome').value.trim();
+      const nasc=document.getElementById('pacNasc').value||null;
+      if(!nome)return alert('Informe seu nome para continuar.');
+      if(!document.getElementById('consent').checked)return alert('E necessario aceitar os termos de privacidade para continuar.');
+      if(!PATIENT_TOKEN)return alert('Link invalido.');
+      const total=Object.values(answers).reduce((sum,v)=>sum+Number(v),0);
+      const payload={p_token:PATIENT_TOKEN,p_patient_name:nome,p_patient_birth:nasc,p_instrumento:'PHQ-9',p_respostas:answers,p_scores:{total,nivel:levelFor(total),item9:Number(answers[9]||0)},p_score_total:total};
+      const btn=document.getElementById('submitBtn');
+      btn.disabled=true;
+      btn.textContent='Enviando...';
+      try{
+        const res=await fetch(`${SB_URL}/rest/v1/rpc/submit_patient_response`,{method:'POST',headers:{'Content-Type':'application/json',apikey:SB_KEY,Authorization:'Bearer '+SB_KEY},body:JSON.stringify(payload)});
+        showResult(total,res.ok);
+      }catch(_){
+        showResult(total,false);
+      }
+    }
+    function showResult(total,saved){
+      document.getElementById('questions').style.display='none';
+      document.querySelector('.actions').style.display='none';
+      document.getElementById('score').textContent=total;
+      document.getElementById('level').textContent=levelFor(total);
+      document.getElementById('success').style.display=saved?'block':'none';
+      document.getElementById('sendError').style.display=saved?'none':'block';
+      document.getElementById('safetyNote').style.display=Number(answers[9]||0)>0?'block':'none';
+      document.getElementById('result').style.display='block';
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+    document.getElementById('submitBtn').addEventListener('click',submit);
+    if(PATIENT_NAME_PARAM)document.getElementById('pacNome').value=decodeURIComponent(PATIENT_NAME_PARAM);
+    build();
+    checkTokenStatus();
+  </script>
+</body>
+</html>

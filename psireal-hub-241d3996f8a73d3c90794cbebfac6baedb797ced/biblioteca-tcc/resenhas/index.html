@@ -1,0 +1,757 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resenhas de Livros — Biblioteca Psi Real</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --r1: #3D2028;
+      --r2: #7A4A55;
+      --r3: #B08090;
+      --r-light: #EEE0E4;
+      --r-pale: #F8F2F4;
+      --r-border: #DDD0D6;
+      --grad: linear-gradient(135deg, #3D2028 0%, #7A4A55 50%, #B08090 100%);
+      --ink: #1E1014;
+      --ink-2: #5A3040;
+      --ink-3: #9A7080;
+      --ink-4: #C8A8B4;
+      --bg: #FFFFFF;
+      --white: #FFFFFF;
+      --border: #E2D0D8;
+      --surface: #F5EEF1;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow-card: 0 2px 12px rgba(90,48,64,0.06), 0 1px 3px rgba(90,48,64,0.04);
+      --shadow-hover: 0 12px 40px rgba(90,48,64,0.12), 0 4px 12px rgba(90,48,64,0.06);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--r-border);
+      padding: 0 2.5rem; height: 62px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-icon {
+      width: 33px; height: 33px; background: var(--grad);
+      border-radius: 9px; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 3px 10px rgba(90,48,64,0.18);
+    }
+    .nav-logo-icon svg { width: 17px; height: 17px; stroke: #fff; fill: none; stroke-width: 1.8; }
+    .nav-logo-text { font-size: 16px; font-weight: 500; color: var(--ink); letter-spacing: -0.01em; }
+    .nav-logo-text span { color: var(--r1); }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; }
+    .nav-links a {
+      font-size: 13.5px; color: var(--ink-3); text-decoration: none;
+      padding: 6px 12px; border-radius: 8px; transition: color 0.15s, background 0.15s;
+    }
+    .nav-links a:hover { color: var(--ink); background: var(--r-light); }
+    .nav-links a.active { color: var(--r1); font-weight: 600; }
+    .nav-links .nav-cta {
+      background: var(--grad); color: #fff !important;
+      font-weight: 500; padding: 7px 15px;
+      box-shadow: 0 2px 8px rgba(90,48,64,0.13);
+    }
+    .nav-links .nav-cta:hover { opacity: 0.9; }
+
+    /* PAGE HEADER */
+    .page-header {
+      padding: 4rem 2.5rem 3rem;
+      max-width: 960px; margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-eyebrow {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--r2); margin-bottom: 1rem;
+    }
+    .page-eyebrow::before { content: ''; width: 18px; height: 2px; background: var(--grad); border-radius: 1px; }
+    .page-header h1 {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: clamp(32px, 5vw, 52px); font-weight: 400;
+      line-height: 1.1; letter-spacing: -0.025em;
+      color: var(--ink); margin-bottom: 1rem;
+    }
+    .page-header h1 em { font-style: italic; color: var(--r2); }
+    .page-header p {
+      font-size: 15px; color: var(--ink-3); max-width: 560px; line-height: 1.75;
+    }
+
+    /* FILTERS */
+    .filters-wrap {
+      padding: 1.5rem 2.5rem;
+      max-width: 960px; margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+      display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center;
+    }
+    .filter-group { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .filter-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-4); margin-right: 2px; }
+    .filter-btn {
+      font-size: 12px; font-weight: 500; font-family: inherit;
+      padding: 5px 13px; border-radius: 99px; cursor: pointer;
+      border: 1.5px solid var(--border); background: transparent; color: var(--ink-3);
+      transition: all 0.15s;
+    }
+    .filter-btn:hover { border-color: var(--r3); color: var(--r2); }
+    .filter-btn.active {
+      background: var(--grad); color: #fff; border-color: transparent;
+    }
+    .search-wrap { margin-left: auto; }
+    .search-input {
+      font-family: inherit; font-size: 13px; color: var(--ink);
+      padding: 7px 14px 7px 36px; border-radius: 99px;
+      border: 1.5px solid var(--border); background: var(--surface);
+      outline: none; width: 200px; transition: border-color 0.15s, width 0.2s;
+    }
+    .search-input:focus { border-color: var(--r3); width: 240px; }
+    .search-wrap { position: relative; }
+    .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--ink-4); font-size: 14px; pointer-events: none; }
+
+    /* RESULTS COUNT */
+    .results-bar {
+      max-width: 960px; margin: 0 auto;
+      padding: 1rem 2.5rem 0;
+      font-size: 12px; color: var(--ink-4);
+    }
+
+    /* BOOKS GRID */
+    .books-grid {
+      max-width: 960px; margin: 0 auto;
+      padding: 1.5rem 2.5rem 5rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;
+    }
+    .book-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.18s, box-shadow 0.18s;
+      display: flex; flex-direction: column;
+    }
+    .book-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+    .book-card[data-hidden="true"] { display: none; }
+
+    /* Book thumb */
+    .book-thumb {
+      background: var(--grad); padding: 1.75rem 1.5rem 1.5rem;
+      display: flex; flex-direction: column; gap: 10px;
+      position: relative; min-height: 130px;
+    }
+    .book-thumb-level {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      background: rgba(255,255,255,0.18); color: #fff;
+      padding: 3px 10px; border-radius: 99px; width: fit-content;
+    }
+    .book-thumb-dots {
+      display: flex; gap: 4px; position: absolute; bottom: 1.25rem; right: 1.25rem;
+    }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.3); }
+    .dot.filled { background: rgba(255,255,255,0.9); }
+
+    /* Book body */
+    .book-body { padding: 1.25rem; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+    .book-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .book-tag {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      background: var(--r-light); color: var(--r2);
+      padding: 2px 8px; border-radius: 99px;
+    }
+    .book-title {
+      font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.35;
+    }
+    .book-author { font-size: 12px; color: var(--ink-3); font-weight: 400; }
+    .book-desc { font-size: 13px; color: var(--ink-3); line-height: 1.65; flex: 1; }
+
+    /* Info strips */
+    .book-info {
+      border-top: 1px solid var(--border); padding-top: 10px;
+      display: flex; flex-direction: column; gap: 7px;
+    }
+    .book-info-row { display: flex; gap: 8px; align-items: flex-start; }
+    .book-info-icon {
+      width: 20px; height: 20px; border-radius: 6px;
+      background: var(--r-light); display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .book-info-icon svg { width: 11px; height: 11px; stroke: var(--r2); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .book-info-text { font-size: 12px; color: var(--ink-2); line-height: 1.5; }
+    .book-info-text strong { font-weight: 600; color: var(--ink); }
+
+    /* Empty state */
+    .empty-state {
+      display: none; grid-column: 1 / -1;
+      text-align: center; padding: 4rem 2rem; color: var(--ink-3);
+    }
+    .empty-state.visible { display: block; }
+    .empty-state p { font-size: 14px; margin-top: 8px; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border); padding: 2.5rem;
+      text-align: center; background: var(--white);
+    }
+    .footer-logo { font-family: 'Instrument Serif', serif; font-size: 18px; color: var(--ink); margin-bottom: 6px; }
+    .footer-logo span { color: var(--r1); }
+    footer p { font-size: 12px; color: var(--ink-4); }
+    footer a { color: var(--r1); text-decoration: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      nav { padding: 0 1.25rem; }
+      .nav-links a:not(.nav-cta):not([target]) { display: none; }
+      .page-header { padding: 2.5rem 1.5rem 2rem; }
+      .filters-wrap { padding: 1.25rem 1.5rem; }
+      .books-grid { padding: 1.25rem 1.5rem 4rem; }
+      .search-wrap { width: 100%; }
+      .search-input { width: 100%; }
+      .results-bar { padding: 1rem 1.5rem 0; }
+    }
+  </style>
+
+<style id="psireal-layout-refresh">
+  :root{
+    --ps-bg:#FAF8F5;
+    --ps-surface:#FFFFFF;
+    --ps-ink:#171321;
+    --ps-muted:#686174;
+    --ps-soft:#A090C8;
+    --ps-border:#E8E2EC;
+    --ps-violet:#5B3DF5;
+    --ps-violet-dark:#2C1A69;
+    --ps-violet-soft:#EEE9FF;
+    --ps-shadow:0 18px 48px rgba(23,19,33,.08);
+    --ps-radius:22px;
+  }
+
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ps-bg)!important;
+    color:var(--ps-ink)!important;
+    font-family:'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif!important;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,h4,
+  .hero-title,.section-title,.material-title,.review-title,
+  .nav-logo-text,.card-title{
+    font-family:'Manrope', system-ui, sans-serif!important;
+    letter-spacing:-.045em!important;
+    color:var(--ps-ink)!important;
+  }
+
+  p,li,.subtitle,.description,.lead{
+    color:var(--ps-muted)!important;
+  }
+
+  nav,header,.topbar,.navbar{
+    background:rgba(250,248,245,.9)!important;
+    border-bottom:1px solid var(--ps-border)!important;
+    backdrop-filter:blur(18px)!important;
+  }
+
+  .nav-logo img,
+  .nav-real-logo{
+    width:42px!important;
+    height:42px!important;
+    border-radius:50%!important;
+    object-fit:contain!important;
+  }
+
+  .nav-logo-icon{
+    display:none!important;
+  }
+
+  .nav-logo{
+    gap:12px!important;
+  }
+
+  a{
+    color:inherit;
+  }
+
+  a:hover{
+    color:var(--ps-violet)!important;
+  }
+
+  .btn,
+  .button,
+  .cta,
+  .primary,
+  .btn-primary,
+  .hero-cta,
+  button,
+  a[class*="btn"]{
+    border-radius:14px!important;
+    font-weight:800!important;
+  }
+
+  .btn-primary,
+  .primary,
+  .cta,
+  .hero-cta,
+  button.primary,
+  a.primary,
+  a.btn-primary{
+    background:var(--ps-violet)!important;
+    color:#fff!important;
+    border-color:var(--ps-violet)!important;
+    box-shadow:0 16px 34px rgba(91,61,245,.18)!important;
+  }
+
+  .btn-primary:hover,
+  .primary:hover,
+  .cta:hover,
+  .hero-cta:hover,
+  a.primary:hover,
+  a.btn-primary:hover{
+    background:#4B30DA!important;
+    color:#fff!important;
+    transform:translateY(-1px);
+  }
+
+  .btn-secondary,
+  .secondary,
+  a.secondary{
+    background:#fff!important;
+    color:var(--ps-ink)!important;
+    border:1px solid var(--ps-border)!important;
+  }
+
+  .pill,.badge,.tag,.category,.label{
+    background:var(--ps-violet-soft)!important;
+    color:var(--ps-violet-dark)!important;
+    border:1px solid var(--ps-border)!important;
+    border-radius:999px!important;
+    font-weight:800!important;
+    letter-spacing:.06em!important;
+  }
+
+  .card,
+  .material-card,
+  .resource-card,
+  .review-card,
+  article,
+  .content-card,
+  .panel{
+    background:#fff!important;
+    border:1px solid var(--ps-border)!important;
+    border-radius:var(--ps-radius)!important;
+    box-shadow:0 8px 26px rgba(23,19,33,.045)!important;
+  }
+
+  .card:hover,
+  .material-card:hover,
+  .resource-card:hover,
+  .review-card:hover{
+    box-shadow:var(--ps-shadow)!important;
+    border-color:#D8D0E5!important;
+  }
+
+  .material-card .card-visual,
+  .card-visual,
+  .visual,
+  .gradient-card,
+  .cover{
+    background:linear-gradient(135deg,#171321 0%,#5B3DF5 100%)!important;
+  }
+
+  .toc,
+  .sidebar,
+  aside{
+    background:transparent!important;
+  }
+
+  .toc a.active,
+  .toc .active,
+  .sidebar .active,
+  .nav-links .active,
+  .active{
+    background:var(--ps-violet-soft)!important;
+    color:var(--ps-violet-dark)!important;
+    border-radius:12px!important;
+  }
+
+  hr,.divider{
+    border-color:var(--ps-border)!important;
+  }
+
+  #install-prompt,
+  .install-prompt,
+  .pwa-install,
+  .pwa-prompt,
+  .install-banner,
+  .app-install-banner,
+  [data-install-prompt]{
+    display:none!important;
+    visibility:hidden!important;
+    opacity:0!important;
+    pointer-events:none!important;
+  }
+</style>
+
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../../index.html">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 3c-1.5 0-3 .6-4 1.7C6.8 6 6 7.5 6 9c0 1.2.4 2.3 1 3.2-.3.6-.5 1.2-.5 1.8 0 2.2 2 4 4.5 4s4.5-1.8 4.5-4c0-.6-.2-1.2-.5-1.8.6-.9 1-2 1-3.2 0-1.5-.8-3-2-4.3C12.9 3.5 12 3 12 3z"/><path d="M9 15.5c0 1 1.3 1.5 3 1.5s3-.5 3-1.5"/></svg>
+    </div>
+    <span class="nav-logo-text">Biblioteca Psi<span>Real</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="https://michelledonegaterapia.com.br/" target="_blank" rel="noopener">Voltar ao site</a>
+    <a href="../../index.html#materiais">Materiais</a>
+    <a href="#" class="active">Resenhas</a>
+    <a href="https://psireal.app/" target="_blank" rel="noopener" target="_blank" class="nav-cta">psireal.app</a>
+    <a href="https://wa.me/5511947388423" target="_blank" rel="noopener" target="_blank">WhatsApp →</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-eyebrow">Arsenal de leituras</div>
+  <h1>Livros que fazem<br>você <em>pensar melhor</em></h1>
+  <p>Resenhas honestas para psis em formação. Cada livro avaliado com uma pergunta em mente: <strong>isso vai me ajudar na prática agora?</strong></p>
+</div>
+
+<div class="filters-wrap">
+  <div class="filter-group">
+    <span class="filter-label">Tema</span>
+    <button class="filter-btn active" data-filter="tema" data-value="todos">Todos</button>
+    <button class="filter-btn" data-filter="tema" data-value="fundamentos">Fundamentos TCC</button>
+    <button class="filter-btn" data-filter="tema" data-value="ansiedade">Ansiedade</button>
+    <button class="filter-btn" data-filter="tema" data-value="depressao">Depressão</button>
+    <button class="filter-btn" data-filter="tema" data-value="formulacao">Formulação</button>
+    <button class="filter-btn" data-filter="tema" data-value="supervisao">Supervisão</button>
+  </div>
+  <div class="filter-group">
+    <span class="filter-label">Nível</span>
+    <button class="filter-btn active" data-filter="nivel" data-value="todos">Todos</button>
+    <button class="filter-btn" data-filter="nivel" data-value="iniciante">Iniciante</button>
+    <button class="filter-btn" data-filter="nivel" data-value="intermediario">Intermediário</button>
+    <button class="filter-btn" data-filter="nivel" data-value="avancado">Avançado</button>
+  </div>
+  <div class="search-wrap">
+    <span class="search-icon">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </span>
+    <input class="search-input" type="text" id="search" placeholder="Buscar por título ou autorâ€¦" />
+  </div>
+</div>
+
+<div class="results-bar">
+  <span id="results-count"></span>
+</div>
+
+<div class="books-grid" id="books-grid">
+
+  <!-- LIVRO 1 -->
+  <article class="book-card"
+    data-tema="fundamentos"
+    data-nivel="iniciante"
+    data-titulo="Terapia Cognitivo-Comportamental: Teoria e Prática"
+    data-autor="Judith Beck">
+    <div class="book-thumb">
+      <span class="book-thumb-level">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        Iniciante
+      </span>
+      <div class="book-thumb-dots">
+        <div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div>
+      </div>
+    </div>
+    <div class="book-body">
+      <div class="book-tags">
+        <span class="book-tag">Fundamentos TCC</span>
+      </div>
+      <div class="book-title">Terapia Cognitivo-Comportamental: Teoria e Prática</div>
+      <div class="book-author">Judith S. Beck · 3ª edição, 2021</div>
+      <p class="book-desc">O livro de referência da TCC. Judith Beck ensina o modelo cognitivo do zero, com sessões anotadas e exemplos clínicos reais. É o livro que você vai abrir na véspera de toda supervisão.</p>
+      <div class="book-info">
+        <div class="book-info-row">
+          <div class="book-info-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="book-info-text"><strong>Por onde começar:</strong> Capítulos 1 a 4 primeiro. Eles explicam o modelo cognitivo que fundamenta tudo o que você vai aprender depois.</div>
+        </div>
+        <div class="book-info-row">
+          <div class="book-info-icon">
+            <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <div class="book-info-text"><strong>Leia antes de:</strong> qualquer outro livro de técnicas. Sem esse mapa, as técnicas parecem soltas.</div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- LIVRO 2 -->
+  <article class="book-card"
+    data-tema="ansiedade"
+    data-nivel="iniciante"
+    data-titulo="Vencendo o Pânico"
+    data-autor="Salkovskis">
+    <div class="book-thumb" style="background: linear-gradient(135deg, #4A2840 0%, #8A5070 50%, #C090A8 100%);">
+      <span class="book-thumb-level">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg>
+        Iniciante
+      </span>
+      <div class="book-thumb-dots">
+        <div class="dot filled"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+    </div>
+    <div class="book-body">
+      <div class="book-tags">
+        <span class="book-tag">Ansiedade</span>
+      </div>
+      <div class="book-title">Vencendo o Transtorno do Pânico</div>
+      <div class="book-author">David Clark & Paul Salkovskis · 2021</div>
+      <p class="book-desc">Um guia clínico direto para tratar pânico com TCC. Explica o modelo cognitivo do pânico de forma que faz sentido para o terapeuta e para o paciente. Cheio de exemplos de diálogo socrático.</p>
+      <div class="book-info">
+        <div class="book-info-row">
+          <div class="book-info-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="book-info-text"><strong>Por onde começar:</strong> O capítulo sobre o modelo do círculo vicioso do pânico. Você vai querer usar na psicoeducação do paciente imediatamente.</div>
+        </div>
+        <div class="book-info-row">
+          <div class="book-info-icon">
+            <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <div class="book-info-text"><strong>Leia depois de:</strong> Judith Beck (2021). O modelo cognitivo geral precisa estar claro antes de estudar o pânico especificamente.</div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- LIVRO 3 -->
+  <article class="book-card"
+    data-tema="formulacao"
+    data-nivel="intermediario"
+    data-titulo="Formulação de Casos em TCC"
+    data-autor="Persons">
+    <div class="book-thumb" style="background: linear-gradient(135deg, #2A2840 0%, #504870 50%, #9080A8 100%);">
+      <span class="book-thumb-level">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Intermediário
+      </span>
+      <div class="book-thumb-dots">
+        <div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div>
+      </div>
+    </div>
+    <div class="book-body">
+      <div class="book-tags">
+        <span class="book-tag">Formulação</span>
+      </div>
+      <div class="book-title">A Abordagem de Formulação de Caso em TCC</div>
+      <div class="book-author">Jacqueline Persons · 2008</div>
+      <p class="book-desc">O guia definitivo para aprender a montar uma formulação de caso coerente. Persons mostra como conectar queixa, história de vida, crenças e comportamentos num mapa clínico funcional.</p>
+      <div class="book-info">
+        <div class="book-info-row">
+          <div class="book-info-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="book-info-text"><strong>Por onde começar:</strong> Os três primeiros capítulos, que mostram o que é uma formulação e por que ela muda o tratamento.</div>
+        </div>
+        <div class="book-info-row">
+          <div class="book-info-icon">
+            <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <div class="book-info-text"><strong>Leia depois de:</strong> Judith Beck (2021). Você precisa ter o modelo cognitivo na cabeça para aproveitar o livro de formulação.</div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- LIVRO 4 -->
+  <article class="book-card"
+    data-tema="depressao"
+    data-nivel="intermediario"
+    data-titulo="Terapia Cognitiva da Depressão"
+    data-autor="Beck">
+    <div class="book-thumb" style="background: linear-gradient(135deg, #1E2838 0%, #405068 50%, #7898A8 100%);">
+      <span class="book-thumb-level">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Intermediário
+      </span>
+      <div class="book-thumb-dots">
+        <div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div>
+      </div>
+    </div>
+    <div class="book-body">
+      <div class="book-tags">
+        <span class="book-tag">Depressão</span>
+      </div>
+      <div class="book-title">Terapia Cognitiva da Depressão</div>
+      <div class="book-author">Aaron Beck, Rush, Shaw & Emery · 1979</div>
+      <p class="book-desc">O livro que deu origem Ã  TCC. Leitura obrigatória não por ser fácil — é denso — mas porque entender de onde vieram as técnicas muda a forma como você as aplica. Referência que qualquer supervisor vai citar.</p>
+      <div class="book-info">
+        <div class="book-info-row">
+          <div class="book-info-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="book-info-text"><strong>Por onde começar:</strong> Parte II (capítulos 4 a 9), que cobrem as técnicas cognitivas e comportamentais. A parte teórica fica mais fácil depois.</div>
+        </div>
+        <div class="book-info-row">
+          <div class="book-info-icon">
+            <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <div class="book-info-text"><strong>Leia depois de:</strong> Judith Beck (2021) e de ter pelo menos 6 meses de prática clínica. A densidade compensa quando você já tem contexto.</div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- LIVRO 5 -->
+  <article class="book-card"
+    data-tema="ansiedade"
+    data-nivel="intermediario"
+    data-titulo="Superando o Medo e a Ansiedade Social"
+    data-autor="Clark">
+    <div class="book-thumb" style="background: linear-gradient(135deg, #3A2030 0%, #704050 50%, #A87880 100%);">
+      <span class="book-thumb-level">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Intermediário
+      </span>
+      <div class="book-thumb-dots">
+        <div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div>
+      </div>
+    </div>
+    <div class="book-body">
+      <div class="book-tags">
+        <span class="book-tag">Ansiedade</span>
+      </div>
+      <div class="book-title">Terapia Cognitiva para Transtornos de Ansiedade</div>
+      <div class="book-author">Clark & Beck · 2012</div>
+      <p class="book-desc">Cobre todos os principais transtornos de ansiedade com modelos específicos para cada um. Especialmente útil para fobia social, TAG e TEPT. A seção sobre vulnerabilidade cognitiva é um dos melhores capítulos da literatura em TCC.</p>
+      <div class="book-info">
+        <div class="book-info-row">
+          <div class="book-info-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="book-info-text"><strong>Por onde começar:</strong> Escolha o capítulo do transtorno do seu paciente atual. O livro foi feito para ser lido por partes, não do início ao fim.</div>
+        </div>
+        <div class="book-info-row">
+          <div class="book-info-icon">
+            <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <div class="book-info-text"><strong>Leia depois de:</strong> Judith Beck (2021) e, idealmente, do livro de pânico de Clark & Salkovskis — você começa a ver os padrões entre os transtornos.</div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- LIVRO 6 -->
+  <article class="book-card"
+    data-tema="supervisao"
+    data-nivel="avancado"
+    data-titulo="Supervisão em TCC"
+    data-autor="Liese">
+    <div class="book-thumb" style="background: linear-gradient(135deg, #282028 0%, #504850 50%, #907890 100%);">
+      <span class="book-thumb-level">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Avançado
+      </span>
+      <div class="book-thumb-dots">
+        <div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div>
+      </div>
+    </div>
+    <div class="book-body">
+      <div class="book-tags">
+        <span class="book-tag">Supervisão</span>
+      </div>
+      <div class="book-title">Supervisão em Terapia Cognitivo-Comportamental</div>
+      <div class="book-author">Liese & Beck · 1997</div>
+      <p class="book-desc">O guia para entender o que acontece — e o que deveria acontecer — numa supervisão de TCC. Ãštil tanto para o supervisionando quanto para quem está aprendendo a supervisionar. Ajuda a extrair mais de cada sessão de supervisão.</p>
+      <div class="book-info">
+        <div class="book-info-row">
+          <div class="book-info-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="book-info-text"><strong>Por onde começar:</strong> O capítulo sobre o papel do supervisionando — o que você pode pedir, como apresentar casos, como aproveitar o feedback.</div>
+        </div>
+        <div class="book-info-row">
+          <div class="book-info-icon">
+            <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <div class="book-info-text"><strong>Leia depois de:</strong> Ter pelo menos 1 ano de supervisão ativa. As discussões fazem muito mais sentido quando você já tem experiência para comparar.</div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <div class="empty-state" id="empty-state">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--ink-4); margin: 0 auto 12px; display: block;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <p>Nenhum livro encontrado com esses filtros.<br>Tente uma combinação diferente.</p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">Biblioteca Psi<span>Real</span></div>
+  <p>Recursos clínicos em TCC · <a href="../../index.html">Voltar Ã  biblioteca</a></p>
+</footer>
+
+<script>
+  const cards = document.querySelectorAll('.book-card');
+  const emptyState = document.getElementById('empty-state');
+  const resultsCount = document.getElementById('results-count');
+  let activeFilters = { tema: 'todos', nivel: 'todos' };
+  let searchQuery = '';
+
+  function applyFilters() {
+    let visible = 0;
+    cards.forEach(card => {
+      const tema = card.dataset.tema;
+      const nivel = card.dataset.nivel;
+      const titulo = card.dataset.titulo.toLowerCase();
+      const autor = card.dataset.autor.toLowerCase();
+      const matchTema = activeFilters.tema === 'todos' || tema === activeFilters.tema;
+      const matchNivel = activeFilters.nivel === 'todos' || nivel === activeFilters.nivel;
+      const matchSearch = !searchQuery || titulo.includes(searchQuery) || autor.includes(searchQuery);
+      const show = matchTema && matchNivel && matchSearch;
+      card.dataset.hidden = show ? 'false' : 'true';
+      if (show) visible++;
+    });
+    emptyState.classList.toggle('visible', visible === 0);
+    const total = cards.length;
+    resultsCount.textContent = visible === total
+      ? `${total} livros`
+      : `${visible} de ${total} livros`;
+  }
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const group = btn.dataset.filter;
+      const value = btn.dataset.value;
+      activeFilters[group] = value;
+      document.querySelectorAll(`[data-filter="${group}"]`).forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilters();
+    });
+  });
+
+  document.getElementById('search').addEventListener('input', e => {
+    searchQuery = e.target.value.toLowerCase().trim();
+    applyFilters();
+  });
+
+  applyFilters();
+</script>
+</body>
+</html>
